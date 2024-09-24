@@ -27,4 +27,9 @@ public class AdminController {
     public String orderManagement() {
         return "admin/eco-products-orders";
     }
+
+    @GetMapping("/eco-products-edit.html")
+    public String editProduct() {
+        return "admin/eco-products-edit";
+    }
 }
