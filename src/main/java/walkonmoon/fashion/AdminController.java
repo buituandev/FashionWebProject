@@ -18,12 +18,10 @@ public class AdminController {
         return "admin/eco-products";
     }
 
-
     @GetMapping("/edo-products-detail.html")
     public String categoryManagement() {
         return "admin/eco-products-detail";
     }
-
 
     @GetMapping("/eco-products-orders.html")
     public String orderManagement() {
