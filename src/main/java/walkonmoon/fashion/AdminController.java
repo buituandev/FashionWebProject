@@ -8,23 +8,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @GetMapping("/dashboard")
+    @GetMapping("/index.html")
     public String dashboard() {
         return "admin/index";
     }
 
-    @GetMapping("/product-management")
+    @GetMapping("/eco-products.html")
     public String productManagement() {
         return "admin/eco-products";
     }
 
-    @GetMapping("/category-management")
+
+    @GetMapping("/edo-products-detail.html")
     public String categoryManagement() {
         return "admin/eco-products-detail";
     }
 
-    @GetMapping("/order-management")
+
+    @GetMapping("/eco-products-orders.html")
     public String orderManagement() {
         return "admin/eco-products-orders";
+    }
+
+    @GetMapping("/eco-products-edit.html")
+    public String editProduct() {
+        return "admin/eco-products-edit";
     }
 }
