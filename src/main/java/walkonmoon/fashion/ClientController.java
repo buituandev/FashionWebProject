@@ -70,7 +70,7 @@ public class ClientController {
     public String register() {
         return "register";
     }
-
+  
     @GetMapping("/register.html")
     public String registerHtml(){
         return "register";
@@ -135,4 +135,11 @@ public class ClientController {
     public String myAccountHtml(){
         return "my-account";
     }
+
+    @GetMapping("wishlist.html")
+    public String wishlistHtml(){return "wishlist";}
+
+    @GetMapping("compare.html")
+    public String compareHtml(){return "compare";}
+
 }
