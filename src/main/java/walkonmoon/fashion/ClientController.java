@@ -16,9 +16,19 @@ public class ClientController {
         return "index";
     }
 
+    @GetMapping("/category")
+    public String category() {
+        return "shop-grid";
+    }
+
     @GetMapping("/shop-grid.html")
     public String shopGridHtml(){
         return "shop-grid";
+    }
+
+    @GetMapping("/product-detail")
+    public String productDetail() {
+        return "single-product";
     }
 
     @GetMapping("/single-product.html")
@@ -26,9 +36,19 @@ public class ClientController {
         return "single-product";
     }
 
+    @GetMapping("/shopping-cart")
+    public String shoppingCart() {
+        return "cart";
+    }
+
     @GetMapping("/cart.html")
     public String cartHtml(){
         return "cart";
+    }
+
+    @GetMapping("/shipping-page")
+    public String shippingPage() {
+        return "checkout";
     }
 
     @GetMapping("/checkout.html")
@@ -36,11 +56,21 @@ public class ClientController {
         return "checkout";
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/login.html")
     public String loginHtml(){
         return "login";
     }
 
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
+  
     @GetMapping("/register.html")
     public String registerHtml(){
         return "register";
@@ -66,6 +96,11 @@ public class ClientController {
         return "about";
     }
 
+    @GetMapping("/blog")
+    public String blog() {
+        return "blog-left-sidebar";
+    }
+
     @GetMapping("/blog-left-sidebar.html")
     public String blogLeftSidebarHtml(){
         return "blog-left-sidebar";
@@ -79,6 +114,21 @@ public class ClientController {
     @GetMapping("/blog-details.html")
     public String blogDetailsHtml(){
         return "blog-details";
+    }
+
+//    @GetMapping("/logout")
+//    public String logout() {
+//        return "logout";
+//    }
+
+//    @GetMapping("/forgot-password")
+//    public String forgotPassword() {
+//        return "forgot-password";
+//    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "my-account";
     }
 
     @GetMapping("/my-account.html")
