@@ -457,21 +457,8 @@
         <div class="banner-section mt-full mb-half">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="promo-banner hover-effect-1">
-                            <a href="#">
-                                <img src="assets/images/banners/banner-7.jpg" alt="Promo Banner">
-                            </a>
-                        </div> <!-- end of promo-banner -->
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="promo-banner hover-effect-1">
-                            <a href="#">
-                                <img src="assets/images/banners/banner-8.jpg" alt="Promo Banner">
-                            </a>
-                        </div> <!-- end of promo-banner -->
-                    </div>
+                    <div th:replace="layout::promoBannerWide('assets/images/banners/banner-7.jpg')"></div>
+                    <div th:replace="layout::promoBannerWide('assets/images/banners/banner-8.jpg')"></div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>

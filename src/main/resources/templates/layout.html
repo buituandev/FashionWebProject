@@ -379,30 +379,6 @@
 </header>
 <!-- End of Header -->
 
-<!--Swiper Slide-->
-<div th:fragment="swiperSlide(imageSrc, promoTitle, mainTitle1, mainTitle2, subtitle, buttonLink, buttonText)" class="swiper-wrapper">
-    <div class="swiper-slide bg-img-wrapper">
-        <div class="slide-inner image-placeholder">
-            <img th:src="${imageSrc}" class="visually-hidden" alt="Slider Image">
-            <div class="slide-progress"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="slide-content layer-animation-3">
-                            <p class="promo-title"><span th:text="${promoTitle}"></span></p>
-                            <h1 class="main-title"><span th:text="${mainTitle1}"></span> <span th:text="${mainTitle2}"></span></h1>
-                            <p class="subtitle" th:text="${subtitle}"></p>
-                            <div class="slide-button">
-                                <a class="default-btn" th:href="${buttonLink}" th:title="${buttonText}" th:text="${buttonText}"></a>
-                            </div>
-                        </div> <!-- end of slide-content -->
-                    </div>
-                </div>
-            </div>
-        </div> <!-- end of slider-inner -->
-    </div> <!-- end of swiper-slide -->
-</div> <!-- end of swiper-wrapper -->
-
 <!--PromoteBanner-->
 <div th:fragment="promoBannerNarrow(imageSrc)" class="col-6 col-sm-6 col-md-4 col-lg-4">
     <div class="promo-banner hover-effect-1">
@@ -410,6 +386,13 @@
             <img th:src="${imageSrc}" alt="Promo Banner">
         </a>
     </div>
+</div>
+<div th:fragment="promoBannerWide(imageSrc)" class="col-12 col-sm-12 col-md-6 col-lg-6">
+    <div class="promo-banner hover-effect-1">
+        <a href="#">
+            <img th:src="${imageSrc}" alt="Promo Banner">
+        </a>
+    </div> <!-- end of promo-banner -->
 </div>
 <!-- end of promo-banner -->
 
