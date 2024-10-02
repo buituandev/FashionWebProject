@@ -98,12 +98,12 @@ public class ClientController {
 
     @GetMapping("/blog")
     public String blog() {
-        return "blog-left-sidebar";
+        return "blog-right-sidebar";
     }
 
-    @GetMapping("/blog-left-sidebar.html")
+    @GetMapping("/blog-right-sidebar.html")
     public String blogLeftSidebarHtml(){
-        return "blog-left-sidebar";
+        return "blog-right-sidebar";
     }
 
     @GetMapping("/blog-detail")
