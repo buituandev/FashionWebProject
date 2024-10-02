@@ -70,7 +70,7 @@ public class ClientController {
     public String register() {
         return "register";
     }
-  
+
     @GetMapping("/register.html")
     public String registerHtml(){
         return "register";
