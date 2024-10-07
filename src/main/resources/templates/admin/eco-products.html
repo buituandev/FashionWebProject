@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://thymeleaf.org">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
 
-<head th:replace = "admin/admin_layout :: head"></head>
+<head th:replace="admin/admin_layout :: head"></head>
+<link rel="stylesheet" type="text/css"
+      href="../assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
 =======
 
 
@@ -53,7 +55,9 @@
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                             <li class="breadcrumb-item active">Products</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a href="eco-products-edit.html" style="color: white;"><i class="fa fa-plus-circle"></i> Create New</a></button>
+                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a
+                                href="eco-products-edit.html" style="color: white;"><i class="fa fa-plus-circle"></i>
+                            Create New</a></button>
                     </div>
                 </div>
             </div>
@@ -64,60 +68,30 @@
             <!-- ============================================================== -->
             <!-- Info box Content -->
             <!-- ============================================================== -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Products Table</h4>
-                            <h6 class="card-subtitle">Export data to Copy, CSV, Excel, PDF & Print</h6>
-                            <div class="table-responsive m-t-40">
-                                <table id="example23"
-                                       class="display nowrap table table-hover table-striped border"
-                                       style="width: 100%; border-spacing: 10px;">
-                                    <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Photo</th>
-                                        <th>Origin</th>
-                                        <th>Price</th>
-                                        <th>Start date</th>
-                                        <th>Stock</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                        <th>Photo</th>
-                                        <th>Origin</th>
-                                        <th>Price</th>
-                                        <th>Start date</th>
-                                        <th>Stock</th>
-                                        <th>Action</th>
-                                    </tfoot>
-                                    <tbody>
-                                    <!--                                        <tr>-->
-                                    <!--                                            <td>Tiger Nixon</td>-->
-                                    <!--                                            <td>System Architect</td>-->
-                                    <!--                                            <td>Photo</td>-->
-                                    <!--                                            <td>Edinburgh</td>-->
-                                    <!--                                            <td>61</td>-->
-                                    <!--                                            <td>2011/04/25</td>-->
-                                    <!--                                            <td>$320,800</td>-->
-                                    <!--                                            <td><a href="javascript:void(0)" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>-->
-                                    <!--                                        </tr>-->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Products</h4>
+                    <h6 class="card-subtitle"></h6>
+                    <div class="table-responsive m-t-40">
+                        <table id="myTable" class="table table-striped border">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Photo</th>
+                                <th>Price</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
