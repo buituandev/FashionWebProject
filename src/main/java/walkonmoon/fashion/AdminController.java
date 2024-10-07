@@ -20,7 +20,7 @@ public class AdminController {
 
 
     @GetMapping("/edo-products-detail.html")
-    public String categoryManagement() {
+    public String productDetail() {
         return "admin/eco-products-detail";
     }
 
@@ -33,5 +33,15 @@ public class AdminController {
     @GetMapping("/eco-products-edit.html")
     public String editProduct() {
         return "admin/eco-products-edit";
+    }
+
+    @GetMapping("/category.html")
+    public String categoryManagement() {
+        return "admin/category";
+    }
+
+    @GetMapping("/user-management.html")
+    public String userManagement() {
+        return "admin/user-management";
     }
 }
