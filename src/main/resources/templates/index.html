@@ -30,11 +30,11 @@
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.gender}"></td>
-            <td th:text="${#dates.format(user.dob, 'yyyy-MM-dd')}"></td> <!-- Format date -->
-            <td th:text="${user.address}"></td>
+            <td th:text="${user.getId()}"></td>
+            <td th:text="${user.getFull_name()}"></td>
+            <td th:text="${user.getGender()}"></td>
+            <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td> <!-- Format date -->
+            <td th:text="${user.getAddress()}"></td>
         </tr>
         </tbody>
     </table>
