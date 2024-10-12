@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.UserService;
 
@@ -23,7 +24,8 @@ public class AdminController {
     }
 
     @GetMapping("/eco-products.html")
-    public String productManagement() {
+    public String productManagement(Model model) {
+        List<Product> products =
         return "admin/eco-products";
     }
 
@@ -52,7 +54,7 @@ public class AdminController {
     @GetMapping("/user-management.html")
     public String userManagement(Model model) {
         List<User> users = userService.getAll(); // Fetch all users
-        model.addAttribute("users", users);
+        model.addAttribute("userList", users);
         return "admin/user-management";
     }
 }
