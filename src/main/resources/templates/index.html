@@ -15,9 +15,29 @@
 <!-- Start of Whole Site Wrapper with mobile menu support -->
 <div id="whole" class="whole-site-wrapper">
 
-    <div th:replace="layout::headerhp"></div>
-    <div th:replace="layout::nav"></div>
-
+    <div th:replace="~{layout::headerhp}"></div>
+    <div th:replace="~{layout::nav}"></div>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Address</th>
+            <th>Deleted</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.gender}"></td>
+            <td th:text="${#dates.format(user.dob, 'yyyy-MM-dd')}"></td> <!-- Format date -->
+            <td th:text="${user.address}"></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
@@ -559,8 +579,9 @@
     </main>
     <!-- End of Main Content Wrapper -->
 
-    <div th:replace="layout::footer"></div>
-    <div th:replace="layout::scroll_to_top"></div>
+    <div th:replace="~{layout::footer}"></div>
+
+    <div th:replace="~{layout::scroll_to_top}"></div>
 
     <!-- Quick View Content Start -->
     <div class="product-quick-view">
