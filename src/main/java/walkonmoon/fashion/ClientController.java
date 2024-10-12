@@ -1,18 +1,30 @@
 package walkonmoon.fashion;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class ClientController {
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        List <User> users = userService.getAll();
+        model.addAttribute("users", users);
         return "index";
     }
 
     @GetMapping("/index.html")
-    public String indexHtml() {
+    public String indexHtml(Model model) {
+        List<User> users = userService.getAll(); // Fetch all users
+        model.addAttribute("users", users);
         return "index";
     }
 
@@ -116,16 +128,6 @@ public class ClientController {
         return "blog-details";
     }
 
-//    @GetMapping("/logout")
-//    public String logout() {
-//        return "logout";
-//    }
-
-//    @GetMapping("/forgot-password")
-//    public String forgotPassword() {
-//        return "forgot-password";
-//    }
-
     @GetMapping("/profile")
     public String profile() {
         return "my-account";
@@ -141,5 +143,6 @@ public class ClientController {
 
     @GetMapping("compare.html")
     public String compareHtml(){return "compare";}
+
 
 }
