@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
 
 <head th:replace = "admin/admin_layout :: head"></head>
@@ -76,25 +76,32 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Full Name</th>
-                                <th>Email</th>
-                                <th>Password</th>
+                                <th>Pasword</th>
+                                <th>Gender</th>
                                 <th>DOB</th>
                                 <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Image</th>
-                                <th>Gender</th>
                                 <th>Type</th>
+                                <th>Is deleted</th>
                                 <th>Province</th>
-                                <th>Action</th>
+                                <th>Email</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="user : ${users}">
-                                <td th:text="${user.id}"></td>
-                                <td th:text="${user.name}"></td>
-                                <td th:text="${user.gender}"></td>
-                                <td th:text="${#dates.format(user.dob, 'yyyy-MM-dd')}"></td> <!-- Format date -->
-                                <td th:text="${user.address}"></td>
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getFull_name()}"></td>
+                                <td th:text="${user.getPassword()}"></td>
+                                <td th:text="${user.getGender()}"></td>
+                                <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td> <!-- Format date -->
+                                <td th:text="${user.getAddress()}"></td>
+                                <td th:text="${user.getPhone_number()}"></td>
+                                <td th:text="${user.getImage()}"></td>
+                                <td th:text="${user.getType()}"></td>
+                                <td th:text="${user.getIs_deleted()}"></td>
+                                <td th:text="${user.getProvince()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
                             </tr>
                             </tbody>
                         </table>

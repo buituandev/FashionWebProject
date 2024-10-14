@@ -6,15 +6,14 @@ import lombok.Getter;
 import java.util.Date;
 @Getter
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id;
-
     @Column
-    private String name;
+    private String product_name;
     @Column
     private int categoryId;
     @Column
@@ -27,6 +26,47 @@ public class Product {
     private Date updateDate;
     @Column
     private String SKU;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getProduct_name() {
+        return product_name;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public String getSKU() {
+        return SKU;
+    }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public int getImageCollectionId() {
+        return ImageCollectionId;
+    }
+
     @Column
     private String longDescription;
     @Column
@@ -37,7 +77,7 @@ public class Product {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.product_name = name;
     }
 
     public void setCategoryId(int categoryId) {
