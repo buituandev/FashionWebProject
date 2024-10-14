@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "18106330681",
+    "project_id": "chromashop",
+    "storage_bucket": "chromashop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18106330681:android:b883a12d430a6472c0e7e8",
+        "android_client_info": {
+          "package_name": "com.chroma.chromashop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXUD-Rlj5WAGZPM1hGUHKB_stnNVs0Cgo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
