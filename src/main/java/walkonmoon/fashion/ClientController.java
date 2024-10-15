@@ -1,18 +1,48 @@
 package walkonmoon.fashion;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import walkonmoon.fashion.model.Product;
+import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.service.ProductService;
+import walkonmoon.fashion.service.UserService;
+
+import java.util.List;
 
 @Controller
 public class ClientController {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model model) {
+        List <User> users = userService.getListUser();
+        model.addAttribute("users", users);
+        List<Product> products = productService.getListProducts();
+        model.addAttribute("products", products);
         return "index";
     }
 
+    @GetMapping("/layout.html")
+    public void layout(Model model) {
+        List <User> users = userService.getListUser();
+        model.addAttribute("users", users);
+        List<Product> products = productService.getListProducts();
+        model.addAttribute("products", products);
+
+    }
+
+
     @GetMapping("/index.html")
-    public String indexHtml() {
+    public String indexHtml(Model model) {
+        List<User> users = userService.getListUser(); // Fetch all users
+        model.addAttribute("users", users);
+        List<Product> products = productService.getListProducts();
+        model.addAttribute("products", products);
         return "index";
     }
 
@@ -98,12 +128,12 @@ public class ClientController {
 
     @GetMapping("/blog")
     public String blog() {
-        return "blog-left-sidebar";
+        return "blog-right-sidebar";
     }
 
-    @GetMapping("/blog-left-sidebar.html")
+    @GetMapping("/blog-right-sidebar.html")
     public String blogLeftSidebarHtml(){
-        return "blog-left-sidebar";
+        return "blog-right-sidebar";
     }
 
     @GetMapping("/blog-detail")
@@ -115,16 +145,6 @@ public class ClientController {
     public String blogDetailsHtml(){
         return "blog-details";
     }
-
-//    @GetMapping("/logout")
-//    public String logout() {
-//        return "logout";
-//    }
-
-//    @GetMapping("/forgot-password")
-//    public String forgotPassword() {
-//        return "forgot-password";
-//    }
 
     @GetMapping("/profile")
     public String profile() {

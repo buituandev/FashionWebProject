@@ -15,9 +15,29 @@
 <!-- Start of Whole Site Wrapper with mobile menu support -->
 <div id="whole" class="whole-site-wrapper">
 
-    <div th:replace="layout::headerhp"></div>
-    <div th:replace="layout::nav"></div>
-
+    <div th:replace="~{layout::headerhp}"></div>
+    <div th:replace="~{layout::nav}"></div>
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Gender</th>-->
+<!--            <th>DOB</th>-->
+<!--            <th>Address</th>-->
+<!--            <th>Deleted</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="user : ${users}">-->
+<!--            <td th:text="${user.getId()}"></td>-->
+<!--            <td th:text="${user.getFull_name()}"></td>-->
+<!--            <td th:text="${user.getGender()}"></td>-->
+<!--            <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td> &lt;!&ndash; Format date &ndash;&gt;-->
+<!--            <td th:text="${user.getAddress()}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
@@ -486,9 +506,51 @@
                                  data-space-between="0" data-speed="1000" data-autoplay-delay="5000">
 
                                 <!-- Slides -->
-                                <div class="swiper-wrapper">
-                                    <article th:replace="layout::product_item_big"></article>
-                                </div> <!-- end of swiper-wrapper -->
+                                <div class="swiper-wrapper" style="transform: translate3d(-4050px, 0px, 0px); transition-duration: 1000ms;">
+                                    <!-- end of product-layout -->
+                                    <article class="swiper-slide product-layout" style="width: 405px;" th:each="product:${products}">
+                                        <div class="product-thumb">
+                                            <div class="product-inner">
+                                                <div class="product-image">
+                                                    <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                    <a href="single-product.html">
+                                                        <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
+                                                    </a>
+                                                    <div class="action-links">
+                                                        <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
+                                                        <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                        <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                        <a class="action-btn btn-quickview" data-bs-toggle="modal" data-bs-target="#product_quick_view" href="#" title="Quick View"><i class="pe-7s-search"></i></a>
+                                                    </div>
+                                                </div> <!-- end of product-image -->
+
+                                                <div class="product-caption">
+                                                    <div class="product-meta d-flex justify-content-between align-items-center">
+                                                        <div class="product-manufacturer">
+                                                            <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                        </div>
+                                                        <div class="product-ratings">
+                                                            <div class="rating-box">
+                                                                <ul class="rating d-flex">
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <h4 class="product-name"><a href="single-product.html" th:text="${product.getProduct_name()}"></a></h4>
+                                                    <p class="product-price">
+                                                        <span class="price-new" th:text="${product.getPrice()}"></span>
+                                                    </p>
+                                                </div><!-- end of product-caption -->
+                                            </div><!-- end of product-inner -->
+                                        </div><!-- end of product-thumb -->
+                                    </article> <!-- end of product-layout -->
+                                </div>
+                                <!-- end of swiper-wrapper -->
 
                                 <!-- Slider Navigation -->
                                 <div class="swiper-arrow next"><i class="fa fa-angle-right"></i></div>
@@ -531,6 +593,7 @@
                                                 </a>
                                             </div>
 
+
                                             <div class="post-content">
                                                 <h4 class="post-title">
                                                     <a href="blog-details.html">Arcu ut Enim Volutpat Curabitur
@@ -558,9 +621,9 @@
     </main>
     <!-- End of Main Content Wrapper -->
 
-    <!-- Start of Footer -->
-    <footer th:replace="layout::footer"></footer>
-    <!-- End of Footer -->
+    <div th:replace="~{layout::footer}"></div>
+
+    <div th:replace="~{layout::scroll_to_top}"></div>
 
     <!-- Quick View Content Start -->
     <div class="product-quick-view">
@@ -813,7 +876,6 @@
     </div>
     <!-- Quick View Content End -->
 
-    <div th:replace="layout::scroll_to_top"></div>
 </div>
 <!-- End of Whole Site Wrapper -->
 

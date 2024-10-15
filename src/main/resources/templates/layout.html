@@ -429,7 +429,7 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="blog-left-sidebar.html"><span>Blogs</span></a>
+                <li><a href="blog-right-sidebar.html"><span>Blogs</span></a>
                 </li>
                 <li><a href="about.html"><span>About Us</span></a></li>
                 <li><a href="contact.html"><span>Contact Us</span></a></li>
@@ -439,19 +439,19 @@
 </div>
 <!-- End of Main and Mobile Navigation -->
 
-<!--Product Layout--><article th:fragment="product_item_big"
-        class="product-layout col-6 col-sm-6 col-md-4 col-lg-4">
+<!--Product Layout-->
+<article th:fragment="product_item_big(product)"
+         class="product-layout col-6 col-sm-6 col-md-4 col-lg-4">
     <div class="product-thumb">
         <div class="product-inner">
             <div class="product-image">
                 <div class="label-product label-sale">-20%
                 </div>
-                <div class="label-product label-new">New
+                <div class="label-product label-new"> [[${product.getTitle()}]]
                 </div>
                 <a href="single-product.html">
                     <img src="assets/images/products/new/product-1.jpg"
-                         alt="Compete Track Tote"
-                         title="Compete Track Tote">
+                         th:alt="${product.}">
                 </a>
                 <div class="action-links">
                     <a class="action-btn btn-cart" href="#"
