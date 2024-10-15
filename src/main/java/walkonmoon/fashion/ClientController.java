@@ -16,14 +16,14 @@ public class ClientController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List <User> users = userService.getAll();
+        List <User> users = userService.getListUser();
         model.addAttribute("users", users);
         return "index";
     }
 
     @GetMapping("/index.html")
     public String indexHtml(Model model) {
-        List<User> users = userService.getAll(); // Fetch all users
+        List<User> users = userService.getListUser(); // Fetch all users
         model.addAttribute("users", users);
         return "index";
     }
