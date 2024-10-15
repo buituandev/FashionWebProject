@@ -27,12 +27,6 @@ public class AdminController {
     @Autowired
     private CategoryService categoryService;
 
-//    public AdminController(UserService userService, ProductService productService) {
-//        this.userService = userService;
-//        this.productService = productService;
-//    }
-
-
     @GetMapping("/index.html")
     public String dashboard() {
         return "admin/index";
@@ -79,7 +73,7 @@ public class AdminController {
         return "admin/user-management";
     }
 
-    @PostMapping("/products/save")
+    @PostMapping("/eco-products/save")
     public String saveProduct(Product product, Model model) {
         productService.saveProduct(product);
         return "redirect:/admin/eco-products.html";
