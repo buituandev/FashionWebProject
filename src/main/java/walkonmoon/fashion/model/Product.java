@@ -1,7 +1,6 @@
 package walkonmoon.fashion.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
 
 import java.util.Date;
 
@@ -13,7 +12,7 @@ public class Product {
     @Column(name="id")
     private int id;
     @Column(name="product_name")
-    private String product_name;
+    public String product_name;
     @Column(name="category_id")
     private int category_id;
     @Column(name="stock")
@@ -28,8 +27,8 @@ public class Product {
     private String SKU;
     @Column(name="long_description")
     private String long_description;
-    @Column(name="image_collection_id")
-    private int image_collection_id;
+    @Column(name="image_collection_url")
+    private String image_collection_url;
 
     @Column(name = "price")
     private int price;
@@ -70,8 +69,8 @@ public class Product {
         this.long_description = longDescription;
     }
 
-    public void setImage_collection_url(int image_collection_url) {
-        this.image_collection_id = image_collection_url;
+    public void setImage_collection_url(String image_collection_url) {
+        this.image_collection_url = image_collection_url;
     }
 
     public int getPrice() {
@@ -117,8 +116,8 @@ public class Product {
         return long_description;
     }
 
-    public int getImage_collection_id() {
-        return image_collection_id;
+    public String getImage_collection_url() {
+        return image_collection_url;
     }
 
     @Override
@@ -133,7 +132,7 @@ public class Product {
                 ", update_date=" + update_date +
                 ", SKU='" + SKU + '\'' +
                 ", long_description='" + long_description + '\'' +
-                ", image_collection_id=" + image_collection_id +
+                ", image_collection_id=" + image_collection_url +
                 ", price=" + price +
                 '}';
     }
