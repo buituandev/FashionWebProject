@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th = "http://thymeleaf.org" >
+<html lang="en" xmlns:layout="http://www.thymeleaf/layout"
+      xmlns:th = "http://www.thymeleaf.org" >
 <head th:fragment = "head">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title layout:title-pattern="${CONTENT_TITLE} - ${LAYOUT_TITLE}">Chroma Admin</title>
+    <title th:text="${web_title}">Chroma Admin</title>
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/PEBONAMINI.png">
     <!-- chartist CSS -->
 

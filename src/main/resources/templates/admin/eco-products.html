@@ -86,7 +86,6 @@
                                 <th>Short Description</th>
                                 <th>Updated Date</th>
                                 <th>SKU</th>
-                                <th>Long Description</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -102,7 +101,6 @@
                                 <td th:text="${product.getShort_description()}"></td>
                                 <td th:text="${product.getUpdate_date()}"></td>
                                 <td th:text="${product.getSKU()}"></td>
-                                <td th:text="${product.getLong_description()}"></td>
                                 <td><a href="javascript:void(0)" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
                             </tr>
                             </tbody>
