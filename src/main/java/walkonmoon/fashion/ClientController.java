@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import walkonmoon.fashion.model.Product;
-
 import walkonmoon.fashion.model.User;
-import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
 import java.util.List;
@@ -16,23 +13,18 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private UserService userService;
-    private ProductService productService;
 
     @GetMapping("/")
     public String index(Model model) {
-        List <User> users = userService.getAll();
+        List <User> users = userService.getListUser();
         model.addAttribute("users", users);
-//        List<Product> products = productService.getAll();
-//        model.addAttribute("products", products);
         return "index";
     }
 
     @GetMapping("/index.html")
     public String indexHtml(Model model) {
-        List <User> users = userService.getAll();
+        List<User> users = userService.getListUser(); // Fetch all users
         model.addAttribute("users", users);
-//        List<Product> products = productService.getAll();
-//        model.addAttribute("products", products);
         return "index";
     }
 
@@ -151,8 +143,6 @@ public class ClientController {
 
     @GetMapping("compare.html")
     public String compareHtml(){return "compare";}
-    @GetMapping("upload.html")
-    public String uploadHtml(){return "upload";}
 
 
 }

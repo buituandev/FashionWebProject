@@ -1,14 +1,24 @@
 package walkonmoon.fashion.service;
 
-import walkonmoon.fashion.dao.ProductDAO;
+import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.Product;
-import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.repository.ProductRepository;
 
 import java.util.List;
 
-public interface ProductService {
-    List<Product> getAll();
-    Product getById(int id);
-    void add(Product product);
-    void delete(int id);
+@Service
+public class ProductService {
+    private final ProductRepository proRepo;
+
+    public ProductService(ProductRepository proRepo) {
+        this.proRepo = proRepo;
+    }
+
+    public List<Product> getListProducts(){
+        return (List<Product>) proRepo.findAll();
+    }
+
+    public void saveProduct(Product product){
+        proRepo.save(product);
+    }
 }
