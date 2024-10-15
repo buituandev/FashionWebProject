@@ -7,29 +7,6 @@
     <meta name="description" content="">
     <meta name="robots" content="noindex, follow"/>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "AIzaSyAaY18TUcgAAwD3ieJnzRafTYUYiUqJBUM",
-            authDomain: "chromashop.firebaseapp.com",
-            projectId: "chromashop",
-            storageBucket: "chromashop.appspot.com",
-            messagingSenderId: "18106330681",
-            appId: "1:18106330681:web:fb365e79ef577f8ac0e7e8",
-            measurementId: "G-P6032P8EJL"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-    </script>
     <!-- favicon
     ============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/PEBONA MINI.png">
@@ -462,19 +439,19 @@
 </div>
 <!-- End of Main and Mobile Navigation -->
 
-<!--Product Layout--><article th:fragment="product_item_big()"
-        class="product-layout col-6 col-sm-6 col-md-4 col-lg-4">
+<!--Product Layout-->
+<article th:fragment="product_item_big(product)"
+         class="product-layout col-6 col-sm-6 col-md-4 col-lg-4">
     <div class="product-thumb">
         <div class="product-inner">
             <div class="product-image">
                 <div class="label-product label-sale">-20%
                 </div>
-                <div class="label-product label-new">New
+                <div class="label-product label-new"> [[${product.getTitle()}]]
                 </div>
                 <a href="single-product.html">
                     <img src="assets/images/products/new/product-1.jpg"
-                         alt="Compete Track Tote"
-                         title="Complete Track Tote">
+                         th:alt="${product.}">
                 </a>
                 <div class="action-links">
                     <a class="action-btn btn-cart" href="#"
@@ -539,7 +516,7 @@
         </div><!-- end of product-inner -->
     </div><!-- end of product-thumb -->
 </article>
-<article th:fragment="product_item_small()" class="swiper-slide product-layout">
+<article th:fragment="product_item_small" class="swiper-slide product-layout">
     <div class="product-thumb">
         <div class="product-inner">
             <div class="product-image">
@@ -571,7 +548,7 @@
                 <div
                         class="product-meta d-flex justify-content-between align-items-center">
                     <div class="product-manufacturer">
-                        <a href="#"></a>
+                        <a href="#">Graphic Corner</a>
                     </div>
                     <div class="product-ratings">
                         <div class="rating-box">
