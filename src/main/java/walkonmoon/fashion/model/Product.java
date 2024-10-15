@@ -31,6 +31,17 @@ public class Product {
     @Column(name="image_collection_id")
     private int image_collection_id;
 
+    public String getImage_collection_url() {
+        return image_collection_url;
+    }
+
+    public void setImage_collection_url(String image_collection_url) {
+        this.image_collection_url = image_collection_url;
+    }
+
+    @Column(name="image_collection_url")
+    private String image_collection_url;
+
     @Column(name = "price")
     private int price;
 

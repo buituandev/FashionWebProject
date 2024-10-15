@@ -1,5 +1,6 @@
 package walkonmoon.fashion.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.ProductRepository;
@@ -18,6 +19,7 @@ public class ProductService {
         return (List<Product>) proRepo.findAll();
     }
 
+    @Transactional
     public void saveProduct(Product product){
         proRepo.save(product);
     }

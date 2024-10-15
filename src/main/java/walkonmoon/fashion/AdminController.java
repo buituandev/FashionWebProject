@@ -76,6 +76,6 @@ public class AdminController {
     @PostMapping("/eco-products/save")
     public String saveProduct(Product product, Model model) {
         productService.saveProduct(product);
-        return "redirect:/admin/eco-products.html";
+        return "redirect:/eco-products.html";
     }
 }
