@@ -162,5 +162,9 @@ public class ClientController {
     @GetMapping("compare.html")
     public String compareHtml(){return "compare";}
 
+    @GetMapping("/upload.html")
+    public String uploadHtml(){
+        return "upload";
+    }
 
 }
