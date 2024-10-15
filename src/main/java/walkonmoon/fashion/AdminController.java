@@ -13,6 +13,9 @@ import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -59,6 +62,12 @@ public class AdminController {
         return "admin/eco-products-edit";
     }
 
+    @GetMapping("/category-add.html")
+    public String formCategory(Model model) {
+        model.addAttribute("category", new Category());
+        return "admin/category-add";
+    }
+
     @GetMapping("/category.html")
     public String categoryManagement(Model model) {
         List<Category> categories = categoryService.getListCategories();
@@ -75,7 +84,25 @@ public class AdminController {
 
     @PostMapping("/eco-products/save")
     public String saveProduct(Product product, Model model) {
+        Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        product.setUpdate_date(updatedNow);
+        product.setImage_collection_url("assets/images/products/new/product-10.jpg");
         productService.saveProduct(product);
-        return "redirect:/eco-products.html";
+        return "redirect:/admin/eco-products.html";
+    }
+
+    @PostMapping("/category/save")
+    public String saveCategory(Category category, Model model) {
+        Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        category.setCreateDate(updatedNow);
+        categoryService.saveCategory(category);
+        return "redirect:/admin/category.html";
+    }
+
+    @GetMapping("/category/edit")
+    public String editCategory(Integer id, Model model) {
+        Category category = categoryService.getCategoryById(id);
+        model.addAttribute("category", category);
+        return "admin/category-edit";
     }
 }
