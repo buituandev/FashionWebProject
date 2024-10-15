@@ -66,7 +66,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/eco-products/save}" method="post" th:object="${product}">
+                            <form th:action="@{/admin/eco-products/save}" method="post" th:object="${product}">
                                 <div class="form-body">
                                     <h5 class="card-title">About Product</h5>
                                     <hr>
@@ -97,7 +97,17 @@
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Image ID</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" th:field="*{image_collection_id}" value="1" placeholder="price" aria-label="price" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                        </div>
 
                                         <!--/span-->
 <!--                                        <div class="col-md-6">-->
@@ -125,7 +135,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1"><i class="ti-money"></i></span>
                                                     </div>
-                                                    <input type="text" class="form-control" th:field="*{price}" placeholder="price" aria-label="price" aria-describedby="basic-addon1">
+                                                    <input type="number" class="form-control" th:field="*{price}" placeholder="price" aria-label="price" aria-describedby="basic-addon1">
                                                 </div>
                                             </div>
                                         </div>
@@ -137,7 +147,7 @@
                                                     <div class="input-group-prepend">
 <!--                                                        <span class="input-group-text" id="basic-addon2"><i class="ti-cut"></i></span>-->
                                                     </div>
-                                                    <input type="text" class="form-control" th:field="*{stock}" placeholder="Discount" aria-label="Discount" aria-describedby="basic-addon2">
+                                                    <input type="number" class="form-control" th:field="*{stock}" placeholder="Discount" aria-label="Discount" aria-describedby="basic-addon2">
                                                 </div>
                                             </div>
                                         </div>
@@ -147,7 +157,7 @@
                                     <div class="row">
                                         <div class="col-md-12 ">
                                             <div class="form-group">
-                                                <textarea class="form-control" rows="4">Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. but the majority have suffered alteration in some form, by injected humour</textarea>
+                                                <textarea class="form-control" th:field="*{long_description}" rows="4"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -167,7 +177,7 @@
                                         <!--/span-->
                                         <div class="col-md-3">
                                             <h5 class="card-title m-t-20">Upload Image</h5>
-                                            <div class="product-img"> <img src="../assets/images/gallery/chair.jpg">
+                                            <div class="product-img"> <img src="../assets/images/products/new/product-10.jpg" th:field="*{image_collection_url}">
                                                 <div class="pro-img-overlay"><a href="javascript:void(0)" class="bg-info"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="bg-danger"><i class="ti-trash"></i></a></div>
                                                 <br/>
                                                 <div class="fileupload btn btn-info waves-effect waves-light text-white"><span><i class="ion-upload m-r-5"></i>Upload Anonther Image</span>
