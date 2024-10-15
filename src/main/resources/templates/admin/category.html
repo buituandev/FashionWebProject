@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
 
 <head th:replace = "admin/admin_layout :: head"></head>
@@ -77,13 +77,18 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Description</th>
-                                <th>Quantity</th>
                                 <th>Create Date</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-
+                            <tr th:each="category : ${categories}">
+                                <td th:text="${category.getId()}"></td>
+                                <td th:text="${category.getName()}"></td>
+                                <td th:text="${category.getDescription()}"></td>
+                                <td th:text="${category.getCreateDate()}"></td>
+                                <td><a href="javascript:void(0)" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

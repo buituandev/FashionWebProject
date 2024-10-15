@@ -1,12 +1,19 @@
 package walkonmoon.fashion.service;
 
+import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.repository.UserRepository;
 
 import java.util.List;
+@Service
+public class UserService {
+   private final UserRepository userRepo;
 
-public interface UserService {
-    List<User> getAll();
-    User getById(int id);
-    void add(User user);
-    void delete(int id);
+    public UserService(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
+
+    public List<User> getListUser() {
+       return (List<User>) userRepo.findAll();
+   }
 }

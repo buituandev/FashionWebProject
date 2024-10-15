@@ -17,27 +17,27 @@
 
     <div th:replace="~{layout::headerhp}"></div>
     <div th:replace="~{layout::nav}"></div>
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>DOB</th>
-            <th>Address</th>
-            <th>Deleted</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.getId()}"></td>
-            <td th:text="${user.getFull_name()}"></td>
-            <td th:text="${user.getGender()}"></td>
-            <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td> <!-- Format date -->
-            <td th:text="${user.getAddress()}"></td>
-        </tr>
-        </tbody>
-    </table>
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Gender</th>-->
+<!--            <th>DOB</th>-->
+<!--            <th>Address</th>-->
+<!--            <th>Deleted</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="user : ${users}">-->
+<!--            <td th:text="${user.getId()}"></td>-->
+<!--            <td th:text="${user.getFull_name()}"></td>-->
+<!--            <td th:text="${user.getGender()}"></td>-->
+<!--            <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td> &lt;!&ndash; Format date &ndash;&gt;-->
+<!--            <td th:text="${user.getAddress()}"></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
