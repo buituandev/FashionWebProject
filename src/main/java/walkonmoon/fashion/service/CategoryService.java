@@ -27,8 +27,8 @@ public class CategoryService {
 
     @Transactional
     public Category getCategoryById(int id){
-        Optional<Category> categoryID = categoryRepository.findById(id);
-        return categoryID.orElse(null);
+        Optional<Category> category = categoryRepository.findById(id);
+        return category.orElse(null);
     }
 
     @Transactional
