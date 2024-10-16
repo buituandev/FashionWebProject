@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import walkonmoon.fashion.model.Category;
@@ -103,6 +104,12 @@ public class AdminController {
     public String editCategory(Integer id, Model model) {
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
-        return "admin/category-edit";
+        return "/category/category-edit";
+    }
+
+    @GetMapping("/category/category-delete")
+    public String deleteCategory(@PathVariable("id") Integer id){
+        categoryService.deleteCategoryById(id);
+        return "redirect:/admin/category.html";
     }
 }

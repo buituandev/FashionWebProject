@@ -30,4 +30,9 @@ public class CategoryService {
         Optional<Category> categoryID = categoryRepository.findById(id);
         return categoryID.orElse(null);
     }
+
+    @Transactional
+    public void deleteCategoryById(int id){
+        categoryRepository.deleteById(id);
+    }
 }
