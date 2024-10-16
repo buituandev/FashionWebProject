@@ -22,6 +22,7 @@ public class FileUploadController {
         this.firebaseConfig = firebaseConfig;
     }
 
+    // Single file upload
     @PostMapping("/upload")
     public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
@@ -29,13 +30,37 @@ public class FileUploadController {
         }
 
         try (InputStream inputStream = file.getInputStream()) {
-            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-            Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());
-            blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
-            String fileUrl = String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media", firebaseConfig.getBucketName(), fileName);
+            String fileUrl = getFileName(file, inputStream);
             return new ResponseEntity<>(fileUrl, HttpStatus.OK);
         } catch (IOException e) {
             return new ResponseEntity<>("Failed to upload file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    // Multiple file upload
+    @PostMapping("/uploadMultiple")
+    public ResponseEntity<String> handleMultipleFileUpload(@RequestParam("files") MultipartFile[] files) {
+        if (files.length == 0) {
+            return new ResponseEntity<>("Files are empty", HttpStatus.BAD_REQUEST);
+        }
+
+        StringBuilder fileUrls = new StringBuilder();
+        for (MultipartFile file : files) {
+            try (InputStream inputStream = file.getInputStream()) {
+                String fileUrl = getFileName(file, inputStream);
+                fileUrls.append(fileUrl).append("\n");
+            } catch (IOException e) {
+                return new ResponseEntity<>("Failed to upload files", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<>(fileUrls.toString(), HttpStatus.OK);
+    }
+
+    private String getFileName(MultipartFile file, InputStream inputStream) {
+        String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+        Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());
+        blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
+        return String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media", firebaseConfig.getBucketName(), fileName);
     }
 }

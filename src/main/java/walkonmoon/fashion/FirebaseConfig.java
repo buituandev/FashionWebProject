@@ -16,6 +16,7 @@ import java.io.InputStream;
 public class FirebaseConfig {
 
     private final ResourceLoader resourceLoader;
+    private final String location = "classpath:chroma-config.json";
 
     public FirebaseConfig(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
@@ -23,11 +24,11 @@ public class FirebaseConfig {
 
     @PostConstruct
     public void initialize() throws IOException {
-        Resource resource = resourceLoader.getResource("classpath:chroma-config.json");
+        Resource resource = resourceLoader.getResource(location);
         try (InputStream serviceAccount = resource.getInputStream()) {
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket("chromashop.appspot.com")
+                    .setStorageBucket(getBucketName())
                     .build();
 
             if (FirebaseApp.getApps().isEmpty()) {
