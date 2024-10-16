@@ -87,8 +87,8 @@
                                 <td th:text="${category.getName()}"></td>
                                 <td th:text="${category.getDescription()}"></td>
                                 <td th:text="${category.getCreateDate()}"></td>
-                                <td><a th:href="@{'/category/category-edit'}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
-                                    <a th:href="@{'/admin/category/category-delete'}" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
+                                <td><a th:href="@{'/admin/category/category-edit/' + ${category.getId()}}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
+                                    <a th:href="@{'/admin/category/category-delete/' + ${category.getId()}}" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
                             </tr>
                             </tbody>
                         </table>

@@ -100,14 +100,14 @@ public class AdminController {
         return "redirect:/admin/category.html";
     }
 
-    @GetMapping("/category/edit")
-    public String editCategory(Integer id, Model model) {
+    @GetMapping("/category/category-edit/{id}")
+    public String editCategory(@PathVariable("id") Integer id, Model model) {
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
-        return "/category/category-edit";
+        return "admin/category-add";
     }
 
-    @GetMapping("/category/category-delete")
+    @GetMapping("/category/category-delete/{id}")
     public String deleteCategory(@PathVariable("id") Integer id){
         categoryService.deleteCategoryById(id);
         return "redirect:/admin/category.html";
