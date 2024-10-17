@@ -95,7 +95,6 @@ public class AdminController {
     public String saveProduct(@ModelAttribute Product product, Model model, @RequestParam("files") MultipartFile file, RedirectAttributes redirectAttributes) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         product.setUpdate_date(updatedNow);
-
         Product existPro = productService.getProductById(product.getId());
         if(existPro != null) {
             if(!file.isEmpty()){

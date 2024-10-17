@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout::head('Chroma - Product Details')">
+<head th:object="${product}" th:replace="layout::head(${product.getProduct_name()})">
 </head>
-<body>
+<body th:object="${product}">
 
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
@@ -25,7 +25,7 @@
                         <nav class="breadcrumb">
                             <a class="breadcrumb-item" href="index.html">Home</a>
                             <a class="breadcrumb-item" href="shop-grid.html">Shop</a>
-                            <span class="breadcrumb-item active">Product name</span>
+                            <span class="breadcrumb-item active" th:text="${product.getProduct_name()}">Product name</span>
                         </nav>
                     </div>
                 </div> <!-- end of row -->
@@ -53,8 +53,8 @@
                                                             <!-- Slides -->
                                                             <div class="swiper-wrapper">
                                                                 <figure class="swiper-slide">
-                                                                    <a href="assets/images/products/single/product-1.jpg" data-size="600x600">
-                                                                        <img src="assets/images/products/single/product-1.jpg" alt="Product Image">
+                                                                    <a th:href="${product.getImage_collection_url()}" data-size="600x600">
+                                                                        <img th:src="${product.getImage_collection_url()}" alt="Product Image">
                                                                         <div class="image-overlay"><i class="fa fa-search-plus"></i></div>
                                                                     </a>
                                                                     <figcaption class="visually-hidden">
@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                             <div class="product-details">
-                                                <h3 class="product-name">Compete Track Tote</h3>
+                                                <h3 class="product-name" th:text="${product.getProduct_name()}"></h3>
                                                 <div class="product-ratings d-flex">
                                                     <ul class="rating d-flex me-4">
                                                         <li><i class="ion ion-md-star-outline"></i></li>
@@ -163,11 +163,11 @@
                                                 <div class="product-price">
                                                     <p class="d-flex align-items-center">
                                                         <span class="price-old">$54.65</span>
-                                                        <span class="price-new">$43.72</span>
+                                                        <span class="price-new" th:text="${product.getPrice()}">$43.72</span>
                                                         <span class="price-discount">-20%</span>
                                                     </p>
                                                 </div>
-                                                <div class="product-description">
+                                                <div class="product-description" th:text="${product.getShort_description()}">
 													<p>Regular fit, round neckline, long sleeves. 100% cotton, brushed inner side for extra comfort.</p>
                                                 </div>
                                                 <div class="product-actions">
@@ -248,7 +248,7 @@
                                                 </ul>
                                                 <div class="tab-content">
                                                     <div class="tab-pane fade show active" id="tab_description" role="tabpanel" aria-labelledby="nav_desctiption">
-                                                        <p>Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime. Regular fit, round neckline, long sleeves. 100% cotton, brushed inner side for extra comfort.</p>
+                                                        <p th:text="${product.getLong_description()}">Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime. Regular fit, round neckline, long sleeves. 100% cotton, brushed inner side for extra comfort.</p>
                                                     </div>
                                                     <div class="tab-pane fade" id="tab_product_details" role="tabpanel" aria-labelledby="nav_product_details">
                                                     	<div class="product-tab-details d-flex justify-content-center align-content-center">

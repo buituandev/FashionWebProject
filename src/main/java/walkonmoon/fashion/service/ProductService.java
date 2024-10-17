@@ -2,10 +2,10 @@ package walkonmoon.fashion.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +31,8 @@ public class ProductService {
         Optional<Product> product = proRepo.findById(id);
         return product.orElse(null);
     }
-
     @Transactional
-    public void deleteProductbyId(int id){
-        proRepo.deleteById(id);
+    public List<Product> findByCategoryId(int categoryID){
+        return proRepo.findByCategoryId(categoryID);
     }
 }

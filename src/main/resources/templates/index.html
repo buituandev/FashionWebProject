@@ -171,19 +171,19 @@
                         <ul class="nav nav-pills justify-content-center" id="our_categories" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="nav_shop_new" data-bs-toggle="pill" href="#shop_new"
-                                   role="tab" aria-controls="shop_new" aria-selected="true">Shop New</a>
+                                   role="tab" aria-controls="shop_new" aria-selected="true">Sneakers</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_shoes" data-bs-toggle="pill" href="#shop_shoes"
-                                   role="tab" aria-controls="shop_shoes" aria-selected="false">Sneakers</a>
+                                   role="tab" aria-controls="shop_shoes" aria-selected="false">Backpacks</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_bags" data-bs-toggle="pill" href="#shop_bags"
-                                   role="tab" aria-controls="shop_bags" aria-selected="false">Backpacks</a>
+                                   role="tab" aria-controls="shop_bags" aria-selected="false">Glasses</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_glasses" data-bs-toggle="pill" href="#shop_glasses"
-                                   role="tab" aria-controls="shop_glasses" aria-selected="false">Sunglasses</a>
+                                   role="tab" aria-controls="shop_glasses" aria-selected="false">Accessories</a>
                             </li>
                         </ul> <!-- end of nav -->
 
@@ -197,16 +197,16 @@
 
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
-                                            <article class="swiper-slide product-layout">
+                                            <article class="swiper-slide product-layout" th:each="fp1 : ${filteredProductByCategory1}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
                                                             <div class="label-product label-sale">-7%</div>
-                                                            <div class="label-product label-new">New</div>
+                                                            <div class="label-product label-new" th:text="${fp1.getTitle()}"></div>
                                                             <a href="single-product.html">
-                                                                <img src="assets/images/products/new/product-7.jpg"
-                                                                     alt="Strive Shoulder Pack"
-                                                                     title="Strive Shoulder Pack">
+                                                                <img th:src="${fp1.getImage_collection_url()}"
+                                                                     th:alt="${fp1.getProduct_name()}"
+                                                                     th:title="${fp1.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
                                                                 <a class="action-btn btn-cart" href="#"
@@ -230,7 +230,7 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#">Graphic Corner</a>
+                                                                    <a href="#" th:text="${fp1.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -255,11 +255,10 @@
                                                                 </div>
                                                             </div>
                                                             <h4 class="product-name"><a
-                                                                    href="single-product.html">Strive Shoulder
-                                                                Pack</a></h4>
+                                                                    href="single-product.html" th:text="${fp1.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-old">$76.40</span>
-                                                                <span class="price-new">$71.05</span>
+                                                                <span class="price-old" th:text="${fp1.getPrice()}" >$76.40</span>
+
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -284,16 +283,16 @@
 
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
-                                            <article class="swiper-slide product-layout">
+                                            <article class="swiper-slide product-layout" th:each="fp2 : ${filteredProductByCategory2}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
                                                             <div class="label-product label-sale">-20%</div>
-                                                            <div class="label-product label-new">New</div>
+                                                            <div class="label-product label-new" th:text="${fp2.getTitle()}"></div>
                                                             <a href="single-product.html">
-                                                                <img src="assets/images/products/new/product-9.jpg"
-                                                                     alt="Compete Track Tote"
-                                                                     title="Compete Track Tote">
+                                                                <img th:src="${fp2.getImage_collection_url()}"
+                                                                     th:alt="${fp2.getProduct_name()}"
+                                                                     th:title="${fp2.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
                                                                 <a class="action-btn btn-cart" href="#"
@@ -317,7 +316,7 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#">Studio Design</a>
+                                                                    <a href="#" th:text="${fp2.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -342,16 +341,16 @@
                                                                 </div>
                                                             </div>
                                                             <h4 class="product-name"><a
-                                                                    href="single-product.html">Compete Track
-                                                                Tote</a></h4>
+                                                                    href="single-product.html" th:text="${fp2.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-old">$54.65</span>
-                                                                <span class="price-new">$43.72</span>
+                                                                <span class="price-old" th:text="${fp2.getPrice()}"></span>
+                                                                <span class="price-new" th:text="${fp2.getPrice()}"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
                                                 </div><!-- end of product-thumb -->
-                                            </article> <!-- end of product-layout -->
+                                            </article>
+                                             end of product-layout
 
                                         </div> <!-- end of swiper-wrapper -->
 
@@ -371,15 +370,15 @@
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
 
-                                            <article class="swiper-slide product-layout">
+                                            <article class="swiper-slide product-layout" th:each="fp3 : ${filteredProductByCategory3}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
-                                                            <div class="label-product label-new">New</div>
+                                                            <div class="label-product label-new" th:text="${fp3.getTitle()}"></div>
                                                             <a href="single-product.html">
-                                                                <img src="assets/images/products/new/product-8.jpg"
-                                                                     alt="Wayfarer Messenger Bag"
-                                                                     title="Wayfarer Messenger Bag">
+                                                                <img th:src="${fp3.getImage_collection_url()}"
+                                                                     th:alt="${fp3.getProduct_name()}"
+                                                                     th:title="${fp3.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
                                                                 <a class="action-btn btn-cart" href="#"
@@ -403,7 +402,7 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#">Studio Design</a>
+                                                                    <a href="#" th:text="${fp3.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -428,10 +427,9 @@
                                                                 </div>
                                                             </div>
                                                             <h4 class="product-name"><a
-                                                                    href="single-product.html">Wayfarer Messenger
-                                                                Bag</a></h4>
+                                                                    href="single-product.html" th:text="${fp3.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-new">$65.40</span>
+                                                                <span class="price-new" th:text="${fp3.getPrice()}"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -456,7 +454,72 @@
 
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
-                                            <article th:replace="layout::product_item_small"></article>
+                                            <article class="swiper-slide product-layout" th:each="fp4 : ${filteredProductByCategory4}">
+                                                <div class="product-thumb">
+                                                    <div class="product-inner">
+                                                        <div class="product-image">
+                                                            <div class="label-product label-new" th:text="${fp4.getTitle()}"></div>
+                                                            <a href="single-product.html">
+                                                                <img th:src="${fp4.getImage_collection_url()}"
+                                                                     th:alt="${fp4.getProduct_name()}"
+                                                                     th:title="${fp4.getProduct_name()}">
+                                                            </a>
+                                                            <div class="action-links">
+                                                                <a class="action-btn btn-cart" href="#"
+                                                                   title="Add to Cart"><i
+                                                                        class="pe-7s-shopbag"></i></a>
+                                                                <a class="action-btn btn-wishlist" href="#"
+                                                                   title="Add to Wishlist"><i
+                                                                        class="pe-7s-like"></i></a>
+                                                                <a class="action-btn btn-compare" href="#"
+                                                                   title="Add to Compare"><i
+                                                                        class="pe-7s-refresh-2"></i></a>
+                                                                <a class="action-btn btn-quickview"
+                                                                   data-bs-toggle="modal"
+                                                                   data-bs-target="#product_quick_view" href="#"
+                                                                   title="Quick View"><i
+                                                                        class="pe-7s-search"></i></a>
+                                                            </div>
+                                                        </div> <!-- end of product-image -->
+
+                                                        <div class="product-caption">
+                                                            <div
+                                                                    class="product-meta d-flex justify-content-between align-items-center">
+                                                                <div class="product-manufacturer">
+                                                                    <a href="#" th:text="${fp4.getProduct_name()}"></a>
+                                                                </div>
+                                                                <div class="product-ratings">
+                                                                    <div class="rating-box">
+                                                                        <ul class="rating d-flex">
+                                                                            <li><i
+                                                                                    class="ion ion-md-star-outline"></i>
+                                                                            </li>
+                                                                            <li><i
+                                                                                    class="ion ion-md-star-outline"></i>
+                                                                            </li>
+                                                                            <li><i
+                                                                                    class="ion ion-md-star-outline disabled"></i>
+                                                                            </li>
+                                                                            <li><i
+                                                                                    class="ion ion-md-star-outline disabled"></i>
+                                                                            </li>
+                                                                            <li><i
+                                                                                    class="ion ion-md-star-outline disabled"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h4 class="product-name"><a
+                                                                    href="single-product.html" th:text="${fp4.getProduct_name()}"></a></h4>
+                                                            <p class="product-price">
+                                                                <span class="price-new" th:text="${fp4.getPrice()}"></span>
+                                                            </p>
+                                                        </div><!-- end of product-caption -->
+                                                    </div><!-- end of product-inner -->
+                                                </div><!-- end of product-thumb -->
+                                            </article>
+
 
                                         </div> <!-- end of swiper-wrapper -->
 
@@ -508,6 +571,7 @@
                                 <!-- Slides -->
                                 <div class="swiper-wrapper" style="transform: translate3d(-4050px, 0px, 0px); transition-duration: 1000ms;">
                                     <!-- end of product-layout -->
+<!--                                    product layout big-->
                                     <article class="swiper-slide product-layout" style="width: 405px;" th:each="product:${products}">
                                         <div class="product-thumb">
                                             <div class="product-inner">
