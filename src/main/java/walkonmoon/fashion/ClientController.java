@@ -21,10 +21,16 @@ public class ClientController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List <User> users = userService.getListUser();
-        model.addAttribute("users", users);
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
+        List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
+        model.addAttribute("filteredProductByCategory1", filteredProductByCategory1);
+        List<Product> filteredProductByCategory2 = productService.findByCategoryId(2);
+        model.addAttribute("filteredProductByCategory2", filteredProductByCategory2);
+        List<Product> filteredProductByCategory3 = productService.findByCategoryId(3);
+        model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
+        List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
+        model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
         return "index";
     }
 
@@ -40,10 +46,16 @@ public class ClientController {
 
     @GetMapping("/index.html")
     public String indexHtml(Model model) {
-        List<User> users = userService.getListUser(); // Fetch all users
-        model.addAttribute("users", users);
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
+        List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
+        model.addAttribute("filteredProductByCategory1", filteredProductByCategory1);
+        List<Product> filteredProductByCategory2 = productService.findByCategoryId(2);
+        model.addAttribute("filteredProductByCategory2", filteredProductByCategory2);
+        List<Product> filteredProductByCategory3 = productService.findByCategoryId(3);
+        model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
+        List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
+        model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
         return "index";
     }
 
@@ -58,9 +70,6 @@ public class ClientController {
         model.addAttribute("products", products);
         return "shop-grid";
     }
-
-//    @GetMapping("/shop-grid.html{catid}")
-//    public String shopGridFilter(){return }
 
     @GetMapping("/product-detail")
     public String productDetail() {

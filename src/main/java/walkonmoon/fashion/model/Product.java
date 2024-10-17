@@ -13,8 +13,9 @@ public class Product {
     private int id;
     @Column(name="product_name")
     public String product_name;
+    // Rename category_id to categoryId
     @Column(name="category_id")
-    private int category_id;
+    private int categoryId; // Changed here
     @Column(name="stock")
     private int stock;
     @Column(name="title")
@@ -54,7 +55,7 @@ public class Product {
     }
 
     public void setCategory_id(int categoryId) {
-        this.category_id = categoryId;
+        this.categoryId = categoryId;
     }
 
     public void setStock(int stock) {
@@ -97,7 +98,7 @@ public class Product {
     }
 
     public int getCategory_id() {
-        return category_id;
+        return categoryId;
     }
 
     public int getId() {
@@ -137,7 +138,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", product_name='" + product_name + '\'' +
-                ", category_id=" + category_id +
+                ", category_id=" + categoryId +
                 ", stock=" + stock +
                 ", title='" + title + '\'' +
                 ", short_description='" + short_description + '\'' +
