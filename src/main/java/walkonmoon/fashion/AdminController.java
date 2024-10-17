@@ -95,20 +95,36 @@ public class AdminController {
     public String saveProduct(@ModelAttribute Product product, Model model, @RequestParam("files") MultipartFile file, RedirectAttributes redirectAttributes) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         product.setUpdate_date(updatedNow);
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "File is empty");
-            return "redirect:/admin/eco-products-edit.html";
+        Product existPro = productService.getProductById(product.getId());
+        if(existPro != null) {
+            if(!file.isEmpty()){
+                try (InputStream inputStream = file.getInputStream()) {
+                    String fileUrl = getFileName(file, inputStream);
+                    product.setImage_collection_url(fileUrl);
+                } catch (IOException e) {
+                    redirectAttributes.addFlashAttribute("message", "Failed to upload file");
+                    return "redirect:/admin/eco-products-edit.html";
+                }
+            }else{
+                product.setImage_collection_url(existPro.getImage_collection_url());
+            }
+        }else{
+            if (file.isEmpty()) {
+                redirectAttributes.addFlashAttribute("message", "File is empty");
+                return "redirect:/admin/eco-products-edit.html";
+            }
+            try (InputStream inputStream = file.getInputStream()) {
+                String fileUrl = getFileName(file, inputStream);
+                product.setImage_collection_url(fileUrl);
+            } catch (IOException e) {
+                redirectAttributes.addFlashAttribute("message", "Failed to upload file");
+                return "redirect:/admin/eco-products-edit.html";
+            }
         }
-        try (InputStream inputStream = file.getInputStream()) {
-            String fileUrl = getFileName(file, inputStream);
-            product.setImage_collection_url(fileUrl);
-            productService.saveProduct(product);
-            redirectAttributes.addFlashAttribute("message", "Product saved successfully");
-            return "redirect:/admin/eco-products.html";
-        } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("message", "Failed to upload file");
-            return "redirect:/admin/eco-products-edit.html";
-        }
+
+        productService.saveProduct(product);
+        redirectAttributes.addFlashAttribute("message", "Product saved successfully");
+        return "redirect:/admin/eco-products.html";
     }
 
     @GetMapping("/category-add.html")
@@ -125,14 +141,14 @@ public class AdminController {
         return "redirect:/admin/category.html";
     }
 
-    @GetMapping("/category/category-edit/{id}")
+    @GetMapping("/category-edit/{id}")
     public String editCategory(@PathVariable("id") Integer id, Model model) {
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         return "admin/category-add";
     }
 
-    @GetMapping("/category/category-delete/{id}")
+    @GetMapping("/category-delete/{id}")
     public String deleteCategory(@PathVariable("id") Integer id){
         categoryService.deleteCategoryById(id);
         return "redirect:/admin/category.html";
