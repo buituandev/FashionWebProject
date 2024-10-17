@@ -165,7 +165,7 @@ public class AdminController {
 
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, Model model) {
-        productService.deleteProductbyId(id);
+        productService.deleteProductById(id);
         return "redirect:/admin/eco-products.html";
     }
 
