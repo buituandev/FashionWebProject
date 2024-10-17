@@ -203,7 +203,7 @@
                                                         <div class="product-image">
                                                             <div class="label-product label-sale">-7%</div>
                                                             <div class="label-product label-new" th:text="${fp1.getTitle()}"></div>
-                                                            <a href="single-product.html">
+                                                            <a th:href="@{'/single-product/' + ${fp1.getId()}}">
                                                                 <img th:src="${fp1.getImage_collection_url()}"
                                                                      th:alt="${fp1.getProduct_name()}"
                                                                      th:title="${fp1.getProduct_name()}">
@@ -254,8 +254,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a
-                                                                    href="single-product.html" th:text="${fp1.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp1.getId()}}" th:text="${fp1.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
                                                                 <span class="price-old" th:text="${fp1.getPrice()}" >$76.40</span>
 
@@ -289,7 +288,7 @@
                                                         <div class="product-image">
                                                             <div class="label-product label-sale">-20%</div>
                                                             <div class="label-product label-new" th:text="${fp2.getTitle()}"></div>
-                                                            <a href="single-product.html">
+                                                            <a th:href="@{'/single-product/' + ${fp2.getId()}}">
                                                                 <img th:src="${fp2.getImage_collection_url()}"
                                                                      th:alt="${fp2.getProduct_name()}"
                                                                      th:title="${fp2.getProduct_name()}">
@@ -340,8 +339,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a
-                                                                    href="single-product.html" th:text="${fp2.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp2.getId()}}" th:text="${fp2.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
                                                                 <span class="price-old" th:text="${fp2.getPrice()}"></span>
                                                                 <span class="price-new" th:text="${fp2.getPrice()}"></span>
@@ -375,7 +373,7 @@
                                                     <div class="product-inner">
                                                         <div class="product-image">
                                                             <div class="label-product label-new" th:text="${fp3.getTitle()}"></div>
-                                                            <a href="single-product.html">
+                                                            <a th:href="@{'/single-product/' + ${fp3.getId()}}">
                                                                 <img th:src="${fp3.getImage_collection_url()}"
                                                                      th:alt="${fp3.getProduct_name()}"
                                                                      th:title="${fp3.getProduct_name()}">
@@ -426,8 +424,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a
-                                                                    href="single-product.html" th:text="${fp3.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp3.getId()}}" th:text="${fp3.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
                                                                 <span class="price-new" th:text="${fp3.getPrice()}"></span>
                                                             </p>
@@ -459,7 +456,7 @@
                                                     <div class="product-inner">
                                                         <div class="product-image">
                                                             <div class="label-product label-new" th:text="${fp4.getTitle()}"></div>
-                                                            <a href="single-product.html">
+                                                            <a th:href="@{'/single-product/' + ${fp4.getId()}}">
                                                                 <img th:src="${fp4.getImage_collection_url()}"
                                                                      th:alt="${fp4.getProduct_name()}"
                                                                      th:title="${fp4.getProduct_name()}">
@@ -510,8 +507,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a
-                                                                    href="single-product.html" th:text="${fp4.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp4.getId()}}" th:text="${fp4.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
                                                                 <span class="price-new" th:text="${fp4.getPrice()}"></span>
                                                             </p>
@@ -577,7 +573,7 @@
                                             <div class="product-inner">
                                                 <div class="product-image">
                                                     <div class="label-product label-new" th:text="${product.getTitle()}"></div>
-                                                    <a href="single-product.html">
+                                                    <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                         <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
                                                     </a>
                                                     <div class="action-links">
@@ -605,7 +601,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h4 class="product-name"><a href="single-product.html" th:text="${product.getProduct_name()}"></a></h4>
+                                                    <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a></h4>
                                                     <p class="product-price">
                                                         <span class="price-new" th:text="${product.getPrice()}"></span>
                                                     </p>
