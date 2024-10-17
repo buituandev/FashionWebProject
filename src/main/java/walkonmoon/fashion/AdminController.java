@@ -92,7 +92,7 @@ public class AdminController {
     }
 
     @PostMapping("/eco-products/save")
-    public String saveProduct(@ModelAttribute Product product, Model model, @RequestParam("image_collection_url") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String saveProduct(@ModelAttribute Product product, Model model, @RequestParam("files") MultipartFile file, RedirectAttributes redirectAttributes) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         product.setUpdate_date(updatedNow);
         if (file.isEmpty()) {
@@ -101,17 +101,14 @@ public class AdminController {
         }
         try (InputStream inputStream = file.getInputStream()) {
             String fileUrl = getFileName(file, inputStream);
-            // Save product details
             product.setImage_collection_url(fileUrl);
             productService.saveProduct(product);
             redirectAttributes.addFlashAttribute("message", "Product saved successfully");
             return "redirect:/admin/eco-products.html";
-
         } catch (IOException e) {
             redirectAttributes.addFlashAttribute("message", "Failed to upload file");
             return "redirect:/admin/eco-products-edit.html";
         }
-
     }
 
     @GetMapping("/category-add.html")
