@@ -31,4 +31,9 @@ public class ProductService {
         Optional<Product> product = proRepo.findById(id);
         return product.orElse(null);
     }
+
+    @Transactional
+    public void deleteProductbyId(int id){
+        proRepo.deleteById(id);
+    }
 }
