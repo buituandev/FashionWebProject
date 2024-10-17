@@ -163,6 +163,12 @@ public class AdminController {
         return "admin/eco-products-edit";
     }
 
+    @GetMapping("/product-delete/{id}")
+    public String deleteProduct(@PathVariable("id") Integer id, Model model) {
+        productService.deleteProductById(id);
+        return "redirect:/admin/eco-products.html";
+    }
+
     private String getFileName(MultipartFile file, InputStream inputStream) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());

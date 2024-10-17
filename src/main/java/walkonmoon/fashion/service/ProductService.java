@@ -35,4 +35,9 @@ public class ProductService {
     public List<Product> findByCategoryId(int categoryID){
         return proRepo.findByCategoryId(categoryID);
     }
+
+    @Transactional
+    public void deleteProductById(int id){
+        proRepo.deleteById(id);
+    }
 }
