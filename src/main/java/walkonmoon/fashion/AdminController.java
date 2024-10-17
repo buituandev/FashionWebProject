@@ -95,31 +95,19 @@ public class AdminController {
     public String saveProduct(@ModelAttribute Product product, Model model, @RequestParam("files") MultipartFile file, RedirectAttributes redirectAttributes) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         product.setUpdate_date(updatedNow);
+
         Product existPro = productService.getProductById(product.getId());
-        if(existPro != null) {
-            if(!file.isEmpty()){
-                try (InputStream inputStream = file.getInputStream()) {
-                    String fileUrl = getFileName(file, inputStream);
-                    product.setImage_collection_url(fileUrl);
-                } catch (IOException e) {
-                    redirectAttributes.addFlashAttribute("message", "Failed to upload file");
-                    return "redirect:/admin/eco-products-edit.html";
-                }
-            }else{
-                product.setImage_collection_url(existPro.getImage_collection_url());
-            }
-        }else{
-            if (file.isEmpty()) {
-                redirectAttributes.addFlashAttribute("message", "File is empty");
-                return "redirect:/admin/eco-products-edit.html";
-            }
+
+        if (!file.isEmpty()) {
             try (InputStream inputStream = file.getInputStream()) {
                 String fileUrl = getFileName(file, inputStream);
-                product.setImage_collection_url(fileUrl);
+                product.setImage_collection_url(fileUrl);  // Update product with new image URL
             } catch (IOException e) {
                 redirectAttributes.addFlashAttribute("message", "Failed to upload file");
                 return "redirect:/admin/eco-products-edit.html";
             }
+        } else if (existPro!= null) {
+            product.setImage_collection_url(existPro.getImage_collection_url());
         }
 
         productService.saveProduct(product);
