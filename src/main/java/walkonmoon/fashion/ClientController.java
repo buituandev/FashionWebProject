@@ -52,9 +52,14 @@ public class ClientController {
     }
 
     @GetMapping("/shop-grid.html")
-    public String shopGridHtml(){
+    public String shopGridHtml(Model model){
+        List<Product> products = productService.getListProducts();
+        model.addAttribute("products", products);
         return "shop-grid";
     }
+
+//    @GetMapping("/shop-grid.html{catid}")
+//    public String shopGridFilter(){return }
 
     @GetMapping("/product-detail")
     public String productDetail() {
