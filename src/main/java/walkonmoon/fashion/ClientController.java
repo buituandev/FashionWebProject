@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.ProductService;
@@ -63,6 +64,13 @@ public class ClientController {
 
     @GetMapping("/product-detail")
     public String productDetail() {
+        return "single-product";
+    }
+    
+    @GetMapping("/single-product/{id}")
+    public String singleProduct(Model model, @PathVariable String id){
+        Product product = productService.getProductById(Integer.parseInt(id));
+        model.addAttribute("product", product);
         return "single-product";
     }
 
