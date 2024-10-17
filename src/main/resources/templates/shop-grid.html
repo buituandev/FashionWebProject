@@ -89,7 +89,47 @@
                                                     <div id="grid" class="tab-pane anime-tab active show"
                                                         role="tabpanel">
                                                         <div class="row">
-                                                            <article th:replace="layout::product_item_big"></article>
+                                                            <article class="swiper-slide product-layout" style="width: 405px;" th:each="product:${products}">
+                                                                <div class="product-thumb">
+                                                                    <div class="product-inner">
+                                                                        <div class="product-image">
+                                                                            <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                                            <a th:href="@{'/single-product/' + ${product.getId()}}">
+                                                                                <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
+                                                                            </a>
+                                                                            <div class="action-links">
+                                                                                <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
+                                                                                <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                                                <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                                                <a class="action-btn btn-quickview" data-bs-toggle="modal" data-bs-target="#product_quick_view" href="#" title="Quick View"><i class="pe-7s-search"></i></a>
+                                                                            </div>
+                                                                        </div> <!-- end of product-image -->
+
+                                                                        <div class="product-caption">
+                                                                            <div class="product-meta d-flex justify-content-between align-items-center">
+                                                                                <div class="product-manufacturer">
+                                                                                    <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                                                </div>
+                                                                                <div class="product-ratings">
+                                                                                    <div class="rating-box">
+                                                                                        <ul class="rating d-flex">
+                                                                                            <li><i class="ion ion-md-star-outline"></i></li>
+                                                                                            <li><i class="ion ion-md-star-outline"></i></li>
+                                                                                            <li><i class="ion ion-md-star-outline"></i></li>
+                                                                                            <li><i class="ion ion-md-star-outline"></i></li>
+                                                                                            <li><i class="ion ion-md-star-outline"></i></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <h4 class="product-name"><a href="single-product.html" th:text="${product.getProduct_name()}"></a></h4>
+                                                                            <p class="product-price">
+                                                                                <span class="price-new" th:text="${product.getPrice()}"></span>
+                                                                            </p>
+                                                                        </div><!-- end of product-caption -->
+                                                                    </div><!-- end of product-inner -->
+                                                                </div><!-- end of product-thumb -->
+                                                            </article> <!-- end of product-layout -->
                                                         </div>
                                                     </div>
                                                     <div id="list" class="tab-pane anime-tab" role="tabpanel">
@@ -255,7 +295,10 @@
                                     <h2 class="widgettitle">Categories</h2>
                                     <div class="list-widget-wrapper">
                                         <div class="list-group">
-                                            <a href="#">Shoes (198)</a>
+                                            <a href="#">Sneakers</a>
+                                            <a href="#">Backpacks</a>
+                                            <a href="#">Glasses</a>
+                                            <a href="#">Accessories</a>
                                         </div>
                                     </div>
                                 </div> <!-- end of sidebar-widget -->

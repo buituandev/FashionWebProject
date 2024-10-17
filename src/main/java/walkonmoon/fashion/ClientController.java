@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.ProductService;
@@ -20,10 +21,16 @@ public class ClientController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List <User> users = userService.getListUser();
-        model.addAttribute("users", users);
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
+        List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
+        model.addAttribute("filteredProductByCategory1", filteredProductByCategory1);
+        List<Product> filteredProductByCategory2 = productService.findByCategoryId(2);
+        model.addAttribute("filteredProductByCategory2", filteredProductByCategory2);
+        List<Product> filteredProductByCategory3 = productService.findByCategoryId(3);
+        model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
+        List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
+        model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
         return "index";
     }
 
@@ -39,10 +46,16 @@ public class ClientController {
 
     @GetMapping("/index.html")
     public String indexHtml(Model model) {
-        List<User> users = userService.getListUser(); // Fetch all users
-        model.addAttribute("users", users);
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
+        List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
+        model.addAttribute("filteredProductByCategory1", filteredProductByCategory1);
+        List<Product> filteredProductByCategory2 = productService.findByCategoryId(2);
+        model.addAttribute("filteredProductByCategory2", filteredProductByCategory2);
+        List<Product> filteredProductByCategory3 = productService.findByCategoryId(3);
+        model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
+        List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
+        model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
         return "index";
     }
 
@@ -52,12 +65,21 @@ public class ClientController {
     }
 
     @GetMapping("/shop-grid.html")
-    public String shopGridHtml(){
+    public String shopGridHtml(Model model){
+        List<Product> products = productService.getListProducts();
+        model.addAttribute("products", products);
         return "shop-grid";
     }
 
     @GetMapping("/product-detail")
     public String productDetail() {
+        return "single-product";
+    }
+    
+    @GetMapping("/single-product/{id}")
+    public String singleProduct(Model model, @PathVariable String id){
+        Product product = productService.getProductById(Integer.parseInt(id));
+        model.addAttribute("product", product);
         return "single-product";
     }
 
