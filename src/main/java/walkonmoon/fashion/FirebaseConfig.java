@@ -10,29 +10,20 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Configuration
 public class FirebaseConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(FirebaseConfig.class);
 
-    // Relative path to the secret file
-    private static final String FIREBASE_CONFIG_RELATIVE_PATH = "etc/secrets/firebase-config.json";
+    private static final String FIREBASE_CONFIG_PATH = "/etc/secrets/firebase-config.json";
 
     @PostConstruct
     public void initialize() {
         try {
-            Path rootPath = Paths.get("").toAbsolutePath();
-            Path configPath = rootPath.resolve(FIREBASE_CONFIG_RELATIVE_PATH);
+            logger.info("Looking for Firebase config at: " + FIREBASE_CONFIG_PATH);
 
-            if (!Files.exists(configPath)) {
-                throw new IOException("Configuration file not found: " + configPath.toString());
-            }
-
-            try (FileInputStream serviceAccount = new FileInputStream(configPath.toFile())) {
+            try (FileInputStream serviceAccount = new FileInputStream(FIREBASE_CONFIG_PATH)) {
                 FirebaseOptions options = new FirebaseOptions.Builder()
                         .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                         .setStorageBucket(getBucketName())
