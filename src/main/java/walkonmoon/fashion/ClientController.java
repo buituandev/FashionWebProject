@@ -20,7 +20,7 @@ public class ClientController {
     private ProductService productService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model){
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
         List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
@@ -32,14 +32,6 @@ public class ClientController {
         List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
         model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
         return "index";
-    }
-
-    @GetMapping("/layout.html")
-    public void layout(Model model) {
-        List <User> users = userService.getListUser();
-        model.addAttribute("users", users);
-        List<Product> products = productService.getListProducts();
-        model.addAttribute("products", products);
 
     }
 

@@ -120,7 +120,7 @@
             <div class="row align-items-center">
                 <div class="col-12 col-sm-12 col-md-4 col-lg-6">
                     <div class="logo">
-                        <a href="index.html"><img src="/assets/images/PEBONA.png" style="object-fit: contain;" alt="Logo"
+                        <a href="/" th:href="@{/index.html}"><img src="/assets/images/PEBONA.png" style="object-fit: contain;" alt="Logo"
                                                   class="img-fluid"></a>
 
                     </div>
@@ -285,7 +285,7 @@
                 </div>
                 <div class="col-12 order-1 col-sm-12 order-sm-1 col-md-4 order-md-2 col-lg-6">
                     <div class="logo">
-                        <a href="index.html"><img src="/assets/images/PEBONA.png" style="object-fit: contain;" alt="Logo"
+                        <a href="/" th:href="@{/index.html}"><img src="/assets/images/PEBONA.png" style="object-fit: contain;" alt="Logo"
                                                   class="img-fluid"></a>
                     </div>
                 </div>
@@ -402,15 +402,15 @@
         <nav id="main_nav" class="stellarnav white-scheme desktop">
             <!-- <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a> -->
             <ul>
-                <li class="active"><a href="index.html"><span>Home</span></a>
+                <li class="active"><a href="/" th:href="@{/index.html}"><span>Home</span></a>
                 </li>
-                <li class="mega has-sub" data-columns="4"><a href="shop-grid.html"><span>Shop</span></a>
+                <li class="mega has-sub" data-columns="4"><a href="/" th:href="@{/shop-grid.html}"><span>Shop</span></a>
                     <ul class="mega-container" style="left: 0px; max-width: 100%;">
                         <li class="has-sub column column-3"><a href="#" class="mega-menu-title">
                             <h3>Shop</h3>
                         </a>
                             <ul style="max-width: 100%;">
-                                <li><a href="shop-grid.html">Product Category</a></li>
+                                <li><a href="/" th:href="@{/shop-grid.html}">Product Category</a></li>
                             </ul>
                             <a class="dd-toggle" href="#"><i class="fa fa-plus"></i></a>
                         </li>
@@ -418,7 +418,7 @@
                             <h3>Shop Misc</h3>
                         </a>
                             <ul style="max-width: 100%;">
-                                <li><a href="compare.html">Product Compare</a></li>
+                                <li><a href="/" th:href="@{/compare.html}">Product Compare</a></li>
                             </ul>
                             <a class="dd-toggle" href="#"><i class="fa fa-plus"></i></a>
                         </li>
@@ -429,10 +429,10 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="blog-right-sidebar.html"><span>Blogs</span></a>
+                <li><a href="/" th:href="@{/blog-right-sidebar.html}"><span>Blogs</span></a>
                 </li>
-                <li><a href="about.html"><span>About Us</span></a></li>
-                <li><a href="contact.html"><span>Contact Us</span></a></li>
+                <li><a href="/" th:href="@{/about.html}"><span>About Us</span></a></li>
+                <li><a href="/" th:href="@{/contact.html}"><span>Contact Us</span></a></li>
             </ul>
         </nav>
     </div> <!-- end of container -->
