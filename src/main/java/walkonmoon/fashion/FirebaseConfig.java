@@ -10,28 +10,40 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Configuration
 public class FirebaseConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(FirebaseConfig.class);
 
-    // File path where the secret file is mounted by Render
-    private static final String FIREBASE_CONFIG_PATH = "/etc/secrets/firebase-config.json";
+    // Relative path to the secret file
+    private static final String FIREBASE_CONFIG_RELATIVE_PATH = "etc/secrets/firebase-config.json";
 
     @PostConstruct
     public void initialize() {
-        try (FileInputStream serviceAccount = new FileInputStream(FIREBASE_CONFIG_PATH)) {
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket(getBucketName())
-                    .build();
+        try {
+            Path rootPath = Paths.get("").toAbsolutePath();
+            Path configPath = rootPath.resolve(FIREBASE_CONFIG_RELATIVE_PATH);
 
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-                logger.info("Firebase initialized successfully.");
-            } else {
-                logger.info("FirebaseApp already initialized.");
+            if (!Files.exists(configPath)) {
+                throw new IOException("Configuration file not found: " + configPath.toString());
+            }
+
+            try (FileInputStream serviceAccount = new FileInputStream(configPath.toFile())) {
+                FirebaseOptions options = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                        .setStorageBucket(getBucketName())
+                        .build();
+
+                if (FirebaseApp.getApps().isEmpty()) {
+                    FirebaseApp.initializeApp(options);
+                    logger.info("Firebase initialized successfully.");
+                } else {
+                    logger.info("FirebaseApp already initialized.");
+                }
             }
         } catch (IOException e) {
             logger.error("Failed to initialize Firebase: ", e);
