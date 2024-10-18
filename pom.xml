@@ -10,7 +10,7 @@
     </parent>
     <groupId>walkonmoon</groupId>
     <artifactId>Fashion</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1</version>
     <name>Fashion</name>
     <description>Fashion</description>
     <url/>
