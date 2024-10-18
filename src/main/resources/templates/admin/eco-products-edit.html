@@ -7,6 +7,51 @@
 </head>
 
 <body class="skin-default fixed-layout">
+<style>
+    .image-preview-wrapper {
+        display: flex;                /* Use flexbox for horizontal alignment */
+        flex-wrap: nowrap;             /* Prevent wrapping of the images */
+        overflow-x: auto;              /* Allow scrolling horizontally if there are too many images */
+        gap: 10px;                     /* Add space between images */
+    }
+
+    .image-container {
+        position: relative;            /* Allows overlay to be positioned on top of the image */
+        display: inline-block;
+    }
+
+    .preview-image {
+        max-width: 150px;              /* Set a max width for images */
+        height: auto;                  /* Maintain aspect ratio */
+        display: block;                /* Ensure the images are displayed as block elements */
+        border: 1px solid #ddd;        /* Optional: Add border to images */
+        padding: 5px;                  /* Optional: Add padding */
+    }
+
+    .pro-img-overlay {
+        position: absolute;            /* Position overlay relative to image container */
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+        opacity: 0;                    /* Hide overlay initially */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s;      /* Fade-in effect for overlay */
+    }
+
+    .image-container:hover .pro-img-overlay {
+        opacity: 1;                    /* Show overlay on hover */
+    }
+
+    .delete-icon {
+        color: #fff;                   /* White color for the delete icon */
+        font-size: 20px;               /* Icon size */
+        cursor: pointer;               /* Pointer cursor on hover */
+    }
+</style>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -159,25 +204,30 @@
                                         <!--/span-->
                                         <div class="col-md-3">
                                             <h5 class="card-title m-t-20">Upload Image</h5>
-                                            <div class="product-img"><img id="image-preview"
-                                                                          th:src="${#strings.isEmpty(product.getImage_collection_url()) ? '/assets/images/products/new/product-9.jpg' : product.getImage_collection_url()}"
-                                                                          alt="Upload image to preview" >
-                                                <div class="pro-img-overlay">
-<!--                                                    <a href="javascript:void(0)" class="bg-info"><i class="ti-marker-alt"></i></a> -->
-<!--                                                    <a href="javascript:void(0)" class="bg-danger"><i class="ti-trash"></i></a>-->
+                                            <div class="product-img" id="image-preview-container">
+                                                <div class="image-preview-wrapper" id="image-preview-wrapper" style="width: 80vw">
+                                                    <!-- Example of a single image preview with an overlay, this will be dynamically populated -->
+                                                    <div class="image-container">
+                                                        <img th:src="${#strings.isEmpty(product.getImage_collection_url()) ? '/assets/images/products/new/product-9.jpg' : product.getImage_collection_url()}"
+                                                             alt="Upload image to preview" class="preview-image">
+                                                        <div class="pro-img-overlay">
+                                                            <a href="javascript:void(0)" class="bg-danger delete-icon"><i class="ti-trash"></i></a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <br/>
-                                                <div class="fileupload btn btn-info waves-effect waves-light text-white"><span><i class="ion-upload m-r-5"></i>Upload Images</span>
+                                                <div class="fileupload btn btn-info waves-effect waves-light text-white">
+                                                    <span><i class="ion-upload m-r-5"></i>Upload Images</span>
                                                     <input type="file" class="upload" id="files" name="files" multiple accept="image/*">
                                                 </div>
                                                 <input type="text" th:field="*{image_collection_url}" style="visibility: hidden">
                                             </div>
                                         </div>
-                                    </div>
                                     <hr> </div>
                                 <div class="form-actions m-t-40">
                                     <button type="submit" class="btn btn-success text-white"> <i class="fa fa-check"></i> Save</button>
                                     <button type="button" class="btn btn-dark">Cancel</button>
+                                </div>
                                 </div>
                             </form>
                         </div>
@@ -224,13 +274,39 @@
 <!-- This page plugins -->
 <!-- ============================================================== -->
 <script>
-    const image = document.getElementById('image-preview');
+    const container = document.getElementById('image-preview-wrapper');
     const input = document.getElementById('files');
 
     input.addEventListener('change', (e) => {
+        container.innerHTML = '';  // Clear any previous images
         if (e.target.files.length) {
-            const src = URL.createObjectURL(e.target.files[0]);
-            image.src = src;
+            Array.from(e.target.files).forEach(file => {
+                const imgContainer = document.createElement('div');
+                imgContainer.classList.add('image-container');  // Container for image and overlay
+
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.classList.add('preview-image');  // Apply styles to preview image
+
+                const overlay = document.createElement('div');
+                overlay.classList.add('pro-img-overlay');
+
+                const deleteIcon = document.createElement('a');
+                deleteIcon.href = 'javascript:void(0)';
+                deleteIcon.classList.add('bg-danger', 'delete-icon');
+                deleteIcon.innerHTML = '<i class="ti-trash"></i>';
+
+                // Add click event to remove the image
+                deleteIcon.addEventListener('click', () => {
+                    imgContainer.remove();
+                });
+
+                overlay.appendChild(deleteIcon);
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(overlay);
+
+                container.appendChild(imgContainer);
+            });
         }
     });
 </script>
