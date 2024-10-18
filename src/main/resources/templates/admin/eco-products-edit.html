@@ -159,7 +159,9 @@
                                         <!--/span-->
                                         <div class="col-md-3">
                                             <h5 class="card-title m-t-20">Upload Image</h5>
-                                            <div class="product-img"><img id="image-preview" th:src="@{${product.getImage_collection_url()}}" alt="product-img">
+                                            <div class="product-img"><img id="image-preview"
+                                                                          th:src="${#strings.isEmpty(product.getImage_collection_url()) ? '/assets/images/products/new/product-9.jpg' : product.getImage_collection_url()}"
+                                                                          alt="Upload image to preview" >
                                                 <div class="pro-img-overlay">
 <!--                                                    <a href="javascript:void(0)" class="bg-info"><i class="ti-marker-alt"></i></a> -->
 <!--                                                    <a href="javascript:void(0)" class="bg-danger"><i class="ti-trash"></i></a>-->
@@ -221,6 +223,17 @@
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
+<script>
+    const image = document.getElementById('image-preview');
+    const input = document.getElementById('files');
+
+    input.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            const src = URL.createObjectURL(e.target.files[0]);
+            image.src = src;
+        }
+    });
+</script>
 </body>
 
 
