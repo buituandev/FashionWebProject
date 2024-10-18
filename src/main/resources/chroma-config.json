@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "chromashop",
+    "private_key_id": "4066e4fc9f3b700794320f6dc3af41a154eac70a",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCVE1yLjLY66ivB\nr9AnLfYP61IC9QI87V9hr63v/HWvfLGdUzloNjBBrf7kaxaHN1/TJyZuJ3tuPGcZ\naL4a7WI5IqB478rS574/jV7eHbFgeCKDNtqdwWt4XK675S89XT86iaLviVMfTJGT\nkQvRh/VhOhD6xGp26sQDV3BrsNuNonBpRk6Sd2IZhnu//G40CJFfZpJT3dht48nS\nHMrzZJFpL6eO6ykSqqb3XO+P2w3kb55lq4vDLJFXGBJbT239XwHkMuCcrQ57s228\nDM0oCaplCcTN8R39Pz1T7CRkkSNPsbM07aDqSiynSMJESCHygxNFnjOcRXNBliSL\nAUMNQt7VAgMBAAECggEAIVGlQNR3o1XU51KsD6G0aizylNIdiLAWPi9ljSqsRAd2\n7D6eaVYZNYjV3Eg6Dgk4m+lXa83bxtDtyy5PtRWC+1mrq7QOrVJaAXrPrg3NaA4Z\nyqF/PbyuEEYI0Nqh0xGNEQCTv/19rFRxAh4sWc3NMIippF6zm/YPTt7jc9Jg0/gX\n2nSvB9dlvd6BPzbzOsMXZW1K0A/DHVGuT6HwioMTB5ib80c31Z/l+4xZ/a9ynmBo\nVK3b4Af4rPx5K46zuQ4Owuf4SJOKGw+xHrEFv+5b5n0fRAhCl5mq+Eezb0HXolAA\nas7Cy+Vf7OveLYudLDUJ0a0VOGaAdOFo67KbsxzASQKBgQDFiRNEbOGxYUCi43DC\nFHHBuGw+YSkAKjKUGqEZDJxh/EJmWe6BunhbeiT6vNYtkT7C34KgmRRJCW0n3E4G\nmIQqBopnSP2s62ZRO5FfJQ8R5aJzS5VhJEqEmlqIlVTQe+0gxDAVKGxDzrK+qVIm\n2h1OYv2OPm+Lx6E/eDmFgF4g6QKBgQDBMpF39HU4hnV2HvElMlLEBVwL/1mLt71C\nDNHFWrW4UPBtDfmh7wmBf6aaZJCfQsZo4bA6yZ+/gs75DdJdIEUV1NzzL2Eowun9\nweIfKz+iFQdmUlyH3R/B94AO0XanvKgKgccHoLW2BHqbt/n5k/K3isj3qF8X1UtR\ncCslxEm7DQKBgQC3W2qwDCVfAjf+OwIylMmXGPoY2RU22vSB90nsN4F9jquP2BCF\nCLKprvJecCSavYS1XMUjD5T9yqsw4dTnWHDtlY6pGt6lwQgDhTiGSZ74bOBjBxjM\nx+QHvEMnHv5QW4gb7x/2s8PzGQ1f30mrWLD1TvuvKpNd+1rY0F8MZcB56QKBgFXG\nhtF0RqsO/42vFS+HlTmUi5aEC5S9whhWKrhtmqq3vNceUkv0HgtRyn1X0uHyuraM\nJTskk3lqsUvgOBrCngmgVWzfB0saptrUPvnJsNncbkmenZhws43hvghWNVEpsI3h\nqqUXVDX47Rq/5wtJBYU56BoUtguV1nfUzkNZT8btAoGAEU5/aHIqNvWAq3HX2Qmp\nfsKNgrdYuXVm+ujBRL8FFbTtRP8yX/N11cNKpHyQsHSs5G0y/Bu87XtMNyAq76Q2\nehokQc5Hsj+h+XkDF8KBoVYyryTrnC1pGMG/AAwLkIh5AVJlJtY+JrOJVXLfBG/J\nES91hHnlIdp9mSJMlEfoXhE=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-gh77u@chromashop.iam.gserviceaccount.com",
+    "client_id": "102394376401779201665",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-gh77u%40chromashop.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }
+  
