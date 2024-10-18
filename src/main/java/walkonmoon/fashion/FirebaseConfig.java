@@ -16,7 +16,7 @@ public class FirebaseConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(FirebaseConfig.class);
 
-    private static final String FIREBASE_CONFIG_PATH = "/etc/secrets/firebase-config.json";
+    private static final String FIREBASE_CONFIG_PATH = "/app/firebase-config.json";
 
     @PostConstruct
     public void initialize() {
