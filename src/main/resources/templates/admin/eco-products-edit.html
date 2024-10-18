@@ -214,6 +214,7 @@
                                                             <a href="javascript:void(0)" class="bg-danger delete-icon"><i class="ti-trash"></i></a>
                                                         </div>
                                                     </div>
+
                                                 </div>
                                                 <br/>
                                                 <div class="fileupload btn btn-info waves-effect waves-light text-white">
@@ -308,6 +309,19 @@
                 container.appendChild(imgContainer);
             });
         }
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.delete-icon').forEach(function(deleteButton) {
+            deleteButton.addEventListener('click', function() {
+                if (confirm("Are you sure you want to delete this image?")) {
+                    const imageContainer = this.closest('.image-container');
+                    imageContainer.remove();
+                }
+            });
+        });
     });
 </script>
 </body>
