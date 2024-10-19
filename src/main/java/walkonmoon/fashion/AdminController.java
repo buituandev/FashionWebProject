@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import walkonmoon.fashion.model.Category;
+import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.CategoryService;
+import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
@@ -40,6 +42,8 @@ public class AdminController {
     @Autowired
     private CategoryService categoryService;
     private final FirebaseConfig firebaseConfig;
+    @Autowired
+    private ImageService imageService;
 
     public AdminController(FirebaseConfig firebaseConfig) {
         this.firebaseConfig = firebaseConfig;
@@ -92,22 +96,32 @@ public class AdminController {
     }
 
     @PostMapping("/eco-products/save")
-    public String saveProduct(@ModelAttribute Product product, Model model, @RequestParam("files") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String saveProduct(@ModelAttribute Product product, Model model,
+                              @RequestParam("files") MultipartFile[] files,
+                              RedirectAttributes redirectAttributes) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         product.setUpdate_date(updatedNow);
 
         Product existPro = productService.getProductById(product.getId());
-
-        if (!file.isEmpty()) {
-            try (InputStream inputStream = file.getInputStream()) {
-                String fileUrl = getFileName(file, inputStream);
-                product.setImage_collection_url(fileUrl);  // Update product with new image URL
-            } catch (IOException e) {
-                redirectAttributes.addFlashAttribute("message", "Failed to upload file");
-                return "redirect:/admin/eco-products-edit.html";
+        imageService.deleteByProductId(product.getId());
+        if (files != null && files.length > 0) {
+            for (int i = 0; i < files.length; i++) {
+                if (!files[i].isEmpty()) {
+                    try (InputStream inputStream = files[i].getInputStream()) {
+                        String fileUrl = getFileName(files[i], inputStream);
+                        Image image = new Image();
+                        image.setImageurl(fileUrl);
+                        image.setProductId(product.getId());
+                        imageService.saveImage(image);
+                        if(i == 0){
+                            product.setImage_collection_url(fileUrl);
+                        }
+                    } catch (IOException e) {
+                        redirectAttributes.addFlashAttribute("message", "Failed to upload file");
+                        return "redirect:/admin/eco-products-edit.html";
+                    }
+                }
             }
-        } else if (existPro!= null) {
-            product.setImage_collection_url(existPro.getImage_collection_url());
         }
 
         productService.saveProduct(product);
