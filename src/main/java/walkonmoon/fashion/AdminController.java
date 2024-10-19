@@ -103,16 +103,19 @@ public class AdminController {
         product.setUpdate_date(updatedNow);
 
         Product existPro = productService.getProductById(product.getId());
-
+        imageService.deleteByProductId(product.getId());
         if (files != null && files.length > 0) {
-            for (MultipartFile file : files) {
-                if (!file.isEmpty()) {
-                    try (InputStream inputStream = file.getInputStream()) {
-                        String fileUrl = getFileName(file, inputStream);
+            for (int i = 0; i < files.length; i++) {
+                if (!files[i].isEmpty()) {
+                    try (InputStream inputStream = files[i].getInputStream()) {
+                        String fileUrl = getFileName(files[i], inputStream);
                         Image image = new Image();
                         image.setImageurl(fileUrl);
                         image.setProductId(product.getId());
                         imageService.saveImage(image);
+                        if(i == 0){
+                            product.setImage_collection_url(fileUrl);
+                        }
                     } catch (IOException e) {
                         redirectAttributes.addFlashAttribute("message", "Failed to upload file");
                         return "redirect:/admin/eco-products-edit.html";
