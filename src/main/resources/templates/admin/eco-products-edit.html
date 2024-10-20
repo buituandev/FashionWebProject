@@ -203,20 +203,27 @@
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-3">
-                                            <h5 class="card-title m-t-20">Upload Image</h5>
+                                            <h5 class="card-title m-t-20">Upload Images</h5>
                                             <div class="product-img" id="image-preview-container">
-                                                <div class="image-preview-wrapper" id="image-preview-wrapper" style="width: 80vw">
-                                                    <!-- Example of a single image preview with an overlay, this will be dynamically populated -->
-                                                    <div class="image-container">
-                                                        <img th:src="${#strings.isEmpty(product.getImage_collection_url()) ? '/assets/images/products/new/product-9.jpg' : product.getImage_collection_url()}"
-                                                             alt="Upload image to preview" class="preview-image">
-                                                        <div class="pro-img-overlay">
-                                                            <a href="javascript:void(0)" class="bg-danger delete-icon"><i class="ti-trash"></i></a>
+                                                <div class="image-preview-wrapper" id="image-preview-wrapper" style="width: 80vw; display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto;">
+                                                    <!-- Loop through all images dynamically -->
+                                                    <div id="file-list" style="display: flex; gap: 10px;">
+                                                        <div th:each="image : ${images}" style="position: relative; display: inline-block;">
+                                                            <div class="image-container" style="position: relative; display: inline-block;">
+                                                                <!-- Use the correct attribute for the image URL -->
+                                                                <img th:src="${image.imageurl}" alt="Image preview" class="preview-image" style="width: 100px; height: 100px; object-fit: cover;">
+                                                                <div class="pro-img-overlay" style="position: absolute; top: 0; right: 0;">
+                                                                    <!-- Delete functionality for each image -->
+                                                                    <a href="javascript:void(0)" class="bg-danger delete-icon" th:attr="data-image-id=${image.id}">
+                                                                        <i class="ti-trash"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <br/>
+                                                <!-- File upload button for new images -->
                                                 <div class="fileupload btn btn-info waves-effect waves-light text-white">
                                                     <span><i class="ion-upload m-r-5"></i>Upload Images</span>
                                                     <input type="file" class="upload" id="files" name="files" multiple accept="image/*">
@@ -327,79 +334,25 @@
 
 <!--<script>-->
 <!--    document.addEventListener('DOMContentLoaded', function() {-->
-<!--        const fileInput = document.getElementById('files');-->
-<!--        const previewContainer = document.getElementById('image-preview-wrapper');-->
-
-<!--        // Listen for file selection-->
-<!--        fileInput.addEventListener('change', function(event) {-->
-<!--            const files = event.target.files;-->
-
-<!--            // Loop through the selected files-->
-<!--            for (let i = 0; i < files.length; i++) {-->
-<!--                const file = files[i];-->
-<!--                const reader = new FileReader();-->
-
-<!--                // When the file is loaded, display the preview-->
-<!--                reader.onload = function(e) {-->
-<!--                    const previewImageSrc = e.target.result;-->
-
-<!--                    // Create a new image container for the preview-->
-<!--                    const imageContainer = document.createElement('div');-->
-<!--                    imageContainer.classList.add('image-container');-->
-
-<!--                    // Create the image element-->
-<!--                    const imgElement = document.createElement('img');-->
-<!--                    imgElement.src = previewImageSrc;-->
-<!--                    imgElement.alt = 'Uploaded Image Preview';-->
-<!--                    imgElement.classList.add('preview-image');-->
-
-<!--                    // Create the delete button overlay-->
-<!--                    const overlay = document.createElement('div');-->
-<!--                    overlay.classList.add('pro-img-overlay');-->
-<!--                    overlay.innerHTML = '<a href="javascript:void(0)" class="bg-danger delete-icon"><i class="ti-trash"></i></a>';-->
-
-<!--                    // Add the image and overlay to the container-->
-<!--                    imageContainer.appendChild(imgElement);-->
-<!--                    imageContainer.appendChild(overlay);-->
-
-<!--                    // Append the new image container to the preview area-->
-<!--                    previewContainer.appendChild(imageContainer);-->
-
-<!--                    // Attach event listener to the delete button-->
-<!--                    attachDeleteHandler(overlay);-->
-<!--                };-->
-
-<!--                // Read the image file as a data URL-->
-<!--                reader.readAsDataURL(file);-->
-<!--            }-->
-<!--        });-->
-
-<!--        // Function to attach the delete handler to each image's delete button-->
-<!--        function attachDeleteHandler(overlay) {-->
-<!--            const deleteButton = overlay.querySelector('.delete-icon');-->
-<!--            deleteButton.addEventListener('click', function() {-->
-<!--                // Confirm before deleting-->
-<!--                if (confirm("Are you sure you want to delete this image?")) {-->
-<!--                    // Remove the image container from the DOM-->
-<!--                    const imageContainer = this.closest('.image-container');-->
-<!--                    imageContainer.remove();-->
-<!--                }-->
-<!--            });-->
-<!--        }-->
-
-<!--        // Attach delete handler to any existing image previews already on the page-->
 <!--        document.querySelectorAll('.delete-icon').forEach(function(deleteButton) {-->
 <!--            deleteButton.addEventListener('click', function() {-->
-<!--                // Confirm before deleting-->
 <!--                if (confirm("Are you sure you want to delete this image?")) {-->
-<!--                    // Remove the image container from the DOM-->
 <!--                    const imageContainer = this.closest('.image-container');-->
+
+<!--                    // Toggle the checkbox for deletion-->
+<!--                    const checkbox = this.nextElementSibling;-->
+<!--                    checkbox.checked = !checkbox.checked;-->
+
+<!--                    // Optionally add a class to indicate selection-->
+<!--                    this.classList.toggle('selected');-->
+
+<!--                    // Remove the image preview from the DOM-->
 <!--                    imageContainer.remove();-->
 <!--                }-->
 <!--            });-->
 <!--        });-->
 <!--    });-->
+<!--</script>-->
 
-</script>
 </body>
 </html>

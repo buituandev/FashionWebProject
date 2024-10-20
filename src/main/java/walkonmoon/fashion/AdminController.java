@@ -92,6 +92,7 @@ public class AdminController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("product", new Product());
+
         return "admin/eco-products-edit";
     }
 
@@ -103,7 +104,11 @@ public class AdminController {
         product.setUpdate_date(updatedNow);
 
         Product existPro = productService.getProductById(product.getId());
-        imageService.deleteByProductId(product.getId());
+        if(existPro != null) {
+            imageService.deleteByProductId(product.getId());
+        }else{
+            productService.saveProduct(product);
+        }
         if (files != null && files.length > 0) {
             for (int i = 0; i < files.length; i++) {
                 if (!files[i].isEmpty()) {
@@ -160,7 +165,9 @@ public class AdminController {
     public String editProduct(@PathVariable("id") Integer id, Model model) {
         Product product = productService.getProductById(id);
         List<Category> categories = categoryService.getListCategories();
+        List<Image> images = imageService.findImageByProductId(id);
         model.addAttribute("categories", categories);
+        model.addAttribute("images", images);
         model.addAttribute("product", product);
         return "admin/eco-products-edit";
     }
