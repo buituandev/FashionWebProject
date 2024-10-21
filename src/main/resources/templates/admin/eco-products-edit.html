@@ -153,12 +153,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label">Image ID</label>
-                                                <input type="text" th:field="*{image_collection_id}"
-                                                       class="form-control"></div>
-                                        </div>
+<!--                                        <div class="col-md-6">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <label class="form-label">Image ID</label>-->
+<!--                                                <input type="text" th:field="*{image_collection_id}"-->
+<!--                                                       class="form-control"></div>-->
+<!--                                        </div>-->
                                     </div>
                                     <!--/row-->
                                     <div class="row">
@@ -256,7 +256,7 @@
                                         <button type="submit" class="btn btn-success text-white"><i
                                                 class="fa fa-check"></i> Save
                                         </button>
-                                        <button type="button" class="btn btn-dark">Cancel</button>
+                                        <button type="button" class="btn btn-dark"><a th:href="@{'/admin/eco-products.html'}">Cancel</a></button>
                                     </div>
                                 </div>
                             </form>
