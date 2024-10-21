@@ -104,11 +104,6 @@ public class AdminController {
         product.setUpdate_date(updatedNow);
 
         Product existPro = productService.getProductById(product.getId());
-//        if(existPro == null) {
-//            imageService.deleteByProductId(product.getId());
-//        }else{
-//            productService.saveProduct(product);
-//        }
         if(existPro == null){
             productService.saveProduct(product);
         }

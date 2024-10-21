@@ -153,12 +153,12 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label">Image ID</label>
-                                                <input type="text" th:field="*{image_collection_id}"
-                                                       class="form-control"></div>
-                                        </div>
+                                        <!--                                        <div class="col-md-6">-->
+                                        <!--                                            <div class="form-group">-->
+                                        <!--                                                <label class="form-label">Image ID</label>-->
+                                        <!--                                                <input type="text" th:field="*{image_collection_id}"-->
+                                        <!--                                                       class="form-control"></div>-->
+                                        <!--                                        </div>-->
                                     </div>
                                     <!--/row-->
                                     <div class="row">
@@ -230,7 +230,7 @@
                                                                 <div class="pro-img-overlay"
                                                                      style="position: absolute; top: 0; right: 0;">
                                                                     <a href="javascript:void(0)"
-                                                                       class="bg-danger delete-icon"
+                                                                       class="bg-danger delete-icon" th:id="${image.id}"
                                                                        th:attr="data-image-id=${image.id}">
                                                                         <i class="ti-trash"></i>
                                                                     </a>
@@ -256,7 +256,8 @@
                                         <button type="submit" class="btn btn-success text-white"><i
                                                 class="fa fa-check"></i> Save
                                         </button>
-                                        <button type="button" class="btn btn-dark">Cancel</button>
+                                        <button type="button" class="btn btn-dark"><a
+                                                th:href="@{'/admin/eco-products.html'}">Cancel</a></button>
                                     </div>
                                 </div>
                             </form>
@@ -308,39 +309,50 @@
     const input = document.getElementById('files');
 
     input.addEventListener('change', (e) => {
-        container.innerHTML = '';  // Clear any previous images
-        if (e.target.files.length) {
-            Array.from(e.target.files).forEach((file, index) => {
-                const imgContainer = document.createElement('div');
-                imgContainer.classList.add('image-container');  // Container for image and overlay
+    container.innerHTML = '';  // Clear any previous images
+    if (e.target.files.length) {
+        Array.from(e.target.files).forEach((file, index) => {
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('image-container');  // Container for image and overlay
 
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.classList.add('preview-image');  // Apply styles to preview image
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.classList.add('preview-image');  // Apply styles to preview image
 
-                const overlay = document.createElement('div');
-                overlay.classList.add('pro-img-overlay');
+            const overlay = document.createElement('div');
+            overlay.classList.add('pro-img-overlay');
 
-                const deleteIcon = document.createElement('a');
-                deleteIcon.href = 'javascript:void(0)';
-                deleteIcon.classList.add('bg-danger', 'delete-icon');
-                deleteIcon.innerHTML = '<i class="ti-trash"></i>';
-                deleteIcon.dataset.index = index;  // Store the index of the file
+            const deleteIcon = document.createElement('a');
+            deleteIcon.href = 'javascript:void(0)';
+            deleteIcon.classList.add('bg-danger', 'delete-icon');
+            deleteIcon.innerHTML = '<i class="ti-trash"></i>';
+            deleteIcon.dataset.index = index;  // Store the index of the file
 
-                // Add click event to remove the image
-                deleteIcon.addEventListener('click', () => {
-                    imgContainer.remove();
+            // Assuming you have a way to set imageId, set it here
+            // deleteIcon.dataset.imageId = someImageId;
+
+            // Add click event to remove the image
+            deleteIcon.addEventListener('click', () => {
+                console.log('Delete icon clicked for index:', index);
+                imgContainer.remove();
+                if (typeof removeFile === 'function') {
                     removeFile(index);
-                });
+                } else {
+                    console.error('removeFile function is not defined');
+                }
 
-                overlay.appendChild(deleteIcon);
-                imgContainer.appendChild(img);
-                imgContainer.appendChild(overlay);
+                // Retrieve the image ID from the data attribute
 
-                container.appendChild(imgContainer);
             });
-        }
-    });
+
+            overlay.appendChild(deleteIcon);
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(overlay);
+
+            container.appendChild(imgContainer);
+        });
+    }
+});
 
     function removeFile(index) {
         const dt = new DataTransfer();
@@ -363,33 +375,29 @@
                 if (confirm("Are you sure you want to delete this image?")) {
                     const imageContainer = this.closest('.image-container');
                     imageContainer.remove();
+                    let deleteIcon = this;
+                    const imageId = deleteIcon.dataset.imageId;
+                    if (imageId) {
+                        // Send a DELETE request to the server
+                        fetch(`/images/${imageId}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    console.error('Failed to delete image');
+                                } else {
+                                    console.log('Deleting image with ID:', imageId);
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    } else {
+                        console.error('Image ID is not set');
+                    }
                 }
             });
         });
     });
 </script>
-
-<!--<script>-->
-<!--    document.addEventListener('DOMContentLoaded', function() {-->
-<!--        document.querySelectorAll('.delete-icon').forEach(function(deleteButton) {-->
-<!--            deleteButton.addEventListener('click', function() {-->
-<!--                if (confirm("Are you sure you want to delete this image?")) {-->
-<!--                    const imageContainer = this.closest('.image-container');-->
-
-<!--                    // Toggle the checkbox for deletion-->
-<!--                    const checkbox = this.nextElementSibling;-->
-<!--                    checkbox.checked = !checkbox.checked;-->
-
-<!--                    // Optionally add a class to indicate selection-->
-<!--                    this.classList.toggle('selected');-->
-
-<!--                    // Remove the image preview from the DOM-->
-<!--                    imageContainer.remove();-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
 
 </body>
 </html>
