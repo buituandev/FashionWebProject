@@ -46,7 +46,7 @@
         <!-- Logo -->
         <!-- ============================================================== -->
         <div class="navbar-header">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" th:href="@{'/admin/index.html'}">
                 <!-- Logo icon --><b>
                 <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                 <!-- Dark Logo icon -->
@@ -398,19 +398,19 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="nav-small-cap">--- PERSONAL</li>
-                <li><a href="index.html"><i class="ti-dashboard"></i><span class="hide-menu">Dashboard</span></a>
+                <li><a th:href="@{'/admin/index.html'}"><i class="ti-dashboard"></i><span class="hide-menu">Dashboard</span></a>
                 </li>
 
-                <li><a href="eco-products.html"><i class="ti-package"></i><span
+                <li><a th:href="@{'/admin/eco-products.html'}"><i class="ti-package"></i><span
                         class="hide-menu">Products</span></a></li>
 
-                <li><a href="eco-products-orders.html"><i class="ti-files"></i><span class="hide-menu">Product Orders</span></a>
+                <li><a th:href="@{'/admin/eco-products-orders.html'}"><i class="ti-files"></i><span class="hide-menu">Product Orders</span></a>
                 </li>
 
-                <li><a href="category.html"><i class="ti-layout-menu-v"></i><span class="hide-menu">Category</span></a>
+                <li><a th:href="@{'/admin/category.html'}"><i class="ti-layout-menu-v"></i><span class="hide-menu">Category</span></a>
                 </li>
 
-                <li><a href="user-management.html"><i class="icon-people"></i><span class="hide-menu">User Management</span></a>
+                <li><a th:href="@{'/admin/user-management.html'}"><i class="icon-people"></i><span class="hide-menu">User Management</span></a>
                 </li>
 
 

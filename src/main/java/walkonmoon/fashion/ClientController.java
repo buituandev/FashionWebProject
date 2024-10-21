@@ -5,8 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
@@ -18,6 +20,8 @@ public class ClientController {
     private UserService userService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping("/")
     public String index(Model model){
@@ -72,6 +76,10 @@ public class ClientController {
     public String singleProduct(Model model, @PathVariable String id){
         Product product = productService.getProductById(Integer.parseInt(id));
         model.addAttribute("product", product);
+        List<Image> productImages = imageService.findByProductId(product.getId());
+        model.addAttribute("productImages", productImages);
+        List<Product> relatedProducts = productService.findByCategoryId(product.getCategory_id());
+        model.addAttribute("relatedProducts", relatedProducts);
         return "single-product";
     }
 
