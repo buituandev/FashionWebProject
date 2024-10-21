@@ -206,14 +206,11 @@
                                             <h5 class="card-title m-t-20">Upload Images</h5>
                                             <div class="product-img" id="image-preview-container">
                                                 <div class="image-preview-wrapper" id="image-preview-wrapper" style="width: 80vw; display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto;">
-                                                    <!-- Loop through all images dynamically -->
                                                     <div id="file-list" style="display: flex; gap: 10px;">
                                                         <div th:each="image : ${images}" style="position: relative; display: inline-block;">
                                                             <div class="image-container" style="position: relative; display: inline-block;">
-                                                                <!-- Use the correct attribute for the image URL -->
                                                                 <img th:src="${image.imageurl}" alt="Image preview" class="preview-image" style="width: 100px; height: 100px; object-fit: cover;">
                                                                 <div class="pro-img-overlay" style="position: absolute; top: 0; right: 0;">
-                                                                    <!-- Delete functionality for each image -->
                                                                     <a href="javascript:void(0)" class="bg-danger delete-icon" th:attr="data-image-id=${image.id}">
                                                                         <i class="ti-trash"></i>
                                                                     </a>

@@ -104,12 +104,17 @@ public class AdminController {
         product.setUpdate_date(updatedNow);
 
         Product existPro = productService.getProductById(product.getId());
-        if(existPro != null) {
-            imageService.deleteByProductId(product.getId());
-        }else{
+//        if(existPro == null) {
+//            imageService.deleteByProductId(product.getId());
+//        }else{
+//            productService.saveProduct(product);
+//        }
+        if(existPro == null){
             productService.saveProduct(product);
         }
-        if (files != null && files.length > 0) {
+
+        if (files != null && files.length > 1) {
+            imageService.deleteByProductId(product.getId());
             for (int i = 0; i < files.length; i++) {
                 if (!files[i].isEmpty()) {
                     try (InputStream inputStream = files[i].getInputStream()) {
@@ -125,6 +130,8 @@ public class AdminController {
                         redirectAttributes.addFlashAttribute("message", "Failed to upload file");
                         return "redirect:/admin/eco-products-edit.html";
                     }
+                }else {
+
                 }
             }
         }
@@ -174,6 +181,7 @@ public class AdminController {
 
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, Model model) {
+        imageService.deleteByProductId(id);
         productService.deleteProductById(id);
         return "redirect:/admin/eco-products.html";
     }
