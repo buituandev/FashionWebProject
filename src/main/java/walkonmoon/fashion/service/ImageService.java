@@ -7,6 +7,7 @@ import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.ImageRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,21 @@ public class ImageService {
                      imageRepository.delete(image);
                 }
             }
+        }
+
+        public List<Image> findImageByProductId(int productId){
+            List<Image> imageList = new ArrayList<>();
+             for(Image image : imageRepository.findAll()){
+                 if(image.getProductId() == productId){
+                      imageList.add(image);
+                 }
+             }
+
+             return imageList;
+        }
+
+        public void deleteImagesbyId(int id){
+             imageRepository.deleteById(id);
         }
 
 }
