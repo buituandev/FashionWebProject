@@ -108,8 +108,8 @@ public class AdminController {
             productService.saveProduct(product);
         }
 
-        if (files != null && files.length > 1) {
-            imageService.deleteByProductId(product.getId());
+        if (files != null && files.length > 0) {
+//            imageService.deleteByProductId(product.getId());
             for (int i = 0; i < files.length; i++) {
                 if (!files[i].isEmpty()) {
                     try (InputStream inputStream = files[i].getInputStream()) {
@@ -118,7 +118,7 @@ public class AdminController {
                         image.setImageurl(fileUrl);
                         image.setProductId(product.getId());
                         imageService.saveImage(image);
-                        if(i == 0){
+                        if(i == 0 && files.length != 1){
                             product.setImage_collection_url(fileUrl);
                         }
                     } catch (IOException e) {
