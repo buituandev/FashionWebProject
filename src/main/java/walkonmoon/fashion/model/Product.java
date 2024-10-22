@@ -30,19 +30,6 @@ public class Product {
     private String long_description;
     @Column(name="image_collection_url")
     private String image_collection_url;
-
-    public int getImage_collection_id() {
-        return image_collection_id;
-    }
-
-    public void setImage_collection_id(int image_collection_id) {
-        this.image_collection_id = image_collection_id;
-    }
-
-    @Column(name = "image_collection_id")
-    private int image_collection_id;
-
-
     @Column(name = "price")
     private int price;
 
