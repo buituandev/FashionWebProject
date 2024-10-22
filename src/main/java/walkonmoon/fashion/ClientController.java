@@ -5,9 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
@@ -22,6 +24,8 @@ public class ClientController {
     private ProductService productService;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("/")
     public String index(Model model){
@@ -63,7 +67,9 @@ public class ClientController {
     @GetMapping("/shop-grid.html")
     public String shopGridHtml(Model model){
         List<Product> products = productService.getListProducts();
+        List<Category> categories = categoryService.getListCategories();
         model.addAttribute("products", products);
+        model.addAttribute("categories", categories);
         return "shop-grid";
     }
 
