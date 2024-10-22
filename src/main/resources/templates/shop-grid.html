@@ -95,7 +95,8 @@
                                                                         <div class="product-image">
                                                                             <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
-                                                                                <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
+                                                                                <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}" style="width: 375px;height: 375px;
+    object-fit: cover;">
                                                                             </a>
                                                                             <div class="action-links">
                                                                                 <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>

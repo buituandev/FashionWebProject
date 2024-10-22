@@ -27,8 +27,8 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12">
                     <nav class="breadcrumb">
-                        <a class="breadcrumb-item" href="index.html">Home</a>
-                        <a class="breadcrumb-item" href="shop-grid.html">Shop</a>
+                        <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
+                        <a class="breadcrumb-item" th:href="@{/shop-grid.html}">Shop</a>
                         <span class="breadcrumb-item active">Compete Track Tote</span>
                     </nav>
                 </div>
@@ -60,7 +60,7 @@
                                                             <figure class="swiper-slide" th:each="image:${productImages}">
                                                                 <a th:href="${image.getImageurl()}">
                                                                     <img th:src="${image.getImageurl()}" alt="Product Image" style="object-fit: cover; width: 600px; height: 600px">
-                                                                    <div class="image-overlay"><i class="fa fa-search-plus"></i></div>
+<!--                                                                    <div class="image-overlay"><i class="fa fa-search-plus"></i></div>-->
                                                                 </a>
                                                                 <figcaption class="visually-hidden">
                                                                     <span>Product Image</span>
