@@ -296,10 +296,7 @@
                                     <h2 class="widgettitle">Categories</h2>
                                     <div class="list-widget-wrapper">
                                         <div class="list-group">
-                                            <a href="#">Sneakers</a>
-                                            <a href="#">Backpacks</a>
-                                            <a href="#">Glasses</a>
-                                            <a href="#">Accessories</a>
+                                            <a href="#" th:each="category: ${categories}" th:text="${category.getName()}"></a>
                                         </div>
                                     </div>
                                 </div> <!-- end of sidebar-widget -->
