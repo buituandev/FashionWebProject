@@ -308,51 +308,45 @@
     const container = document.getElementById('image-preview-wrapper');
     const input = document.getElementById('files');
 
+    // Handle new image uploads without clearing the existing images
     input.addEventListener('change', (e) => {
-    container.innerHTML = '';  // Clear any previous images
-    if (e.target.files.length) {
-        Array.from(e.target.files).forEach((file, index) => {
-            const imgContainer = document.createElement('div');
-            imgContainer.classList.add('image-container');  // Container for image and overlay
+        if (e.target.files.length) {
+            Array.from(e.target.files).forEach((file, index) => {
+                const imgContainer = document.createElement('div');
+                imgContainer.classList.add('image-container');  // Container for image and overlay
 
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(file);
-            img.classList.add('preview-image');  // Apply styles to preview image
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                img.classList.add('preview-image');  // Apply styles to preview image
 
-            const overlay = document.createElement('div');
-            overlay.classList.add('pro-img-overlay');
+                const overlay = document.createElement('div');
+                overlay.classList.add('pro-img-overlay');
 
-            const deleteIcon = document.createElement('a');
-            deleteIcon.href = 'javascript:void(0)';
-            deleteIcon.classList.add('bg-danger', 'delete-icon');
-            deleteIcon.innerHTML = '<i class="ti-trash"></i>';
-            deleteIcon.dataset.index = index;  // Store the index of the file
+                const deleteIcon = document.createElement('a');
+                deleteIcon.href = 'javascript:void(0)';
+                deleteIcon.classList.add('bg-danger', 'delete-icon');
+                deleteIcon.innerHTML = '<i class="ti-trash"></i>';
+                deleteIcon.dataset.index = index;  // Store the index of the file
 
-            // Assuming you have a way to set imageId, set it here
-            // deleteIcon.dataset.imageId = someImageId;
+                // Add click event to remove the image
+                deleteIcon.addEventListener('click', () => {
+                    console.log('Delete icon clicked for index:', index);
+                    imgContainer.remove();
+                    if (typeof removeFile === 'function') {
+                        removeFile(index);
+                    } else {
+                        console.error('removeFile function is not defined');
+                    }
+                });
 
-            // Add click event to remove the image
-            deleteIcon.addEventListener('click', () => {
-                console.log('Delete icon clicked for index:', index);
-                imgContainer.remove();
-                if (typeof removeFile === 'function') {
-                    removeFile(index);
-                } else {
-                    console.error('removeFile function is not defined');
-                }
+                overlay.appendChild(deleteIcon);
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(overlay);
 
-                // Retrieve the image ID from the data attribute
-
+                container.appendChild(imgContainer);  // Append instead of clearing
             });
-
-            overlay.appendChild(deleteIcon);
-            imgContainer.appendChild(img);
-            imgContainer.appendChild(overlay);
-
-            container.appendChild(imgContainer);
-        });
-    }
-});
+        }
+    });
 
     function removeFile(index) {
         const dt = new DataTransfer();
