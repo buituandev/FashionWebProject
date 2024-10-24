@@ -1,161 +1,165 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout::head('Chroma - 404')">
+<head th:replace="~{layout::head('Chroma - 404')}">
 </head>
 <body>
 
-    <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
-    <![endif]-->
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve
+    your experience.</p>
+<![endif]-->
 
-    <!-- Start of Whole Site Wrapper with mobile menu support -->
-    <div id="whole" class="whole-site-wrapper color-scheme-one">
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
 
-        <div th:replace="layout::headernormal"></div>
-        <div th:replace="layout::nav"></div>
+    <div th:replace="~{layout::headernormal}"></div>
+    <div th:replace="~{layout::nav}"></div>
 
-        <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
+    <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
-        <!-- Start of Breadcrumbs -->
-        <div class="breadcrumb-section bgc-offset mb-full">
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section bgc-offset mb-full">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" href="index.html">Home</a>
+                        <span class="breadcrumb-item active">404</span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+
+    <!-- Start of Main Content Wrapper -->
+    <main id="content" class="main-content-wrapper">
+
+        <!-- Start of Error 404 Section -->
+        <section class="error-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12">
-                        <nav class="breadcrumb">
-                            <a class="breadcrumb-item" href="index.html">Home</a>
-                            <span class="breadcrumb-item active">404</span>
-                        </nav>
+                    <div class="col-md-12">
+                        <div class="error-wrapper text-center">
+                            <div class="error-text">
+                                <h1>404</h1>
+                                <h2>Oops! Something went wrong.</h2>
+                                <p>Sorry, the page you are looking for does not exist, have been removed, name changed
+                                    or is temporarity unavailable. </p>
+                                <p>You can try searching with a keyword below:</p>
+                            </div>
+                            <div class="search-error">
+                                <form id="search-form" class="input-group" action="#">
+                                    <input type="search" class="form-control" placeholder="Search.....">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </div>
+                            <div class="error-button mt-half">
+                                <a href="index.html" class="btn btn-secondary">Back to home page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end of container -->
+        </section>
+        <!-- End of Error 404 Section -->
+
+        <!-- Start of Newsletter Section -->
+        <section class="newsletter-section vpadding bgc-offset mb0">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-7">
+                        <div class="newsletter-title d-lg-flex justify-content-lg-start">
+                            <h6>Subscribe to our Newsletter</h6>
+                            <h3>Subscribe to our newsletter and know first about all the promotions and discounts. Be
+                                always trendy.</h3>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-5">
+                        <div class="newsletter-form-wrapper">
+                            <form class="mc-subscribe-form">
+                                <input type="email" autocomplete="off" placeholder="Enter you email address here..."
+                                       required>
+                                <input type="submit" class="default-btn" value="Subscribe">
+                            </form>
+
+                            <div class="mailchimp-alerts">
+                                <div class="mailchimp-submitting"></div>
+                                <div class="mailchimp-success"></div>
+                                <div class="mailchimp-error"></div>
+                            </div><!-- end of mailchimp-alerts -->
+                        </div>
                     </div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
+        </section>
+        <!-- End of Newsletter Section -->
+    </main>
+    <!-- End of Main Content Wrapper -->
+
+    <div th:replace="~{layout::footer}"></div>
+    <div th:replace="~{layout::scroll_to_top}"></div>
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- Initializing Photoswipe -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
         </div>
-        <!-- End of Breadcrumbs -->
-
-        <!-- Start of Main Content Wrapper -->
-        <main id="content" class="main-content-wrapper">
-            
-            <!-- Start of Error 404 Section -->
-            <section class="error-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="error-wrapper text-center">
-                                <div class="error-text">
-                                    <h1>404</h1>
-                                    <h2>Oops! Something went wrong.</h2>
-                                    <p>Sorry, the page you are looking for does not exist, have been removed, name changed or is temporarity unavailable. </p>
-                                    <p>You can try searching with a keyword below:</p>
-                                </div>
-                                <div class="search-error">
-                                    <form id="search-form" class="input-group" action="#">
-                                        <input type="search" class="form-control" placeholder="Search.....">
-                                        <button type="submit"><i class="fa fa-search"></i></button>
-                                    </form>
-                                </div>
-                                <div class="error-button mt-half">
-                                    <a href="index.html" class="btn btn-secondary">Back to home page</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- end of container -->
-            </section>
-            <!-- End of Error 404 Section -->
-
-            <!-- Start of Newsletter Section -->
-            <section class="newsletter-section vpadding bgc-offset mb0">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-7">
-                            <div class="newsletter-title d-lg-flex justify-content-lg-start">
-                                <h6>Subscribe to our Newsletter</h6>
-                                <h3>Subscribe to our newsletter and know first about all the promotions and discounts. Be always trendy.</h3>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-5">
-                            <div class="newsletter-form-wrapper">
-                                <form class="mc-subscribe-form">
-                                    <input type="email" autocomplete="off" placeholder="Enter you email address here..." required> 
-                                    <input type="submit" class="default-btn" value="Subscribe">
-                                </form>
-
-                                <div class="mailchimp-alerts">
-                                    <div class="mailchimp-submitting"></div>
-                                    <div class="mailchimp-success"></div>
-                                    <div class="mailchimp-error"></div>
-                                </div><!-- end of mailchimp-alerts -->
-                            </div>
-                        </div>
-                    </div> <!-- end of row -->
-                </div> <!-- end of container -->
-            </section>
-            <!-- End of Newsletter Section -->
-        </main>
-        <!-- End of Main Content Wrapper -->
-
-        <div th:replace="layout::footer"></div>
-        <div th:replace="layout::scroll_to_top"></div>
-    </div>
-    <!-- End of Whole Site Wrapper -->
-
-    <!-- Initializing Photoswipe -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
                         </div>
                     </div>
                 </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
             </div>
         </div>
     </div>
-    <!-- End of Photoswipe -->
+</div>
+<!-- End of Photoswipe -->
 
 
-    <!-- JS
-    ============================================ -->
+<!-- JS
+============================================ -->
 
-    <!-- jQuery JS -->
-    <script src="assets/js/jquery.1.12.4.min.js"></script>
+<!-- jQuery JS -->
+<script src="assets/js/jquery.1.12.4.min.js"></script>
 
-    <!-- Popper JS -->
-    <script src="assets/js/popper.min.js"></script>
+<!-- Popper JS -->
+<script src="assets/js/popper.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="assets/js/bootstrap.min.js"></script>
 
-    <!-- Plugins JS -->
-    <script src="assets/js/plugins.js"></script>
+<!-- Plugins JS -->
+<script src="assets/js/plugins.js"></script>
 
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+<!-- Main JS -->
+<script src="assets/js/main.js"></script>
 
 </body>
 

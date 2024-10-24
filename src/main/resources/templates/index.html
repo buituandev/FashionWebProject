@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
 >
-<head th:replace="layout::head('Chroma Shop')">
+<head th:replace="~{layout::head('Chroma Shop')}">
 </head>
 
 <body>
@@ -122,9 +122,9 @@
         <div class="banner-section mt-30 mb-half">
             <div class="container">
                 <div class="row">
-                    <div th:replace="layout::promoBannerNarrow('assets/images/banners/banner-1.jpg')"></div>
-                    <div th:replace="layout::promoBannerNarrow('assets/images/banners/banner-2.jpg')"></div>
-                    <div th:replace="layout::promoBannerNarrow('assets/images/banners/banner-3.jpg')"></div>
+                    <div th:replace="~{layout::promoBannerNarrow('assets/images/banners/banner-1.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerNarrow('assets/images/banners/banner-2.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerNarrow('assets/images/banners/banner-3.jpg')}"></div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>
@@ -515,8 +515,8 @@
         <div class="banner-section mt-full mb-half">
             <div class="container">
                 <div class="row">
-                    <div th:replace="layout::promoBannerWide('assets/images/banners/banner-7.jpg')"></div>
-                    <div th:replace="layout::promoBannerWide('assets/images/banners/banner-8.jpg')"></div>
+                    <div th:replace="~{layout::promoBannerWide('assets/images/banners/banner-7.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerWide('assets/images/banners/banner-8.jpg')}"></div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>

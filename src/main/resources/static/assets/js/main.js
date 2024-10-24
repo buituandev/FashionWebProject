@@ -1,27 +1,27 @@
 /******************************
 
-INDEX:
+ INDEX:
 
-    s00 - Predefined Variables
-    s01 - Nice Select Init
-    s02 - Main Navigation Menu
-    s03 - Image Background Settings
-    s04 - Primary Slider Settings
-    s05 - Elements Spacing & Classes
-    s06 - Elements Carousel
-    s07 - Tooltips
-    s08 - Product Gallery with Thumbnails
-    s09 - Testimonial Carousel
-    s10 - Scroll to Top JS
-    s11 - Interactive Behaviour
-    s12 - Instagram Settings
-    s13 - MailChimp Settings
+ s00 - Predefined Variables
+ s01 - Nice Select Init
+ s02 - Main Navigation Menu
+ s03 - Image Background Settings
+ s04 - Primary Slider Settings
+ s05 - Elements Spacing & Classes
+ s06 - Elements Carousel
+ s07 - Tooltips
+ s08 - Product Gallery with Thumbnails
+ s09 - Testimonial Carousel
+ s10 - Scroll to Top JS
+ s11 - Interactive Behaviour
+ s12 - Instagram Settings
+ s13 - MailChimp Settings
 
 
 
-******************************/
+ ******************************/
 
-(function($) {
+(function ($) {
 
     "use strict";
 
@@ -30,45 +30,45 @@ INDEX:
 
 
     /************************************************************
-        s00 - Predefined Variables
-    *************************************************************/
+     s00 - Predefined Variables
+     *************************************************************/
 
-    var $window             = $(window),
-        $document           = $(document),
-        $niceSelect         = $(".nice-select"),
-        $mainMenu           = $(".stellarnav"),
-        $headerfl           = $(".floating-header"),
-        $pSlider            = $("#primary_slider"),
-        $elCarousel         = $(".element-carousel"),
-        $galleryThumbs      = $(".gallery-with-thumbs"),
-        $testimonial        = $(".testimonial-container"),
-        $toTop              = $("#to_top"),
-        $intelHeader        = $(".main-nav-area"),
-        $footer             = $("#colophon"),
-        $priceRange         = $("#price_slider"),
-        $instagram          = $("#instagram_feed"),
-        $mailChimp          = $(".mc-subscribe-form");
+    var $window = $(window),
+        $document = $(document),
+        $niceSelect = $(".nice-select"),
+        $mainMenu = $(".stellarnav"),
+        $headerfl = $(".floating-header"),
+        $pSlider = $("#primary_slider"),
+        $elCarousel = $(".element-carousel"),
+        $galleryThumbs = $(".gallery-with-thumbs"),
+        $testimonial = $(".testimonial-container"),
+        $toTop = $("#to_top"),
+        $intelHeader = $(".main-nav-area"),
+        $footer = $("#colophon"),
+        $priceRange = $("#price_slider"),
+        $instagram = $("#instagram_feed"),
+        $mailChimp = $(".mc-subscribe-form");
 
 
     // Check if element exists
-    $.fn.elExists = function() {
+    $.fn.elExists = function () {
         return this.length > 0;
     };
 
 
     /************************************************************
-        s01 - Nice Select Init
-    *************************************************************/
-    PEBONA.niceInit = function() {
+     s01 - Nice Select Init
+     *************************************************************/
+    PEBONA.niceInit = function () {
         $niceSelect.niceSelect();
     };
 
 
     /************************************************************
-        s02 - Main Navigation Menu
-    *************************************************************/
+     s02 - Main Navigation Menu
+     *************************************************************/
 
-    PEBONA.mainNav = function() {
+    PEBONA.mainNav = function () {
         $mainMenu.stellarNav({
             theme: 'plain',
             breakpoint: 991,
@@ -78,12 +78,11 @@ INDEX:
 
         // Adding active class to nav menu depending on page
         var pageUrl = window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
-        $("#main_nav a").each(function() {
+        $("#main_nav a").each(function () {
             if ($(this).attr("href") === pageUrl || $(this).attr("href") === '') {
                 $(this).closest('li').addClass("active");
                 $(this).parents('li').addClass('active');
-            }
-            else if (window.location.pathname === '/' || window.location.pathname === '/index-main.html') {
+            } else if (window.location.pathname === '/' || window.location.pathname === '/index-main.html') {
                 $('#main_nav a[href="index-main.html"]').parent('li').addClass('active');
             }
         })
@@ -91,11 +90,11 @@ INDEX:
 
 
     /************************************************************
-        s03 - Image Background Settings
-    *************************************************************/
+     s03 - Image Background Settings
+     *************************************************************/
 
-    PEBONA.imageBgSettings = function() {
-        $(".bg-img-wrapper").each(function() {
+    PEBONA.imageBgSettings = function () {
+        $(".bg-img-wrapper").each(function () {
             var $this = $(this);
             var img = $this.find("img.visually-hidden").attr("src");
 
@@ -109,16 +108,16 @@ INDEX:
 
 
     /************************************************************
-        s04 - Primary Slider Settings
-    *************************************************************/
+     s04 - Primary Slider Settings
+     *************************************************************/
 
-    PEBONA.primarySlider = function() {
+    PEBONA.primarySlider = function () {
         if ($pSlider.elExists()) {
 
             let interleaveOffset = 0.5;
 
-            if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1){
-                 // Firefox-related activities
+            if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+                // Firefox-related activities
                 interleaveOffset = 0;
             }
 
@@ -147,7 +146,7 @@ INDEX:
 
                 // Giving slider a background parallax sliding effect
                 on: {
-                    progress: function() {
+                    progress: function () {
                         var swiper = this;
                         for (var i = 0; i < swiper.slides.length; i++) {
                             var slideProgress = swiper.slides[i].progress;
@@ -157,13 +156,13 @@ INDEX:
                                 "translate3d(" + innerTranslate + "px, 0, 0)";
                         }
                     },
-                    touchStart: function() {
+                    touchStart: function () {
                         var swiper = this;
                         for (var i = 0; i < swiper.slides.length; i++) {
                             swiper.slides[i].style.transition = "";
                         }
                     },
-                    setTransition: function(speed) {
+                    setTransition: function (speed) {
                         var swiper = this;
                         for (var i = 0; i < swiper.slides.length; i++) {
                             swiper.slides[i].style.transition = speed + "ms";
@@ -180,19 +179,19 @@ INDEX:
 
 
     /************************************************************
-        s05 - Elements Spacing & Classes
-    *************************************************************/
+     s05 - Elements Spacing & Classes
+     *************************************************************/
 
-    PEBONA.ElementsSpacingClasses = function() {
+    PEBONA.ElementsSpacingClasses = function () {
 
         // Fixed Navigation Menu Height
         var headerHeight = $intelHeader[0].getBoundingClientRect().height;
-        var topBarHeight = ( $('header .top-bar').elExists() ) ? $('header .top-bar')[0].getBoundingClientRect().height : 0;
+        var topBarHeight = ($('header .top-bar').elExists()) ? $('header .top-bar')[0].getBoundingClientRect().height : 0;
         var headerMainHeight = $('header .header-area')[0].getBoundingClientRect().height;
         var headerTotalHeight = topBarHeight + headerMainHeight;
 
         // Sticky header
-        $window.on('scroll', function() {
+        $window.on('scroll', function () {
             var height = $window.scrollTop();
             if (height < headerTotalHeight) {
                 $(".fixed-header-space").height(0);
@@ -236,43 +235,43 @@ INDEX:
 
 
     /************************************************************
-        s06 - Elements Carousel
-    *************************************************************/
+     s06 - Elements Carousel
+     *************************************************************/
 
-    PEBONA.elementsCarousel = function() {
+    PEBONA.elementsCarousel = function () {
 
-        var visibleSlides       = null;
-        var visibleSlides_xl    = null;
-        var visibleSlides_lg    = null;
-        var visibleSlides_md    = null;
-        var visibleSlides_sm    = null;
-        var visibleSlides_xs    = null;
-        var slideLoop           = null;
-        var slideSpeed          = null;
-        var slideSpace          = null;
-        var slideAutoPlayDelay  = null;
-        var slideEffect         = null;
+        var visibleSlides = null;
+        var visibleSlides_xl = null;
+        var visibleSlides_lg = null;
+        var visibleSlides_md = null;
+        var visibleSlides_sm = null;
+        var visibleSlides_xs = null;
+        var slideLoop = null;
+        var slideSpeed = null;
+        var slideSpace = null;
+        var slideAutoPlayDelay = null;
+        var slideEffect = null;
 
         if ($elCarousel.elExists()) {
 
             var swiperInstances = [];
 
-            $elCarousel.each(function(index, element) {
+            $elCarousel.each(function (index, element) {
 
                 var $this = $(this);
 
                 // Fetching from data attributes
-                var visibleSlides       = $this.attr("data-visible-slide") ? parseInt($this.attr("data-visible-slide"), 10) : 5;
-                var visibleSlides_xl    = $this.attr("data-visible-xl-slide") ? parseInt($this.attr("data-visible-xl-slide"), 10) : 5;
-                var visibleSlides_lg    = $this.attr("data-visible-lg-slide") ? parseInt($this.attr("data-visible-lg-slide"), 10) : 4;
-                var visibleSlides_md    = $this.attr("data-visible-md-slide") ? parseInt($this.attr("data-visible-md-slide"), 10) : 3;
-                var visibleSlides_sm    = $this.attr("data-visible-sm-slide") ? parseInt($this.attr("data-visible-sm-slide"), 10) : 2;
-                var visibleSlides_xs    = $this.attr("data-visible-xs-slide") ? parseInt($this.attr("data-visible-xs-slide"), 10) : 1;
-                var slideSpeed          = $this.attr("data-speed") ? parseInt($this.attr("data-speed"), 10) : 1000;
-                var slideLoop           = $this.attr("data-loop") === 'true' ? 1 : 0;
-                var slideSpace          = $this.attr("data-space-between") ? parseInt($this.attr("data-space-between"), 10) : 30;
-                var slideAutoPlayDelay  = $this.attr("data-autoplay-delay") ? parseInt($this.attr("data-autoplay-delay"), 10) : 100000000;
-                var slideEffect         = $this.attr("data-effect") ? $this.attr("data-effect") : 'slide';
+                var visibleSlides = $this.attr("data-visible-slide") ? parseInt($this.attr("data-visible-slide"), 10) : 5;
+                var visibleSlides_xl = $this.attr("data-visible-xl-slide") ? parseInt($this.attr("data-visible-xl-slide"), 10) : 5;
+                var visibleSlides_lg = $this.attr("data-visible-lg-slide") ? parseInt($this.attr("data-visible-lg-slide"), 10) : 4;
+                var visibleSlides_md = $this.attr("data-visible-md-slide") ? parseInt($this.attr("data-visible-md-slide"), 10) : 3;
+                var visibleSlides_sm = $this.attr("data-visible-sm-slide") ? parseInt($this.attr("data-visible-sm-slide"), 10) : 2;
+                var visibleSlides_xs = $this.attr("data-visible-xs-slide") ? parseInt($this.attr("data-visible-xs-slide"), 10) : 1;
+                var slideSpeed = $this.attr("data-speed") ? parseInt($this.attr("data-speed"), 10) : 1000;
+                var slideLoop = $this.attr("data-loop") === 'true' ? 1 : 0;
+                var slideSpace = $this.attr("data-space-between") ? parseInt($this.attr("data-space-between"), 10) : 30;
+                var slideAutoPlayDelay = $this.attr("data-autoplay-delay") ? parseInt($this.attr("data-autoplay-delay"), 10) : 100000000;
+                var slideEffect = $this.attr("data-effect") ? $this.attr("data-effect") : 'slide';
 
                 // Adding slider and slider-nav instances to use multiple times in a page
                 $this.addClass("instance-" + index);
@@ -340,17 +339,17 @@ INDEX:
                     }
                 });
             });
-            
+
             // Updating the sliders
             setTimeout(function () {
-                swiperInstances.forEach(function(slider) {
+                swiperInstances.forEach(function (slider) {
                     slider.update();
                 })
             }, 50);
 
             // Updating the sliders in tab
             $('body').on('shown.bs.tab', 'a[data-bs-toggle="tab"], a[data-bs-toggle="pill"]', function (e) {
-                swiperInstances.forEach(function(slider) {
+                swiperInstances.forEach(function (slider) {
                     slider.update();
                 })
             });
@@ -358,10 +357,10 @@ INDEX:
     };
 
     /************************************************************
-        s08 - Product Gallery with Thumbnails
-    *************************************************************/
+     s08 - Product Gallery with Thumbnails
+     *************************************************************/
 
-    PEBONA.galleryWithThumb = function() {
+    PEBONA.galleryWithThumb = function () {
         if ($galleryThumbs.elExists()) {
 
             // Params
@@ -372,7 +371,7 @@ INDEX:
             var mainSliderOptions = {
                 effect: 'fade',
                 loop: true,
-                speed:1000,
+                speed: 1000,
                 spaceBetween: 0,
                 loopAdditionalSlides: 10,
                 watchSlidesProgress: true,
@@ -384,7 +383,7 @@ INDEX:
             // Navigation Slider
             var navSliderOptions = {
                 loop: true,
-                speed:1000,
+                speed: 1000,
                 slidesPerView: 3,
                 mousewheel: true,
                 loopAdditionalSlides: 10,
@@ -425,8 +424,8 @@ INDEX:
             navSlider.controller.control = mainSlider;
 
             // Updating slider in modal
-            $('body').on('shown.bs.modal', '#product_quick_view', function() {
-                setTimeout(function() {
+            $('body').on('shown.bs.modal', '#product_quick_view', function () {
+                setTimeout(function () {
                     navSlider.update();
                     mainSlider.update();
                 }, 500);
@@ -436,10 +435,10 @@ INDEX:
 
 
     /************************************************************
-        s09 - Testimonial Carousel
-    *************************************************************/
+     s09 - Testimonial Carousel
+     *************************************************************/
 
-    PEBONA.testimonialCarousel = function() {
+    PEBONA.testimonialCarousel = function () {
         if ($testimonial.elExists()) {
             var testimonial = new Swiper($testimonial, {
                 loop: true,
@@ -465,12 +464,12 @@ INDEX:
 
 
     /************************************************************
-        s10 - Scroll to Top JS
-    *************************************************************/
+     s10 - Scroll to Top JS
+     *************************************************************/
 
-    PEBONA.scrollToTop = function() {
+    PEBONA.scrollToTop = function () {
         $toTop.hide();
-        $window.on('scroll', function() {
+        $window.on('scroll', function () {
             if ($window.scrollTop() > 300) {
                 $toTop.fadeIn();
             } else {
@@ -478,7 +477,7 @@ INDEX:
             }
         });
 
-        $toTop.on('click', function() {
+        $toTop.on('click', function () {
             $("html,body").animate({
                 scrollTop: 0
             }, 1000)
@@ -487,31 +486,31 @@ INDEX:
 
 
     /************************************************************
-        s11 - Interactive Behaviour
-    *************************************************************/
+     s11 - Interactive Behaviour
+     *************************************************************/
 
-    PEBONA.interactiveBehaviour = function() {
+    PEBONA.interactiveBehaviour = function () {
 
         // Checkout Page Accordion Behaviour
-        $( '#show_login' ).on('click', function() {
-            $( '#checkout_login' ).slideToggle(300);
+        $('#show_login').on('click', function () {
+            $('#checkout_login').slideToggle(300);
         });
 
-        $( '#show_coupon' ).on('click', function() {
-            $( '#checkout_coupon' ).slideToggle(300);
+        $('#show_coupon').on('click', function () {
+            $('#checkout_coupon').slideToggle(300);
         });
 
-        $("#different_shipping").on("change",function(){
+        $("#different_shipping").on("change", function () {
             $(".ship-box-info").slideToggle(300);
         });
 
-        $("#create_account").on("change",function(){
+        $("#create_account").on("change", function () {
             $(".new-account-info").slideToggle(300);
         });
-        
+
 
         // Header Custom dropdowns
-        $("header .dropdown-toggle").on("click", function() {
+        $("header .dropdown-toggle").on("click", function () {
             $(this).toggleClass('open').next('.dropdown-menu').toggleClass('open');
             $(this).parents().siblings().find('.dropdown-menu, .dropdown-toggle').removeClass('open');
         });
@@ -525,7 +524,7 @@ INDEX:
         });
 
         // Prevent closing dropdown upon clicking inside the dropdown
-        $("header .dropdown-menu").on("click", function(e) {
+        $("header .dropdown-menu").on("click", function (e) {
             e.stopPropagation();
         });
 
@@ -551,7 +550,7 @@ INDEX:
 
         // Custom INC/DESC clickable button
         $(".cart-input").append('<div class="dec qtybutton"><i class="fa fa-angle-down"></i></div><div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>');
-        $(".qtybutton").on("click", function() {
+        $(".qtybutton").on("click", function () {
             let newVal;
             var $button = $(this);
             var oldValue = $button.parent().find("input").val();
@@ -572,13 +571,13 @@ INDEX:
 
 
     /************************************************************
-        s12 - Instagram Settings
-    *************************************************************/
+     s12 - Instagram Settings
+     *************************************************************/
 
-    PEBONA.instagramSettings = function() {
+    PEBONA.instagramSettings = function () {
         if ($instagram.elExists()) {
             var feed = new Instafeed({
-                accessToken:'IGQVJYX1VzNUVSRmhiV1ZAXTWRiUXNIdHVmM0FwMlBGamhIaWItWUFINk1HSGZA2NjZAoWnp1ZAkt6REhlWjdCd3I5RnlmRzNaSkwzcGxpTlIzcDJLdk9idVBBemZAGSjJwN29mQmVJcF9nVThVVnZAOZATF3NwZDZD',
+                accessToken: 'IGQVJYX1VzNUVSRmhiV1ZAXTWRiUXNIdHVmM0FwMlBGamhIaWItWUFINk1HSGZA2NjZAoWnp1ZAkt6REhlWjdCd3I5RnlmRzNaSkwzcGxpTlIzcDJLdk9idVBBemZAGSjJwN29mQmVJcF9nVThVVnZAOZATF3NwZDZD',
                 target: 'instagram_feed',
                 resolution: 'standard_resolution',
                 limit: 9,
@@ -621,22 +620,22 @@ INDEX:
                     });
                 }
             });
-            
+
             feed.run();
         }
     };
 
 
     /************************************************************
-        s13 - MailChimp Settings
-    *************************************************************/
+     s13 - MailChimp Settings
+     *************************************************************/
 
-    PEBONA.mcSettings = function() {
+    PEBONA.mcSettings = function () {
         if ($mailChimp.elExists()) {
             $mailChimp.ajaxChimp({
                 language: 'en',
                 callback: mailChimpResponse,
-                
+
                 // ADD YOUR MAILCHIMP URL BELOW HERE!
                 url: 'https://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef'
             });
@@ -645,7 +644,7 @@ INDEX:
                 if (resp.result === 'success') {
                     $('.mailchimp-success').addClass('active').html('' + resp.msg).fadeIn(900);
                     $('.mailchimp-error').removeClass('active').fadeOut(400);
-                } else if(resp.result === 'error') {
+                } else if (resp.result === 'error') {
                     $('.mailchimp-error').addClass('active').html('' + resp.msg).fadeIn(900);
                 }
             }
@@ -653,28 +652,27 @@ INDEX:
     };
 
 
-
     // Window load functions
-    $window.on('load', function() {
+    $window.on('load', function () {
         PEBONA.primarySlider(),
-        PEBONA.interactiveBehaviour();
+            PEBONA.interactiveBehaviour();
         PEBONA.imageBgSettings();
     });
 
     // Document ready functions
-    $document.on('ready', function() {
+    $document.on('ready', function () {
         PEBONA.niceInit(),
-        PEBONA.mainNav(),
-        PEBONA.elementsCarousel(),
-        PEBONA.galleryWithThumb(),
-        PEBONA.testimonialCarousel(),
-        PEBONA.scrollToTop(),
-        PEBONA.mcSettings(),
-        PEBONA.instagramSettings();
+            PEBONA.mainNav(),
+            PEBONA.elementsCarousel(),
+            PEBONA.galleryWithThumb(),
+            PEBONA.testimonialCarousel(),
+            PEBONA.scrollToTop(),
+            PEBONA.mcSettings(),
+            PEBONA.instagramSettings();
     });
 
     // Window load and resize functions
-    $window.on('load resize', function() {
+    $window.on('load resize', function () {
         PEBONA.ElementsSpacingClasses();
     });
 
