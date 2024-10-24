@@ -2,7 +2,7 @@
 <html lang="zxx">
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout::head('Chroma - Cart')">
+<head th:replace="~{layout::head('Chroma - Cart')}">
 </head>
 
 <body>
@@ -14,8 +14,8 @@
     <!-- Start of Whole Site Wrapper with mobile menu support -->
     <div id="whole" class="whole-site-wrapper color-scheme-one">
 
-        <div th:replace="layout::headernormal"></div>
-        <div th:replace="layout::nav"></div>
+        <div th:replace="~{layout::headernormal}"></div>
+        <div th:replace="~{layout::nav}"></div>
 
         <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
@@ -228,8 +228,8 @@
         </div>
         <!-- End of Main Content Wrapper -->
 
-        <div th:replace="layout::footer"></div>
-        <div th:replace="layout::scroll_to_top"></div>
+        <div th:replace="~{layout::footer}"></div>
+        <div th:replace="~{layout::scroll_to_top}"></div>
 
     </div>
     <!-- End of Whole Site Wrapper -->
