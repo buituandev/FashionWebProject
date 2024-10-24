@@ -1,9 +1,13 @@
 package walkonmoon.fashion.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name="category")
 public class Category {
@@ -17,39 +21,7 @@ public class Category {
     private String description;
     @Column(name="create_date")
     private Date createDate;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
+    
     @Override
     public String toString() {
         return "Category{" +
