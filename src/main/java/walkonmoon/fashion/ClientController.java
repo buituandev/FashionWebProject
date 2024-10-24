@@ -84,7 +84,7 @@ public class ClientController {
         model.addAttribute("product", product);
         List<Image> productImages = imageService.findByProductId(product.getId());
         model.addAttribute("productImages", productImages);
-        List<Product> relatedProducts = productService.findByCategoryId(product.getCategory_id());
+        List<Product> relatedProducts = productService.findByCategoryId(product.getCategoryId());
         model.addAttribute("relatedProducts", relatedProducts);
         return "single-product";
     }
