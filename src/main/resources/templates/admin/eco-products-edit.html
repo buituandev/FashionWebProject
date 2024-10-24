@@ -142,7 +142,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Category</label>
-                                                <select th:field="*{category_id}" class="form-control" tabindex="1">
+                                                <select th:field="*{categoryId}" class="form-control" tabindex="1">
                                                     <option th:each="category : ${categories}"
                                                             th:text="${category.getName()}"
                                                             th:value="${category.getId()}"
