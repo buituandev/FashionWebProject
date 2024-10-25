@@ -26,9 +26,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -57,7 +55,16 @@ public class AdminController {
     @GetMapping("/eco-products.html")
     public String productManagement(Model model2) {
         List<Product> products = productService.getListProducts();
+        Map<Integer, String> categoryMap = new HashMap<>();
+         for (Product product : products) {
+              Category category = categoryService.getCategoryById(product.getCategoryId());
+              if(category != null){
+                   categoryMap.put(product.getCategoryId(), category.getName());
+              }
+         }
         model2.addAttribute("productList", products);
+         model2.addAttribute("categoryMap", categoryMap);
+
         return "admin/eco-products";
     }
 
