@@ -399,7 +399,7 @@
 <!-- end of promo-banner -->
 
 <!-- Start of Main and Mobile Navigation -->
-<div th:fragment="nav" class="main-nav-area">
+<div th:fragment="nav(categories)" class="main-nav-area">
     <div class="container">
         <nav id="main_nav" class="stellarnav white-scheme desktop">
             <!-- <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a> -->
@@ -411,8 +411,10 @@
                         <li class="has-sub column column-3"><a href="#" class="mega-menu-title">
                             <h3>Shop</h3>
                         </a>
-                            <ul style="max-width: 100%;">
-                                <li><a href="/" th:href="@{/shop-grid.html}">All Products</a></li>
+                            <ul>
+                                <li th:each="category : ${categories}">
+                                    <a href="/" th:href="@{/shop-grid.html}" th:text="${category.name}"></a>
+                                </li>
                             </ul>
                             <a class="dd-toggle" href="#"><i class="fa fa-plus"></i></a>
                         </li>
