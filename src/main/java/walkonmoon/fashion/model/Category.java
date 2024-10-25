@@ -21,6 +21,8 @@ public class Category {
     private String description;
     @Column(name="create_date")
     private Date createDate;
+    @Column(name="quantity", nullable = false, columnDefinition = "int default 0")
+    private int quantity;
     
     @Override
     public String toString() {
@@ -29,6 +31,7 @@ public class Category {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", createDate=" + createDate +
+                 ", quantity=" + quantity +
                 '}';
     }
 }
