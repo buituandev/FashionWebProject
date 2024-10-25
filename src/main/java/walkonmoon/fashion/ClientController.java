@@ -15,6 +15,7 @@ import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class ClientController {
@@ -94,6 +95,9 @@ public class ClientController {
         List<Image> productImages = imageService.findByProductId(product.getId());
         model.addAttribute("productImages", productImages);
         List<Product> relatedProducts = productService.findByCategoryId(product.getCategoryId());
+        relatedProducts = relatedProducts.stream()
+                .filter(p -> p.getId() != product.getId())
+                .collect(Collectors.toList());
         model.addAttribute("relatedProducts", relatedProducts);
         return "single-product";
     }
