@@ -64,20 +64,20 @@
                                                         <span>Showing 10 to 18 of 27</span>
                                                     </div>
                                                 </div>
-                                                <div class="product-select-box">
-                                                    <div class="product-sort">
-                                                        <p>Sort By:</p>
-                                                        <select class="nice-select" name="sortby">
-                                                            <option value="trending">Relevance</option>
-                                                            <option value="sales">Name (A - Z)</option>
-                                                            <option value="sales">Name (Z - A)</option>
-                                                            <option value="rating">Price (Low > High)</option>
-                                                            <option value="date">Rating (Lowest)</option>
-                                                            <option value="price-asc">Model (A - Z)</option>
-                                                            <option value="price-asc">Model (Z - A)</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+<!--                                                <div class="product-select-box">-->
+<!--                                                    <div class="product-sort">-->
+<!--                                                        <p>Sort By:</p>-->
+<!--                                                        <select class="nice-select" name="sortby">-->
+<!--                                                            <option value="trending">Relevance</option>-->
+<!--                                                            <option value="sales">Name (A - Z)</option>-->
+<!--                                                            <option value="sales">Name (Z - A)</option>-->
+<!--                                                            <option value="rating">Price (Low > High)</option>-->
+<!--                                                            <option value="date">Rating (Lowest)</option>-->
+<!--                                                            <option value="price-asc">Model (A - Z)</option>-->
+<!--                                                            <option value="price-asc">Model (Z - A)</option>-->
+<!--                                                        </select>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
                                             </div>
                                         </div>
                                     </div> <!-- end of row -->
@@ -296,49 +296,64 @@
                                     <h2 class="widgettitle">Categories</h2>
                                     <div class="list-widget-wrapper">
                                         <div class="list-group">
-                                            <a href="#" th:each="category: ${categories}" th:text="${category.getName()}"></a>
+                                            <div th:each="category: ${categories}">
+                                                <input
+                                                        type="checkbox"
+                                                        th:checked="${selectedCategoryId} == ${category.getId()}"
+                                                        th:id="'checkbox-' + ${category.getId()}"
+                                                        th:name="category-checkbox"
+                                                        th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"
+                                                        th:data-href="@{'/shop-grid/' + ${category.getId()}}"
+                                                        onclick="selectOnlyOne(this);"
+                                                />
+                                                <label th:for="'checkbox-' + ${category.getId()}"></label>
+                                                <a th:href="@{'/shop-grid/' + ${category.getId()}}"
+                                                   th:text="${category.getName()}"
+                                                   th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"
+                                                   th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div> <!-- end of sidebar-widget -->
+                                </div>
+                                <!--                                <div class="sidebar-widget list-widget">-->
+<!--                                    <h2 class="widgettitle">Brands</h2>-->
+<!--                                    <div class="list-widget-wrapper">-->
+<!--                                        <div class="list-group">-->
+<!--                                            <a href="#">Graphic Corner (14)</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget list-widget">
-                                    <h2 class="widgettitle">Brands</h2>
-                                    <div class="list-widget-wrapper">
-                                        <div class="list-group">
-                                            <a href="#">Graphic Corner (14)</a>
-                                        </div>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
+<!--                                <div class="sidebar-widget list-widget">-->
+<!--                                    <h2 class="widgettitle">Price</h2>-->
+<!--                                    <div class="list-widget-wrapper">-->
+<!--                                        <div class="list-group">-->
+<!--                                            <a href="#">$43.00 - $45.00 (10)</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget list-widget">
-                                    <h2 class="widgettitle">Price</h2>
-                                    <div class="list-widget-wrapper">
-                                        <div class="list-group">
-                                            <a href="#">$43.00 - $45.00 (10)</a>
-                                        </div>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
+<!--                                <div class="sidebar-widget color-widget">-->
+<!--                                    <h2 class="widgettitle">Color</h2>-->
+<!--                                    <div class="color-widget-wrapper">-->
+<!--                                        <ul class="color-options">-->
+<!--                                            <li>-->
+<!--                                                <span class="white"></span>-->
+<!--                                                <a href="#">white (4)</a>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget color-widget">
-                                    <h2 class="widgettitle">Color</h2>
-                                    <div class="color-widget-wrapper">
-                                        <ul class="color-options">
-                                            <li>
-                                                <span class="white"></span>
-                                                <a href="#">white (4)</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
-
-                                <div class="sidebar-widget tag-cloud">
-                                    <h2 class="widgettitle">Popular Tags</h2>
-                                    <div class="tags-widget">
-                                        <ul>
-                                            <li><a href="#">Ecommerce</a></li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
+<!--                                <div class="sidebar-widget tag-cloud">-->
+<!--                                    <h2 class="widgettitle">Popular Tags</h2>-->
+<!--                                    <div class="tags-widget">-->
+<!--                                        <ul>-->
+<!--                                            <li><a href="#">Ecommerce</a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
                             </aside> <!-- end of #secondary -->
                         </div>
                     </div> <!-- end of row -->
@@ -671,5 +686,52 @@
     <script src="assets/js/main.js"></script>
 
 </body>
+<script>
+    function selectOnlyOne(checkbox) {
+        // Deselect all checkboxes
+        var checkboxes = document.getElementsByName('category-checkbox');
+        checkboxes.forEach(function (item) {
+            if (item !== checkbox) item.checked = false;
+        });
+
+        // Redirect to the href associated with the checkbox
+        if (checkbox.checked) {
+            window.location.href = checkbox.getAttribute('data-href');
+        }
+    }
+</script>
+<style>
+    /* Hide the default checkbox */
+    input[type="checkbox"] {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        appearance: none;
+        border: 2px solid black;
+        cursor: pointer;
+    }
+
+    /* Custom checkbox appearance */
+    input[type="checkbox"]:checked {
+        background-color: red; /* Set red background when checked */
+        border-color: black;
+    }
+
+    /* Create the checkmark when checked */
+    input[type="checkbox"]:checked::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        top: 2px;
+        left: 7px;
+        transform: rotate(45deg);
+    }
+
+</style>
+
+
 
 </html>
