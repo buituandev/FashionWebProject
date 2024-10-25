@@ -57,6 +57,8 @@ public class ClientController {
         model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
         List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
         model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
         return "index";
     }
 
@@ -102,6 +104,12 @@ public class ClientController {
         return "single-product";
     }
 
+    @GetMapping("/categories")
+    public String getCategories(Model model) {
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        return "layout"; // or the name of your template
+    }
     @GetMapping("/single-product.html")
     public String singleProductHtml(){
         return "single-product";

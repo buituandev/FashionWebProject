@@ -124,7 +124,7 @@
                                                                             </div>
                                                                             <h4 class="product-name"><a href="single-product.html" th:text="${product.getProduct_name()}"></a></h4>
                                                                             <p class="product-price">
-                                                                                <span class="price-new" th:text="${product.getPrice()}"></span>
+                                                                                <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
                                                                             </p>
                                                                         </div><!-- end of product-caption -->
                                                                     </div><!-- end of product-inner -->
@@ -683,6 +683,8 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+
+    <script src="/assets/js/FormatPrice.js"></script>
 
 </body>
 <script>
