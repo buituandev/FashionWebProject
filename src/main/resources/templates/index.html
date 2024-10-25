@@ -235,7 +235,7 @@
                                                             </div>
                                                             <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp1.getId()}}" th:text="${fp1.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-old" th:text="${fp1.getPrice()}" >$76.40</span>
+                                                                <span class="price-old formatted-price" th:text="${fp1.getPrice()}+' VND'" >$76.40</span>
 
                                                             </p>
                                                         </div><!-- end of product-caption -->
@@ -320,14 +320,13 @@
                                                             </div>
                                                             <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp2.getId()}}" th:text="${fp2.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-old" th:text="${fp2.getPrice()}"></span>
-                                                                <span class="price-new" th:text="${fp2.getPrice()}"></span>
+<!--                                                                <span class="price-old" th:text="${fp2.getPrice()}"></span>-->
+                                                                <span class="price-new formatted-price" th:text="${fp2.getPrice()}+' VND'"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
                                                 </div><!-- end of product-thumb -->
                                             </article>
-                                             end of product-layout
 
                                         </div> <!-- end of swiper-wrapper -->
 
@@ -405,7 +404,7 @@
                                                             </div>
                                                             <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp3.getId()}}" th:text="${fp3.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-new" th:text="${fp3.getPrice()}"></span>
+                                                                <span class="price-new formatted-price" th:text="${fp3.getPrice()}+' VND'"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -488,7 +487,7 @@
                                                             </div>
                                                             <h4 class="product-name"><a th:href="@{'/single-product/' + ${fp4.getId()}}" th:text="${fp4.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-new" th:text="${fp4.getPrice()}"></span>
+                                                                <span class="price-new formatted-price" th:text="${fp4.getPrice()}+' VND'"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -582,7 +581,7 @@
                                                     </div>
                                                     <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a></h4>
                                                     <p class="product-price">
-                                                        <span class="price-new" th:text="${product.getPrice()}"></span>
+                                                        <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
                                                     </p>
                                                 </div><!-- end of product-caption -->
                                             </div><!-- end of product-inner -->
@@ -962,19 +961,21 @@
 ============================================ -->
 
 <!-- jQuery JS -->
-<script src="assets/js/jquery.1.12.4.min.js"></script>
+<script src="/assets/js/jquery.1.12.4.min.js"></script>
 
 <!-- Popper JS -->
-<script src="assets/js/popper.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
 
 <!-- Bootstrap JS -->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 
 <!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
+<script src="/assets/js/plugins.js"></script>
 
 <!-- Main JS -->
-<script src="assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
+
+<script src="/assets/js/FormatPrice.js"></script>
 
 </body>
 

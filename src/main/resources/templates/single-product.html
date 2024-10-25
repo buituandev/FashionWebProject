@@ -91,19 +91,19 @@
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="product-details">
                                             <h3 class="product-name" th:text="${product.getProduct_name()}"></h3>
-                                            <div class="product-ratings d-flex">
-                                                <ul class="rating d-flex me-4">
-                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                    <li><i class="ion ion-md-star-outline disabled"></i></li>
-                                                </ul>
-                                                <ul class="comments-advices list-inline d-flex">
-                                                    <li class="list-inline-item me-3"><a href="#">2 Reviews</a></li>
-                                                    <li class="list-inline-item"><a href="#">Write a Review</a></li>
-                                                </ul>
-                                            </div>
+<!--                                            <div class="product-ratings d-flex">-->
+<!--                                                <ul class="rating d-flex me-4">-->
+<!--                                                    <li><i class="ion ion-md-star-outline"></i></li>-->
+<!--                                                    <li><i class="ion ion-md-star-outline"></i></li>-->
+<!--                                                    <li><i class="ion ion-md-star-outline"></i></li>-->
+<!--                                                    <li><i class="ion ion-md-star-outline"></i></li>-->
+<!--                                                    <li><i class="ion ion-md-star-outline disabled"></i></li>-->
+<!--                                                </ul>-->
+<!--                                                <ul class="comments-advices list-inline d-flex">-->
+<!--                                                    <li class="list-inline-item me-3"><a href="#">2 Reviews</a></li>-->
+<!--                                                    <li class="list-inline-item"><a href="#">Write a Review</a></li>-->
+<!--                                                </ul>-->
+<!--                                            </div>-->
                                             <div class="product-price">
                                                 <p class="d-flex align-items-center">
 <!--                                                    <span class="price-old" th:text="${product.getPrice()}+' VND'"></span>-->
@@ -153,8 +153,8 @@
                                                             <li class="box-quantity">
                                                                 <div class="cart-input2">
                                                                     <input class="cart-input-box" type="number" min="0" value="0" th:max="${product.getStock()}">
-                                                                    <div class="dec2 qtybutton2"><i class="fa fa-angle-down" style="visibility: hidden"></i></div>
-                                                                    <div class="inc2 qtybutton2"><i class="fa fa-angle-up"></i></div>
+<!--                                                                    <div class="dec2 qtybutton2"><i class="fa fa-angle-down" style="visibility: hidden"></i></div>-->
+<!--                                                                    <div class="inc2 qtybutton2"><i class="fa fa-angle-up"></i></div>-->
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -569,18 +569,7 @@
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
 
-<script>
-    function formatPrices() {
-        const priceElements = document.querySelectorAll('.formatted-price');
-        priceElements.forEach(priceElement => {
-            const priceText = priceElement.textContent;
-            const priceValue = parseFloat(priceText.replace(/\D/g, ''));
-            priceElement.textContent = priceValue.toLocaleString('vi-VN') + ' VND';
-        });
-    }
-
-    document.addEventListener("DOMContentLoaded", formatPrices);
-</script>
+<script src="/assets/js/FormatPrice.js"></script>
 
 </body>
 
