@@ -8,6 +8,23 @@
 
 <body class="skin-default fixed-layout">
 <style>
+    .category-select {
+        appearance: none; /* Remove default arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="black" stroke-width=".5" d="M0 0L2 2L4 0"/></svg>') no-repeat right 10px center;
+        background-color: #fff;
+        background-size: 10px;
+        padding-right: 30px; /* Ensure space for arrow */
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .category-select:hover, .category-select:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
     .image-preview-wrapper {
         display: flex; /* Use flexbox for horizontal alignment */
         flex-wrap: nowrap; /* Prevent wrapping of the images */
@@ -142,23 +159,15 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Category</label>
-                                                <select th:field="*{categoryId}" class="form-control" tabindex="1">
+                                                <select th:field="*{categoryId}" class="form-control category-select" tabindex="1">
                                                     <option th:each="category : ${categories}"
                                                             th:text="${category.getName()}"
                                                             th:value="${category.getId()}"
                                                             th:selected="${category.getId() == category.id}">
-
                                                     </option>
-
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--                                        <div class="col-md-6">-->
-                                        <!--                                            <div class="form-group">-->
-                                        <!--                                                <label class="form-label">Image ID</label>-->
-                                        <!--                                                <input type="text" th:field="*{image_collection_id}"-->
-                                        <!--                                                       class="form-control"></div>-->
-                                        <!--                                        </div>-->
                                     </div>
                                     <!--/row-->
                                     <div class="row">
@@ -167,8 +176,7 @@
                                                 <label class="form-label">Price</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><i
-                                                                class="ti-money"></i></span>
+                                                        <span class="input-group-text" id="basic-addon1">VND</span>
                                                     </div>
                                                     <input type="number" class="form-control" th:field="*{price}"
                                                            placeholder="price" aria-label="price"
@@ -204,14 +212,19 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Title</label>
-                                                <input type="text" th:field="*{title}" class="form-control"></div>
+                                                <label class="form-label">SKU</label>
+                                                <input type="text" th:field="*{SKU}" class="form-control"></div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">SKU</label>
-                                                <input type="text" th:field="*{SKU}" class="form-control"></div>
+                                                <label class="form-label">Title</label>
+<!--                                                <input type="text" th:field="*{title}" class="form-control">-->
+                                                    <select th:field="*{title}" class="form-control category-select" tabindex="1">
+                                                        <option th:value="New" selected>New</option>
+                                                        <option th:value="Trend">Trend</option>
+                                                    </select>
+                                            </div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-3">
