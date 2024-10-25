@@ -72,6 +72,15 @@ public class ClientController {
         model.addAttribute("categories", categories);
         return "shop-grid";
     }
+    @GetMapping("/shop-grid/{categoryId}")
+    public String filterShopGrid(@PathVariable int categoryId, Model model){
+        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
+        model.addAttribute("products", filteredProduct);
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        model.addAttribute("selectedCategoryId", categoryId);
+        return "shop-grid";
+    }
 
     @GetMapping("/product-detail")
     public String productDetail() {
