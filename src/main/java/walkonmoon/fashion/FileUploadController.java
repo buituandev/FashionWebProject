@@ -1,11 +1,13 @@
 package walkonmoon.fashion;
 
 import com.google.cloud.storage.Acl;
+import com.google.cloud.storage.BlobId;
 import com.google.firebase.cloud.StorageClient;
 import com.google.cloud.storage.Blob;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,5 +64,29 @@ public class FileUploadController {
         Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());
         blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
         return String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media", firebaseConfig.getBucketName(), fileName);
+    }
+
+    // Method to delete a file based on URL
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteFile(@RequestParam("fileUrl") String fileUrl) {
+        try {
+            String fileName = extractFileName(fileUrl);
+            BlobId blobId = BlobId.of(firebaseConfig.getBucketName(), fileName);
+            boolean deleted = StorageClient.getInstance().bucket().getStorage().delete(blobId);
+            if (deleted) {
+                return new ResponseEntity<>("File deleted successfully", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Helper method to extract file name from URL
+    private String extractFileName(String fileUrl) {
+        String[] parts = fileUrl.split("/");
+        String fileName = parts[parts.length - 1].split("\\?")[0];
+        return fileName;
     }
 }
