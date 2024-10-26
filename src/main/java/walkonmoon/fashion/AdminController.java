@@ -83,6 +83,15 @@ public class AdminController {
     @GetMapping("/category.html")
     public String categoryManagement(Model model) {
         List<Category> categories = categoryService.getListCategories();
+        List<Product> products = productService.getListProducts();
+        for(Category category : categories){
+            for( Product product : products){
+                if(product.getCategoryId() == category.getId()){
+                    int quan = category.getQuantity() + product.getStock();
+                    category.setQuantity(quan);
+                }
+            }
+        }
         model.addAttribute("categories", categories);
         return "admin/category";
     }
@@ -99,7 +108,7 @@ public class AdminController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("product", new Product());
-
+        model.addAttribute("mode", "create");
         return "admin/eco-products-edit";
     }
 
@@ -178,6 +187,7 @@ public class AdminController {
         model.addAttribute("categories", categories);
         model.addAttribute("images", images);
         model.addAttribute("product", product);
+        model.addAttribute("mode", "edit");
         return "admin/eco-products-edit";
     }
 
