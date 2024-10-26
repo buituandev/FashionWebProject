@@ -12,7 +12,7 @@
     <!-- Start of Whole Site Wrapper with mobile menu support -->
     <div id="whole" class="whole-site-wrapper color-scheme-one">
        <div th:replace="layout::headernormal"></div>
-        <div th:replace="layout::nav"></div>
+        <div th:replace="layout::nav(${categories})"></div>
 
         <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
