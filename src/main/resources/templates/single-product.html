@@ -55,6 +55,11 @@
 
                                                         <!-- Slides -->
                                                         <div class="swiper-wrapper">
+                                                            <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
+                                                            <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
+                                                            <image class="product-img" th:src="${product.getImage_collection_url()}" style="visibility: hidden"></image>
+                                                            <div class="product-name-hid" th:text="${product.getProduct_name()}" style="visibility: hidden"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>
 
                                                             <figure class="swiper-slide" th:each="image:${productImages}">
                                                                 <a th:href="${image.getImageurl()}">
@@ -152,14 +157,13 @@
                                                         <ul class="d-flex flex-wrap align-items-center">
                                                             <li class="box-quantity">
                                                                 <div class="cart-input2">
-                                                                    <input class="cart-input-box" type="number" min="0" value="0" th:max="${product.getStock()}">
+                                                                    <input class="cart-input-box" type="number" th:min="${product.getStock()>= 1 ? 1 : 0}" th:value="${product.getStock()>= 1 ? 1 : 0}" th:max="${product.getStock()}">
 <!--                                                                    <div class="dec2 qtybutton2"><i class="fa fa-angle-down" style="visibility: hidden"></i></div>-->
 <!--                                                                    <div class="inc2 qtybutton2"><i class="fa fa-angle-up"></i></div>-->
                                                                 </div>
                                                             </li>
                                                             <li>
-                                                                <button type="button" class="default-btn">Add to Cart</button>
-                                                            </li>
+                                                                <button type="button" class="default-btn cart-btn" th:text="${product.getStock() > 0 ? 'Add to Cart' : 'Out of Stock'}" th:disabled="${product.getStock() == 0}"></button>                                                            </li>
                                                         </ul>
                                                     </form>
                                                 </div>
@@ -330,6 +334,9 @@
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
+                                                    <div class="product-id" th:text="${relatedProduct.getId()}" style="visibility: hidden"></div>
+                                                    <div class="product-price-hid" th:text="${relatedProduct.getPrice()}" style="visibility: hidden"></div>
+                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}" style="visibility: hidden"></div>
                                                     <div class="label-product label-new" th:text="${relatedProduct.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}">
                                                         <img th:src="${relatedProduct.getImage_collection_url()}" th:alt="${relatedProduct.getProduct_name()}" th:title="${relatedProduct.getProduct_name()}">
@@ -570,6 +577,7 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="/assets/js/cart.js"></script>
 
 </body>
 
