@@ -398,48 +398,44 @@
 <!-- end of promo-banner -->
 
 <!-- Start of Main and Mobile Navigation -->
-<div th:fragment="nav(categories)" class="main-nav-area">
+<div th:fragment="nav(categories1,categories2,categories3,categories4)" class="main-nav-area">
     <div class="container">
-        <nav id="main_nav" class="stellarnav white-scheme desktop">
-            <!-- <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a> -->
+        <nav id="main_nav" class="stellarnav white-scheme">
+<!--             <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a>-->
             <ul>
-                <li class="active"><a href="/" th:href="@{/index.html}"><span>Home</span></a>
-                </li>
+                <li class="active"><a href="/" th:href="@{/index.html}"><span>Home</span></a></li>
                 <li class="mega" data-columns="4"><a th:href="@{/shop-grid.html}"><span>Shop</span></a>
                     <ul class="mega-container">
-                        <li th:each="category:${categories}"><a th:href="@{'/shop-grid/' + ${category.id}}" class="mega-menu-title"><h3 th:text="${category.name}"></h3></a>
-<!--                            <ul>-->
-<!--                                <li><a href="shop-grid.html">Shop Grid</a></li>-->
-<!--                                <li><a href="shop-list.html">Shop List</a></li>-->
-<!--                                <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>-->
-<!--                            </ul>-->
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories1}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
                         </li>
-<!--                        <li><a href="#" class="mega-menu-title"><h3>Shop pages 02</h3></a>-->
-<!--&lt;!&ndash;                            <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="shop-fullwidth.html">Shop Full Width</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="single-product.html">Single Product Page</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="compare.html">Product Compare</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </ul>&ndash;&gt;-->
-<!--                        </li>-->
-<!--                        <li><a href="#" class="mega-menu-title"><h3>Shop pages 03</h3></a>-->
-<!--&lt;!&ndash;                            <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="cart.html">Cart Page</a><li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="checkout.html">Checkout Page</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="wishlist.html">Wishlist Page</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </ul>&ndash;&gt;-->
-<!--                        </li>-->
-<!--                        <li class="last"><a href="#" class="mega-menu-title"><h3>Shop pages 04</h3></a>-->
-<!--&lt;!&ndash;                            <ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="my-account.html">My Account</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="login.html">Login</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <li><a href="register.html">Register</a></li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </ul>&ndash;&gt;-->
-<!--                        </li>-->
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories2}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories3}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories4}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
+                        </li>
                         <li class="fullwidth-banner">
                             <a href="#"><img src="assets/images/banners/menu-banner.jpg" alt="Menu Banner"></a>
                         </li>
                     </ul>
                 </li>
+
                 <li><a href="/" th:href="@{/blog-right-sidebar.html}"><span>Blogs</span></a>
                 </li>
                 <li><a href="/" th:href="@{/about.html}"><span>About Us</span></a></li>
@@ -691,6 +687,15 @@
 
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    const categories = /*[[${#objectMapper.writeValueAsString(categories)}]]*/ {};-->
+<!--    /*]]>*/-->
+<!--</script>-->
+
+
+
 </body>
+
 
 </html>

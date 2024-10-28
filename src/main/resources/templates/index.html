@@ -16,7 +16,7 @@
 <div id="whole" class="whole-site-wrapper">
 
     <div th:replace="~{layout::headerhp}"></div>
-    <div th:replace="~{layout :: nav(${categories})}"></div>
+    <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
 
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
@@ -122,9 +122,9 @@
         <div class="banner-section mt-30 mb-half">
             <div class="container">
                 <div class="row">
-                    <div th:replace="~{layout::promoBannerNarrow('assets/images/banners/banner-1.jpg')}"></div>
-                    <div th:replace="~{layout::promoBannerNarrow('assets/images/banners/banner-2.jpg')}"></div>
-                    <div th:replace="~{layout::promoBannerNarrow('assets/images/banners/banner-3.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerNarrow('https://i.pinimg.com/564x/71/fb/33/71fb336be5e3ee5f56bc56ec62e1d327.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerNarrow('https://i.pinimg.com/564x/ed/b2/dd/edb2dd3e0a8bef2244a90fd6918550d5.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerNarrow('https://i.pinimg.com/564x/6d/3c/42/6d3c4225c24a828d97d4e78593aabb29.jpg')}"></div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>
@@ -514,8 +514,8 @@
         <div class="banner-section mt-full mb-half">
             <div class="container">
                 <div class="row">
-                    <div th:replace="~{layout::promoBannerWide('assets/images/banners/banner-7.jpg')}"></div>
-                    <div th:replace="~{layout::promoBannerWide('assets/images/banners/banner-8.jpg')}"></div>
+                    <div th:replace="~{layout::promoBannerWide('https://pebona.myshopify.com/cdn/shop/files/Banner.png?v=1613770282%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20')}"></div>
+                    <div th:replace="~{layout::promoBannerWide('https://pebona.myshopify.com/cdn/shop/files/Banner2.png?v=1613770282%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20')}"></div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>
