@@ -71,7 +71,7 @@
                                             <p class="subtitle" style="color: white !important;">Light knit upper adapts to the shape of your foot
                                                 for flexible and natural movement.</p>
                                             <div class="slide-button">
-                                                <a class="default-btn" href="shop-grid.html" title="Shop Now" style="border: 1px solid white !important;">Shop
+                                                <a class="default-btn" th:href="@{/shop-grid.html}" title="Shop Now" style="border: 1px solid white !important;">Shop
                                                     Now</a>
                                             </div>
                                         </div> <!-- end of slide-content -->
@@ -150,19 +150,19 @@
                         <ul class="nav nav-pills justify-content-center" id="our_categories" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" th:id="nav_shop_new" data-bs-toggle="pill" href="#shop_new"
-                                   role="tab" aria-controls="shop_new" aria-selected="true" th:text="${category1.name}"></a>
+                                   role="tab" aria-controls="shop_new" aria-selected="true" th:text="${category1.getName()}"></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_shoes" data-bs-toggle="pill" href="#shop_shoes"
-                                   role="tab" aria-controls="shop_shoes" aria-selected="false" th:text="${category2.name}"></a>
+                                   role="tab" aria-controls="shop_shoes" aria-selected="false" th:text="${category2.getName()}"></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_bags" data-bs-toggle="pill" href="#shop_bags"
-                                   role="tab" aria-controls="shop_bags" aria-selected="false" th:text="${category3.name}"></a>
+                                   role="tab" aria-controls="shop_bags" aria-selected="false" th:text="${category3.getName()}"></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_glasses" data-bs-toggle="pill" href="#shop_glasses"
-                                   role="tab" aria-controls="shop_glasses" aria-selected="false" th:text="${category4.name}"></a>
+                                   role="tab" aria-controls="shop_glasses" aria-selected="false" th:text="${category4.getName()}"></a>
                             </li>
                         </ul> <!-- end of nav -->
 
@@ -183,7 +183,7 @@
                                                         <div class="product-image">
                                                             <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
                                                             <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
-                                                            <div class="label-product label-sale">-7%</div>
+                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>                                                            <div class="label-product label-sale">-7%</div>
                                                             <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.id}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
@@ -270,6 +270,8 @@
                                                         <div class="product-image">
                                                           <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
                                                             <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>                                                            <div class="label-product label-sale">-7%</div>
+
                                                             <div class="label-product label-sale">-20%</div>
                                                             <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
@@ -357,6 +359,8 @@
                                                         <div class="product-image">
                                                           <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
                                                             <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>                                                            <div class="label-product label-sale">-7%</div>
+
                                                             <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
@@ -442,6 +446,8 @@
                                                         <div class="product-image">
                                                           <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
                                                             <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>                                                            <div class="label-product label-sale">-7%</div>
+
                                                             <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
@@ -561,6 +567,8 @@
                                                 <div class="product-image">
                                                     <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
                                                     <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
+                                                    <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>                                                            <div class="label-product label-sale">-7%</div>
+
                                                     <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                         <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
@@ -987,6 +995,8 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="/assets/js/cart.js"></script>
+
 
 </body>
 

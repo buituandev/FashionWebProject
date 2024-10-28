@@ -36,11 +36,25 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
 
-        for (Category category : categories) {
+        List<Category> topCategories = categories.stream()
+                .sorted((c1, c2) -> {
+                    int count1 = productService.findByCategoryId(c1.getId()).size();
+                    int count2 = productService.findByCategoryId(c2.getId()).size();
+                    return Integer.compare(count2, count1); // descending order
+                })
+                .limit(4)
+                .toList();
+        model.addAttribute("topCategories", topCategories);
+
+        for (int i = 0; i < topCategories.size(); i++) {
+            Category category = topCategories.get(i);
+            model.addAttribute("category"+(i+1), category);
             List<Product> filteredProducts = productService.findByCategoryId(category.getId());
-            model.addAttribute(category.getName(), filteredProducts);
+            model.addAttribute("topCategoryProducts" +(i+1), filteredProducts);
         }
+
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
             int end = Math.min(start + chunkSize, categories.size());
@@ -57,7 +71,6 @@ public class ClientController {
         }
 
         return "index";
-
     }
 
 
