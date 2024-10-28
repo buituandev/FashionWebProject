@@ -336,7 +336,7 @@
                                                 <div class="product-image">
                                                     <div class="product-id" th:text="${relatedProduct.getId()}" style="visibility: hidden"></div>
                                                     <div class="product-price-hid" th:text="${relatedProduct.getPrice()}" style="visibility: hidden"></div>
-                                                    <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>
+                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}" style="visibility: hidden"></div>
                                                     <div class="label-product label-new" th:text="${relatedProduct.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}">
                                                         <img th:src="${relatedProduct.getImage_collection_url()}" th:alt="${relatedProduct.getProduct_name()}" th:title="${relatedProduct.getProduct_name()}">
