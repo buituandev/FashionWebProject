@@ -14,6 +14,7 @@ import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,30 @@ public class ClientController {
         model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
         List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
         model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
+
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
+
         return "index";
 
     }
@@ -59,12 +84,27 @@ public class ClientController {
         model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
-        return "index";
-    }
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
 
-    @GetMapping("/category")
-    public String category() {
-        return "shop-grid";
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
+        return "index";
     }
 
     @GetMapping("/shop-grid.html")
@@ -73,6 +113,26 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "shop-grid";
     }
     @GetMapping("/shop-grid/{categoryId}")
@@ -82,13 +142,33 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategoryId", categoryId);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "shop-grid";
     }
 
-    @GetMapping("/product-detail")
-    public String productDetail() {
-        return "single-product";
-    }
+//    @GetMapping("/product-detail")
+//    public String productDetail() {
+//        return "single-product";
+//    }
     
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id){
@@ -101,6 +181,28 @@ public class ClientController {
                 .filter(p -> p.getId() != product.getId())
                 .collect(Collectors.toList());
         model.addAttribute("relatedProducts", relatedProducts);
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "single-product";
     }
 
@@ -108,108 +210,359 @@ public class ClientController {
     public String getCategories(Model model) {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
-        return "layout"; // or the name of your template
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
+        return "layout";
     }
     @GetMapping("/single-product.html")
-    public String singleProductHtml(){
+    public String singleProductHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "single-product";
     }
 
-    @GetMapping("/shopping-cart")
-    public String shoppingCart() {
-        return "cart";
-    }
-
     @GetMapping("/cart.html")
-    public String cartHtml(){
+    public String cartHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "cart";
     }
 
-    @GetMapping("/shipping-page")
-    public String shippingPage() {
-        return "checkout";
-    }
 
     @GetMapping("/checkout.html")
-    public String checkoutHtml(){
+    public String checkoutHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "checkout";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 
     @GetMapping("/login.html")
-    public String loginHtml(){
+    public String loginHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "login";
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
 
     @GetMapping("/register.html")
-    public String registerHtml(){
+    public String registerHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "register";
     }
 
-    @GetMapping("/contact")
-    public String contact() {
-        return "contact";
-    }
 
     @GetMapping("/contact.html")
-    public String contactHtml(){
+    public String contactHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "contact";
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "about";
-    }
+//    @GetMapping("/about")
+//    public String about() {
+//        return "about";
+//    }
 
     @GetMapping("/about.html")
-    public String aboutHtml(){
-        return "about";
-    }
+    public String aboutHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
 
-    @GetMapping("/blog")
-    public String blog() {
-        return "blog-right-sidebar";
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
+        return "about";
     }
 
     @GetMapping("/blog-right-sidebar.html")
-    public String blogLeftSidebarHtml(){
+    public String blogLeftSidebarHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "blog-right-sidebar";
     }
 
-    @GetMapping("/blog-detail")
-    public String blogDetail() {
-        return "blog-details";
-    }
-
     @GetMapping("/blog-details.html")
-    public String blogDetailsHtml(){
+    public String blogDetailsHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "blog-details";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "my-account";
-    }
 
     @GetMapping("/my-account.html")
-    public String myAccountHtml(){
+    public String myAccountHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
         return "my-account";
     }
 
     @GetMapping("wishlist.html")
-    public String wishlistHtml(){return "wishlist";}
+    public String wishlistHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
+        return "wishlist";}
 
     @GetMapping("compare.html")
-    public String compareHtml(){return "compare";}
+    public String compareHtml(Model model){
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
+        System.out.println("Total categories: " + categories.size());
+        System.out.println("Chunk size: " + chunkSize);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                if (i == 3) {
+                    List<Category> chunk = categories.subList(start, categories.size());
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                } else {
+                    List<Category> chunk = categories.subList(start, end);
+                    model.addAttribute("categories" + (i + 1), chunk);
+                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+                }
+            }
+        }
+        return "compare";}
 
     @GetMapping("/upload.html")
     public String uploadHtml(){

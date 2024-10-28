@@ -14,7 +14,7 @@
 <div id="whole" class="whole-site-wrapper color-scheme-one">
 
     <div th:replace="~{layout::headernormal}"></div>
-    <div th:replace="~{layout::nav}"></div>
+    <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
 
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12">
                     <nav class="breadcrumb">
-                        <a class="breadcrumb-item" href="index.html">Home</a>
+                        <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
                         <span class="breadcrumb-item active">404</span>
                     </nav>
                 </div>

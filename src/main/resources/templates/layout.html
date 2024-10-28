@@ -129,8 +129,7 @@
                 <div class="col-12 col-sm-12 col-md-8 col-lg-6">
                     <div class="row align-items-center">
                         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-                            <div class="header-text"><span class="phone"><a href="#">+(012) 800 456
-                                                789-987</a></span><span>Customer Service</span></div>
+                            <div class="header-text"><span class="phone"><a href="#">0809-908-809</a></span><span>Customer Service</span></div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
                             <div class="header-cart-area">
@@ -399,40 +398,44 @@
 <!-- end of promo-banner -->
 
 <!-- Start of Main and Mobile Navigation -->
-<div th:fragment="nav(categories)" class="main-nav-area">
+<div th:fragment="nav(categories1,categories2,categories3,categories4)" class="main-nav-area">
     <div class="container">
-        <nav id="main_nav" class="stellarnav white-scheme desktop">
-            <!-- <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a> -->
+        <nav id="main_nav" class="stellarnav white-scheme">
+<!--             <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a>-->
             <ul>
-                <li class="active"><a href="/" th:href="@{/index.html}"><span>Home</span></a>
-                </li>
-                <li class="mega has-sub" data-columns="4"><a href="/" th:href="@{/shop-grid.html}"><span>Shop</span></a>
-                    <ul class="mega-container" style="left: 0px; max-width: 100%;">
-                        <li class="has-sub column column-3"><a href="#" class="mega-menu-title">
-                            <h3>Shop</h3>
-                        </a>
+                <li class="active"><a href="/" th:href="@{/index.html}"><span>Home</span></a></li>
+                <li class="mega" data-columns="4"><a th:href="@{/shop-grid.html}"><span>Shop</span></a>
+                    <ul class="mega-container">
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
                             <ul>
-                                <li th:each="category : ${categories}">
-                                    <a href="/" th:href="@{/shop-grid.html}" th:text="${category.name}"></a>
-                                </li>
+                                <li th:each="category: ${categories1}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
                             </ul>
-                            <a class="dd-toggle" href="#"><i class="fa fa-plus"></i></a>
                         </li>
-<!--                        <li class="has-sub column column-3"><a href="#" class="mega-menu-title">-->
-<!--                            <h3>Shop Misc</h3>-->
-<!--                        </a>-->
-<!--                            <ul style="max-width: 100%;">-->
-<!--                                <li><a href="/" th:href="@{/compare.html}">Product Compare</a></li>-->
-<!--                            </ul>-->
-<!--                            <a class="dd-toggle" href="#"><i class="fa fa-plus"></i></a>-->
-<!--                        </li>-->
-
-                        <li class="fullwidth-banner column column-3">
-                            <a href="#"><img src="/assets/images/banners/menu-banner.jpg"
-                                             alt="Menu Banner"></a>
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories2}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories3}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" class="mega-menu-title"><h3></h3></a>
+                            <ul>
+                                <li th:each="category: ${categories4}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                            </ul>
+                        </li>
+                        <li class="fullwidth-banner">
+                            <a href="#"><img src="assets/images/banners/menu-banner.jpg" alt="Menu Banner"></a>
                         </li>
                     </ul>
                 </li>
+
                 <li><a href="/" th:href="@{/blog-right-sidebar.html}"><span>Blogs</span></a>
                 </li>
                 <li><a href="/" th:href="@{/about.html}"><span>About Us</span></a></li>
@@ -684,6 +687,15 @@
 
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
+<!--<script th:inline="javascript">-->
+<!--    /*<![CDATA[*/-->
+<!--    const categories = /*[[${#objectMapper.writeValueAsString(categories)}]]*/ {};-->
+<!--    /*]]>*/-->
+<!--</script>-->
+
+
+
 </body>
+
 
 </html>

@@ -26,9 +26,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -57,7 +55,16 @@ public class AdminController {
     @GetMapping("/eco-products.html")
     public String productManagement(Model model2) {
         List<Product> products = productService.getListProducts();
+        Map<Integer, String> categoryMap = new HashMap<>();
+         for (Product product : products) {
+              Category category = categoryService.getCategoryById(product.getCategoryId());
+              if(category != null){
+                   categoryMap.put(product.getCategoryId(), category.getName());
+              }
+         }
         model2.addAttribute("productList", products);
+         model2.addAttribute("categoryMap", categoryMap);
+
         return "admin/eco-products";
     }
 
@@ -76,6 +83,15 @@ public class AdminController {
     @GetMapping("/category.html")
     public String categoryManagement(Model model) {
         List<Category> categories = categoryService.getListCategories();
+        List<Product> products = productService.getListProducts();
+        for(Category category : categories){
+            for( Product product : products){
+                if(product.getCategoryId() == category.getId()){
+                    int quan = category.getQuantity() + product.getStock();
+                    category.setQuantity(quan);
+                }
+            }
+        }
         model.addAttribute("categories", categories);
         return "admin/category";
     }
@@ -92,7 +108,7 @@ public class AdminController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("product", new Product());
-
+        model.addAttribute("mode", "create");
         return "admin/eco-products-edit";
     }
 
@@ -171,6 +187,7 @@ public class AdminController {
         model.addAttribute("categories", categories);
         model.addAttribute("images", images);
         model.addAttribute("product", product);
+        model.addAttribute("mode", "edit");
         return "admin/eco-products-edit";
     }
 

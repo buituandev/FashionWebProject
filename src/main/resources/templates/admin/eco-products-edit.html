@@ -8,6 +8,23 @@
 
 <body class="skin-default fixed-layout">
 <style>
+    .category-select {
+        appearance: none; /* Remove default arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="black" stroke-width=".5" d="M0 0L2 2L4 0"/></svg>') no-repeat right 10px center;
+        background-color: #fff;
+        background-size: 10px;
+        padding-right: 30px; /* Ensure space for arrow */
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .category-select:hover, .category-select:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
     .image-preview-wrapper {
         display: flex; /* Use flexbox for horizontal alignment */
         flex-wrap: nowrap; /* Prevent wrapping of the images */
@@ -87,16 +104,18 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Products Edit</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'create'}" style="font-weight: 600">Add Product</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'edit'}" style="font-weight: 600">Edit Product</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Products edit</li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a href="eco-products-edit.html" style="color: rgb(228, 106, 118)">Create Product</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Products edit</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i
-                                class="fa fa-plus-circle"></i> Create New
+                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a href="eco-products-edit.html"><i
+                                class="fa fa-plus-circle"></i> Create New</a>
                         </button>
                     </div>
                 </div>
@@ -116,7 +135,6 @@
                             <form th:action="@{/admin/eco-products/save}" method="post" th:object="${product}"
                                   enctype="multipart/form-data">
                                 <div class="form-body">
-                                    <h5 class="card-title">About Product</h5>
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -142,23 +160,15 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label">Category</label>
-                                                <select th:field="*{categoryId}" class="form-control" tabindex="1">
+                                                <select th:field="*{categoryId}" class="form-control category-select" tabindex="1">
                                                     <option th:each="category : ${categories}"
                                                             th:text="${category.getName()}"
                                                             th:value="${category.getId()}"
                                                             th:selected="${category.getId() == category.id}">
-
                                                     </option>
-
                                                 </select>
                                             </div>
                                         </div>
-                                        <!--                                        <div class="col-md-6">-->
-                                        <!--                                            <div class="form-group">-->
-                                        <!--                                                <label class="form-label">Image ID</label>-->
-                                        <!--                                                <input type="text" th:field="*{image_collection_id}"-->
-                                        <!--                                                       class="form-control"></div>-->
-                                        <!--                                        </div>-->
                                     </div>
                                     <!--/row-->
                                     <div class="row">
@@ -167,8 +177,7 @@
                                                 <label class="form-label">Price</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1"><i
-                                                                class="ti-money"></i></span>
+                                                        <span class="input-group-text" id="basic-addon1">VND</span>
                                                     </div>
                                                     <input type="number" class="form-control" th:field="*{price}"
                                                            placeholder="price" aria-label="price"
@@ -204,17 +213,46 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Title</label>
-                                                <input type="text" th:field="*{title}" class="form-control"></div>
-                                        </div>
-                                        <!--/span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
                                                 <label class="form-label">SKU</label>
                                                 <input type="text" th:field="*{SKU}" class="form-control"></div>
                                         </div>
                                         <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Title</label>
+<!--                                                <input type="text" th:field="*{title}" class="form-control">-->
+                                                    <select th:field="*{title}" class="form-control category-select" tabindex="1">
+                                                        <option th:value="New" selected>New</option>
+                                                        <option th:value="Trend">Trend</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
                                         <div class="col-md-3">
+                                            <h5 class="card-title m-t-20">Upload Main Image</h5>
+                                            <div class="product-img" id="image-main-container">
+                                                <div class="image-preview-wrapper" id="image-main-container-wrapper"
+                                                     style="width: 80vw; display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto;">
+                                                    <img id="main-image-preview" alt="Main Image Preview" class="preview-image"
+                                                         style="width: 100px; height: 100px; object-fit: cover; display: none;">
+                                                    <div class="pro-img-overlay" id="main-image-overlay" style="position: absolute; top: 0; right: 0; display: none;">
+                                                        <a href="javascript:void(0)" class="bg-danger delete-icon" id="delete-main-image">
+                                                            <i class="ti-trash"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                            </div>
+                                            <!-- File upload button for new images -->
+                                            <div class="fileupload btn btn-info waves-effect waves-light text-white">
+                                                <span><i class="ion-upload m-r-5"></i>Upload Main Image</span>
+                                                <input type="file" class="upload" id="file" name="file" multiple
+                                                       accept="image/*">
+                                            </div>
+                                            <input type="text" th:field="*{image_collection_url}"
+                                                   style="visibility: hidden">
+
+                                        <hr>
                                             <h5 class="card-title m-t-20">Upload Images</h5>
                                             <div class="product-img" id="image-preview-container">
                                                 <div class="image-preview-wrapper" id="image-preview-wrapper"
@@ -240,6 +278,7 @@
                                                     </div>
                                                 </div>
                                                 <br/>
+                                            </div>
                                                 <!-- File upload button for new images -->
                                                 <div class="fileupload btn btn-info waves-effect waves-light text-white">
                                                     <span><i class="ion-upload m-r-5"></i>Upload Images</span>
@@ -251,7 +290,6 @@
                                             </div>
                                         </div>
                                         <hr>
-                                    </div>
                                     <div class="form-actions m-t-40">
                                         <button type="submit" class="btn btn-success text-white"><i
                                                 class="fa fa-check"></i> Save
@@ -390,6 +428,49 @@
                 }
             });
         });
+    });
+</script>
+<script>
+    const mainImageContainer = document.getElementById('image-main-container-wrapper'); // Wrapper for main image preview
+    const mainImageInput = document.getElementById('file'); // File input for the main image
+
+    // Handle main image upload and display
+    mainImageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0]; // Only handle the first selected file for main image
+        if (file) {
+            // Remove any previous main image container if present
+            mainImageContainer.innerHTML = '';
+
+            // Create a container div for the main image and overlay
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('image-container'); // Style for image container
+
+            // Create img element for the main image preview
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.classList.add('preview-image'); // Style for preview image
+
+            // Create overlay with delete icon
+            const overlay = document.createElement('div');
+            overlay.classList.add('pro-img-overlay');
+
+            const deleteIcon = document.createElement('a');
+            deleteIcon.href = 'javascript:void(0)';
+            deleteIcon.classList.add('bg-danger', 'delete-icon');
+            deleteIcon.innerHTML = '<i class="ti-trash"></i>';
+
+            // Add click event to delete the main image preview
+            deleteIcon.addEventListener('click', () => {
+                imgContainer.remove(); // Remove image container
+                mainImageInput.value = ''; // Clear file input for re-selection
+            });
+
+            overlay.appendChild(deleteIcon); // Add delete icon to overlay
+            imgContainer.appendChild(img); // Add image to container
+            imgContainer.appendChild(overlay); // Add overlay to container
+
+            mainImageContainer.appendChild(imgContainer); // Display main image in container
+        }
     });
 </script>
 
