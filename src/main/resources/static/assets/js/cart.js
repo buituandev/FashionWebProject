@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 id: productElement.querySelector('.product-id').textContent,
                 title: productElement.querySelector('.product-name').innerText,
                 image: productElement.querySelector('img').src,
-                price: productElement.querySelector('.product-price-hid').textContent
+                price: productElement.querySelector('.product-price-hid').textContent,
+                stock: productElement.querySelector('.product-stock').textContent
             };
             console.log(product);
             console.log(productElement);
-            addItemToCart(product);
+            addItemToCart(product, 1, product.stock);
         });
     });
 
@@ -27,24 +28,36 @@ document.addEventListener('DOMContentLoaded', function () {
                 id: productElement.querySelector('.product-id').textContent,
                 title: productElement.querySelector('.product-name-hid').textContent,
                 image: productElement.querySelector('.product-img').src,
-                price: productElement.querySelector('.product-price-hid').textContent
+                price: productElement.querySelector('.product-price-hid').textContent,
+                stock: productElement.querySelector('.product-stock').textContent
             };
+            const quantity = productElement.querySelector('.cart-input-box').value;
             console.log(product);
             console.log(productElement);
-            addItemToCart(product);
+            addItemToCart(product, quantity, product.stock);
         });
     });
 
     updateCartDisplay();
 });
 
-function addItemToCart(item) {
+function addItemToCart(item, quant = 1, stock) {
     const cart = loadCart();
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
+    const quantity = parseInt(quant); // Ensure quant is treated as a number
+
+    if (quantity > parseInt(stock)) {
+        alert("Số lượng sản phẩm trong giỏ hàng vượt quá số lượng sản phẩm trong kho");
+        return;
+    }
     if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.stock = stock;
+        existingItem.quantity += quantity;
+        if (existingItem.quantity > parseInt(stock)) {
+            existingItem.quantity = parseInt(stock);
+        }
     } else {
-        item.quantity = 1;
+        item.quantity = quantity;
         cart.push(item);
     }
     saveCart(cart);
@@ -97,7 +110,7 @@ function updateCartDisplay() {
                 <div class="shopping-cart-img me-4">
                     <a href="#">
                         <img class="img-fluid" alt="Cart Item" src="${item.image}">
-                        <span class="product-quantity">${item.quantity}x</span>
+                        <span class="product-quantity">${item.quantity}</span>
                     </a>
                 </div>
                 <div class="shopping-cart-title flex-grow-1">
