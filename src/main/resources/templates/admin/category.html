@@ -221,6 +221,20 @@
         });
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const errorMessage = /*[[${errorMessage}]]*/ 'null'; // Thymeleaf variable
+        if (errorMessage !== 'null') {
+            // Show SweetAlert for the error message
+            swal({
+                title: "Error!",
+                text: errorMessage,
+                icon: "error",
+                button: "OK",
+            });
+        }
+    });
+</script>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
