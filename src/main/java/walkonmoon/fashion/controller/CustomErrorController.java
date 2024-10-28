@@ -1,4 +1,4 @@
-package walkonmoon.fashion;
+package walkonmoon.fashion.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;

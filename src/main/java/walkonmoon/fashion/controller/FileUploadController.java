@@ -1,4 +1,4 @@
-package walkonmoon.fashion;
+package walkonmoon.fashion.controller;
 
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.BlobId;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import walkonmoon.fashion.config.FirebaseConfig;
 
 import java.io.IOException;
 import java.io.InputStream;

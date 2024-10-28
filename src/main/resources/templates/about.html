@@ -4,7 +4,6 @@
 <head th:replace="~{layout::head('Chroma - About Us')}">
 </head>
 <body>
-
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
     <![endif]-->
@@ -13,7 +12,7 @@
     <div id="whole" class="whole-site-wrapper color-scheme-one">
 
         <div th:replace="~{layout::headernormal}"></div>
-        <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
+        <div th:replace="~{layout::nav}"></div>
 
         <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
