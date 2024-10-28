@@ -46,6 +46,11 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <main id="primary" class="site-main">
                             <div class="single-product-wrapper">
+                                <div class="product-id" th:text="${product.getId()}" style="visibility: hidden; display: none" ></div>
+                                <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden; display: none"></div>
+                                <image class="product-img" th:src="${product.getImage_collection_url()}" style="visibility: hidden; display: none"></image>
+                                <div class="product-name-hid" th:text="${product.getProduct_name()}" style="visibility: hidden; display: none"></div>
+                                <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="product-gallery">
@@ -55,11 +60,6 @@
 
                                                         <!-- Slides -->
                                                         <div class="swiper-wrapper">
-                                                            <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
-                                                            <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
-                                                            <image class="product-img" th:src="${product.getImage_collection_url()}" style="visibility: hidden"></image>
-                                                            <div class="product-name-hid" th:text="${product.getProduct_name()}" style="visibility: hidden"></div>
-                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>
 
                                                             <figure class="swiper-slide" th:each="image:${productImages}">
                                                                 <a th:href="${image.getImageurl()}">
@@ -334,9 +334,9 @@
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
-                                                    <div class="product-id" th:text="${relatedProduct.getId()}" style="visibility: hidden"></div>
-                                                    <div class="product-price-hid" th:text="${relatedProduct.getPrice()}" style="visibility: hidden"></div>
-                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}" style="visibility: hidden"></div>
+                                                    <div class="product-id" th:text="${relatedProduct.getId()}" style="visibility: hidden; display: none"></div>
+                                                    <div class="product-price-hid" th:text="${relatedProduct.getPrice()}" style="visibility: hidden; display: none"></div>
+                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}" style="visibility: hidden; display: none"></div>
                                                     <div class="label-product label-new" th:text="${relatedProduct.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}">
                                                         <img th:src="${relatedProduct.getImage_collection_url()}" th:alt="${relatedProduct.getProduct_name()}" th:title="${relatedProduct.getProduct_name()}">
