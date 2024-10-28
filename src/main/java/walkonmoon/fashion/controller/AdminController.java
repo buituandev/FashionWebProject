@@ -1,4 +1,4 @@
-package walkonmoon.fashion;
+package walkonmoon.fashion.controller;
 
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Blob;
@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import walkonmoon.fashion.config.FirebaseConfig;
 import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
@@ -20,10 +21,6 @@ import walkonmoon.fashion.service.UserService;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
