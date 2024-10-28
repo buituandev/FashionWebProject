@@ -2,8 +2,11 @@ package walkonmoon.fashion.controller;
 
 import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
 import com.google.firebase.cloud.StorageClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -80,15 +83,6 @@ public class AdminController {
     @GetMapping("/category.html")
     public String categoryManagement(Model model) {
         List<Category> categories = categoryService.getListCategories();
-        List<Product> products = productService.getListProducts();
-        for(Category category : categories){
-            for( Product product : products){
-                if(product.getCategoryId() == category.getId()){
-                    int quan = category.getQuantity() + product.getStock();
-                    category.setQuantity(quan);
-                }
-            }
-        }
         model.addAttribute("categories", categories);
         return "admin/category";
     }
@@ -111,7 +105,7 @@ public class AdminController {
 
     @PostMapping("/eco-products/save")
     public String saveProduct(@ModelAttribute Product product, Model model,
-                              @RequestParam("files") MultipartFile[] files,
+                              @RequestParam("files") MultipartFile[] files, @RequestParam("file") MultipartFile file,
                               RedirectAttributes redirectAttributes) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         product.setUpdate_date(updatedNow);
@@ -119,10 +113,19 @@ public class AdminController {
         Product existPro = productService.getProductById(product.getId());
         if(existPro == null){
             productService.saveProduct(product);
+        }else {
+            product.setImage_collection_url(existPro.getImage_collection_url());  // Keep existing URL if no new file
+        }
+        if (!file.isEmpty()) {
+            try (InputStream inputStream = file.getInputStream()) {
+                String fileUrl = getFileName(file, inputStream);
+                product.setImage_collection_url(fileUrl);
+            } catch (IOException e) {
+                return null;
+            }
         }
 
         if (files != null && files.length > 0) {
-//            imageService.deleteByProductId(product.getId());
             for (int i = 0; i < files.length; i++) {
                 if (!files[i].isEmpty()) {
                     try (InputStream inputStream = files[i].getInputStream()) {
@@ -131,9 +134,6 @@ public class AdminController {
                         image.setImageurl(fileUrl);
                         image.setProductId(product.getId());
                         imageService.saveImage(image);
-                        if(i == 0 && files.length != 1){
-                            product.setImage_collection_url(fileUrl);
-                        }
                     } catch (IOException e) {
                         redirectAttributes.addFlashAttribute("message", "Failed to upload file");
                         return "redirect:/admin/eco-products-edit.html";
@@ -145,6 +145,11 @@ public class AdminController {
         }
 
         productService.saveProduct(product);
+        Category category = categoryService.getCategoryById(product.getCategoryId());
+        if (category != null) {
+            category.setQuantity(category.getQuantity() + 1); // Increase quantity by 1
+            categoryService.saveCategory(category); // Save updated category
+        }
         redirectAttributes.addFlashAttribute("message", "Product saved successfully");
         return "redirect:/admin/eco-products.html";
     }
@@ -171,8 +176,15 @@ public class AdminController {
     }
 
     @GetMapping("/category-delete/{id}")
-    public String deleteCategory(@PathVariable("id") Integer id){
-        categoryService.deleteCategoryById(id);
+    public String deleteCategory(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+        Category cate = categoryService.getCategoryById(id);
+
+        if (cate.getQuantity() > 0) { // Check if there are products in the category
+            redirectAttributes.addFlashAttribute("errorMessage", "Cannot delete category with products in it.");
+        } else {
+            categoryService.deleteCategoryById(id); // Delete category if it has no products
+        }
+
         return "redirect:/admin/category.html";
     }
 
@@ -185,13 +197,35 @@ public class AdminController {
         model.addAttribute("images", images);
         model.addAttribute("product", product);
         model.addAttribute("mode", "edit");
+        Category category = categoryService.getCategoryById(product.getCategoryId());
+        if (category != null && category.getQuantity() > 0) {
+            category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
+            categoryService.saveCategory(category); // Save updated category
+        }
+
         return "admin/eco-products-edit";
     }
 
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, Model model) {
+        String fileUrl =  productService.getProductById(id).getImage_collection_url();
+        ResponseEntity<String> deleteImg = deleteFile(fileUrl);
+        for(Image img : imageService.findByProductId(id)){
+            String url = img.getImageurl();
+            ResponseEntity<String> delete = deleteFile(url);
+        }
+
+        if (deleteImg.getStatusCode() != HttpStatus.OK) {
+            System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
+        }
         imageService.deleteByProductId(id);
         productService.deleteProductById(id);
+        Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
+        if (category != null && category.getQuantity() > 0) {
+            category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
+            categoryService.saveCategory(category); // Save updated category
+        }
+
         return "redirect:/admin/eco-products.html";
     }
 
@@ -201,4 +235,26 @@ public class AdminController {
         blob.createAcl(Acl.of(Acl.User.ofAllUsers(), Acl.Role.READER));
         return String.format("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media", firebaseConfig.getBucketName(), fileName);
     }
+
+    private ResponseEntity<String> deleteFile(String fileUrl) {
+        try {
+            String fileName = extractFileName(fileUrl);
+            BlobId blobId = BlobId.of(firebaseConfig.getBucketName(), fileName);
+            boolean deleted = StorageClient.getInstance().bucket().getStorage().delete(blobId);
+            if (deleted) {
+                return new ResponseEntity<>("File deleted successfully", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete file", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private String extractFileName(String fileUrl) {
+        String[] parts = fileUrl.split("/");
+        String fileName = parts[parts.length - 1].split("\\?")[0];
+        return fileName;
+    }
+
 }

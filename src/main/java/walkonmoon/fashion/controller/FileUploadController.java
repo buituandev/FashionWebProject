@@ -68,26 +68,26 @@ public class FileUploadController {
     }
 
     // Method to delete a file based on URL
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteFile(@RequestParam("fileUrl") String fileUrl) {
-        try {
-            String fileName = extractFileName(fileUrl);
-            BlobId blobId = BlobId.of(firebaseConfig.getBucketName(), fileName);
-            boolean deleted = StorageClient.getInstance().bucket().getStorage().delete(blobId);
-            if (deleted) {
-                return new ResponseEntity<>("File deleted successfully", HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to delete file", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    // Helper method to extract file name from URL
-    private String extractFileName(String fileUrl) {
-        String[] parts = fileUrl.split("/");
-        String fileName = parts[parts.length - 1].split("\\?")[0];
-        return fileName;
-    }
+//    @DeleteMapping("/delete")
+//    public ResponseEntity<String> deleteFile(@RequestParam("fileUrl") String fileUrl) {
+//        try {
+//            String fileName = extractFileName(fileUrl);
+//            BlobId blobId = BlobId.of(firebaseConfig.getBucketName(), fileName);
+//            boolean deleted = StorageClient.getInstance().bucket().getStorage().delete(blobId);
+//            if (deleted) {
+//                return new ResponseEntity<>("File deleted successfully", HttpStatus.OK);
+//            } else {
+//                return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
+//            }
+//        } catch (Exception e) {
+//            return new ResponseEntity<>("Failed to delete file", HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+//
+//    // Helper method to extract file name from URL
+//    private String extractFileName(String fileUrl) {
+//        String[] parts = fileUrl.split("/");
+//        String fileName = parts[parts.length - 1].split("\\?")[0];
+//        return fileName;
+//    }
 }
