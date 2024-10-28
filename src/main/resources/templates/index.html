@@ -180,6 +180,8 @@
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
+                                                            <div class="product-id" th:text="${fp1.getId()}" style="visibility: hidden"></div>
+                                                            <div class="product-price-hid" th:text="${fp1.getPrice()}" style="visibility: hidden"></div>
                                                             <div class="label-product label-sale">-7%</div>
                                                             <div class="label-product label-new" th:text="${fp1.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${fp1.getId()}}">
@@ -265,6 +267,8 @@
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
+                                                            <div class="product-id" th:text="${fp2.getId()}" style="visibility: hidden"></div>
+                                                            <div class="product-price-hid" th:text="${fp2.getPrice()}" style="visibility: hidden"></div>
                                                             <div class="label-product label-sale">-20%</div>
                                                             <div class="label-product label-new" th:text="${fp2.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${fp2.getId()}}">
@@ -350,6 +354,8 @@
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
+                                                            <div class="product-id" th:text="${fp3.getId()}" style="visibility: hidden"></div>
+                                                            <div class="product-price-hid" th:text="${fp3.getPrice()}" style="visibility: hidden"></div>
                                                             <div class="label-product label-new" th:text="${fp3.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${fp3.getId()}}">
                                                                 <img th:src="${fp3.getImage_collection_url()}"
@@ -433,6 +439,8 @@
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
+                                                            <div class="product-id" th:text="${fp4.getId()}" style="visibility: hidden"></div>
+                                                            <div class="product-price-hid" th:text="${fp4.getPrice()}" style="visibility: hidden"></div>
                                                             <div class="label-product label-new" th:text="${fp4.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${fp4.getId()}}">
                                                                 <img th:src="${fp4.getImage_collection_url()}"
@@ -550,6 +558,8 @@
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
+                                                    <div class="product-id" th:text="${product.getId()}" style="visibility: hidden"></div>
+                                                    <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden"></div>
                                                     <div class="label-product label-new" th:text="${product.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                         <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
@@ -976,6 +986,7 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="/assets/js/cart.js"></script>
 
 </body>
 
