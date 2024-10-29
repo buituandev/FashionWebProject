@@ -177,14 +177,14 @@ public class AdminController {
 
     @GetMapping("/category-delete/{id}")
     public String deleteCategory(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
-        Category cate = categoryService.getCategoryById(id);
+        Category category = categoryService.getCategoryById(id);
 
-        if (cate.getQuantity() > 0) { // Check if there are products in the category
+        if (category.getQuantity() > 0) {
             redirectAttributes.addFlashAttribute("errorMessage", "Cannot delete category with products in it.");
-        } else {
-            categoryService.deleteCategoryById(id); // Delete category if it has no products
+            return "redirect:/admin/category.html"; // Redirect back to the category page
         }
 
+        categoryService.deleteCategoryById(id); // Proceed with deletion
         return "redirect:/admin/category.html";
     }
 
