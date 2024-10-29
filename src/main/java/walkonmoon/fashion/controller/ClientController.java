@@ -1,13 +1,18 @@
 package walkonmoon.fashion.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
+import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
@@ -319,9 +324,45 @@ public class ClientController {
                 }
             }
         }
+
         return "login";
     }
 
+
+    @PostMapping("/login/access")
+    public String loginAccount(@RequestParam("email") String email,
+                               @RequestParam("password") String password,
+                               Model model,
+                               HttpServletResponse response) {
+        User currentUser = userService.getUserByEmail(email);
+        if (currentUser == null) {
+            return "redirect:/login.html";
+        } else {
+            if (currentUser.getPassword().equals(password)) {
+                // Create and add cookies after validating their values
+                addCookie(response, "userID", String.valueOf(currentUser.getId()));
+                addCookie(response, "password", currentUser.getPassword());
+                addCookie(response, "email", email);
+                addCookie(response, "gender", currentUser.getGender());
+                addCookie(response, "dob", String.valueOf(currentUser.getDob()));
+                addCookie(response, "address", currentUser.getAddress());
+                addCookie(response, "phoneNumber", currentUser.getPhone_number());
+                addCookie(response, "province", currentUser.getProvince());
+
+                return "redirect:/index.html";
+            }
+        }
+        return "login";
+    }
+
+    private void addCookie(HttpServletResponse response, String name, String value) {
+        // Trim value and replace spaces with underscores or another character if necessary
+        value = value.trim().replace(" ", "_"); // Replace space with underscore
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/"); // Set appropriate path
+        cookie.setMaxAge(60 * 60 * 24 * 30 * 12); // Set cookie age
+        response.addCookie(cookie);
+    }
 
     @GetMapping("/register.html")
     public String registerHtml(Model model){
