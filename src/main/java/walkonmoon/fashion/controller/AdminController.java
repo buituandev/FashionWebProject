@@ -177,14 +177,14 @@ public class AdminController {
 
     @GetMapping("/category-delete/{id}")
     public String deleteCategory(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
-        Category cate = categoryService.getCategoryById(id);
+        Category category = categoryService.getCategoryById(id);
 
-        if (cate.getQuantity() > 0) { // Check if there are products in the category
+        if (category.getQuantity() > 0) {
             redirectAttributes.addFlashAttribute("errorMessage", "Cannot delete category with products in it.");
-        } else {
-            categoryService.deleteCategoryById(id); // Delete category if it has no products
+            return "redirect:/admin/category.html"; // Redirect back to the category page
         }
 
+        categoryService.deleteCategoryById(id); // Proceed with deletion
         return "redirect:/admin/category.html";
     }
 
@@ -227,6 +227,25 @@ public class AdminController {
         }
 
         return "redirect:/admin/eco-products.html";
+    }
+
+    @GetMapping("/pages-login.html")
+    public  String loginPages(Model model){
+        model.addAttribute( "user", new User());
+        return "/admin/pages-login";
+    }
+
+    @PostMapping("/login")
+    public  String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
+         User user = userService.getUserByEmail(email);
+        if(user == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid email or password.");
+            return "redirect:/admin/pages-login.html";
+        }
+         else if(user.getPassword().equals(password)){
+             return "redirect:/admin/index.html";
+         }
+        return "redirect:/admin/pages-login.html";
     }
 
     private String getFileName(MultipartFile file, InputStream inputStream) {
