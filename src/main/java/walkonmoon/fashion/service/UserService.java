@@ -16,4 +16,13 @@ public class UserService {
     public List<User> getListUser() {
        return (List<User>) userRepo.findAll();
    }
+
+   public User getUserByEmail(String username){
+       for(User user :  userRepo.findAll()){
+            if(user.getEmail().equals(username)){
+                return user;
+            }
+       }
+       return null;
+   }
 }
