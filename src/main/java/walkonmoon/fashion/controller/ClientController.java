@@ -1,6 +1,7 @@
 package walkonmoon.fashion.controller;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,14 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import walkonmoon.fashion.dto.CartItemDTO;
 import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
-import walkonmoon.fashion.service.CategoryService;
-import walkonmoon.fashion.service.ImageService;
-import walkonmoon.fashion.service.ProductService;
-import walkonmoon.fashion.service.UserService;
+import walkonmoon.fashion.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,14 +31,39 @@ public class ClientController {
     private ImageService imageService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CartItemService cartItemService;
 
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, HttpServletRequest request){
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
 
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
+        
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+        
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+        
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+        
+        model.addAttribute("cartItems", cartItems);
+        
 
         List<Category> topCategories = categories.stream()
                 .sorted((c1, c2) -> {
@@ -80,7 +104,7 @@ public class ClientController {
 
 
     @GetMapping("/index.html")
-    public String indexHtml(Model model) {
+    public String indexHtml(Model model, HttpServletRequest request) {
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
 
@@ -121,11 +145,33 @@ public class ClientController {
             }
         }
 
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
+
         return "index";
     }
 
     @GetMapping("/shop-grid.html")
-    public String shopGridHtml(Model model){
+    public String shopGridHtml(Model model, HttpServletRequest request) {
         List<Product> products = productService.getListProducts();
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("products", products);
@@ -148,10 +194,31 @@ public class ClientController {
                 }
             }
         }
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
         return "shop-grid";
     }
     @GetMapping("/shop-grid/{categoryId}")
-    public String filterShopGrid(@PathVariable int categoryId, Model model){
+    public String filterShopGrid(@PathVariable int categoryId, Model model, HttpServletRequest request) {
         List<Product> filteredProduct = productService.findByCategoryId(categoryId);
         model.addAttribute("products", filteredProduct);
         List<Category> categories = categoryService.getListCategories();
@@ -172,6 +239,27 @@ public class ClientController {
                 }
             }
         }
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
         return "shop-grid";
     }
 
@@ -181,7 +269,7 @@ public class ClientController {
 //    }
     
     @GetMapping("/single-product/{id}")
-    public String singleProduct(Model model, @PathVariable String id){
+    public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request) {
         Product product = productService.getProductById(Integer.parseInt(id));
         model.addAttribute("product", product);
         List<Image> productImages = imageService.findByProductId(product.getId());
@@ -208,11 +296,32 @@ public class ClientController {
                 }
             }
         }
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
         return "single-product";
     }
 
     @GetMapping("/categories")
-    public String getCategories(Model model) {
+    public String getCategories(Model model, HttpServletRequest request) {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
@@ -231,10 +340,31 @@ public class ClientController {
                 }
             }
         }
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
         return "layout";
     }
     @GetMapping("/single-product.html")
-    public String singleProductHtml(Model model){
+    public String singleProductHtml(Model model, HttpServletRequest request) {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
@@ -253,6 +383,27 @@ public class ClientController {
                 }
             }
         }
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
         return "single-product";
     }
 

@@ -1,4 +1,4 @@
-package walkonmoon.fashion.model;
+package walkonmoon.fashion.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,10 +8,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CartItemDTO {
-    private String id;
+    private int id;
     private String title;
     private String image;
-    private String price;
-    private String stock;
+    private int price;
+    private int stock;
     private int quantity;
+    private int userId;
 }

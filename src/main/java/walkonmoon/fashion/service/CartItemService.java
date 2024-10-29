@@ -5,7 +5,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import walkonmoon.fashion.model.CartItemDTO;
+import org.springframework.web.bind.annotation.PostMapping;
+import walkonmoon.fashion.dto.CartItemDTO;
 import walkonmoon.fashion.model.CartItem;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.CartItemRepository;
@@ -23,45 +24,52 @@ public class CartItemService {
     @Autowired
     private ProductService productService;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Transactional
+    public void addCartItem(CartItemDTO cartItemDTO) {
+        CartItem existingCartItem = cartItemRepository.findByUserIdAndProductId(cartItemDTO.getUserId(), cartItemDTO.getId());
 
-    public void mergeLocalStorageCart(int userId, List<CartItemDTO> localCartItems) {
-        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
-        Map<Integer, CartItem> cartItemMap = cartItems.stream().collect(
-                Collectors.toMap(CartItem::getProductId, cartItem -> cartItem)
-        );
-
-        for (var localCartItemDTO : localCartItems) {
-            int productId = Integer.parseInt(localCartItemDTO.getId());
-            if (cartItemMap.containsKey(productId)) {
-                CartItem cartItem = cartItemMap.get(productId);
-                cartItem.setQuantity(cartItem.getQuantity() + localCartItemDTO.getQuantity());
-                entityManager.merge(cartItem);
-            } else {
-                CartItem newCartItem = new CartItem();
-                newCartItem.setProductId(productId);
-                newCartItem.setQuantity(localCartItemDTO.getQuantity());
-                newCartItem.setUserId(userId);
-                entityManager.persist(newCartItem);
-            }
+        if (existingCartItem != null) {
+            existingCartItem.setQuantity(existingCartItem.getQuantity() + cartItemDTO.getQuantity());
+            cartItemRepository.save(existingCartItem);
+        } else {
+            CartItem cartItem = new CartItem();
+            cartItem.setProductId(cartItemDTO.getId());
+            cartItem.setQuantity(cartItemDTO.getQuantity());
+            cartItem.setUserId(cartItemDTO.getUserId());
+            cartItemRepository.save(cartItem);
         }
     }
-    public List<CartItemDTO> getCartItemsDTOByUserId(int userId) {
-        return transferCartItemToCartItemDTO(cartItemRepository.findByUserId(userId));
-    }
+    
+    @Transactional
+    public List<CartItemDTO> getCartItems(int userId) {
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        List<Integer> productIds = cartItems.stream().map(CartItem::getProductId).collect(Collectors.toList());
+        Map<Integer, Product> productMap = productService.getProductsByIds(productIds).stream().collect(Collectors.toMap(Product::getId, product -> product));
 
-    public List<CartItemDTO> transferCartItemToCartItemDTO(List<CartItem> cartItems){
         return cartItems.stream().map(cartItem -> {
             CartItemDTO cartItemDTO = new CartItemDTO();
-            Product product = productService.getProductById(cartItem.getProductId());
-            cartItemDTO.setId(String.valueOf(cartItem.getProductId()));
-            cartItemDTO.setTitle(product.getProduct_name());
-            cartItemDTO.setPrice(String.valueOf(product.getPrice()));
-            cartItemDTO.setImage(product.getImage_collection_url());
-            cartItemDTO.setStock(String.valueOf(product.getStock()));
+            cartItemDTO.setId(cartItem.getProductId());
             cartItemDTO.setQuantity(cartItem.getQuantity());
+            cartItemDTO.setUserId(cartItem.getUserId());
+
+            Product product = productMap.get(cartItem.getProductId());
+            cartItemDTO.setTitle(product.getProduct_name());
+            cartItemDTO.setImage(product.getImage_collection_url());
+            cartItemDTO.setPrice(product.getPrice());
+            cartItemDTO.setStock(product.getStock());
+
             return cartItemDTO;
         }).collect(Collectors.toList());
     }
+    
+    @Transactional
+    public void deleteCartItem(int userId, int productId) {
+        cartItemRepository.deleteByUserIdAndProductId(userId, productId);
+    }
+    
+    @Transactional
+    public int calculateTotalPrice(List<CartItemDTO> cartItems) {
+        return cartItems.stream().mapToInt(cartItem -> cartItem.getPrice() * cartItem.getQuantity()).sum();
+    }
+    
 }
