@@ -1,18 +1,24 @@
 package walkonmoon.fashion.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
+import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,20 +37,28 @@ public class ClientController {
     public String index(Model model){
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
-        List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
-        model.addAttribute("filteredProductByCategory1", filteredProductByCategory1);
-        List<Product> filteredProductByCategory2 = productService.findByCategoryId(2);
-        model.addAttribute("filteredProductByCategory2", filteredProductByCategory2);
-        List<Product> filteredProductByCategory3 = productService.findByCategoryId(3);
-        model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
-        List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
-        model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
 
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
+
+        List<Category> topCategories = categories.stream()
+                .sorted((c1, c2) -> {
+                    int count1 = productService.findByCategoryId(c1.getId()).size();
+                    int count2 = productService.findByCategoryId(c2.getId()).size();
+                    return Integer.compare(count2, count1); // descending order
+                })
+                .limit(4)
+                .toList();
+        model.addAttribute("topCategories", topCategories);
+
+        for (int i = 0; i < topCategories.size(); i++) {
+            Category category = topCategories.get(i);
+            model.addAttribute("category"+(i+1), category);
+            List<Product> filteredProducts = productService.findByCategoryId(category.getId());
+            model.addAttribute("topCategoryProducts" +(i+1), filteredProducts);
+        }
+
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -54,17 +68,14 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
 
         return "index";
-
     }
 
 
@@ -72,19 +83,28 @@ public class ClientController {
     public String indexHtml(Model model) {
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
-        List<Product> filteredProductByCategory1 = productService.findByCategoryId(1);
-        model.addAttribute("filteredProductByCategory1", filteredProductByCategory1);
-        List<Product> filteredProductByCategory2 = productService.findByCategoryId(2);
-        model.addAttribute("filteredProductByCategory2", filteredProductByCategory2);
-        List<Product> filteredProductByCategory3 = productService.findByCategoryId(3);
-        model.addAttribute("filteredProductByCategory3", filteredProductByCategory3);
-        List<Product> filteredProductByCategory4 = productService.findByCategoryId(4);
-        model.addAttribute("filteredProductByCategory4", filteredProductByCategory4);
+
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
+
+        List<Category> topCategories = categories.stream()
+                .sorted((c1, c2) -> {
+                    int count1 = productService.findByCategoryId(c1.getId()).size();
+                    int count2 = productService.findByCategoryId(c2.getId()).size();
+                    return Integer.compare(count2, count1); // descending order
+                })
+                .limit(4)
+                .toList();
+        model.addAttribute("topCategories", topCategories);
+
+        for (int i = 0; i < topCategories.size(); i++) {
+            Category category = topCategories.get(i);
+            model.addAttribute("category"+(i+1), category);
+            List<Product> filteredProducts = productService.findByCategoryId(category.getId());
+            model.addAttribute("topCategoryProducts" +(i+1), filteredProducts);
+        }
+
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -94,14 +114,13 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
+
         return "index";
     }
 
@@ -112,8 +131,6 @@ public class ClientController {
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -141,9 +158,6 @@ public class ClientController {
         model.addAttribute("categories", categories);
         model.addAttribute("selectedCategoryId", categoryId);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
-
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
             int end = Math.min(start + chunkSize, categories.size());
@@ -152,11 +166,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -182,9 +194,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
-
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
             int end = Math.min(start + chunkSize, categories.size());
@@ -193,11 +202,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -209,8 +216,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -220,11 +225,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -235,8 +238,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -246,11 +247,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -262,8 +261,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -273,11 +270,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -290,8 +285,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -301,11 +294,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -318,8 +309,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -329,25 +318,57 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
+            }
+        }
+
+        return "login";
+    }
+
+
+    @PostMapping("/login/access")
+    public String loginAccount(@RequestParam("email") String email,
+                               @RequestParam("password") String password,
+                               Model model,
+                               HttpServletResponse response) {
+        User currentUser = userService.getUserByEmail(email);
+        if (currentUser == null) {
+            return "redirect:/login.html";
+        } else {
+            if (currentUser.getPassword().equals(password)) {
+                // Create and add cookies after validating their values
+                addCookie(response, "userID", String.valueOf(currentUser.getId()));
+                addCookie(response, "password", currentUser.getPassword());
+                addCookie(response, "email", email);
+                addCookie(response, "gender", currentUser.getGender());
+                addCookie(response, "dob", String.valueOf(currentUser.getDob()));
+                addCookie(response, "address", currentUser.getAddress());
+                addCookie(response, "phoneNumber", currentUser.getPhone_number());
+                addCookie(response, "province", currentUser.getProvince());
+
+                return "redirect:/index.html";
             }
         }
         return "login";
     }
 
+    private void addCookie(HttpServletResponse response, String name, String value) {
+        // Trim value and replace spaces with underscores or another character if necessary
+        value = value.trim().replace(" ", "_"); // Replace space with underscore
+        Cookie cookie = new Cookie(name, value);
+        cookie.setPath("/"); // Set appropriate path
+        cookie.setMaxAge(60 * 60 * 24 * 30 * 12); // Set cookie age
+        response.addCookie(cookie);
+    }
 
     @GetMapping("/register.html")
     public String registerHtml(Model model){
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -357,11 +378,11 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 }
             }
         }
@@ -374,8 +395,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -385,11 +404,11 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 }
             }
         }
@@ -406,8 +425,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -417,11 +434,11 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 }
             }
         }
@@ -433,8 +450,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -444,11 +459,10 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
+
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -460,8 +474,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -471,11 +483,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -488,8 +498,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
 
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
@@ -499,11 +507,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -515,9 +521,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
-
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
             int end = Math.min(start + chunkSize, categories.size());
@@ -526,11 +529,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }
@@ -541,9 +542,6 @@ public class ClientController {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        System.out.println("Total categories: " + categories.size());
-        System.out.println("Chunk size: " + chunkSize);
-
         for (int i = 0; i < 4; i++) {
             int start = i * chunkSize;
             int end = Math.min(start + chunkSize, categories.size());
@@ -552,11 +550,9 @@ public class ClientController {
                 if (i == 3) {
                     List<Category> chunk = categories.subList(start, categories.size());
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 } else {
                     List<Category> chunk = categories.subList(start, end);
                     model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
                 }
             }
         }

@@ -46,6 +46,11 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <main id="primary" class="site-main">
                             <div class="single-product-wrapper">
+                                <div class="product-id" th:text="${product.getId()}" style="visibility: hidden; display: none" ></div>
+                                <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden; display: none"></div>
+                                <image class="product-img" th:src="${product.getImage_collection_url()}" style="visibility: hidden; display: none"></image>
+                                <div class="product-name-hid" th:text="${product.getProduct_name()}" style="visibility: hidden; display: none"></div>
+                                <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="product-gallery">
@@ -152,14 +157,13 @@
                                                         <ul class="d-flex flex-wrap align-items-center">
                                                             <li class="box-quantity">
                                                                 <div class="cart-input2">
-                                                                    <input class="cart-input-box" type="number" min="0" value="0" th:max="${product.getStock()}">
+                                                                    <input class="cart-input-box" type="number" th:min="${product.getStock()>= 1 ? 1 : 0}" th:value="${product.getStock()>= 1 ? 1 : 0}" th:max="${product.getStock()}">
 <!--                                                                    <div class="dec2 qtybutton2"><i class="fa fa-angle-down" style="visibility: hidden"></i></div>-->
 <!--                                                                    <div class="inc2 qtybutton2"><i class="fa fa-angle-up"></i></div>-->
                                                                 </div>
                                                             </li>
                                                             <li>
-                                                                <button type="button" class="default-btn">Add to Cart</button>
-                                                            </li>
+                                                                <button type="button" class="default-btn cart-btn" th:text="${product.getStock() > 0 ? 'Add to Cart' : 'Out of Stock'}" th:disabled="${product.getStock() == 0}"></button>                                                            </li>
                                                         </ul>
                                                     </form>
                                                 </div>
@@ -330,6 +334,9 @@
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
+                                                    <div class="product-id" th:text="${relatedProduct.getId()}" style="visibility: hidden; display: none"></div>
+                                                    <div class="product-price-hid" th:text="${relatedProduct.getPrice()}" style="visibility: hidden; display: none"></div>
+                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}" style="visibility: hidden; display: none"></div>
                                                     <div class="label-product label-new" th:text="${relatedProduct.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}">
                                                         <img th:src="${relatedProduct.getImage_collection_url()}" th:alt="${relatedProduct.getProduct_name()}" th:title="${relatedProduct.getProduct_name()}">
@@ -383,131 +390,11 @@
     <!-- End of Main Content Wrapper -->
 
     <!-- Start of Footer -->
-    <footer id="colophon" class="bgc-secondary pt-full">
-
-        <!-- Footer Widgets Area -->
-        <div class="footer-widgets-area">
-            <div class="container">
-                <div class="footer-inner">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
-                            <aside class="widget-container">
-                                <div class="widget-content">
-                                    <div class="footer-logo mb-half">
-                                        <img src="assets/images/footer-logo.png" alt="Footer Logo">
-                                    </div>
-                                    <p>We are a team of designers and developers that create high quality Magento, Prestashop, Opencart.</p>
-                                    <div class="footer-contact">
-                                        <p><span>Address:</span>6688Princess Road, London, Greater London BAS 23JK, UK</p>
-                                        <p><span>Phone:</span><a href="#">(012) 800 456 789-987</a></p>
-                                        <p><span>Email:</span><a href="#">support@example.com</a></p>
-                                    </div>
-                                </div> <!-- end of widget-content -->
-                            </aside> <!-- end of widget-container -->
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-6 order-md-3 col-lg-2 order-lg-2">
-                            <aside class="widget-container">
-                                <h4 class="widgettitle">Products</h4>
-                                <div class="widget-content">
-                                    <div class="widgetized-menu">
-                                        <ul class="list-unstyled">
-                                            <li><a href="#">Prices drop</a></li>
-                                            <li><a href="#">New Products</a></li>
-                                            <li><a href="#">Best Sales</a></li>
-                                            <li><a href="#">Contact Us</a></li>
-                                            <li><a href="#">Login</a></li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end of widget-content -->
-                            </aside> <!-- end of widget-container -->
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-6 order-md-4 col-lg-2 order-lg-3">
-                            <aside class="widget-container">
-                                <h4 class="widgettitle">Our Company</h4>
-                                <div class="widget-content">
-                                    <div class="widgetized-menu">
-                                        <ul class="list-unstyled">
-                                            <li><a href="#">About Us</a></li>
-                                            <li><a href="#">Site Map</a></li>
-                                            <li><a href="#">Stores</a></li>
-                                            <li><a href="#">Terms &amp; Conditions</a></li>
-                                            <li><a href="#">My Account</a></li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end of widget-content -->
-                            </aside> <!-- end of widget-container -->
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-6 order-md-2 col-lg-4 order-lg-4">
-                            <aside class="widget-container">
-                                <h4 class="widgettitle">Sign up for our newsletter</h4>
-                                <div class="widget-content">
-                                    <div class="newsletter-widget">
-                                        <p>You may unsubscribe at any moment. For that purpose, please find our contact info in the legal notice.</p>
-                                        <form class="mc-subscribe-form">
-                                            <div class="input-group">
-                                                <input type="email" autocomplete="off" placeholder="Your Email Address" required>
-                                                <button class="default-btn" type="submit">Sign Up</button>
-                                            </div>
-                                        </form> <!-- end of form -->
-
-                                        <div class="mailchimp-alerts">
-                                            <div class="mailchimp-submitting"></div>
-                                            <div class="mailchimp-success"></div>
-                                            <div class="mailchimp-error"></div>
-                                        </div><!-- end of mailchimp-alerts -->
-                                    </div>
-                                </div> <!-- end of widget-content -->
-                            </aside> <!-- end of widget-container -->
-
-                            <aside class="widget-container">
-                                <div class="widget-content">
-                                    <div class="social-widget mt-half">
-                                        <div class="socials d-flex align-items-center justify-content-center justify-content-md-start">
-                                            <ul class="list-inline">
-                                                <li class="list-inline-item"><a href="#" class="bg-facebook" title="Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="bg-twitter" title="Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="bg-gplus" title="Google Plus" target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="bg-pinterest" title="Pinterest" target="_blank"><i class="fa fa-pinterest"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="bg-instagram" title="Instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                                <li class="list-inline-item"><a href="#" class="bg-linkedin" title="Linked In" target="_blank"><i class="fa fa-linkedin"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> <!-- end of widget-content -->
-                            </aside> <!-- end of widget-container -->
-                        </div>
-                    </div> <!-- end of row -->
-                </div> <!-- end of footer-inner -->
-            </div> <!-- end of container -->
-        </div> <!-- end of footer-widgets-area -->
-
-        <!-- Footer Copyright -->
-        <div class="footer-copyright">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <p class="copyright-text">Copyright © 2018 <a href="#" rel="nofollow">Pebona Themes</a>. All Right Reserved.</p>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="footer-payment">
-                            <a href="#"><img src="assets/images/icons/payment.png" alt="Payment Icons"></a>
-                        </div>
-                    </div>
-                </div> <!-- end of row -->
-            </div> <!-- end of container -->
-        </div> <!-- end of footer-copyright -->
-    </footer>
+    <div th:replace="~{layout::footer}"></div>
+    <div th:replace="~{layout::scroll_to_top}"></div>
     <!-- End of Footer -->
 
-    <!-- Start of Scroll to Top -->
-    <div id="to_top">
-        <i class="ion ion-ios-arrow-forward"></i>
-        <i class="ion ion-ios-arrow-forward"></i>
-    </div>
-    <!-- End of Scroll to Top -->
+
 </div>
 <!-- End of Whole Site Wrapper -->
 
@@ -570,6 +457,7 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="/assets/js/cart.js"></script>
 
 </body>
 
