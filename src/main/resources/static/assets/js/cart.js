@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const cartService = new CartService();
+
     document.querySelectorAll('.btn-cart').forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault();
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
             };
             console.log(product);
             console.log(productElement);
-            addItemToCart(product, 1, product.stock);
+            cartService.addToCart(product, 1);
         });
     });
 
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    const cartService = new CartService();
     document.querySelectorAll('.cart-btn').forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault();
@@ -34,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const quantity = productElement.querySelector('.cart-input-box').value;
             console.log(product);
             console.log(productElement);
-            addItemToCart(product, quantity, product.stock);
+            cartService.addToCart(product, quantity);
         });
     });
 
@@ -143,3 +146,128 @@ function removeItemFromCart(itemId) {
     saveCart(cart);
     updateCartDisplay();
 }
+
+class CartService {
+    constructor() {
+        this.LOCAL_STORAGE_KEY = 'cart';
+        this.OFFLINE_OPERATION_KEY = 'offline-cart-operation';
+    }
+
+    isLoggedIn() {
+        return localStorage.getItem('userId') !== null;
+    }
+
+    async addToCart(product, quantity = 1) {
+    const stock = parseInt(product.stock);
+    const quant = parseInt(quantity);
+
+    if (quant > stock) {
+        alert("Số lượng sản phẩm trong giỏ hàng vượt quá số lượng sản phẩm trong kho");
+        return;
+    }
+
+    if (this.isLoggedIn()) {
+        const userId = parseInt(localStorage.getItem('userId')); // Ensure userId is a number
+        console.log(typeof userId);
+        try {
+            const response = await fetch('/merge', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userId: userId,
+                    localCartItems: [{ ...product, quantity: quant }]
+                })
+            });
+            if (!response.ok) {
+                throw new Error('Failed to add item to cart');
+            }
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            //this.queueOfflineOperation({ type: 'add', product, quantity: quant });
+            //Warning
+            alert('Không thể thêm sản phẩm vào giỏ hàng');
+        }
+    }
+    this.addToLocalStorageCart(product, quant);
+}
+
+addToLocalStorageCart(product, quantity) {
+    const cart = this.loadCart();
+    const existingItem = cart.find(item => item.id === product.id);
+    const stock = parseInt(product.stock);
+
+    if (existingItem) {
+        existingItem.stock = stock;
+        existingItem.quantity += quantity;
+        if (existingItem.quantity > stock) {
+            existingItem.quantity = stock;
+        }
+    } else {
+        product.quantity = quantity;
+        cart.push(product);
+    }
+    this.saveCart(cart);
+    updateCartDisplay();
+}
+
+saveCart(cart) {
+    localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(cart));
+}
+
+    queueOfflineOperation(operation) {
+        const operations = JSON.parse(localStorage.getItem(this.OFFLINE_OPERATION_KEY)) || [];
+        operations.push(operation);
+        localStorage.setItem(this.OFFLINE_OPERATION_KEY, JSON.stringify(operations));
+    }
+
+    async syncOfflineOperations() {
+        if (this.isLoggedIn()) {
+            const operations = JSON.parse(localStorage.getItem(this.OFFLINE_OPERATION_KEY)) || [];
+            for (const operation of operations) {
+                if (operation.type === 'add') {
+                    await this.addToCart(operation.product, operation.quantity);
+                }
+            }
+            localStorage.removeItem(this.OFFLINE_OPERATION_KEY);
+        }
+    }
+
+    loadCart() {
+        const cart = localStorage.getItem(this.LOCAL_STORAGE_KEY);
+        return cart ? JSON.parse(cart) : [];
+    }
+
+   async getCart() {
+    if (this.isLoggedIn()) {
+        const userId = parseInt(localStorage.getItem('userId'));
+        try {
+            const response = await fetch(`/cart/${userId}`);
+            if (!response.ok) {
+                throw new Error('Failed to get cart');
+            }
+            const jsonCart = await response.json();
+            localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify(jsonCart));
+            return jsonCart;
+        } catch (error) {
+            console.error('Error getting cart:', error);
+        }
+    }
+    localStorage.removeItem(this.LOCAL_STORAGE_KEY);
+    localStorage.setItem(this.LOCAL_STORAGE_KEY, JSON.stringify([]));
+    return [];
+}}
+
+window.addEventListener('load', () => {
+    const cartService = new CartService();
+    if(cartService.isLoggedIn()) {
+        cartService.getCart();
+    }
+    updateCartDisplay();
+});
+
+//Test set userId
+window.addEventListener('load', () => {
+    localStorage.setItem('userId', '8');
+});
