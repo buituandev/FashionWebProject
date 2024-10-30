@@ -288,8 +288,7 @@
                                                     <input type="file" class="upload" id="files" name="files" multiple
                                                            accept="image/*">
                                                 </div>
-                                                <input type="text" th:field="*{image_collection_url}"
-                                                       style="visibility: hidden">
+                                                <input type="text" id="previousImage">
                                             </div>
                                         </div>
                                         <hr>
@@ -349,6 +348,7 @@
 <script>
     const container = document.getElementById('image-preview-wrapper');
     const input = document.getElementById('files');
+    const hiddenInput = document.getElementById('previousImage');
 
     // Handle new image uploads without clearing the existing images
     input.addEventListener('change', (e) => {
