@@ -30,10 +30,21 @@
 
     <!-- Responsive stylesheet -->
     <link rel="stylesheet" href="/assets/css/responsive.css">
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=arrow_drop_down" />
     <!-- modernizr JS
     ============================================ -->
     <script src="/assets/js/modernizr-2.8.3.min.js"></script>
+    <style>
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 10px;
+            margin-right: -10px;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -74,46 +85,7 @@
 <!-- End of Newsletter Popup -->
 
 <!-- Start of Header -->
-<header th:fragment="headerhp" class="header bgc-white header-type-4">
-    <!--    <div class="top-bar">-->
-    <!--        <div class="container">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col-12 order-2 col-sm-12 order-sm-2 col-md-8 order-md-1 align-self-center">-->
-    <!--                    <p>Mid-season sale up to 20% OFF. Use code "SALEOFF20"</p>-->
-    <!--                </div>-->
-    <!--                <div class="col-12 order-1 col-sm-12 order-sm-1 col-md-4 order-md-2">-->
-    <!--                    <ul class="list-inline">-->
-    <!--                        <li class="currency list-inline-item">-->
-    <!--                            <div class="btn-group">-->
-    <!--                                <button class="btn-link dropdown-toggle"> USD $<i-->
-    <!--                                        class="fa fa-angle-down"></i></button>-->
-    <!--                                <div class="dropdown-menu">-->
-    <!--                                    <ul>-->
-    <!--                                        <li><a href="#">Euro €</a></li>-->
-    <!--                                        <li><a href="#" class="current">USD $</a></li>-->
-    <!--                                    </ul>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                        </li>-->
-    <!--                        <li class="language list-inline-item">-->
-    <!--                            <div class="btn-group">-->
-    <!--                                <button class="btn-link dropdown-toggle">English <i-->
-    <!--                                        class="fa fa-angle-down"></i></button>-->
-    <!--                                <div class="dropdown-menu">-->
-    <!--                                    <ul>-->
-    <!--                                        <li><a href="#" class="current"><img src="/assets/images/icons/en-gb.png"-->
-    <!--                                                                             alt="Icons"> English</a></li>-->
-    <!--                                        <li><a href="#"><img src="/assets/images/icons/fr-fr.png" alt="Icons">-->
-    <!--                                            Français</a></li>-->
-    <!--                                    </ul>-->
-    <!--                                </div>-->
-    <!--                            </div>-->
-    <!--                        </li>-->
-    <!--                    </ul>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </div> &lt;!&ndash; end of container &ndash;&gt;-->
-    <!--    </div> &lt;!&ndash; end of top-bar &ndash;&gt;-->
+<header th:fragment="headerhp(user)" class="header bgc-white header-type-4">
 
     <div class="header-area">
         <div class="container">
@@ -136,28 +108,51 @@
                                 <div th:replace="~{layout::cart-nav}"></div>
                                 <ul class="list-inline">
                                     <li class="top-links list-inline-item">
-                                        <div class="btn-group">
+                                        <div th:if="${user} == null" class="btn-group">
                                             <button class="btn-link dropdown-toggle"><i
                                                     class="pe-7s-config"></i></button>
                                             <div class="dropdown-menu">
                                                 <ul>
-                                                    <li><a href="register.html">Register</a></li>
-                                                    <li><a href="login.html">Login</a></li>
+                                                    <li><a th:href="@{/register.html}">Register</a></li>
+                                                    <li><a th:href="@{/login.html}">Login</a></li>
                                                     <li><a href="my-account.html">My Account</a></li>
 <!--                                                    <li><a href="wishlist.html">Wishlist</a></li>-->
                                                     <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a th:href="@{/logout}">Log out</a></li>
                                                 </ul>
                                             </div>
                                         </div>
+                                        <!--Avatar User-->
+                                        <div th:if="${user}" class="dropdown">
+                                            <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
+                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiKMIe5bDu9ukxaQgrAF6sZIuOIwH8ISeNrA&s" alt="User Image" class="avatar">
+                                                <span class="material-symbols-outlined" style="margin-left: -10px">arrow_drop_down</span>
+                                            </div>
+                                            <div class="dropdown-menu">
+                                                <ul id="dropdown-list" class="dropdown-list">
+                                                    <li><a href="my-account.html">My Account</a></li>
+                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a th:href="@{/logout}">Log out</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+
+                                        <!--                End Avatar User-->
+                          <!-- end of header-cart-area -->
                                     </li>
                                 </ul>
-                            </div> <!-- end of header-cart-area -->
+
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div> <!-- end of container -->
     </div> <!-- end of header-top -->
+    </div>
 </header>
 <!-- End of Header -->
 
@@ -629,13 +624,12 @@
 
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
+
 <!--<script th:inline="javascript">-->
 <!--    /*<![CDATA[*/-->
 <!--    const categories = /*[[${#objectMapper.writeValueAsString(categories)}]]*/ {};-->
 <!--    /*]]>*/-->
-<!--</script>-->
-
-
+<!--</scriptscript>-->
 
 </body>
 
