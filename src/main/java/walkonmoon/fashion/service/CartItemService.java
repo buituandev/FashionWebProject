@@ -2,6 +2,8 @@ package walkonmoon.fashion.service;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import walkonmoon.fashion.model.CartItem;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.CartItemRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -25,13 +28,21 @@ public class CartItemService {
     private ProductService productService;
 
     @Transactional
-    public void addCartItem(CartItemDTO cartItemDTO) {
+    public void addCartItem(CartItemDTO cartItemDTO, HttpServletResponse response) throws IOException {
         CartItem existingCartItem = cartItemRepository.findByUserIdAndProductId(cartItemDTO.getUserId(), cartItemDTO.getId());
 
         if (existingCartItem != null) {
+            if (existingCartItem.getQuantity() + cartItemDTO.getQuantity() > productService.getProductById(existingCartItem.getProductId()).getStock()) {
+                response.sendError(400);
+                return;
+            }
             existingCartItem.setQuantity(existingCartItem.getQuantity() + cartItemDTO.getQuantity());
             cartItemRepository.save(existingCartItem);
         } else {
+            if(cartItemDTO.getQuantity() > productService.getProductById(cartItemDTO.getId()).getStock()) {
+                response.sendError(400);
+                return;
+            }
             CartItem cartItem = new CartItem();
             cartItem.setProductId(cartItemDTO.getId());
             cartItem.setQuantity(cartItemDTO.getQuantity());

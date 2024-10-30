@@ -1054,6 +1054,32 @@
 </div>
 <!-- End of Photoswipe -->
 
+<div id="modal-success" aria-hidden="true">
+
+    <!-- [2] -->
+    <div tabindex="-1" data-micromodal-close>
+
+        <!-- [3] -->
+        <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+
+
+            <header>
+                <h2 id="modal-1-title">
+                    Modal Title
+                </h2>
+
+                <!-- [4] -->
+                <button aria-label="Close modal" data-micromodal-close></button>
+            </header>
+
+            <div id="modal-1-content">
+                Modal Content
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <!-- JS
 ============================================ -->
@@ -1074,17 +1100,19 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
->
-
 <script>
+    import MicroModal from 'micromodal';
+    const MicroModal = require('micromodal');
+
+    MicroModal.init();
+
     function addToCart(productId, quantity) {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
+                MicroModal.show('modal-success');
                 console.log("Item added to cart successfully");
-            } else if (xhr.readyState === 4 && xhr.status === 401) {
-                window.location.href = "/login.html";
             }
         };
         xhr.send();
@@ -1103,7 +1131,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         function updateCart() {
-            fetch('/')
+            fetch('/index.html')
                 .then(response => response.text())
                 .then(html => {
                     const parser = new DOMParser();

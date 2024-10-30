@@ -42,7 +42,7 @@ public class CartController {
             cartItemDTO.setUserId(Integer.parseInt(userId));
             cartItemDTO.setId(productId);
             cartItemDTO.setQuantity(quantity);
-            cartItemService.addCartItem(cartItemDTO);
+            cartItemService.addCartItem(cartItemDTO,response);
         }
     }
 

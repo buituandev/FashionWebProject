@@ -116,7 +116,7 @@
     object-fit: cover;">
                                                                         </a>
                                                                         <div class="action-links">
-                                                                            <a class="action-btn btn-cart" href="#"
+                                                                            <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                                title="Add to Cart"><i
                                                                                     class="pe-7s-shopbag"></i></a>
                                                                             <a class="action-btn btn-wishlist" href="#"
@@ -197,7 +197,7 @@
                                                                             </a>
                                                                             <div class="action-links">
                                                                                 <a class="action-btn btn-cart"
-                                                                                   href="#" title="Add to Cart"><i
+                                                                                    title="Add to Cart"><i
                                                                                         class="pe-7s-shopbag"></i></a>
                                                                                 <a class="action-btn btn-wishlist"
                                                                                    href="#"

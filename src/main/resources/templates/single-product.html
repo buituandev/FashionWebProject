@@ -157,13 +157,14 @@
                                                         <ul class="d-flex flex-wrap align-items-center">
                                                             <li class="box-quantity">
                                                                 <div class="cart-input2">
-                                                                    <input class="cart-input-box" type="number" th:min="${product.getStock()>= 1 ? 1 : 0}" th:value="${product.getStock()>= 1 ? 1 : 0}" th:max="${product.getStock()}">
+                                                                    <input id="quantity-input" class="cart-input-box" type="number" th:min="${product.getStock()>= 1 ? 1 : 0}" th:value="${product.getStock()>= 1 ? 1 : 0}" th:max="${product.getStock()}">
 <!--                                                                    <div class="dec2 qtybutton2"><i class="fa fa-angle-down" style="visibility: hidden"></i></div>-->
 <!--                                                                    <div class="inc2 qtybutton2"><i class="fa fa-angle-up"></i></div>-->
                                                                 </div>
                                                             </li>
                                                             <li>
-                                                                <button type="button" class="default-btn cart-btn" th:text="${product.getStock() > 0 ? 'Add to Cart' : 'Out of Stock'}" th:disabled="${product.getStock() == 0}"></button>                                                            </li>
+                                                                <button type="button" class="default-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', document.getElementById(\'quantity-input\').value)'" th:text="${product.getStock() > 0 ? 'Add to Cart' : 'Out of Stock'}" th:disabled="${product.getStock() == 0}"></button>
+                                                            </li>
                                                         </ul>
                                                     </form>
                                                 </div>
@@ -342,7 +343,7 @@
                                                         <img th:src="${relatedProduct.getImage_collection_url()}" th:alt="${relatedProduct.getProduct_name()}" th:title="${relatedProduct.getProduct_name()}">
                                                     </a>
                                                     <div class="action-links">
-                                                        <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
+                                                        <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${relatedProduct.id} + ', 1)'" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
                                                         <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
                                                         <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
                                                     </div>
@@ -457,7 +458,54 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
+<script>
+    function addToCart(productId, quantity) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Item added to cart successfully");
+            }
+            if(xhr.readyState === 4 && xhr.status === 400) {
+                alert("You have reached the maximum quantity of this product in your cart");
+            }
+        };
+        xhr.send();
+    }
 
+    function deleteCartItem(productId, userId) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Item deleted from cart successfully");
+            }
+        };
+        xhr.send();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        function updateCart() {
+            fetch('/single-product.html')
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                    const newCountStyle = doc.querySelector('.count-style').textContent;
+
+                    document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                    document.querySelector('.count-style').textContent = newCountStyle;
+                })
+                .catch(error => console.error('Error fetching cart items:', error));
+        }
+
+        // Add event listener to buttons with class 'cart-btn'
+        document.querySelectorAll('.btn-cart').forEach(button => {
+            button.addEventListener('click', updateCart);
+        });
+    });
+</script>
 </body>
 
 <!-- Mirrored from htmldemo.net/pebona/pebona/single-product.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Sep 2024 06:10:24 GMT -->
