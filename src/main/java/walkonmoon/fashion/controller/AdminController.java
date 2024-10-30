@@ -198,7 +198,7 @@ public class AdminController {
         model.addAttribute("product", product);
         model.addAttribute("mode", "edit");
         Category category = categoryService.getCategoryById(product.getCategoryId());
-        if (category != null && category.getQuantity() > 0) {
+        if (category.getQuantity() > 0) {
             category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
             categoryService.saveCategory(category); // Save updated category
         }
@@ -219,13 +219,13 @@ public class AdminController {
             System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
         }
         imageService.deleteByProductId(id);
-        productService.deleteProductById(id);
+
         Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
-        if (category != null && category.getQuantity() > 0) {
+        if (category.getQuantity() > 0) {
             category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
             categoryService.saveCategory(category); // Save updated category
         }
-
+        productService.deleteProductById(id);
         return "redirect:/admin/eco-products.html";
     }
 
@@ -238,14 +238,13 @@ public class AdminController {
     @PostMapping("/login")
     public  String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
          User user = userService.getUserByEmail(email);
-        if(user == null){
+        if (user == null || !user.getPassword().equals(password) || user.getType() != 1) {
+
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid email or password.");
             return "redirect:/admin/pages-login.html";
         }
-         else if(user.getPassword().equals(password)){
-             return "redirect:/admin/index.html";
-         }
-        return "redirect:/admin/pages-login.html";
+
+        return "redirect:/admin/index.html";
     }
 
     private String getFileName(MultipartFile file, InputStream inputStream) {

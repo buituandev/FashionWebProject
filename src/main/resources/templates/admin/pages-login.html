@@ -102,16 +102,15 @@
         });
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            /*[[${errorMessage}]]*/
-            const errorMessage = /*[[${errorMessage}]]*/ 'null'; // Thymeleaf variable
-            if (errorMessage !== 'null') {
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            const errorMessage = /*[[${errorMessage}]]*/ 'null';
+            if (errorMessage && errorMessage !== 'null') {  // Check if errorMessage exists
                 Swal.fire({
                     title: "Login Failed",
                     text: errorMessage,
                     icon: "error",
-                    confirmButtonText: "OK"
+                    button: "OK",
                 });
             }
         });
