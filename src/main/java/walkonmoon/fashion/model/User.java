@@ -23,23 +23,23 @@ public class User {
     private Integer id;
     @Column
     private String full_name;
-    @Column
+    @Column(nullable = false)
     private String password;
     @Column
     private String gender;
     @Column
     private Date dob;
-    @Column
+    @Column(nullable = true)
     private String address;
     @Column
     private String phone_number;
-    @Column
+    @Column(nullable = true)
     private String image;
-    @Column
+    @Column(nullable = true)
     private int type;
     @Column
     private int is_deleted;
-    @Column
+    @Column(nullable = true)
     private String province;
     @Column
     private String email;
