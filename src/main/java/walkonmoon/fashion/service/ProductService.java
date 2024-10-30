@@ -40,4 +40,9 @@ public class ProductService {
     public void deleteProductById(int id){
         proRepo.deleteById(id);
     }
+    
+    @Transactional
+    public List<Product> getProductsByIds(List<Integer> productIds) {
+        return proRepo.findByIdIn(productIds);
+    }
 }

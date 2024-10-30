@@ -229,6 +229,25 @@ public class AdminController {
         return "redirect:/admin/eco-products.html";
     }
 
+    @GetMapping("/pages-login.html")
+    public  String loginPages(Model model){
+        model.addAttribute( "user", new User());
+        return "/admin/pages-login";
+    }
+
+    @PostMapping("/login")
+    public  String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
+         User user = userService.getUserByEmail(email);
+        if(user == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid email or password.");
+            return "redirect:/admin/pages-login.html";
+        }
+         else if(user.getPassword().equals(password)){
+             return "redirect:/admin/index.html";
+         }
+        return "redirect:/admin/pages-login.html";
+    }
+
     private String getFileName(MultipartFile file, InputStream inputStream) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());
