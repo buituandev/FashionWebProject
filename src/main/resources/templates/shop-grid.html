@@ -2,6 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{layout::head('Chroma - Products')}">
+    <style>
+        /* Hide the default checkbox */
+        input[type="checkbox"] {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        /* Custom checkbox appearance */
+        input[type="checkbox"]:checked {
+            background-color: red; /* Set red background when checked */
+            border-color: black;
+        }
+
+        /* Create the checkmark when checked */
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            top: 2px;
+            left: 7px;
+            transform: rotate(45deg);
+        }
+
+    </style>
 </head>
 
 <body>
@@ -116,7 +147,8 @@
     object-fit: cover;">
                                                                         </a>
                                                                         <div class="action-links">
-                                                                            <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
+                                                                            <a class="action-btn btn-cart"
+                                                                               th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                                title="Add to Cart"><i
                                                                                     class="pe-7s-shopbag"></i></a>
                                                                             <a class="action-btn btn-wishlist" href="#"
@@ -197,7 +229,7 @@
                                                                             </a>
                                                                             <div class="action-links">
                                                                                 <a class="action-btn btn-cart"
-                                                                                    title="Add to Cart"><i
+                                                                                   title="Add to Cart"><i
                                                                                         class="pe-7s-shopbag"></i></a>
                                                                                 <a class="action-btn btn-wishlist"
                                                                                    href="#"
@@ -736,7 +768,10 @@
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log("Item added to cart successfully");
+                alert("Item added to cart successfully");
+            }
+            if (xhr.readyState === 4 && xhr.status === 400) {
+                alert("You have reached the maximum quantity of this product in your cart");
             }
         };
         xhr.send();
@@ -747,27 +782,30 @@
         xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log("Item deleted from cart successfully");
+                alert("Item deleted from cart successfully");
+                updateCart();
             }
         };
         xhr.send();
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        function updateCart() {
-            fetch('/shop-grid.html')
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
-                    const newCountStyle = doc.querySelector('.count-style').textContent;
+    function updateCart() {
+        fetch('/shop-grid.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
 
-                    document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
-                    document.querySelector('.count-style').textContent = newCountStyle;
-                })
-                .catch(error => console.error('Error fetching cart items:', error));
-        }
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateCart();
 
         // Add event listener to buttons with class 'cart-btn'
         document.querySelectorAll('.btn-cart').forEach(button => {
@@ -775,7 +813,7 @@
         });
     });
 </script>
-</body>
+
 <script>
     function selectOnlyOne(checkbox) {
         // Deselect all checkboxes
@@ -790,37 +828,7 @@
         }
     }
 </script>
-<style>
-    /* Hide the default checkbox */
-    input[type="checkbox"] {
-        position: relative;
-        width: 20px;
-        height: 20px;
-        appearance: none;
-        border: 2px solid black;
-        cursor: pointer;
-    }
-
-    /* Custom checkbox appearance */
-    input[type="checkbox"]:checked {
-        background-color: red; /* Set red background when checked */
-        border-color: black;
-    }
-
-    /* Create the checkmark when checked */
-    input[type="checkbox"]:checked::after {
-        content: '';
-        position: absolute;
-        width: 4px;
-        height: 8px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        top: 2px;
-        left: 7px;
-        transform: rotate(45deg);
-    }
-
-</style>
+</body>
 
 
 </html>

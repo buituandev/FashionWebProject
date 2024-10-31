@@ -92,4 +92,25 @@ public class CartController {
             cartItemService.deleteCartItem(Integer.parseInt(userId), productId);
         }
     }
+    
+    @GetMapping("/updateCartItem")
+    public void updateCartItem(@RequestParam("productId") int productId, @RequestParam("quantity") int quantity, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Cookie[] cookies = request.getCookies();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (userId == null) {
+            response.sendRedirect("/login.html");
+        } else {
+            cartItemService.updateCartItem(Integer.parseInt(userId), productId, quantity, response);
+        }
+    }
 }

@@ -5,308 +5,351 @@
 </head>
 <body>
 
-    <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
-    <![endif]-->
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve
+    your experience.</p>
+<![endif]-->
 
-    <!-- Start of Whole Site Wrapper with mobile menu support -->
-    <div id="whole" class="whole-site-wrapper color-scheme-one">
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
 
-        <div th:replace="~{layout::headernormal}"></div>
-        <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
+    <div th:replace="~{layout::headernormal}"></div>
+    <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
 
-        <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
+    <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
-        <!-- Start of Breadcrumbs -->
-        <div class="breadcrumb-section bgc-offset mb-full">
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section bgc-offset mb-full">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
+                        <span class="breadcrumb-item active">Register</span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+
+    <!-- Start of Main Content Wrapper -->
+    <div id="content" class="main-content-wrapper">
+
+        <!-- Start of Login Wrapper -->
+        <div class="login-wrapper">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12">
-                        <nav class="breadcrumb">
-                            <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
-                            <span class="breadcrumb-item active">Register</span>
-                        </nav>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <main id="primary" class="site-main">
+                            <div class="user-login">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12">
+                                        <div class="section-title">
+                                            <h2>Create an Account</h2>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of row -->
+
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 offset-xl-2">
+                                        <div class="registration-form login-form">
+                                            <!--                                                <form th:action="@{/register/save}" method="post" th:object="${newUser}">-->
+                                            <!--                                                    <div class="login-info mb-half">-->
+                                            <!--                                                        <p>Already have an account? <a th:href="@{/login.html}">Log in instead!</a></p>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row align-items-center">-->
+                                            <!--                                                        <label class="col-12 col-sm-12 col-md-4 col-form-label">Gender</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <div class="form-row">-->
+                                            <!--                                                                <div class="col-6 col-sm-3">-->
+                                            <!--                                                                    <div class="custom-radio">-->
+                                            <!--                                                                        <input class="form-check-input" type="radio" name="gender" id="male" th:field="*{gender}">-->
+                                            <!--                                                                        <span class="checkmark"></span>-->
+                                            <!--                                                                        <label class="form-check-label" for="male">Male</label>-->
+                                            <!--                                                                    </div>-->
+                                            <!--                                                                </div>-->
+                                            <!--                                                                <div class="col-6 col-sm-3">-->
+                                            <!--                                                                    <div class="custom-radio">-->
+                                            <!--                                                                        <input class="form-check-input" type="radio" name="gender" id="female">-->
+                                            <!--                                                                        <span class="checkmark"></span>-->
+                                            <!--                                                                        <label class="form-check-label" for="female">Female</label>-->
+                                            <!--                                                                    </div>-->
+                                            <!--                                                                </div>-->
+                                            <!--                                                            </div>-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="f-name" class="col-12 col-sm-12 col-md-4 col-form-label">First Name</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="text" class="form-control" id="f-name" required="">-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="l-name" class="col-12 col-sm-12 col-md-4 col-form-label">Last Name</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="text" class="form-control" id="l-name" required="">-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email Address</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="text" class="form-control" id="email" required="">-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="inputpassword" class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="password" class="form-control" id="inputpassword" required="">-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="phonenumber" class="col-12 col-sm-12 col-md-4 col-form-label">Phone Number</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="password" class="form-control" id="phonenumber" required="">-->
+                                            <!--                                                            <button class="pass-show-btn" type="button">Show</button>-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="c-password" class="col-12 col-sm-12 col-md-4 col-form-label">Confirm Password</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="password" class="form-control" id="c-password" required="">-->
+                                            <!--                                                            <button class="pass-show-btn" type="button">Show</button>-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-group row">-->
+                                            <!--                                                        <label for="birth" class="col-12 col-sm-12 col-md-4 col-form-label">Birthdate (Optional)</label>-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
+                                            <!--                                                            <input type="text" class="form-control" id="birth" placeholder="MM / DD / YYYY" required="">-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-check row p-0 mt-5">-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-4">-->
+                                            <!--                                                            <div class="custom-checkbox">-->
+                                            <!--                                                                <input class="form-check-input" type="checkbox" id="offer">-->
+                                            <!--                                                                <span class="checkmark"></span>-->
+                                            <!--                                                                <label class="form-check-label" for="offer">Receive offers from our partners</label>-->
+                                            <!--                                                            </div>-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="form-check row p-0 mt-4">-->
+                                            <!--                                                        <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-8 offset-lg-4">-->
+                                            <!--                                                            <div class="custom-checkbox">-->
+                                            <!--                                                                <input class="form-check-input" type="checkbox" id="subscribe" required="">-->
+                                            <!--                                                                <span class="checkmark"></span>-->
+                                            <!--                                                                <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>-->
+                                            <!--                                                            </div>-->
+                                            <!--                                                        </div>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                    <div class="register-box d-flex justify-content-end mt-half">-->
+                                            <!--                                                        <button type="submit" class="default-btn tiny-btn">Register</button>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                </form>-->
+                                            <form th:action="@{/register/save}" method="post" th:object="${newUser}">
+                                                <div class="login-info mb-half">
+                                                    <p>Already have an account? <a th:href="@{/login.html}">Log in
+                                                        instead!</a></p>
+                                                </div>
+
+                                                <div class="form-group row align-items-center">
+                                                    <label class="col-12 col-sm-12 col-md-4 col-form-label">Gender</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <div class="form-row">
+                                                            <div class="col-6 col-sm-3">
+                                                                <div class="custom-radio">
+                                                                    <input class="form-check-input" type="radio"
+                                                                           id="male" th:field="*{gender}" value="Male">
+                                                                    <span class="checkmark"></span>
+                                                                    <label class="form-check-label"
+                                                                           for="male">Male</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6 col-sm-3">
+                                                                <div class="custom-radio">
+                                                                    <input class="form-check-input" type="radio"
+                                                                           id="female" th:field="*{gender}"
+                                                                           value="Female">
+                                                                    <span class="checkmark"></span>
+                                                                    <label class="form-check-label"
+                                                                           for="female">Female</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="full_name"
+                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Full
+                                                        Name</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="full_name"
+                                                               th:field="*{full_name}" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email
+                                                        Address</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <input type="email" class="form-control" id="email"
+                                                               th:field="*{email}" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="password"
+                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <input type="password" class="form-control" id="password"
+                                                               th:field="*{password}" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="phone_number"
+                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Phone
+                                                        Number</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="phone_number"
+                                                               th:field="*{phone_number}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row">
+                                                    <label for="dob" class="col-12 col-sm-12 col-md-4 col-form-label">Birthdate
+                                                        (Optional)</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="dob"
+                                                               th:field="*{dob}" placeholder="MM / DD / YYYY">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-check row p-0 mt-5">
+                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-4">
+                                                        <div class="custom-checkbox">
+                                                            <input class="form-check-input" type="checkbox" id="offer">
+                                                            <span class="checkmark"></span>
+                                                            <label class="form-check-label" for="offer">Receive offers
+                                                                from our partners</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-check row p-0 mt-4">
+                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-8 offset-lg-4">
+                                                        <div class="custom-checkbox">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   id="subscribe" required>
+                                                            <span class="checkmark"></span>
+                                                            <label class="form-check-label" for="subscribe">Sign up for
+                                                                our newsletter</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="register-box d-flex justify-content-end mt-half">
+                                                    <button type="submit" class="default-btn tiny-btn">Register</button>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end of user-login -->
+                        </main> <!-- end of #primary -->
                     </div>
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>
-        <!-- End of Breadcrumbs -->
-
-        <!-- Start of Main Content Wrapper -->
-        <div id="content" class="main-content-wrapper">
-            
-            <!-- Start of Login Wrapper -->
-            <div class="login-wrapper">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <main id="primary" class="site-main">
-                                <div class="user-login">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12">
-                                            <div class="section-title">
-                                                <h2>Create an Account</h2>
-                                            </div>
-                                        </div>
-                                    </div> <!-- end of row -->
-
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 offset-xl-2">
-                                            <div class="registration-form login-form">
-<!--                                                <form th:action="@{/register/save}" method="post" th:object="${newUser}">-->
-<!--                                                    <div class="login-info mb-half">-->
-<!--                                                        <p>Already have an account? <a th:href="@{/login.html}">Log in instead!</a></p>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row align-items-center">-->
-<!--                                                        <label class="col-12 col-sm-12 col-md-4 col-form-label">Gender</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <div class="form-row">-->
-<!--                                                                <div class="col-6 col-sm-3">-->
-<!--                                                                    <div class="custom-radio">-->
-<!--                                                                        <input class="form-check-input" type="radio" name="gender" id="male" th:field="*{gender}">-->
-<!--                                                                        <span class="checkmark"></span>-->
-<!--                                                                        <label class="form-check-label" for="male">Male</label>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="col-6 col-sm-3">-->
-<!--                                                                    <div class="custom-radio">-->
-<!--                                                                        <input class="form-check-input" type="radio" name="gender" id="female">-->
-<!--                                                                        <span class="checkmark"></span>-->
-<!--                                                                        <label class="form-check-label" for="female">Female</label>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="f-name" class="col-12 col-sm-12 col-md-4 col-form-label">First Name</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="text" class="form-control" id="f-name" required="">-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="l-name" class="col-12 col-sm-12 col-md-4 col-form-label">Last Name</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="text" class="form-control" id="l-name" required="">-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email Address</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="text" class="form-control" id="email" required="">-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="inputpassword" class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="password" class="form-control" id="inputpassword" required="">-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="phonenumber" class="col-12 col-sm-12 col-md-4 col-form-label">Phone Number</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="password" class="form-control" id="phonenumber" required="">-->
-<!--                                                            <button class="pass-show-btn" type="button">Show</button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="c-password" class="col-12 col-sm-12 col-md-4 col-form-label">Confirm Password</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="password" class="form-control" id="c-password" required="">-->
-<!--                                                            <button class="pass-show-btn" type="button">Show</button>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-group row">-->
-<!--                                                        <label for="birth" class="col-12 col-sm-12 col-md-4 col-form-label">Birthdate (Optional)</label>-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">-->
-<!--                                                            <input type="text" class="form-control" id="birth" placeholder="MM / DD / YYYY" required="">-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-check row p-0 mt-5">-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-4">-->
-<!--                                                            <div class="custom-checkbox">-->
-<!--                                                                <input class="form-check-input" type="checkbox" id="offer">-->
-<!--                                                                <span class="checkmark"></span>-->
-<!--                                                                <label class="form-check-label" for="offer">Receive offers from our partners</label>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-check row p-0 mt-4">-->
-<!--                                                        <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-8 offset-lg-4">-->
-<!--                                                            <div class="custom-checkbox">-->
-<!--                                                                <input class="form-check-input" type="checkbox" id="subscribe" required="">-->
-<!--                                                                <span class="checkmark"></span>-->
-<!--                                                                <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="register-box d-flex justify-content-end mt-half">-->
-<!--                                                        <button type="submit" class="default-btn tiny-btn">Register</button>-->
-<!--                                                    </div>-->
-<!--                                                </form>-->
-                                                <form th:action="@{/register/save}" method="post" th:object="${newUser}">
-                                                    <div class="login-info mb-half">
-                                                        <p>Already have an account? <a th:href="@{/login.html}">Log in instead!</a></p>
-                                                    </div>
-
-                                                    <div class="form-group row align-items-center">
-                                                        <label class="col-12 col-sm-12 col-md-4 col-form-label">Gender</label>
-                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                            <div class="form-row">
-                                                                <div class="col-6 col-sm-3">
-                                                                    <div class="custom-radio">
-                                                                        <input class="form-check-input" type="radio" id="male" th:field="*{gender}" value="Male">
-                                                                        <span class="checkmark"></span>
-                                                                        <label class="form-check-label" for="male">Male</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-6 col-sm-3">
-                                                                    <div class="custom-radio">
-                                                                        <input class="form-check-input" type="radio" id="female" th:field="*{gender}" value="Female">
-                                                                        <span class="checkmark"></span>
-                                                                        <label class="form-check-label" for="female">Female</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <label for="full_name" class="col-12 col-sm-12 col-md-4 col-form-label">Full Name</label>
-                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                            <input type="text" class="form-control" id="full_name" th:field="*{full_name}" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email Address</label>
-                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                            <input type="email" class="form-control" id="email" th:field="*{email}" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <label for="password" class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>
-                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                            <input type="password" class="form-control" id="password" th:field="*{password}" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <label for="phone_number" class="col-12 col-sm-12 col-md-4 col-form-label">Phone Number</label>
-                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                            <input type="text" class="form-control" id="phone_number" th:field="*{phone_number}">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <label for="dob" class="col-12 col-sm-12 col-md-4 col-form-label">Birthdate (Optional)</label>
-                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                            <input type="text" class="form-control" id="dob" th:field="*{dob}" placeholder="MM / DD / YYYY">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-check row p-0 mt-5">
-                                                        <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-4">
-                                                            <div class="custom-checkbox">
-                                                                <input class="form-check-input" type="checkbox" id="offer">
-                                                                <span class="checkmark"></span>
-                                                                <label class="form-check-label" for="offer">Receive offers from our partners</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-check row p-0 mt-4">
-                                                        <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-8 offset-lg-4">
-                                                            <div class="custom-checkbox">
-                                                                <input class="form-check-input" type="checkbox" id="subscribe" required>
-                                                                <span class="checkmark"></span>
-                                                                <label class="form-check-label" for="subscribe">Sign up for our newsletter</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="register-box d-flex justify-content-end mt-half">
-                                                        <button type="submit" class="default-btn tiny-btn">Register</button>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> <!-- end of user-login -->
-                            </main> <!-- end of #primary -->
-                        </div>
-                    </div> <!-- end of row -->
-                </div> <!-- end of container -->
-            </div>
-            <!-- End of Login Wrapper -->
-        </div>
-        <!-- End of Main Content Wrapper -->
-
-       <div th:replace="~{layout::footer}"></div>
-        <div th:replace="~{layout::scroll_to_top}"></div>
-
+        <!-- End of Login Wrapper -->
     </div>
-    <!-- End of Whole Site Wrapper -->
+    <!-- End of Main Content Wrapper -->
 
-    <!-- Initializing Photoswipe -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
+    <div th:replace="~{layout::footer}"></div>
+    <div th:replace="~{layout::scroll_to_top}"></div>
+
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- Initializing Photoswipe -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
                         </div>
                     </div>
                 </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
             </div>
         </div>
     </div>
-    <!-- End of Photoswipe -->
+</div>
+<!-- End of Photoswipe -->
 
 
-    <!-- JS
-    ============================================ -->
+<!-- JS
+============================================ -->
 
-    <!-- jQuery JS -->
-    <script src="assets/js/jquery.1.12.4.min.js"></script>
+<!-- jQuery JS -->
+<script src="assets/js/jquery.1.12.4.min.js"></script>
 
-    <!-- Popper JS -->
-    <script src="assets/js/popper.min.js"></script>
+<!-- Popper JS -->
+<script src="assets/js/popper.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="assets/js/bootstrap.min.js"></script>
 
-    <!-- Plugins JS -->
-    <script src="assets/js/plugins.js"></script>
+<!-- Plugins JS -->
+<script src="assets/js/plugins.js"></script>
 
-    <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+<!-- Main JS -->
+<script src="assets/js/main.js"></script>
+
+<script>
+    function updateCart() {
+        fetch('/register.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
+
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateCart();
+    });
+</script>
 
 </body>
 
