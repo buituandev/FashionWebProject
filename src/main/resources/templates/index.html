@@ -31,21 +31,26 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide bg-img-wrapper">
                         <div class="slide-inner image-placeholder">
-                            <img src="https://pebona.myshopify.com/cdn/shop/files/Slider-1.png?v=1613770281" class="visually-hidden"
+                            <img src="https://pebona.myshopify.com/cdn/shop/files/Slider-1.png?v=1613770281"
+                                 class="visually-hidden"
                                  alt="Slider Image">
                             <div class="slide-progress"></div>
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="slide-content layer-animation-3">
-                                            <p class="promo-title" style="color: white !important"><span>limited edition</span> Sale Offer 20% Off
+                                            <p class="promo-title" style="color: white !important">
+                                                <span>limited edition</span> Sale Offer 20% Off
                                                 This Week</p>
-                                            <h1 class="main-title" style="color: white !important"><span>Top Popular</span> <span style="color: white !important">Accessories
+                                            <h1 class="main-title" style="color: white !important">
+                                                <span>Top Popular</span> <span style="color: white !important">Accessories
                                                         2018</span></h1>
-                                            <p class="subtitle" style="color: white !important">Light knit upper adapts to the shape of your foot
+                                            <p class="subtitle" style="color: white !important">Light knit upper adapts
+                                                to the shape of your foot
                                                 for flexible and natural movement.</p>
                                             <div class="slide-button">
-                                                <a class="default-btn" href="shop-grid.html" title="Shop Now" style="border: 1px solid white !important;">Shop
+                                                <a class="default-btn" href="shop-grid.html" title="Shop Now"
+                                                   style="border: 1px solid white !important;">Shop
                                                     Now</a>
                                             </div>
                                         </div> <!-- end of slide-content -->
@@ -57,21 +62,26 @@
 
                     <div class="swiper-slide bg-img-wrapper">
                         <div class="slide-inner image-placeholder">
-                            <img src="https://firebasestorage.googleapis.com/v0/b/chromashop.appspot.com/o/Slider-2.jpg?alt=media&token=611c0089-66ce-4111-adf7-bebe98704d3d" class="visually-hidden"
+                            <img src="https://firebasestorage.googleapis.com/v0/b/chromashop.appspot.com/o/Slider-2.jpg?alt=media&token=611c0089-66ce-4111-adf7-bebe98704d3d"
+                                 class="visually-hidden"
                                  alt="Slider Image">
                             <div class="slide-progress"></div>
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="slide-content layer-animation-1">
-                                            <p class="promo-title" style="color: white !important;"><span>New Arrivals</span> Sale Offer 10% Off This
+                                            <p class="promo-title" style="color: white !important;">
+                                                <span>New Arrivals</span> Sale Offer 10% Off This
                                                 Week</p>
-                                            <h1 class="main-title" style="color: white !important;"><span>New Arrivals</span> <span>Sport Sneaker
+                                            <h1 class="main-title" style="color: white !important;">
+                                                <span>New Arrivals</span> <span>Sport Sneaker
                                                         2018</span></h1>
-                                            <p class="subtitle" style="color: white !important;">Light knit upper adapts to the shape of your foot
+                                            <p class="subtitle" style="color: white !important;">Light knit upper adapts
+                                                to the shape of your foot
                                                 for flexible and natural movement.</p>
                                             <div class="slide-button">
-                                                <a class="default-btn" th:href="@{/shop-grid.html}" title="Shop Now" style="border: 1px solid white !important;">Shop
+                                                <a class="default-btn" th:href="@{/shop-grid.html}" title="Shop Now"
+                                                   style="border: 1px solid white !important;">Shop
                                                     Now</a>
                                             </div>
                                         </div> <!-- end of slide-content -->
@@ -150,19 +160,23 @@
                         <ul class="nav nav-pills justify-content-center" id="our_categories" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" th:id="nav_shop_new" data-bs-toggle="pill" href="#shop_new"
-                                   role="tab" aria-controls="shop_new" aria-selected="true" th:text="${category1.getName()}"></a>
+                                   role="tab" aria-controls="shop_new" aria-selected="true"
+                                   th:text="${category1.getName()}"></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_shoes" data-bs-toggle="pill" href="#shop_shoes"
-                                   role="tab" aria-controls="shop_shoes" aria-selected="false" th:text="${category2.getName()}"></a>
+                                   role="tab" aria-controls="shop_shoes" aria-selected="false"
+                                   th:text="${category2.getName()}"></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_bags" data-bs-toggle="pill" href="#shop_bags"
-                                   role="tab" aria-controls="shop_bags" aria-selected="false" th:text="${category3.getName()}"></a>
+                                   role="tab" aria-controls="shop_bags" aria-selected="false"
+                                   th:text="${category3.getName()}"></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="nav_shop_glasses" data-bs-toggle="pill" href="#shop_glasses"
-                                   role="tab" aria-controls="shop_glasses" aria-selected="false" th:text="${category4.getName()}"></a>
+                                   role="tab" aria-controls="shop_glasses" aria-selected="false"
+                                   th:text="${category4.getName()}"></a>
                             </li>
                         </ul> <!-- end of nav -->
 
@@ -176,24 +190,34 @@
                                          data-space-between="0" data-speed="1000">
 
                                         <!-- Slides -->
-                                        <div class="swiper-wrapper" >
-                                            <article class="swiper-slide product-layout" th:each="product:${topCategoryProducts1}">
+                                        <div class="swiper-wrapper">
+                                            <article class="swiper-slide product-layout"
+                                                     th:each="product:${topCategoryProducts1}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
-                                                            <div class="product-id" th:text="${product.getId()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden;display: none"></div>                                                            <div class="label-product label-sale">-7%</div>
-                                                            <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                            <div class="product-id" th:text="${product.getId()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-price-hid"
+                                                                 th:text="${product.getPrice()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="label-product label-sale">-7%</div>
+                                                            <div class="label-product label-new"
+                                                                 th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.id}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
                                                                      th:alt="${product.getProduct_name()}"
                                                                      th:title="${product.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
-                                                                <a class="action-btn btn-cart" href="#"
-                                                                   title="Add to Cart"><i
-                                                                        class="pe-7s-shopbag"></i></a>
+                                                                <a class="action-btn btn-cart"
+                                                                   th:onclick="'addToCart(' + ${product.id} + ', 1)'"
+                                                                   title="Add to Cart">
+                                                                    <i class="pe-7s-shopbag"></i>
+                                                                </a>
+
                                                                 <a class="action-btn btn-wishlist" href="#"
                                                                    title="Add to Wishlist"><i
                                                                         class="pe-7s-like"></i></a>
@@ -212,7 +236,8 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                                    <a href="#"
+                                                                       th:text="${product.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -236,9 +261,12 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.id}}" th:text="${product.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a
+                                                                    th:href="@{'/single-product/' + ${product.id}}"
+                                                                    th:text="${product.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'" >$76.40</span>
+                                                                <span class="price-new formatted-price"
+                                                                      th:text="${product.getPrice()}+' VND'">$76.40</span>
 
                                                             </p>
                                                         </div><!-- end of product-caption -->
@@ -264,23 +292,30 @@
 
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
-                                            <article class="swiper-slide product-layout" th:each="product : ${topCategoryProducts2}">
+                                            <article class="swiper-slide product-layout"
+                                                     th:each="product : ${topCategoryProducts2}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
-                                                          <div class="product-id" th:text="${product.getId()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden;display: none"></div>                                                            <div class="label-product label-sale">-7%</div>
+                                                            <div class="product-id" th:text="${product.getId()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-price-hid"
+                                                                 th:text="${product.getPrice()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="label-product label-sale">-7%</div>
 
                                                             <div class="label-product label-sale">-20%</div>
-                                                            <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                            <div class="label-product label-new"
+                                                                 th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
                                                                      th:alt="${product.getProduct_name()}"
                                                                      th:title="${product.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
-                                                                <a class="action-btn btn-cart" href="#"
+                                                                <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                    title="Add to Cart"><i
                                                                         class="pe-7s-shopbag"></i></a>
                                                                 <a class="action-btn btn-wishlist" href="#"
@@ -301,7 +336,8 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                                    <a href="#"
+                                                                       th:text="${product.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -325,10 +361,13 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a
+                                                                    th:href="@{'/single-product/' + ${product.getId()}}"
+                                                                    th:text="${product.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
                                                                 <!--                                                                <span class="price-old" th:text="${fp2.getPrice()}"></span>-->
-                                                                <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
+                                                                <span class="price-new formatted-price"
+                                                                      th:text="${product.getPrice()}+' VND'"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -353,23 +392,29 @@
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
 
-                                            <article class="swiper-slide product-layout" th:each="product : ${topCategoryProducts3}">
+                                            <article class="swiper-slide product-layout"
+                                                     th:each="product : ${topCategoryProducts3}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
-                                                          <div class="product-id" th:text="${product.getId()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden;display: none"></div>                                                           
-                                                      <div class="label-product label-sale">-7%</div>
+                                                            <div class="product-id" th:text="${product.getId()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-price-hid"
+                                                                 th:text="${product.getPrice()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="label-product label-sale">-7%</div>
 
-                                                            <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                            <div class="label-product label-new"
+                                                                 th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
                                                                      th:alt="${product.getProduct_name()}"
                                                                      th:title="${product.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
-                                                                <a class="action-btn btn-cart" href="#"
+                                                                <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                    title="Add to Cart"><i
                                                                         class="pe-7s-shopbag"></i></a>
                                                                 <a class="action-btn btn-wishlist" href="#"
@@ -390,7 +435,8 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                                    <a href="#"
+                                                                       th:text="${product.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -414,9 +460,12 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a
+                                                                    th:href="@{'/single-product/' + ${product.getId()}}"
+                                                                    th:text="${product.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
+                                                                <span class="price-new formatted-price"
+                                                                      th:text="${product.getPrice()}+' VND'"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -441,24 +490,30 @@
 
                                         <!-- Slides -->
                                         <div class="swiper-wrapper">
-                                            <article class="swiper-slide product-layout" th:each="product : ${topCategoryProducts4}">
+                                            <article class="swiper-slide product-layout"
+                                                     th:each="product : ${topCategoryProducts4}">
                                                 <div class="product-thumb">
                                                     <div class="product-inner">
                                                         <div class="product-image">
 
-                                                          <div class="product-id" th:text="${product.getId()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden;display: none"></div>
-                                                            <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden;display: none"></div>                                                          
-                                                      <div class="label-product label-sale">-7%</div>
+                                                            <div class="product-id" th:text="${product.getId()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-price-hid"
+                                                                 th:text="${product.getPrice()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="product-stock" th:text="${product.getStock()}"
+                                                                 style="visibility: hidden;display: none"></div>
+                                                            <div class="label-product label-sale">-7%</div>
 
-                                                            <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                            <div class="label-product label-new"
+                                                                 th:text="${product.getTitle()}"></div>
                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                 <img th:src="${product.getImage_collection_url()}"
                                                                      th:alt="${product.getProduct_name()}"
                                                                      th:title="${product.getProduct_name()}">
                                                             </a>
                                                             <div class="action-links">
-                                                                <a class="action-btn btn-cart" href="#"
+                                                                <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                    title="Add to Cart"><i
                                                                         class="pe-7s-shopbag"></i></a>
                                                                 <a class="action-btn btn-wishlist" href="#"
@@ -479,7 +534,8 @@
                                                             <div
                                                                     class="product-meta d-flex justify-content-between align-items-center">
                                                                 <div class="product-manufacturer">
-                                                                    <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                                    <a href="#"
+                                                                       th:text="${product.getProduct_name()}"></a>
                                                                 </div>
                                                                 <div class="product-ratings">
                                                                     <div class="rating-box">
@@ -503,9 +559,12 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a></h4>
+                                                            <h4 class="product-name"><a
+                                                                    th:href="@{'/single-product/' + ${product.getId()}}"
+                                                                    th:text="${product.getProduct_name()}"></a></h4>
                                                             <p class="product-price">
-                                                                <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
+                                                                <span class="price-new formatted-price"
+                                                                      th:text="${product.getPrice()}+' VND'"></span>
                                                             </p>
                                                         </div><!-- end of product-caption -->
                                                     </div><!-- end of product-inner -->
@@ -561,26 +620,40 @@
                                  data-space-between="0" data-speed="1000" data-autoplay-delay="5000">
 
                                 <!-- Slides -->
-                                <div class="swiper-wrapper" style="transform: translate3d(-4050px, 0px, 0px); transition-duration: 1000ms;">
+                                <div class="swiper-wrapper"
+                                     style="transform: translate3d(-4050px, 0px, 0px); transition-duration: 1000ms;">
                                     <!-- end of product-layout -->
                                     <!--                                    product layout big-->
-                                    <article class="swiper-slide product-layout" style="width: 405px;" th:each="product:${products}">
+                                    <article class="swiper-slide product-layout" style="width: 405px;"
+                                             th:each="product:${products}">
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
-                                                    <div class="product-id" th:text="${product.getId()}" style="visibility: hidden;display: none"></div>
-                                                    <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden;display: none"></div>
-                                                    <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden;display: none"></div>                                                            <div class="label-product label-sale">-7%</div>
+                                                    <div class="product-id" th:text="${product.getId()}"
+                                                         style="visibility: hidden;display: none"></div>
+                                                    <div class="product-price-hid" th:text="${product.getPrice()}"
+                                                         style="visibility: hidden;display: none"></div>
+                                                    <div class="product-stock" th:text="${product.getStock()}"
+                                                         style="visibility: hidden;display: none"></div>
+                                                    <div class="label-product label-sale">-7%</div>
 
-                                                    <div class="label-product label-new" th:text="${product.getTitle()}"></div>
+                                                    <div class="label-product label-new"
+                                                         th:text="${product.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${product.getId()}}">
-                                                        <img th:src="${product.getImage_collection_url()}" th:alt="${product.getProduct_name()}" th:title="${product.getProduct_name()}">
+                                                        <img th:src="${product.getImage_collection_url()}"
+                                                             th:alt="${product.getProduct_name()}"
+                                                             th:title="${product.getProduct_name()}">
                                                     </a>
                                                     <div class="action-links">
-                                                        <a class="action-btn btn-cart" href="#" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
-                                                        <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
-                                                        <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
-                                                        <a class="action-btn btn-quickview" data-bs-toggle="modal" data-bs-target="#product_quick_view" href="#" title="Quick View"><i class="pe-7s-search"></i></a>
+                                                        <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'" title="Add to Cart"><i
+                                                                class="pe-7s-shopbag"></i></a>
+                                                        <a class="action-btn btn-wishlist" href="#"
+                                                           title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                        <a class="action-btn btn-compare" href="#"
+                                                           title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                        <a class="action-btn btn-quickview" data-bs-toggle="modal"
+                                                           data-bs-target="#product_quick_view" href="#"
+                                                           title="Quick View"><i class="pe-7s-search"></i></a>
                                                     </div>
                                                 </div> <!-- end of product-image -->
 
@@ -601,9 +674,12 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h4 class="product-name"><a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a></h4>
+                                                    <h4 class="product-name"><a
+                                                            th:href="@{'/single-product/' + ${product.getId()}}"
+                                                            th:text="${product.getProduct_name()}"></a></h4>
                                                     <p class="product-price">
-                                                        <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
+                                                        <span class="price-new formatted-price"
+                                                              th:text="${product.getPrice()}+' VND'"></span>
                                                     </p>
                                                 </div><!-- end of product-caption -->
                                             </div><!-- end of product-inner -->
@@ -978,6 +1054,32 @@
 </div>
 <!-- End of Photoswipe -->
 
+<div id="modal-success" aria-hidden="true">
+
+    <!-- [2] -->
+    <div tabindex="-1" data-micromodal-close>
+
+        <!-- [3] -->
+        <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title" >
+
+
+            <header>
+                <h2 id="modal-1-title">
+                    Modal Title
+                </h2>
+
+                <!-- [4] -->
+                <button aria-label="Close modal" data-micromodal-close></button>
+            </header>
+
+            <div id="modal-1-content">
+                Modal Content
+            </div>
+
+        </div>
+    </div>
+</div>
+
 
 <!-- JS
 ============================================ -->
@@ -998,9 +1100,69 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
-<script src="/assets/js/cart.js"></script>
+<script>
 
+    function addToCart(productId, quantity) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Item added to cart successfully");
+            }
+        };
+        xhr.send();
+    }
 
+    function deleteCartItem(productId, userId) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+
+                console.log("Item deleted from cart successfully");
+                updateCart();
+            }
+        };
+        xhr.send();
+
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        function updateCart() {
+            fetch(`/index.html?cacheBuster=${new Date().getTime()}`) // Adding a
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                    const newCountStyle = doc.querySelector('.count-style').textContent;
+
+                    document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                    document.querySelector('.count-style').textContent = newCountStyle;
+                })
+                .catch(error => console.error('Error fetching cart items:', error));
+        }
+
+        // Add event listener to buttons with class 'cart-btn'
+        document.querySelectorAll('.btn-cart').forEach(button => {
+            button.addEventListener('click', updateCart);
+        });
+    });
+    function updateCart() {
+        fetch(`/index.html?cacheBuster=${new Date().getTime()}`) // Adding a
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
+
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
+</script>
 </body>
 
 
