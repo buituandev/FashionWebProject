@@ -2,6 +2,37 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{layout::head('Chroma - Products')}">
+    <style>
+        /* Hide the default checkbox */
+        input[type="checkbox"] {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        /* Custom checkbox appearance */
+        input[type="checkbox"]:checked {
+            background-color: red; /* Set red background when checked */
+            border-color: black;
+        }
+
+        /* Create the checkmark when checked */
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            top: 2px;
+            left: 7px;
+            transform: rotate(45deg);
+        }
+
+    </style>
 </head>
 
 <body>
@@ -112,11 +143,11 @@
                                                                             <img th:src="${product.getImage_collection_url()}"
                                                                                  th:alt="${product.getProduct_name()}"
                                                                                  th:title="${product.getProduct_name()}"
-                                                                                 style="width: 375px;height: 375px;
-    object-fit: cover;">
+                                                                                  >
                                                                         </a>
                                                                         <div class="action-links">
-                                                                            <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
+                                                                            <a class="action-btn btn-cart"
+                                                                               th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                                title="Add to Cart"><i
                                                                                     class="pe-7s-shopbag"></i></a>
                                                                             <a class="action-btn btn-wishlist" href="#"
@@ -179,7 +210,7 @@
                                                     <div class="row">
                                                         <div class="col-12 col-sm-12 col-md-12">
                                                             <!--Product-->
-                                                            <article class="product-layout product-list">
+                                                            <article class="product-layout product-list" th:each="product:${products}">
                                                                 <div class="product-thumb">
                                                                     <div
                                                                             class="product-inner d-flex align-items-center">
@@ -188,16 +219,16 @@
                                                                             <div class="label-product label-sale">
                                                                                 -20%
                                                                             </div>
-                                                                            <div class="label-product label-new">New
+                                                                            <div class="label-product label-new" th:text="${product.getTitle()}">
                                                                             </div>
-                                                                            <a href="single-product.html">
-                                                                                <img src="/assets/images/products/new/product-1.jpg"
-                                                                                     title="Compete Track Tote"
-                                                                                     alt="Compete Track Tote">
+                                                                            <a th:href="@{'/single-product/' + ${product.getId()}}">
+                                                                                <img th:src="${product.getImage_collection_url()}"
+                                                                                     th:title="${product.getProduct_name()}"
+                                                                                     th:alt="${product.getProduct_name()}">
                                                                             </a>
                                                                             <div class="action-links">
-                                                                                <a class="action-btn btn-cart"
-                                                                                    title="Add to Cart"><i
+                                                                                <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
+                                                                                   title="Add to Cart"><i
                                                                                         class="pe-7s-shopbag"></i></a>
                                                                                 <a class="action-btn btn-wishlist"
                                                                                    href="#"
@@ -217,11 +248,10 @@
 
                                                                         <div class="product-caption flex-grow-1">
                                                                             <div class="product-manufacturer">
-                                                                                <a href="#">Studio Design</a>
+                                                                                <a href="#" th:text="${product.getProduct_name()}"></a>
                                                                             </div>
                                                                             <h4 class="product-name">
-                                                                                <a href="single-product.html">Compete
-                                                                                    Track Tote</a>
+                                                                                <a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a>
                                                                             </h4>
                                                                             <div class="product-ratings">
                                                                                 <div class="rating-box">
@@ -250,21 +280,11 @@
                                                                                 </div>
                                                                             </div>
                                                                             <p class="product-price">
-                                                                                    <span
-                                                                                            class="price-old">$54.65</span>
-                                                                                <span
-                                                                                        class="price-new">$43.72</span>
+                                                                            <span class="price-new formatted-price"
+                                                                                  th:text="${product.getPrice()}+' VND'"></span>
                                                                             </p>
                                                                             <div class="product-des">
-                                                                                <p>Nunc facilisis sagittis
-                                                                                    ullamcorper.
-                                                                                    Proin lectus ipsum, gravida et
-                                                                                    mattis vulputate, tristique ut
-                                                                                    lectus. Sed et lorem nunc.
-                                                                                    Vestibulum ante ipsum primis in
-                                                                                    faucibus orci luctus et ultrices
-                                                                                    posuere cubilia Curae; Aenean
-                                                                                    eleifend ..</p>
+                                                                                <p th:text="${product.getLong_description()}"></p>
                                                                             </div>
                                                                         </div><!-- end of product-caption -->
                                                                     </div><!-- end of product-inner -->
@@ -736,7 +756,10 @@
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log("Item added to cart successfully");
+                alert("Item added to cart successfully");
+            }
+            if (xhr.readyState === 4 && xhr.status === 400) {
+                alert("You have reached the maximum quantity of this product in your cart");
             }
         };
         xhr.send();
@@ -747,27 +770,30 @@
         xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log("Item deleted from cart successfully");
+                alert("Item deleted from cart successfully");
+                updateCart();
             }
         };
         xhr.send();
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        function updateCart() {
-            fetch('/shop-grid.html')
-                .then(response => response.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-                    const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
-                    const newCountStyle = doc.querySelector('.count-style').textContent;
+    function updateCart() {
+        fetch('/shop-grid.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
 
-                    document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
-                    document.querySelector('.count-style').textContent = newCountStyle;
-                })
-                .catch(error => console.error('Error fetching cart items:', error));
-        }
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateCart();
 
         // Add event listener to buttons with class 'cart-btn'
         document.querySelectorAll('.btn-cart').forEach(button => {
@@ -775,7 +801,7 @@
         });
     });
 </script>
-</body>
+
 <script>
     function selectOnlyOne(checkbox) {
         // Deselect all checkboxes
@@ -790,37 +816,7 @@
         }
     }
 </script>
-<style>
-    /* Hide the default checkbox */
-    input[type="checkbox"] {
-        position: relative;
-        width: 20px;
-        height: 20px;
-        appearance: none;
-        border: 2px solid black;
-        cursor: pointer;
-    }
-
-    /* Custom checkbox appearance */
-    input[type="checkbox"]:checked {
-        background-color: red; /* Set red background when checked */
-        border-color: black;
-    }
-
-    /* Create the checkmark when checked */
-    input[type="checkbox"]:checked::after {
-        content: '';
-        position: absolute;
-        width: 4px;
-        height: 8px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        top: 2px;
-        left: 7px;
-        transform: rotate(45deg);
-    }
-
-</style>
+</body>
 
 
 </html>

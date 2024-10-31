@@ -173,9 +173,24 @@
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
 <script>
-    function setUser() {
-        
+    function updateCart() {
+        fetch('/login.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
+
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
     }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateCart();
+    });
 </script>
 
 </body>

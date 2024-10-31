@@ -57,41 +57,42 @@
                                                             <tr>
                                                                 <td>Image</td>
                                                                 <td>Product Name</td>
-                                                                <td>Model</td>
+<!--                                                                <td>Model</td>-->
                                                                 <td>Quantity</td>
                                                                 <td>Unit Price</td>
                                                                 <td>Total</td>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
+                                                        <tbody class="cart-table">
+                                                            <tr th:each="cartItem:${cartItems}">
                                                                 <td>
-                                                                    <a href="single-product.html"><img src="assets/images/products/new/product-1.jpg" alt="Cart Product Image" title="Compete Track Tote" class="img-thumbnail"></a>
+                                                                    <a href="single-product.html"><img th:src="${cartItem.image}" alt="Cart Product Image" th:title="${cartItem.title}" class="img-thumbnail"></a>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="single-product.html">Compete Track Tote</a>
-                                                                    <span>Delivery Date: 2018-09-22</span>
-                                                                    <span>Color: Brown</span>
-                                                                    <span>Reward Points: 300</span>
+                                                                    <a href="single-product.html" th:text="${cartItem.title}">Compete Track Tote</a>
+<!--                                                                    <span>Delivery Date: 2018-09-22</span>-->
+<!--                                                                    <span>Color: Brown</span>-->
+<!--                                                                    <span>Reward Points: 300</span>-->
                                                                 </td>
-                                                                <td>3</td>
+<!--                                                                <td th:text="${cartItem.getQuantity()}">3</td>-->
                                                                 <td>
                                                                     <div class="input-group btn-block">
                                                                         <div class="cart-input">
-                                                                            <input class="cart-input-box" type="text" value="3">
+                                                                            <input id="quantity-input" class="cart-input-box" type="text" th:value="${cartItem.quantity}" th:max="${cartItem.stock}">
                                                                             <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                                             <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
                                                                             <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                                                         </div>
                                                                         <span class="input-group-btn">
-                                                                            <button type="submit" data-bs-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                                                            <button type="button" data-bs-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                                                            <button th:onclick="'updateCartItem(' + ${cartItem.id} + ', document.getElementById(\'quantity-input\').value)'" type="submit" data-bs-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+                                                                            <button th:onclick="'deleteCartItem(' + ${cartItem.id} + ')'" type="button" data-bs-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
                                                                         </span>
                                                                     </div>
                                                                 </td>
-                                                                <td>$200.00</td>
-                                                                <td>$200.00</td>
+                                                                <td th:text="${cartItem.price}">$200.00</td>
+                                                                <td th:text="${cartItem.price}*${cartItem.quantity} + 'VND'">$200.00</td>
+                                                                
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -198,13 +199,13 @@
                                                     <div class="col-12 col-sm-12 col-md-4 offset-md-8">
                                                         <table class="table table-bordered">
                                                             <tbody>
-                                                                <tr>
-                                                                    <td><strong>Sub-Total:</strong></td>
-                                                                    <td>$860.00</td>
-                                                                </tr>
+<!--                                                                <tr>-->
+<!--                                                                    <td><strong>Sub-Total:</strong></td>-->
+<!--                                                                    <td>$860.00</td>-->
+<!--                                                                </tr>-->
                                                                 <tr>
                                                                     <td><strong>Total:</strong></td>
-                                                                    <td><span class="color-primary">$860.00</span></td>
+                                                                    <td><span class="color-primary" th:text="${totalPrice}">$860.00</span></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -291,6 +292,57 @@
 
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+
+<script>
+
+    function deleteCartItem(productId, userId) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Item deleted from cart successfully");
+                updateCart();
+            }
+        };
+        xhr.send();
+    }
+    
+    // Update cart items
+    function updateCartItem(productId, quantity) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", `/updateCartItem?productId=${productId}&quantity=${quantity}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                alert("Item updated successfully");
+                updateCart();
+            } else if (xhr.readyState === 4 && xhr.status === 400) {
+                alert("Quantity is exceeded the stock");
+            }
+        };
+        xhr.send();
+    }
+
+    function updateCart() {
+        fetch('/cart.html')
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
+                const newTbodyContent = doc.querySelector('tbody').innerHTML;
+
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+                document.querySelector('tbody').innerHTML = newTbodyContent;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateCart();
+    });
+</script>
 
 </body>
 
