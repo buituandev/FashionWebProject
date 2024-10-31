@@ -145,10 +145,21 @@ public class AdminController {
         }
 
         productService.saveProduct(product);
-        Category category = categoryService.getCategoryById(product.getCategoryId());
-        if (category != null) {
-            category.setQuantity(category.getQuantity() + 1); // Increase quantity by 1
-            categoryService.saveCategory(category); // Save updated category
+        Integer originalCategoryId = existPro != null ? existPro.getCategoryId() : null;
+        if (!originalCategoryId.equals(product.getCategoryId())) {
+            // If the category has changed, update the quantity
+            Category category = categoryService.getCategoryById(originalCategoryId);
+            if (category != null) {
+                category.setQuantity(category.getQuantity() - 1); // Decrease quantity of old category
+                categoryService.saveCategory(category); // Save updated category
+            }
+
+            // Increase quantity for the new category
+            Category newCategory = categoryService.getCategoryById(product.getCategoryId());
+            if (newCategory != null) {
+                newCategory.setQuantity(newCategory.getQuantity() + 1); // Increase quantity by 1
+                categoryService.saveCategory(newCategory); // Save updated category
+            }
         }
         redirectAttributes.addFlashAttribute("message", "Product saved successfully");
         return "redirect:/admin/eco-products.html";
@@ -197,10 +208,14 @@ public class AdminController {
         model.addAttribute("images", images);
         model.addAttribute("product", product);
         model.addAttribute("mode", "edit");
-        Category category = categoryService.getCategoryById(product.getCategoryId());
-        if (category != null && category.getQuantity() > 0) {
-            category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
-            categoryService.saveCategory(category); // Save updated category
+        Category currentCategory = categoryService.getCategoryById(product.getCategoryId());
+
+        if (currentCategory != null && currentCategory.getQuantity() > 0) {
+            Integer selectedCategoryId = product.getCategoryId();
+            if (!selectedCategoryId.equals(currentCategory.getId())) {
+                currentCategory.setQuantity(currentCategory.getQuantity() - 1);
+                categoryService.saveCategory(currentCategory);
+            }
         }
 
         return "admin/eco-products-edit";
@@ -219,13 +234,13 @@ public class AdminController {
             System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
         }
         imageService.deleteByProductId(id);
-        productService.deleteProductById(id);
+
         Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
-        if (category != null && category.getQuantity() > 0) {
+        if (category.getQuantity() > 0) {
             category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
             categoryService.saveCategory(category); // Save updated category
         }
-
+        productService.deleteProductById(id);
         return "redirect:/admin/eco-products.html";
     }
 
@@ -238,14 +253,13 @@ public class AdminController {
     @PostMapping("/login")
     public  String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
          User user = userService.getUserByEmail(email);
-        if(user == null){
+        if (user == null || !user.getPassword().equals(password) || user.getType() != 1) {
+
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid email or password.");
             return "redirect:/admin/pages-login.html";
         }
-         else if(user.getPassword().equals(password)){
-             return "redirect:/admin/index.html";
-         }
-        return "redirect:/admin/pages-login.html";
+
+        return "redirect:/admin/index.html";
     }
 
     private String getFileName(MultipartFile file, InputStream inputStream) {

@@ -137,7 +137,7 @@ public class ClientController {
 
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
-
+A
         List<Category> topCategories = categories.stream()
                 .sorted((c1, c2) -> {
                     int count1 = productService.findByCategoryId(c1.getId()).size();
