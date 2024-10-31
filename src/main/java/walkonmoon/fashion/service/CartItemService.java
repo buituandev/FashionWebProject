@@ -83,4 +83,15 @@ public class CartItemService {
         return cartItems.stream().mapToInt(cartItem -> cartItem.getPrice() * cartItem.getQuantity()).sum();
     }
     
+    @Transactional
+    public void updateCartItem(int userId, int productId, int quantity, HttpServletResponse response) throws IOException {
+        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
+        if(quantity > productService.getProductById(productId).getStock()) {
+            response.sendError(400);
+            return;
+        }
+        cartItem.setQuantity(quantity);
+        cartItemRepository.save(cartItem);
+    }
+    
 }
