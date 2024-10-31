@@ -1,10 +1,7 @@
 package walkonmoon.fashion.controller;
-
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.apache.el.lang.ELArithmetic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +15,11 @@ import walkonmoon.fashion.model.Category;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.model.User;
-import walkonmoon.fashion.repository.UserRepository;
 import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
-
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,33 +39,29 @@ public class ClientController {
 
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        Integer userID= null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userID")) {
+                    if(!cookie.getValue().equalsIgnoreCase("")) {
+                        userID = Integer.parseInt(cookie.getValue());
+                    }
+                }
+            }
+        }
+        if(userID!=null){
+            User user = userService.findUserById(userID);
+            model.addAttribute("user", user);
+        }else{
+            model.addAttribute("user", null);
+        }
+
         List<Product> products = productService.getListProducts();
         model.addAttribute("products", products);
 
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
-        List<CartItemDTO> cartItems = new ArrayList<>();
-        Cookie[] cookies = request.getCookies();
-        String userId = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (!(userId == null)) {
-            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-        }
-
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-
-        model.addAttribute("cartItems", cartItems);
-
-
         List<Category> topCategories = categories.stream()
                 .sorted((c1, c2) -> {
                     int count1 = productService.findByCategoryId(c1.getId()).size();
@@ -84,9 +74,9 @@ public class ClientController {
 
         for (int i = 0; i < topCategories.size(); i++) {
             Category category = topCategories.get(i);
-            model.addAttribute("category" + (i + 1), category);
+            model.addAttribute("category"+(i+1), category);
             List<Product> filteredProducts = productService.findByCategoryId(category.getId());
-            model.addAttribute("topCategoryProducts" + (i + 1), filteredProducts);
+            model.addAttribute("topCategoryProducts" +(i+1), filteredProducts);
         }
 
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
@@ -105,6 +95,27 @@ public class ClientController {
                 }
             }
         }
+
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        String userId = null;
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName())) {
+                    userId = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        if (!(userId == null)) {
+            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
+        }
+
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+
+        model.addAttribute("cartItems", cartItems);
 
         return "index";
     }
