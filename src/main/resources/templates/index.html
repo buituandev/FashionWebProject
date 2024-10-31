@@ -1101,17 +1101,12 @@
 
 <script src="/assets/js/FormatPrice.js"></script>
 <script>
-    import MicroModal from 'micromodal';
-    const MicroModal = require('micromodal');
-
-    MicroModal.init();
 
     function addToCart(productId, quantity) {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                MicroModal.show('modal-success');
                 console.log("Item added to cart successfully");
             }
         };
@@ -1123,15 +1118,18 @@
         xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
+
                 console.log("Item deleted from cart successfully");
+                updateCart();
             }
         };
         xhr.send();
+
     }
 
     document.addEventListener("DOMContentLoaded", function () {
         function updateCart() {
-            fetch('/index.html')
+            fetch(`/index.html?cacheBuster=${new Date().getTime()}`) // Adding a
                 .then(response => response.text())
                 .then(html => {
                     const parser = new DOMParser();
@@ -1150,6 +1148,20 @@
             button.addEventListener('click', updateCart);
         });
     });
+    function updateCart() {
+        fetch(`/index.html?cacheBuster=${new Date().getTime()}`) // Adding a
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+                const newCountStyle = doc.querySelector('.count-style').textContent;
+
+                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+                document.querySelector('.count-style').textContent = newCountStyle;
+            })
+            .catch(error => console.error('Error fetching cart items:', error));
+    }
 </script>
 </body>
 
