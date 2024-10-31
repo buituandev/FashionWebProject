@@ -50,11 +50,9 @@ public class ClientController {
 
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
-
         List<CartItemDTO> cartItems = new ArrayList<>();
         Cookie[] cookies = request.getCookies();
         String userId = null;
-
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if ("userID".equals(cookie.getName())) {
@@ -137,7 +135,6 @@ public class ClientController {
 
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
-A
         List<Category> topCategories = categories.stream()
                 .sorted((c1, c2) -> {
                     int count1 = productService.findByCategoryId(c1.getId()).size();
