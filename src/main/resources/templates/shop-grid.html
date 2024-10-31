@@ -143,8 +143,7 @@
                                                                             <img th:src="${product.getImage_collection_url()}"
                                                                                  th:alt="${product.getProduct_name()}"
                                                                                  th:title="${product.getProduct_name()}"
-                                                                                 style="width: 375px;height: 375px;
-    object-fit: cover;">
+                                                                                  >
                                                                         </a>
                                                                         <div class="action-links">
                                                                             <a class="action-btn btn-cart"
@@ -211,7 +210,7 @@
                                                     <div class="row">
                                                         <div class="col-12 col-sm-12 col-md-12">
                                                             <!--Product-->
-                                                            <article class="product-layout product-list">
+                                                            <article class="product-layout product-list" th:each="product:${products}">
                                                                 <div class="product-thumb">
                                                                     <div
                                                                             class="product-inner d-flex align-items-center">
@@ -220,15 +219,15 @@
                                                                             <div class="label-product label-sale">
                                                                                 -20%
                                                                             </div>
-                                                                            <div class="label-product label-new">New
+                                                                            <div class="label-product label-new" th:text="${product.getTitle()}">
                                                                             </div>
-                                                                            <a href="single-product.html">
-                                                                                <img src="/assets/images/products/new/product-1.jpg"
-                                                                                     title="Compete Track Tote"
-                                                                                     alt="Compete Track Tote">
+                                                                            <a th:href="@{'/single-product/' + ${product.getId()}}">
+                                                                                <img th:src="${product.getImage_collection_url()}"
+                                                                                     th:title="${product.getProduct_name()}"
+                                                                                     th:alt="${product.getProduct_name()}">
                                                                             </a>
                                                                             <div class="action-links">
-                                                                                <a class="action-btn btn-cart"
+                                                                                <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                                    title="Add to Cart"><i
                                                                                         class="pe-7s-shopbag"></i></a>
                                                                                 <a class="action-btn btn-wishlist"
@@ -249,11 +248,10 @@
 
                                                                         <div class="product-caption flex-grow-1">
                                                                             <div class="product-manufacturer">
-                                                                                <a href="#">Studio Design</a>
+                                                                                <a href="#" th:text="${product.getProduct_name()}"></a>
                                                                             </div>
                                                                             <h4 class="product-name">
-                                                                                <a href="single-product.html">Compete
-                                                                                    Track Tote</a>
+                                                                                <a th:href="@{'/single-product/' + ${product.getId()}}" th:text="${product.getProduct_name()}"></a>
                                                                             </h4>
                                                                             <div class="product-ratings">
                                                                                 <div class="rating-box">
@@ -282,21 +280,11 @@
                                                                                 </div>
                                                                             </div>
                                                                             <p class="product-price">
-                                                                                    <span
-                                                                                            class="price-old">$54.65</span>
-                                                                                <span
-                                                                                        class="price-new">$43.72</span>
+                                                                            <span class="price-new formatted-price"
+                                                                                  th:text="${product.getPrice()}+' VND'"></span>
                                                                             </p>
                                                                             <div class="product-des">
-                                                                                <p>Nunc facilisis sagittis
-                                                                                    ullamcorper.
-                                                                                    Proin lectus ipsum, gravida et
-                                                                                    mattis vulputate, tristique ut
-                                                                                    lectus. Sed et lorem nunc.
-                                                                                    Vestibulum ante ipsum primis in
-                                                                                    faucibus orci luctus et ultrices
-                                                                                    posuere cubilia Curae; Aenean
-                                                                                    eleifend ..</p>
+                                                                                <p th:text="${product.getLong_description()}"></p>
                                                                             </div>
                                                                         </div><!-- end of product-caption -->
                                                                     </div><!-- end of product-inner -->

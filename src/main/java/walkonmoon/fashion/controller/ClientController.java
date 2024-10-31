@@ -563,16 +563,9 @@ public class ClientController {
         if (currentUser == null) {
             return "redirect:/login.html";
         } else {
-            if (currentUser.getPassword().equals(password)) {
+            String encryptedPassword = UserService.toSHA1(password);
+            if (currentUser.getPassword().equals(encryptedPassword)) {
                 addCookie(response, "userID", String.valueOf(currentUser.getId()));
-//                addCookie(response, "password", currentUser.getPassword());
-//                addCookie(response, "email", email);
-//                addCookie(response, "gender", currentUser.getGender());
-//                addCookie(response, "dob", String.valueOf(currentUser.getDob()));
-//                addCookie(response, "address", currentUser.getAddress());
-//                addCookie(response, "phoneNumber", currentUser.getPhone_number());
-//                addCookie(response, "province", currentUser.getProvince());
-//                model.addAttribute("user",currentUser);
                 return "redirect:/index.html";
             }
         }
@@ -632,6 +625,7 @@ public class ClientController {
         model.addAttribute("totalPrice", totalPrice);
 
         model.addAttribute("cartItems", cartItems);
+
         return "register";
     }
 
@@ -642,13 +636,31 @@ public class ClientController {
         newUser.setAddress("");
         newUser.setImage("");
         newUser.setProvince("");
+        //encrypt password
+        String encryptedPassword = UserService.toSHA1(newUser.getPassword());
+        newUser.setPassword(encryptedPassword);
         User user = userService.getUserByEmail(newUser.getEmail());
+        // end of encrypt password
         if (user == null) {
             userService.saveUser(newUser);
             return "redirect:/login.html";
         } else {
             return "redirect:/register.html";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+     Cookie[] cookies =  request.getCookies();
+     for(Cookie cookie : cookies){
+         if ("userID".equalsIgnoreCase(cookie.getName())) {
+             cookie.setValue("");
+             cookie.setPath("/");
+             cookie.setMaxAge(0);
+             response.addCookie(cookie);
+         }
+     }
+     return "redirect:/index.html";
     }
 
 
