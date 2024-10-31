@@ -42,15 +42,17 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Products Edit</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'create'}"style="font-weight: 600">Add Category</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'edit'}"style="font-weight: 600">Edit Category</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Products edit</li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a href="category-add.html" style="color: rgb(228, 106, 118)">Create Category</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Edit Category</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"></i> Create New</button>
+                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"><a href="category-add.html" style="color: white"></i> Create New</a></button>
                     </div>
                 </div>
             </div>
@@ -68,7 +70,6 @@
                         <div class="card-body">
                             <form th:action="@{/admin/category/save}" method="post" th:object="${category}">
                                 <div class="form-body">
-                                    <h5 class="card-title">About Category</h5>
                                     <hr>
                                     <div class="row">
                                         <div class="col-md-6">

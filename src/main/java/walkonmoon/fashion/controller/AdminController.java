@@ -113,6 +113,11 @@ public class AdminController {
         Product existPro = productService.getProductById(product.getId());
         if(existPro == null){
             productService.saveProduct(product);
+            Category newCategory = categoryService.getCategoryById(product.getCategoryId());
+            if (newCategory != null) {
+                newCategory.setQuantity(newCategory.getQuantity() + 1); // Increase quantity by 1
+                categoryService.saveCategory(newCategory); // Save updated category
+            }
         }else {
             product.setImage_collection_url(existPro.getImage_collection_url());  // Keep existing URL if no new file
         }
@@ -138,15 +143,18 @@ public class AdminController {
                         redirectAttributes.addFlashAttribute("message", "Failed to upload file");
                         return "redirect:/admin/eco-products-edit.html";
                     }
-                }else {
-
                 }
             }
         }
 
         productService.saveProduct(product);
-        Integer originalCategoryId = existPro != null ? existPro.getCategoryId() : null;
-        if (!originalCategoryId.equals(product.getCategoryId())) {
+        Integer originalCategoryId;
+        if (existPro != null) {
+            originalCategoryId = existPro.getCategoryId();
+        } else {
+            originalCategoryId = null;
+        }
+        if (originalCategoryId != null && !originalCategoryId.equals(product.getCategoryId())) {
             // If the category has changed, update the quantity
             Category category = categoryService.getCategoryById(originalCategoryId);
             if (category != null) {
@@ -168,6 +176,7 @@ public class AdminController {
     @GetMapping("/category-add.html")
     public String formCategory(Model model) {
         model.addAttribute("category", new Category());
+        model.addAttribute("mode", "create");
         return "admin/category-add";
     }
 
@@ -183,6 +192,7 @@ public class AdminController {
     public String editCategory(@PathVariable("id") Integer id, Model model) {
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
+        model.addAttribute("mode", "edit");
         return "admin/category-add";
     }
 
