@@ -1721,7 +1721,7 @@ to a reusable component.
 .header-cart .dropdown-menu {
     max-height: 0;
     display: block;
-    z-index: 9911;
+    z-index: 1000;
     right: -10px;
     left: auto;
     padding: 0;
