@@ -158,15 +158,15 @@ public class AdminController {
             // If the category has changed, update the quantity
             Category category = categoryService.getCategoryById(originalCategoryId);
             if (category != null) {
-                category.setQuantity(category.getQuantity() - 1); // Decrease quantity of old category
-                categoryService.saveCategory(category); // Save updated category
+                category.setQuantity(category.getQuantity() - 1);
+                categoryService.saveCategory(category);
             }
 
             // Increase quantity for the new category
             Category newCategory = categoryService.getCategoryById(product.getCategoryId());
             if (newCategory != null) {
-                newCategory.setQuantity(newCategory.getQuantity() + 1); // Increase quantity by 1
-                categoryService.saveCategory(newCategory); // Save updated category
+                newCategory.setQuantity(newCategory.getQuantity() + 1);
+                categoryService.saveCategory(newCategory);
             }
         }
         redirectAttributes.addFlashAttribute("message", "Product saved successfully");
@@ -202,10 +202,10 @@ public class AdminController {
 
         if (category.getQuantity() > 0) {
             redirectAttributes.addFlashAttribute("errorMessage", "Cannot delete category with products in it.");
-            return "redirect:/admin/category.html"; // Redirect back to the category page
+            return "redirect:/admin/category.html";
         }
 
-        categoryService.deleteCategoryById(id); // Proceed with deletion
+        categoryService.deleteCategoryById(id);
         return "redirect:/admin/category.html";
     }
 
@@ -247,8 +247,8 @@ public class AdminController {
 
         Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
         if (category.getQuantity() > 0) {
-            category.setQuantity(category.getQuantity() - 1); // Decrease quantity by 1
-            categoryService.saveCategory(category); // Save updated category
+            category.setQuantity(category.getQuantity() - 1);
+            categoryService.saveCategory(category);
         }
         productService.deleteProductById(id);
         return "redirect:/admin/eco-products.html";
