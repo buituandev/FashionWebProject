@@ -6,7 +6,13 @@
 </head>
 
 <body>
-
+<style>
+    .swal2-confirm, .swal2-cancel{
+        text-align: center;
+        padding: 0.5px 20px;
+        font-size: 16px;
+    }
+</style>
 <!--[if lt IE 9]>
 <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve
     your experience.</p>
@@ -1097,21 +1103,33 @@
     }
 
     function deleteCartItem(productId, userId) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Item deleted from cart successfully",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 3500
-                });
-                updateCart();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this item from cart",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) =>{
+            if(result.isConfirmed) {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your item has been deleted from cart',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 3500
+                        });
+                        updateCart();
+                    }
+                };
+                xhr.send();
             }
-        };
-        xhr.send();
+        });
     }
 
     function updateCart() {
@@ -1138,6 +1156,4 @@
     });
 </script>
 </body>
-
-
 </html>
