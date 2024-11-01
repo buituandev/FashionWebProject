@@ -1074,16 +1074,23 @@
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function addToCart(productId, quantity) {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Item added to cart successfully");
+                Swal.fire({
+                    title: "Success!",
+                    text: "Item add to cart successfully",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3500
+                });
             }
             if(xhr.readyState === 4 && xhr.status === 400) {
-                alert("You have reached the maximum quantity of this product in your cart");
+                Swal.fire("Warning!", "You have reached the maximum quantity of this product in your cart", "warning");
             }
         };
         xhr.send();
@@ -1094,7 +1101,13 @@
         xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Item deleted from cart successfully");
+                Swal.fire({
+                    title: "Deleted!",
+                    text: "Item deleted from cart successfully",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3500
+                });
                 updateCart();
             }
         };
