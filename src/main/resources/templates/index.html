@@ -1125,6 +1125,7 @@
 
                 document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
                 document.querySelector('.count-style').textContent = newCountStyle;
+                formatPrices();
             })
             .catch(error => console.error('Error fetching cart items:', error));
     }

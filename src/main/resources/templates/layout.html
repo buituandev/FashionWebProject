@@ -171,14 +171,14 @@
                     </li>
                     <li class="single-cart-item media" th:each="item : ${cartItems}" th:disabled="${item.quantity==0}">
                         <div class="shopping-cart-img me-4">
-                            <a href="#">
+                            <a th:href="@{'/single-product/' + ${item.id}}">
                                 <img class="img-fluid" th:alt="${item.title}" th:src="${item.image}">
                                 <span class="product-quantity" th:text="${item.quantity}"></span>
                             </a>
                         </div>
                         <div class="shopping-cart-title flex-grow-1">
-                            <h4><a href="#" th:text="${item.title}"></a></h4>
-                            <p class="cart-price" th:text="'$' + ${item.price}"></p>
+                            <h4><a th:href="@{'/single-product/' + ${item.id}}" th:text="${item.title}"></a></h4>
+                            <p class="cart-price formatted-price" th:text="${item.price} + ' VND'"></p>
 <!--                            <div class="product-attr">-->
 <!--                                <span>Size: S</span>-->
 <!--                                <span>Color: Black</span>-->
@@ -190,7 +190,7 @@
                     </li>
                 </ul>
                 <div class="shopping-cart-total" th:if="${!#lists.isEmpty(cartItems)}">
-                    <h4>Total : <span th:text="'$' + ${totalPrice}"></span></h4>
+                    <h4>Total : <span class="formatted-price" th:text="${totalPrice}+' VND'"></span></h4>
                 </div>
                 <div class="shopping-cart-btn" th:if="${!#lists.isEmpty(cartItems)}">
                     <a class="default-btn" th:href="@{/cart.html}">view cart</a>
