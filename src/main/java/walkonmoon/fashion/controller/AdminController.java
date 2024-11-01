@@ -169,7 +169,7 @@ public class AdminController {
                 categoryService.saveCategory(newCategory);
             }
         }
-        redirectAttributes.addFlashAttribute("message", "Product saved successfully");
+        redirectAttributes.addFlashAttribute("confirmMessage", "Product saved successfully");
         return "redirect:/admin/eco-products.html";
     }
 

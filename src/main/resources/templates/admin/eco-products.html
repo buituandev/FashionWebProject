@@ -238,6 +238,21 @@
     });
 
 </script>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const confirmMessage = /*[[${confirmMessage}]]*/ 'null';
+        if (confirmMessage && confirmMessage !== 'null') {  // Check if confirmMessage exists
+            Swal.fire({
+                title: "Success",
+                text:  confirmMessage,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    });
+</script>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
