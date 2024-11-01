@@ -419,7 +419,6 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // First delete the image from the application database
                         fetch(`/images/${imageId}`, {
                             method: 'DELETE'
                         })
