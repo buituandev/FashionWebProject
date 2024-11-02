@@ -43,6 +43,7 @@ public class AdminController {
     @Autowired
     private ImageService imageService;
 
+
     public AdminController(FirebaseConfig firebaseConfig) {
         this.firebaseConfig = firebaseConfig;
     }
@@ -184,6 +185,10 @@ public class AdminController {
     public String saveCategory(Category category, Model model) {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         category.setCreateDate(updatedNow);
+        Category existCate = categoryService.getCategoryById(category.getId());
+        if(existCate != null){
+            category.setQuantity(existCate.getQuantity());
+        }
         categoryService.saveCategory(category);
         return "redirect:/admin/category.html";
     }
@@ -263,14 +268,15 @@ public class AdminController {
     @PostMapping("/login")
     public  String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
          User user = userService.getUserByEmail(email);
-        if (user == null || !user.getPassword().equals(password) || user.getType() != 1) {
-
+         String passSHA1 = UserService.toSHA1(password);
+        if (user == null || !user.getPassword().equals(passSHA1) || user.getType() != 1) {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid email or password.");
             return "redirect:/admin/pages-login.html";
         }
 
         return "redirect:/admin/index.html";
     }
+
 
     private String getFileName(MultipartFile file, InputStream inputStream) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
