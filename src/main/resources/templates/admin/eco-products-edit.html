@@ -288,7 +288,6 @@
                                                     <input type="file" class="upload" id="files" name="files" multiple
                                                            accept="image/*">
                                                 </div>
-                                                <input type="text" id="previousImage">
                                             </div>
                                         </div>
                                         <hr>
@@ -349,17 +348,21 @@
     const container = document.getElementById('image-preview-wrapper');
     const input = document.getElementById('files');
     const hiddenInput = document.getElementById('previousImage');
+    let accumulatedFiles = new DataTransfer();
 
-    // Handle new image uploads without clearing the existing images
     input.addEventListener('change', (e) => {
         if (e.target.files.length) {
-            Array.from(e.target.files).forEach((file, index) => {
+            Array.from(e.target.files).forEach((file) => {
+                // Add each file to the accumulatedFiles DataTransfer object
+                accumulatedFiles.items.add(file);
+
+                // Create the preview for each image
                 const imgContainer = document.createElement('div');
-                imgContainer.classList.add('image-container');  // Container for image and overlay
+                imgContainer.classList.add('image-container');
 
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(file);
-                img.classList.add('preview-image');  // Apply styles to preview image
+                img.classList.add('preview-image');
 
                 const overlay = document.createElement('div');
                 overlay.classList.add('pro-img-overlay');
@@ -368,40 +371,33 @@
                 deleteIcon.href = 'javascript:void(0)';
                 deleteIcon.classList.add('bg-danger', 'delete-icon');
                 deleteIcon.innerHTML = '<i class="ti-trash"></i>';
-                deleteIcon.dataset.index = index;  // Store the index of the file
+                deleteIcon.dataset.filename = file.name;
 
-                // Add click event to remove the image
                 deleteIcon.addEventListener('click', () => {
-                    console.log('Delete icon clicked for index:', index);
                     imgContainer.remove();
-                    if (typeof removeFile === 'function') {
-                        removeFile(index);
-                    } else {
-                        console.error('removeFile function is not defined');
-                    }
+
+                    // Removing the selected file
+                    const newFiles = new DataTransfer();
+                    Array.from(accumulatedFiles.files).forEach((accFile) => {
+                        if (accFile.name !== file.name) {
+                            newFiles.items.add(accFile);
+                        }
+                    });
+                    accumulatedFiles = newFiles; // Update accumulated files
+                    input.files = accumulatedFiles.files; // Reassign to input
                 });
 
                 overlay.appendChild(deleteIcon);
                 imgContainer.appendChild(img);
                 imgContainer.appendChild(overlay);
-
-                container.appendChild(imgContainer);  // Append instead of clearing
+                container.appendChild(imgContainer);
             });
+
+            // Set input files to include all accumulated files
+            input.files = accumulatedFiles.files;
         }
     });
 
-    function removeFile(index) {
-        const dt = new DataTransfer();
-        const files = input.files;
-
-        for (let i = 0; i < files.length; i++) {
-            if (i !== index) {
-                dt.items.add(files[i]);
-            }
-        }
-
-        input.files = dt.files;
-    }
 </script>
 
 <script>
@@ -423,7 +419,6 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // First delete the image from the application database
                         fetch(`/images/${imageId}`, {
                             method: 'DELETE'
                         })

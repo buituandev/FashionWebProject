@@ -66,10 +66,10 @@
                                                         <tbody class="cart-table">
                                                             <tr th:each="cartItem:${cartItems}">
                                                                 <td>
-                                                                    <a href="single-product.html"><img th:src="${cartItem.image}" alt="Cart Product Image" th:title="${cartItem.title}" class="img-thumbnail"></a>
+                                                                    <a th:href="@{'/single-product/' + ${cartItem.id}}"><img th:src="${cartItem.image}" alt="Cart Product Image" th:title="${cartItem.title}" class="img-thumbnail"></a>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="single-product.html" th:text="${cartItem.title}">Compete Track Tote</a>
+                                                                    <a th:href="@{'/single-product/' + ${cartItem.id}}" th:text="${cartItem.title}">Compete Track Tote</a>
 <!--                                                                    <span>Delivery Date: 2018-09-22</span>-->
 <!--                                                                    <span>Color: Brown</span>-->
 <!--                                                                    <span>Reward Points: 300</span>-->
@@ -78,21 +78,16 @@
                                                                 <td>
                                                                     <div class="input-group btn-block">
                                                                         <div class="cart-input">
-                                                                            <input id="quantity-input" class="cart-input-box" type="text" th:value="${cartItem.quantity}" th:max="${cartItem.stock}">
-                                                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                                                                            <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                                                                            <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                                                                            <input th:id="'quantity-input-'+${cartItem.id}" class="cart-input-box" type="number" th:min="${cartItem.stock >= 1 ? 1 : 0}" th:value="${cartItem.quantity}">
                                                                         </div>
                                                                         <span class="input-group-btn">
-                                                                            <button th:onclick="'updateCartItem(' + ${cartItem.id} + ', document.getElementById(\'quantity-input\').value)'" type="submit" data-bs-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                                                            <button th:onclick="'deleteCartItem(' + ${cartItem.id} + ')'" type="button" data-bs-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
-                                                                        </span>
+                                                                                <button th:onclick="'updateCartItem(' + ${cartItem.id} + ', document.getElementById(\'quantity-input-' + ${cartItem.id} + '\').value)'" data-bs-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
+                                                                                <button th:onclick="'deleteCartItem(' + ${cartItem.id} + ')'" type="button" data-bs-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
+                                                                    </span>
                                                                     </div>
                                                                 </td>
-                                                                <td th:text="${cartItem.price}">$200.00</td>
-                                                                <td th:text="${cartItem.price}*${cartItem.quantity} + 'VND'">$200.00</td>
-                                                                
+                                                                <td class="price-new formatted-price" th:text="${cartItem.price}+' VND'"><span></span></td>
+                                                                <td class="formatted-price" th:text="${cartItem.price}*${cartItem.quantity} +' VND'">$200.00</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -279,19 +274,23 @@
     ============================================ -->
 
     <!-- jQuery JS -->
-    <script src="assets/js/jquery.1.12.4.min.js"></script>
+    <script src="/assets/js/jquery.1.12.4.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="assets/js/popper.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
 
     <!-- Plugins JS -->
-    <script src="assets/js/plugins.js"></script>
+    <script src="/assets/js/plugins.js"></script>
 
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
+
+    <script src="/assets/js/FormatPrice.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 
@@ -300,7 +299,13 @@
         xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Item deleted from cart successfully");
+                Swal.fire({
+                    title: "Success!",
+                    text: "Item removed from cart successfully",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3500
+                });
                 updateCart();
             }
         };
@@ -313,10 +318,16 @@
         xhr.open("GET", `/updateCartItem?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                alert("Item updated successfully");
+                Swal.fire({
+                    title: "Success!",
+                    text: "Item's quantity updated successfully",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3500
+                });
                 updateCart();
             } else if (xhr.readyState === 4 && xhr.status === 400) {
-                alert("Quantity is exceeded the stock");
+                Swal.fire("Warning!", "You have reached the maximum quantity of this product in your cart", "warning");
             }
         };
         xhr.send();
@@ -331,10 +342,13 @@
                 const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
                 const newCountStyle = doc.querySelector('.count-style').textContent;
                 const newTbodyContent = doc.querySelector('tbody').innerHTML;
+                const newTotalPrice = doc.querySelector('.total-price-display').textContent;
 
                 document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
                 document.querySelector('.count-style').textContent = newCountStyle;
                 document.querySelector('tbody').innerHTML = newTbodyContent;
+                document.querySelector('.total-price-display').textContent = newTotalPrice;
+                formatPrices();
             })
             .catch(error => console.error('Error fetching cart items:', error));
     }
@@ -346,5 +360,4 @@
 
 </body>
 
-<!-- Mirrored from htmldemo.net/pebona/pebona/cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Sep 2024 06:10:18 GMT -->
 </html>
