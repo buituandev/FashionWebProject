@@ -644,17 +644,24 @@ public class ClientController {
                                Model model,
                                HttpServletResponse response) {
         User currentUser = userService.getUserByEmail(email);
+
+        // Check if the user exists
         if (currentUser == null) {
-            return "redirect:/login.html";
-        } else {
-            String encryptedPassword = UserService.toSHA1(password);
-            if (currentUser.getPassword().equals(encryptedPassword)) {
-                addCookie(response, "userID", String.valueOf(currentUser.getId()));
-                return "redirect:/index.html";
-            }
+            return "redirect:/login.html?loginSuccess=false"; // User not found
         }
-        return "login";
+
+        String encryptedPassword = UserService.toSHA1(password);
+
+        // Check if the password matches
+        if (currentUser.getPassword().equals(encryptedPassword)) {
+            addCookie(response, "userID", String.valueOf(currentUser.getId()));
+            return "redirect:/index.html"; // Successful login
+        }
+
+        // If password does not match, redirect with failure
+        return "redirect:/login.html?loginSuccess=false"; // Incorrect password
     }
+
 
     private void addCookie(HttpServletResponse response, String name, String value) {
         value = value.trim().replace(" ", "_");

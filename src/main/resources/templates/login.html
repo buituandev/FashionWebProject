@@ -197,8 +197,28 @@
             });
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const loginSuccess = urlParams.get('loginSuccess');
+
+        // Check if the login was unsuccessful
+        if (loginSuccess === "false") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong! Your email or password may be wrong!!",
+            });
+        }
+    });
+
 </script>
 
 </body>
+<style>
+    .swal2-confirm,.swal2-cancel{
+        padding: 0.5px 20px;
+    }
+</style>
 
 </html>
