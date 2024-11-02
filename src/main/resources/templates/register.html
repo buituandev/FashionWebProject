@@ -2,6 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout::head('Chroma - Register')}">
+
 </head>
 <body>
 
@@ -220,34 +221,10 @@
                                                     <label for="dob" class="col-12 col-sm-12 col-md-4 col-form-label">Birthdate
                                                         (Optional)</label>
                                                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="dob"
+                                                        <input type="date" class="form-control" id="dob"
                                                                th:field="*{dob}" placeholder="MM / DD / YYYY">
                                                     </div>
                                                 </div>
-
-                                                <div class="form-check row p-0 mt-5">
-                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-4">
-                                                        <div class="custom-checkbox">
-                                                            <input class="form-check-input" type="checkbox" id="offer">
-                                                            <span class="checkmark"></span>
-                                                            <label class="form-check-label" for="offer">Receive offers
-                                                                from our partners</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-check row p-0 mt-4">
-                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-8 offset-lg-4">
-                                                        <div class="custom-checkbox">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   id="subscribe" required>
-                                                            <span class="checkmark"></span>
-                                                            <label class="form-check-label" for="subscribe">Sign up for
-                                                                our newsletter</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                                 <div class="register-box d-flex justify-content-end mt-half">
                                                     <button type="submit" class="default-btn tiny-btn">Register</button>
                                                 </div>
@@ -329,6 +306,8 @@
 
 <!-- Main JS -->
 <script src="assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <script>
     function updateCart() {
@@ -349,6 +328,26 @@
     document.addEventListener("DOMContentLoaded", function () {
         updateCart();
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const registerSuccess = urlParams.get('registerSuccess');
+
+        if (registerSuccess === "false") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Something went wrong! Your email may be used",
+            });
+        } else if (registerSuccess === "true") {
+            Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "You have registered successfully!",
+            });
+        }
+    });
+
 </script>
 
 </body>

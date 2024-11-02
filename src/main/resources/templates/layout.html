@@ -138,8 +138,6 @@
                                             </div>
 
                                         </div>
-
-
                                         <!--                End Avatar User-->
                           <!-- end of header-cart-area -->
                                     </li>
@@ -177,12 +175,10 @@
                             </a>
                         </div>
                         <div class="shopping-cart-title flex-grow-1">
+
                             <h4><a th:href="@{'/single-product/' + ${item.id}}" th:text="${item.title}"></a></h4>
                             <p class="cart-price formatted-price" th:text="${item.price} + ' VND'"></p>
-<!--                            <div class="product-attr">-->
-<!--                                <span>Size: S</span>-->
-<!--                                <span>Color: Black</span>-->
-<!--                            </div>-->
+
                         </div>
                         <div class="shopping-cart-delete">
                             <button class="btn-cart" th:onclick="'deleteCartItem(' + ${item.getId()} + ')'" ><i class="ion ion-md-close"></i></button>
@@ -203,47 +199,6 @@
 
 <!-- Start of Header -->
 <header th:fragment="headernormal" class="header bgc-white header-type-1">
-<!--    <div class="top-bar">-->
-<!--        <div class="container">-->
-<!--            <div class="row">-->
-<!--                <div class="col-12 order-2 col-sm-12 order-sm-2 col-md-8 order-md-1 align-self-center">-->
-<!--                    <p>Mid-season sale up to 20% OFF. Use code "SALEOFF20"</p>-->
-<!--                </div>-->
-<!--                <div class="col-12 order-1 col-sm-12 order-sm-1 col-md-4 order-md-2">-->
-<!--                    <ul class="list-inline">-->
-<!--                        <li class="currency list-inline-item">-->
-<!--                            <div class="btn-group">-->
-<!--                                <button class="btn-link dropdown-toggle"> USD $<i class="fa fa-angle-down"></i>-->
-<!--                                </button>-->
-<!--                                <div class="dropdown-menu">-->
-<!--                                    <ul>-->
-<!--                                        <li><a href="#">Euro €</a></li>-->
-<!--                                        <li><a href="#" class="current">USD $</a></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                        <li class="language list-inline-item">-->
-<!--                            <div class="btn-group">-->
-<!--                                <button class="btn-link dropdown-toggle">English <i-->
-<!--                                        class="fa fa-angle-down"></i>-->
-<!--                                </button>-->
-<!--                                <div class="dropdown-menu">-->
-<!--                                    <ul>-->
-<!--                                        <li><a href="#" class="current"><img src="/assets/images/icons/en-gb.png"-->
-<!--                                                                             alt="Icons"> English</a></li>-->
-<!--                                        <li><a href="#"><img src="/assets/images/icons/fr-fr.png" alt="Icons">-->
-<!--                                            Français</a></li>-->
-<!--                                    </ul>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div> &lt;!&ndash; end of container &ndash;&gt;-->
-<!--    </div> &lt;!&ndash; end of top-bar &ndash;&gt;-->
-
     <div class="header-area">
         <div class="container">
             <div class="row align-items-center">
@@ -273,22 +228,40 @@
                         <div th:replace="~{layout::cart-nav}"></div>
                         <ul class="list-inline">
                             <li class="top-links list-inline-item">
-                                <div class="btn-group">
+                                <div th:if="${user} == null" class="btn-group">
                                     <button class="btn-link dropdown-toggle"><i
                                             class="pe-7s-config"></i></button>
                                     <div class="dropdown-menu">
                                         <ul>
-                                            <li><a href="register.html">Register</a></li>
-                                            <li><a href="login.html">Login</a></li>
+                                            <li><a th:href="@{/register.html}">Register</a></li>
+                                            <li><a th:href="@{/login.html}">Login</a></li>
                                             <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="wishlist.html">Wishlist</a></li>
+                                            <!--                                                    <li><a href="wishlist.html">Wishlist</a></li>-->
                                             <li><a href="checkout.html">Checkout</a></li>
+                                            <li><a th:href="@{/logout}">Log out</a></li>
                                         </ul>
                                     </div>
                                 </div>
+                                <!--Avatar User-->
+                                <div th:if="${user}" class="dropdown">
+                                    <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiKMIe5bDu9ukxaQgrAF6sZIuOIwH8ISeNrA&s" alt="User Image" class="avatar">
+                                        <span class="material-symbols-outlined" style="margin-left: -10px">arrow_drop_down</span>
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        <ul id="dropdown-list" class="dropdown-list">
+                                            <li><a href="my-account.html">My Account</a></li>
+                                            <li><a href="checkout.html">Checkout</a></li>
+                                            <li><a th:href="@{/logout}">Log out</a></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <!--                End Avatar User-->
+                                <!-- end of header-cart-area -->
                             </li>
                         </ul>
-                    </div> <!-- end of header-cart-area -->
+                    </div>
                 </div>
             </div>
         </div> <!-- end of container -->
