@@ -225,13 +225,13 @@ public class AdminController {
         model.addAttribute("mode", "edit");
         Category currentCategory = categoryService.getCategoryById(product.getCategoryId());
 
-        if (currentCategory != null && currentCategory.getQuantity() > 0) {
-            Integer selectedCategoryId = product.getCategoryId();
-            if (!selectedCategoryId.equals(currentCategory.getId())) {
-                currentCategory.setQuantity(currentCategory.getQuantity() - 1);
-                categoryService.saveCategory(currentCategory);
-            }
-        }
+//        if (currentCategory != null && currentCategory.getQuantity() > 0) {
+//            Integer selectedCategoryId = product.getCategoryId();
+//            if (!selectedCategoryId.equals(currentCategory.getId())) {
+//                currentCategory.setQuantity(currentCategory.getQuantity() - 1);
+//                categoryService.saveCategory(currentCategory);
+//            }
+//        }
 
         return "admin/eco-products-edit";
     }

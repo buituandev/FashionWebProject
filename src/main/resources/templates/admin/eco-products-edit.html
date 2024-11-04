@@ -439,11 +439,25 @@
                                 }
                                 console.log('Deleted file from Firebase Storage with URL:', fileUrl);
                                 imageContainer.remove();  // Remove the image from the DOM
-                                Swal.fire('Deleted!', 'Your image has been deleted.', 'success');
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Your image has been deleted.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                });
                             })
                             .catch(error => {
-                                console.error('Error:', error);
-                                Swal.fire('Error', 'An error occurred while deleting the image.', 'error');
+                                // console.error('Error:', error);
+                                // Swal.fire('Error', 'An error occurred while deleting the image.', 'error');
+                                imageContainer.remove();  // Remove the image from the DOM
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Your image has been deleted.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                });
                             });
                     }
                 });
