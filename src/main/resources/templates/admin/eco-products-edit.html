@@ -19,44 +19,42 @@
         border: 1px solid #ced4da;
         border-radius: 4px;
     }
-
+    .product-img .pro-img-overlay a {
+        margin: 50% 5px;
+    }
     .category-select:hover, .category-select:focus {
         border-color: #80bdff;
         outline: none;
         box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
     .image-preview-wrapper {
-        display: flex; /* Use flexbox for horizontal alignment */
-        flex-wrap: nowrap; /* Prevent wrapping of the images */
-        overflow-x: auto; /* Allow scrolling horizontally if there are too many images */
-        gap: 10px; /* Add space between images */
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 10px;
     }
 
     .image-container {
         position: relative; /* Allows overlay to be positioned on top of the image */
         display: inline-block;
+
     }
 
     .preview-image {
-        max-width: 150px; /* Set a max width for images */
-        height: auto; /* Maintain aspect ratio */
-        display: block; /* Ensure the images are displayed as block elements */
-        border: 1px solid #ddd; /* Optional: Add border to images */
-        padding: 5px; /* Optional: Add padding */
+        max-width: 150px;
+        height: auto;
+        display: block;
+        border: 1px solid #ddd;
+        padding: 5px;
     }
 
     .pro-img-overlay {
-        position: absolute; /* Position overlay relative to image container */
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
-        opacity: 0; /* Hide overlay initially */
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: opacity 0.3s; /* Fade-in effect for overlay */
+        transition: opacity 0.3s;
     }
 
     .image-container:hover .pro-img-overlay {
@@ -64,9 +62,9 @@
     }
 
     .delete-icon {
-        color: #fff; /* White color for the delete icon */
-        font-size: 20px; /* Icon size */
-        cursor: pointer; /* Pointer cursor on hover */
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
     }
 </style>
 <!-- ============================================================== -->
