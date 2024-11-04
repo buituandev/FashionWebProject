@@ -335,7 +335,7 @@
                 });
                 updateCart();
             } else if (xhr.readyState === 4 && xhr.status === 400) {
-                Swal.fire("Warning!", "You have reached the maximum quantity of this product in your cart", "warning");
+                Swal.fire("Warning!", "You have reached the maximum quantity or entered invalid quantity of this product in your cart", "warning");
             }
         };
         xhr.send();
