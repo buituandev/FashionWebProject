@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 
-<head th:replace = "admin/admin_layout :: head">
+<head th:replace = "~{admin/admin_layout :: head}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 </head>
@@ -16,7 +16,7 @@
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
 
-<div th:replace="admin/admin_layout :: preload"></div>
+<div th:replace="~{admin/admin_layout :: preload}"></div>
 
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
@@ -26,14 +26,14 @@
     <!-- ============================================================== -->
     <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <header th:replace="admin/admin_layout :: header"></header>
+    <header th:replace="~{admin/admin_layout :: header}"></header>
     <!-- ============================================================== -->
     <!-- End Topbar header -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <aside th:replace="admin/admin_layout :: navbar"></aside>
+    <aside th:replace="~{admin/admin_layout :: navbar}"></aside>
     <!-- ============================================================== -->
     <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
@@ -106,7 +106,7 @@
             <!-- Right sidebar -->
             <!-- ============================================================== -->
             <!-- .right-sidebar -->
-            <div th:replace="admin/admin_layout :: rightsidebar"></div>
+            <div th:replace="~{admin/admin_layout :: rightsidebar}"></div>
             <!-- ============================================================== -->
 
             <!-- End Right sidebar -->
@@ -122,7 +122,7 @@
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
-    <footer th:replace="admin/admin_layout :: footer"></footer>
+    <footer th:replace="~{admin/admin_layout :: footer}"></footer>
     <!-- ============================================================== -->
     <!-- End footer -->
     <!-- ============================================================== -->
@@ -134,7 +134,7 @@
 <!-- All Jquery -->
 <!-- ============================================================== -->
 
-<div th:replace="admin/admin_layout :: jscript"></div>
+<div th:replace="~{admin/admin_layout :: jscript}"></div>
 
 <!-- This is data table -->
 <script src="../assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>

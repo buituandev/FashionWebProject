@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 
 
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
 
-<head th:replace="admin/admin_layout :: head">
+<head th:replace="~{admin/admin_layout :: head}">
 </head>
 
 <body class="skin-default fixed-layout">
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
-<div th:replace="admin/admin_layout :: preload"></div>
+<div th:replace="~{admin/admin_layout :: preload}"></div>
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
 <!-- ============================================================== -->
@@ -19,14 +19,14 @@
     <!-- ============================================================== -->
     <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <header th:replace="admin/admin_layout :: header"></header>
+    <header th:replace="~{admin/admin_layout :: header}"></header>
     <!-- ============================================================== -->
     <!-- End Topbar header -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <aside th:replace="admin/admin_layout :: navbar"></aside>
+    <aside th:replace="~{admin/admin_layout :: navbar}"></aside>
     <!-- ============================================================== -->
     <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
@@ -62,7 +62,7 @@
             <!-- ============================================================== -->
             <!-- Info box Content -->
             <!-- ============================================================== -->
-            <div th:replace="admin/admin_layout :: detail"></div>
+            <div th:replace="~{admin/admin_layout :: detail}"></div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
@@ -70,7 +70,7 @@
             <!-- Right sidebar -->
             <!-- ============================================================== -->
             <!-- .right-sidebar -->
-            <div th:replace="admin/admin_layout :: rightsidebar"></div>
+            <div th:replace="~{admin/admin_layout :: rightsidebar}"></div>
             <!-- ============================================================== -->
             <!-- End Right sidebar -->
             <!-- ============================================================== -->
@@ -85,7 +85,7 @@
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
-    <footer th:replace="admin/admin_layout :: footer"></footer>
+    <footer th:replace="~{admin/admin_layout :: footer}"></footer>
     <!-- ============================================================== -->
     <!-- End footer -->
     <!-- ============================================================== -->
@@ -96,7 +96,7 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<div th:replace="admin/admin_layout :: jscript"></div>
+<div th:replace="~{admin/admin_layout :: jscript}"></div>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
