@@ -122,7 +122,7 @@
                                                     <p>In Stock</p>
                                                 </div>
                                                 <div class="product-stock">
-                                                    <form action="#">
+
                                                         <label>Quantity</label>
                                                         <ul class="d-flex flex-wrap align-items-center">
                                                             <li class="box-quantity">
@@ -134,7 +134,7 @@
                                                                 <button type="button" class="default-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', document.getElementById(\'quantity-input\').value)'" th:text="${product.getStock() > 0 ? 'Add to Cart' : 'Out of Stock'}" th:disabled="${product.getStock() == 0}"></button>
                                                             </li>
                                                         </ul>
-                                                    </form>
+
                                                 </div>
 <!--                                                <div class="wishlist-compare">-->
 <!--                                                    <button class="btn-wishlist" type="button" title="Add to Wishlist">Add to Wishlist</button>-->
