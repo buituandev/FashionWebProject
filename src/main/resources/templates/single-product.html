@@ -221,7 +221,9 @@
                                                         </div>
                                                     </div>
 <!--                                                    note ti sua-->
-                                                    <h4 class="product-name"><a th:href="@{'/single-product/' + ${relatedProduct.getId()}}" th:text="${relatedProduct.getProduct_name()}"></a></h4>
+<!--                                                    <h4 class="product-name"><a th:href="@{'/single-product/' + ${relatedProduct.getId()}}" th:text="${relatedProduct.getProduct_name()}"></a></h4>-->
+<!--                                                    <h4 class="product-name" th:text="${relatedProduct.getProduct_name()}"></h4>-->
+
                                                     <p class="product-price">
                                                         <span class="price-new formatted-price" th:text="${relatedProduct.getPrice()}+' VND'"></span>
                                                     </p>
@@ -393,5 +395,4 @@
 </script>
 </body>
 
-<!-- Mirrored from htmldemo.net/pebona/pebona/single-product.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Sep 2024 06:10:24 GMT -->
 </html>
