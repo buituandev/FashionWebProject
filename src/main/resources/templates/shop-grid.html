@@ -2,6 +2,44 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{layout::head('Chroma - Products')}">
+    <style>
+        /* Hide the default checkbox */
+        input[type="checkbox"] {
+            position: relative;
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+
+        /* Custom checkbox appearance */
+        input[type="checkbox"]:checked {
+            background-color: red; /* Set red background when checked */
+            border-color: black;
+        }
+
+        /* Create the checkmark when checked */
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            top: 2px;
+            left: 7px;
+            transform: rotate(45deg);
+        }
+
+    </style>
+    <style>
+        .swal2-confirm, .swal2-cancel{
+            text-align: center;
+            padding: 0.5px 20px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>

@@ -6,6 +6,13 @@
 </head>
 
 <body>
+<style>
+    .swal2-confirm, .swal2-cancel{
+        text-align: center;
+        padding: 0.5px 20px;
+        font-size: 16px;
+    }
+</style>
 
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
@@ -200,7 +207,7 @@
 <!--                                                                </tr>-->
                                                                 <tr>
                                                                     <td><strong>Total:</strong></td>
-                                                                    <td><span class="color-primary" th:text="${totalPrice}">$860.00</span></td>
+                                                                    <td><span class="color-primary total-price-display formatted-price" th:text="${totalPrice}">$860.00</span></td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>

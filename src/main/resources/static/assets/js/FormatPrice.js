@@ -7,7 +7,15 @@ function formatPrices() {
         const priceText = priceElement.textContent;
         console.log("Original price text:", priceText);
 
-        const priceValue = parseFloat(priceText.replace(/[^\d.]/g, ''));
+        // Check if the price is already formatted
+        if (/\d{1,3}(?:\.\d{3})*(?:,\d+)?\s₫/.test(priceText)) {
+            console.log("Price is already formatted:", priceText);
+            return;
+        }
+
+        // Remove non-breaking space and currency symbol
+        const cleanedPriceText = priceText.replace(/[\u00A0₫]/g, '').replace(/[^\d.]/g, '');
+        const priceValue = parseFloat(cleanedPriceText);
         console.log("Parsed price value:", priceValue);
 
         const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(priceValue);
