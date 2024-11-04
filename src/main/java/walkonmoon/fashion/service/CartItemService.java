@@ -86,7 +86,7 @@ public class CartItemService {
     @Transactional
     public void updateCartItem(int userId, int productId, int quantity, HttpServletResponse response) throws IOException {
         CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
-        if(quantity > productService.getProductById(productId).getStock()) {
+        if(quantity > productService.getProductById(productId).getStock() || quantity < 0) {
             response.sendError(400);
             return;
         }
