@@ -168,7 +168,13 @@
         confirmDelete().then((isConfirmed) => {
             if (isConfirmed) {
                 window.location.href = `/admin/product-delete/${productId}`;
-                Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your product has been deleted.',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 3500
+                    });
             }
         });
     }

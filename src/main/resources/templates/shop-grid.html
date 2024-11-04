@@ -350,7 +350,7 @@
                                                 </button>
                                             </h5>
                                         </div>
-                                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
+                                        <div id="collapseOne" class="collapse" >
                                             <div class="card-body">
                                                 <ul class="cat-sub-menu">
                                                     <li><a href="#">blandit vehicula</a></li>
@@ -850,6 +850,36 @@
     }
 </script>
 </body>
+<style>
+    /* Hide the default checkbox */
+    input[type="checkbox"] {
+        position: relative;
+        width: 20px;
+        height: 20px;
+        appearance: none;
+        border: 2px solid black;
+        cursor: pointer;
+    }
 
+    /* Custom checkbox appearance */
+    input[type="checkbox"]:checked {
+        background-color: red; /* Set red background when checked */
+        border-color: black;
+    }
+
+    /* Create the checkmark when checked */
+    input[type="checkbox"]:checked::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        top: 2px;
+        left: 7px;
+        transform: rotate(45deg);
+    }
+
+</style>
 
 </html>

@@ -450,6 +450,24 @@ public class ClientController {
 
     @GetMapping("/single-product.html")
     public String singleProductHtml(Model model, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Integer userID = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userID")) {
+                    if (!cookie.getValue().equalsIgnoreCase("")) {
+                        userID = Integer.parseInt(cookie.getValue());
+                    }
+                }
+            }
+        }
+        if (userID != null) {
+            User user = userService.findUserById(userID);
+            model.addAttribute("user", user);
+        } else {
+            model.addAttribute("user", null);
+        }
+
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
@@ -469,7 +487,6 @@ public class ClientController {
             }
         }
         List<CartItemDTO> cartItems = new ArrayList<>();
-        Cookie[] cookies = request.getCookies();
         String userId = null;
 
         if (cookies != null) {
@@ -494,6 +511,24 @@ public class ClientController {
 
     @GetMapping("/cart.html")
     public String cartHtml(Model model, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        Integer userID = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("userID")) {
+                    if (!cookie.getValue().equalsIgnoreCase("")) {
+                        userID = Integer.parseInt(cookie.getValue());
+                    }
+                }
+            }
+        }
+        if (userID != null) {
+            User user = userService.findUserById(userID);
+            model.addAttribute("user", user);
+        } else {
+            model.addAttribute("user", null);
+        }
+
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
@@ -514,7 +549,6 @@ public class ClientController {
         }
 
         List<CartItemDTO> cartItems = new ArrayList<>();
-        Cookie[] cookies = request.getCookies();
         String userId = null;
 
         if (cookies != null) {
@@ -644,17 +678,24 @@ public class ClientController {
                                Model model,
                                HttpServletResponse response) {
         User currentUser = userService.getUserByEmail(email);
+
+        // Check if the user exists
         if (currentUser == null) {
-            return "redirect:/login.html";
-        } else {
-            String encryptedPassword = UserService.toSHA1(password);
-            if (currentUser.getPassword().equals(encryptedPassword)) {
-                addCookie(response, "userID", String.valueOf(currentUser.getId()));
-                return "redirect:/index.html";
-            }
+            return "redirect:/login.html?loginSuccess=false"; // User not found
         }
-        return "login";
+
+        String encryptedPassword = UserService.toSHA1(password);
+
+        // Check if the password matches
+        if (currentUser.getPassword().equals(encryptedPassword)) {
+            addCookie(response, "userID", String.valueOf(currentUser.getId()));
+            return "redirect:/index.html"; // Successful login
+        }
+
+        // If password does not match, redirect with failure
+        return "redirect:/login.html?loginSuccess=false"; // Incorrect password
     }
+
 
     private void addCookie(HttpServletResponse response, String name, String value) {
         value = value.trim().replace(" ", "_");
