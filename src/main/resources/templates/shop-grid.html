@@ -727,6 +727,8 @@
 
 <script src="/assets/js/FormatPrice.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/toast.js"></script>
 
 <script>
     function addToCart(productId, quantity) {
@@ -734,16 +736,12 @@
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                Swal.fire({
-                    title: "Success!",
-                    text: "Item added to cart successfully",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 3500
-                });
+                toast('success', 'Item added to cart');
             }
             if (xhr.readyState === 4 && xhr.status === 400) {
-                Swal.fire("Warning!", "You have reached the maximum quantity of this product in your cart", "warning");
+                toast("error", "You have reached the maximum quantity of this product in your cart");
+            } if(xhr.readyState===4 && xhr.status === 401){
+                window.location.href = "/login.html";
             }
         };
         xhr.send();
