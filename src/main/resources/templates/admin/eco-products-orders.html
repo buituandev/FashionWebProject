@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
 
-<head th:replace = "admin/admin_layout :: head"></head>
+<head th:replace = "~{admin/admin_layout :: head}"></head>
 <link rel="stylesheet" type="text/css"
       href="../assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
 =======
@@ -13,7 +13,7 @@
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
 
-<div th:replace="admin/admin_layout :: preload"></div>
+<div th:replace="~{admin/admin_layout :: preload}"></div>
 
 <!-- ============================================================== -->
 <!-- Main wrapper - style you can find in pages.scss -->
@@ -23,14 +23,14 @@
     <!-- ============================================================== -->
     <!-- Topbar header - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <header th:replace="admin/admin_layout :: header"></header>
+    <header th:replace="~{admin/admin_layout :: header}"></header>
     <!-- ============================================================== -->
     <!-- End Topbar header -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
-    <aside th:replace="admin/admin_layout :: navbar"></aside>
+    <aside th:replace="~{admin/admin_layout :: navbar}"></aside>
     <!-- ============================================================== -->
     <!-- End Left Sidebar - style you can find in sidebar.scss  -->
     <!-- ============================================================== -->
@@ -47,13 +47,13 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Category</h4>
+                    <h4 class="text-themecolor" style="font-weight: 600">Orders</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Category</li>
+                            <li class="breadcrumb-item active">Orders</li>
                         </ol>
                         <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a href="eco-products-edit.html" style="color: white;"><i class="fa fa-plus-circle"></i> Create New</a></button>
                     </div>
@@ -68,7 +68,7 @@
             <!-- ============================================================== -->
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Orders</h4>
+<!--                    <h4 class="card-title">Orders</h4>-->
                     <h6 class="card-subtitle"></h6>
                     <div class="table-responsive m-t-40">
                         <table id="myTable" class="table table-striped border">
@@ -98,7 +98,7 @@
             <!-- Right sidebar -->
             <!-- ============================================================== -->
             <!-- .right-sidebar -->
-            <div th:replace="admin/admin_layout :: rightsidebar"></div>
+            <div th:replace="~{admin/admin_layout :: rightsidebar}"></div>
             <!-- ============================================================== -->
 
             <!-- End Right sidebar -->
@@ -114,7 +114,7 @@
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
-    <footer th:replace="admin/admin_layout :: footer"></footer>
+    <footer th:replace="~{admin/admin_layout :: footer}"></footer>
     <!-- ============================================================== -->
     <!-- End footer -->
     <!-- ============================================================== -->
@@ -126,7 +126,7 @@
 <!-- All Jquery -->
 <!-- ============================================================== -->
 
-<div th:replace="admin/admin_layout :: jscript"></div>
+<div th:replace="~{admin/admin_layout :: jscript}"></div>
 
 <!-- This is data table -->
 <script src="../assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>

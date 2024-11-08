@@ -1,324 +1,345 @@
 <!DOCTYPE html>
 <html lang="zxx">
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout::head('Chroma - Cart')}">
-</head>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head('Chroma - Cart')}"></head>
 <body>
 <style>
-    .swal2-confirm, .swal2-cancel{
+    .swal2-confirm,
+    .swal2-cancel {
         text-align: center;
         padding: 0.5px 20px;
         font-size: 16px;
     }
 </style>
-
-    <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Start of Whole Site Wrapper with mobile menu support -->
-    <div id="whole" class="whole-site-wrapper color-scheme-one">
-
-        <div th:replace="~{layout::headernormal(${user})}"></div>
-        <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
-
-        <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
-
-        <!-- Start of Breadcrumbs -->
-        <div class="breadcrumb-section bgc-offset mb-full">
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an
+    <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.
+</p>
+<![endif]-->
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
+    <div th:replace="~{layout::headernormal(${user})}"></div>
+    <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
+    <div class="fixed-header-space"></div>
+    <!-- empty placeholder div for Fixed Menu bar height-->
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section bgc-offset mb-full">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" href="index.html">Home</a>
+                        <span class="breadcrumb-item active">Shopping Cart</span>
+                    </nav>
+                </div>
+            </div>
+            <!-- end of row -->
+        </div>
+        <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+    <!-- Start of Main Content Wrapper -->
+    <div id="content" class="main-content-wrapper">
+        <!-- Start of Shopping Cart Wrapper -->
+        <div class="shopping-cart-wrapper">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12">
-                        <nav class="breadcrumb">
-                            <a class="breadcrumb-item" href="index.html">Home</a>
-                            <span class="breadcrumb-item active">Shopping Cart</span>
-                        </nav>
-                    </div>
-                </div> <!-- end of row -->
-            </div> <!-- end of container -->
-        </div>
-        <!-- End of Breadcrumbs -->
-
-        <!-- Start of Main Content Wrapper -->
-        <div id="content" class="main-content-wrapper">
-            
-            <!-- Start of Shopping Cart Wrapper -->
-            <div class="shopping-cart-wrapper">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <main id="primary" class="site-main">
-                                <div class="shopping-cart">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                            <div class="section-title">
-                                                <h2>Shopping Cart</h2>
-                                            </div>
-
-
-                                                <div class="table-responsive">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <main id="primary" class="site-main">
+                            <div class="shopping-cart">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="section-title">
+                                            <h2>Shopping Cart</h2>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <td>Image</td>
+                                                    <td>Product Name</td>
+                                                    <!--                                                                <td>Model</td>-->
+                                                    <td>Quantity</td>
+                                                    <td>Unit Price</td>
+                                                    <td>Total</td>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="cart-table">
+                                                <tr th:class="'item'+${cartItem.id}" th:each="cartItem:${cartItems}">
+                                                    <td style="width: 70px;">
+                                                        <a th:href="@{'/single-product/' + ${cartItem.id}}">
+                                                            <img th:src="${cartItem.image}" alt="Cart Product Image"
+                                                                 th:title="${cartItem.title}" class="img-thumbnail">
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a th:href="@{'/single-product/' + ${cartItem.id}}"
+                                                           th:text="${cartItem.title}">Compete Track Tote</a>
+                                                        <!--                                                                    <span>Delivery Date: 2018-09-22</span>-->
+                                                        <!--                                                                    <span>Color: Brown</span>-->
+                                                        <!--                                                                    <span>Reward Points: 300</span>-->
+                                                    </td>
+                                                    <!--                                                                <td th:text="${cartItem.getQuantity()}">3</td>-->
+                                                    <td>
+                                                        <div class="input-group btn-block">
+                                                            <div>
+                                                                <input th:id="'quantity-input-'+${cartItem.id}"
+                                                                       class="cart-input-box" type="number"
+                                                                       th:min="${cartItem.stock >= 1 ? 1 : 0}"
+                                                                       th:value="${cartItem.quantity}">
+                                                            </div>
+                                                            <span class="input-group-btn">
+                                        <button th:onclick="'updateCartItem(' + ${cartItem.id} + ', document.getElementById(\'quantity-input-' + ${cartItem.id} + '\').value)'"
+                                                data-bs-toggle="tooltip" data-direction="top" class="btn btn-primary"
+                                                data-original-title="Update">
+                                          <i class="fa fa-refresh"></i>
+                                        </button>
+                                        <button th:onclick="'deleteCartItem(' + ${cartItem.id} + ')'" type="button"
+                                                data-bs-toggle="tooltip" data-direction="top"
+                                                class="btn btn-danger pull-right" data-original-title="Remove">
+                                          <i class="fa fa-times-circle"></i>
+                                        </button>
+                                      </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="price-new formatted-price"
+                                                        th:text="${cartItem.price}+' VND'">
+                                                        <span></span>
+                                                    </td>
+                                                    <td class="formatted-price"
+                                                        th:text="${cartItem.price}*${cartItem.quantity} +' VND'">$200.00
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--                                            <div class="cart-accordion-wrapper mt-full">-->
+                                        <!--                                                <h2>What would you like to do next?</h2>-->
+                                        <!--                                                <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>-->
+                                        <!--                                                <div id="cart_accordion" class="mt-4" role="tablist">-->
+                                        <!--                                                    <div class="card">-->
+                                        <!--                                                        <div class="card-header" role="tab" id="headingCoupon">-->
+                                        <!--                                                            <h4 class="mb-0">-->
+                                        <!--                                                                <a data-bs-toggle="collapse" href="#collapseCoupon" aria-expanded="false" aria-controls="collapseCoupon">Use Coupon Code<i class="ion ion-ios-arrow-down"></i></a>-->
+                                        <!--                                                            </h4>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                        <div id="collapseCoupon" class="collapse" role="tabpanel" aria-labelledby="headingCoupon" data-bs-parent="#cart_accordion">-->
+                                        <!--                                                            <div class="card-body">-->
+                                        <!--                                                                <div class="input-group">-->
+                                        <!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-coupon">Enter your coupon here</label>-->
+                                        <!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
+                                        <!--                                                                        <div class="input-group">-->
+                                        <!--                                                                        <input type="text" name="coupon" value="" placeholder="Enter your coupon here" id="input-coupon" class="form-control">-->
+                                        <!--                                                                        <input type="button" value="Apply Coupon" id="button-coupon" class="btn btn-secondary">-->
+                                        <!--                                                                    </div>-->
+                                        <!--                                                                    </div>-->
+                                        <!--                                                                </div>-->
+                                        <!--                                                            </div>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                    <div class="card">-->
+                                        <!--                                                        <div class="card-header" role="tab" id="headingTax">-->
+                                        <!--                                                            <h4 class="mb-0">-->
+                                        <!--                                                                <a class="collapsed" data-bs-toggle="collapse" href="#collapseTax" aria-expanded="false" aria-controls="collapseTax">Estimate Shipping &amp; Taxes<i class="ion ion-ios-arrow-down"></i></a>-->
+                                        <!--                                                              </h4>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                        <div id="collapseTax" class="collapse" role="tabpanel" aria-labelledby="headingTax" data-bs-parent="#cart_accordion">-->
+                                        <!--                                                            <div class="card-body">-->
+                                        <!--                                                                <p>Enter your destination to get a shipping estimate.</p>-->
+                                        <!--                                                                <div class="input-group form-group">-->
+                                        <!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-country"><span class="text-danger">*</span> Country</label>-->
+                                        <!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
+                                        <!--                                                                        <select name="country_id" id="input-country" class="form-control nice-select">-->
+                                        <!--                                                                            <option value=""> -&#45;&#45; Please Select -&#45;&#45; </option>-->
+                                        <!--                                                                            <option value="">Argentina</option>-->
+                                        <!--                                                                            <option value="">Bangladesh</option>-->
+                                        <!--                                                                            <option value="">Belgium</option>-->
+                                        <!--                                                                            <option value="">Brazil</option>-->
+                                        <!--                                                                            <option value="">Germany</option>-->
+                                        <!--                                                                            <option value="">India</option>-->
+                                        <!--                                                                            <option value="">United Kingdom</option>-->
+                                        <!--                                                                            <option value="">United States</option>-->
+                                        <!--                                                                        </select>-->
+                                        <!--                                                                    </div>-->
+                                        <!--                                                                </div>-->
+                                        <!--                                                                <div class="input-group form-group">-->
+                                        <!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-zone"><span class="text-danger">*</span> Region / State</label>-->
+                                        <!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
+                                        <!--                                                                        <select name="zone_id" id="input-zone" class="form-control nice-select">-->
+                                        <!--                                                                            <option value=""> -&#45;&#45; Please Select -&#45;&#45; </option>-->
+                                        <!--                                                                            <option value="">Alabama</option>-->
+                                        <!--                                                                            <option value="">Arizona</option>-->
+                                        <!--                                                                            <option value="">California</option>-->
+                                        <!--                                                                            <option value="">Florida</option>-->
+                                        <!--                                                                            <option value="">Newyork</option>-->
+                                        <!--                                                                        </select>-->
+                                        <!--                                                                    </div>-->
+                                        <!--                                                                </div>-->
+                                        <!--                                                                <div class="input-group form-group mb-5">-->
+                                        <!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-postcode"><span class="text-danger">*</span> Post Code</label>-->
+                                        <!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
+                                        <!--                                                                        <input type="text" name="postcode" value="" placeholder="Post Code" id="input-postcode" class="form-control mb-0">-->
+                                        <!--                                                                    </div>-->
+                                        <!--                                                                </div>-->
+                                        <!--                                                                <button type="button" id="button-quote" class="btn btn-secondary">Get Quotes</button>-->
+                                        <!--                                                            </div>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                    <div class="card">-->
+                                        <!--                                                        <div class="card-header" role="tab" id="headingGift">-->
+                                        <!--                                                            <h4 class="mb-0">-->
+                                        <!--                                                                <a class="collapsed" data-bs-toggle="collapse" href="#collapseGift" aria-expanded="false" aria-controls="collapseGift">Use Gift Certificate<i class="ion ion-ios-arrow-down"></i></a>-->
+                                        <!--                                                              </h4>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                        <div id="collapseGift" class="collapse" role="tabpanel" aria-labelledby="headingGift" data-bs-parent="#cart_accordion">-->
+                                        <!--                                                            <div class="card-body">-->
+                                        <!--                                                                <div class="input-group">-->
+                                        <!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-voucher">Enter your gift certificate code here</label>-->
+                                        <!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
+                                        <!--                                                                        <div class="input-group">-->
+                                        <!--                                                                            <input type="text" name="voucher" value="" placeholder="Enter your gift certificate code here" id="input-voucher" class="form-control">-->
+                                        <!--                                                                            <input type="button" value="Apply Gift Certificate" id="button-boucher" class="btn btn-secondary">-->
+                                        <!--                                                                        </div>-->
+                                        <!--                                                                    </div>-->
+                                        <!--                                                                </div>-->
+                                        <!--                                                            </div>-->
+                                        <!--                                                        </div>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </div>-->
+                                        <div class="cart-amount-wrapper">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-4 offset-md-8">
                                                     <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <td>Image</td>
-                                                                <td>Product Name</td>
-<!--                                                                <td>Model</td>-->
-                                                                <td>Quantity</td>
-                                                                <td>Unit Price</td>
-                                                                <td>Total</td>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="cart-table">
-                                                            <tr th:class="'item'+${cartItem.id}" th:each="cartItem:${cartItems}">
-                                                                <td>
-                                                                    <a th:href="@{'/single-product/' + ${cartItem.id}}"><img th:src="${cartItem.image}" alt="Cart Product Image" th:title="${cartItem.title}" class="img-thumbnail"></a>
-                                                                </td>
-                                                                <td>
-                                                                    <a th:href="@{'/single-product/' + ${cartItem.id}}" th:text="${cartItem.title}">Compete Track Tote</a>
-<!--                                                                    <span>Delivery Date: 2018-09-22</span>-->
-<!--                                                                    <span>Color: Brown</span>-->
-<!--                                                                    <span>Reward Points: 300</span>-->
-                                                                </td>
-<!--                                                                <td th:text="${cartItem.getQuantity()}">3</td>-->
-                                                                <td>
-                                                                    <div class="input-group btn-block">
-                                                                        <div>
-                                                                            <input th:id="'quantity-input-'+${cartItem.id}" class="cart-input-box" type="number" th:min="${cartItem.stock >= 1 ? 1 : 0}" th:value="${cartItem.quantity}">
-                                                                        </div>
-                                                                        <span class="input-group-btn">
-                                                                                <button th:onclick="'updateCartItem(' + ${cartItem.id} + ', document.getElementById(\'quantity-input-' + ${cartItem.id} + '\').value)'" data-bs-toggle="tooltip" data-direction="top" class="btn btn-primary" data-original-title="Update"><i class="fa fa-refresh"></i></button>
-                                                                                <button th:onclick="'deleteCartItem(' + ${cartItem.id} + ')'" type="button" data-bs-toggle="tooltip" data-direction="top" class="btn btn-danger pull-right" data-original-title="Remove"><i class="fa fa-times-circle"></i></button>
-                                                                    </span>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="price-new formatted-price" th:text="${cartItem.price}+' VND'"><span></span></td>
-                                                                <td class="formatted-price" th:text="${cartItem.price}*${cartItem.quantity} +' VND'">$200.00</td>
-                                                            </tr>
+                                                        <tbody>
+                                                        <!--                                                                <tr>-->
+                                                        <!--                                                                    <td><strong>Sub-Total:</strong></td>-->
+                                                        <!--                                                                    <td>$860.00</td>-->
+                                                        <!--                                                                </tr>-->
+                                                        <tr>
+                                                            <td>
+                                                                <strong>Total:</strong>
+                                                            </td>
+                                                            <td>
+                                                                <span class="color-primary total-price-display formatted-price"
+                                                                      th:text="${totalPrice}">$860.00</span>
+                                                            </td>
+                                                        </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-
-<!--                                            <div class="cart-accordion-wrapper mt-full">-->
-<!--                                                <h2>What would you like to do next?</h2>-->
-<!--                                                <p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>-->
-<!--                                                <div id="cart_accordion" class="mt-4" role="tablist">-->
-<!--                                                    <div class="card">-->
-<!--                                                        <div class="card-header" role="tab" id="headingCoupon">-->
-<!--                                                            <h4 class="mb-0">-->
-<!--                                                                <a data-bs-toggle="collapse" href="#collapseCoupon" aria-expanded="false" aria-controls="collapseCoupon">Use Coupon Code<i class="ion ion-ios-arrow-down"></i></a>-->
-<!--                                                            </h4>-->
-<!--                                                        </div>-->
-<!--                                                        <div id="collapseCoupon" class="collapse" role="tabpanel" aria-labelledby="headingCoupon" data-bs-parent="#cart_accordion">-->
-<!--                                                            <div class="card-body">-->
-<!--                                                                <div class="input-group">-->
-<!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-coupon">Enter your coupon here</label>-->
-<!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
-<!--                                                                        <div class="input-group">-->
-<!--                                                                        <input type="text" name="coupon" value="" placeholder="Enter your coupon here" id="input-coupon" class="form-control">-->
-<!--                                                                        <input type="button" value="Apply Coupon" id="button-coupon" class="btn btn-secondary">-->
-<!--                                                                    </div>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="card">-->
-<!--                                                        <div class="card-header" role="tab" id="headingTax">-->
-<!--                                                            <h4 class="mb-0">-->
-<!--                                                                <a class="collapsed" data-bs-toggle="collapse" href="#collapseTax" aria-expanded="false" aria-controls="collapseTax">Estimate Shipping &amp; Taxes<i class="ion ion-ios-arrow-down"></i></a>-->
-<!--                                                              </h4>-->
-<!--                                                        </div>-->
-<!--                                                        <div id="collapseTax" class="collapse" role="tabpanel" aria-labelledby="headingTax" data-bs-parent="#cart_accordion">-->
-<!--                                                            <div class="card-body">-->
-<!--                                                                <p>Enter your destination to get a shipping estimate.</p>-->
-<!--                                                                <div class="input-group form-group">-->
-<!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-country"><span class="text-danger">*</span> Country</label>-->
-<!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
-<!--                                                                        <select name="country_id" id="input-country" class="form-control nice-select">-->
-<!--                                                                            <option value=""> -&#45;&#45; Please Select -&#45;&#45; </option>-->
-<!--                                                                            <option value="">Argentina</option>-->
-<!--                                                                            <option value="">Bangladesh</option>-->
-<!--                                                                            <option value="">Belgium</option>-->
-<!--                                                                            <option value="">Brazil</option>-->
-<!--                                                                            <option value="">Germany</option>-->
-<!--                                                                            <option value="">India</option>-->
-<!--                                                                            <option value="">United Kingdom</option>-->
-<!--                                                                            <option value="">United States</option>-->
-<!--                                                                        </select>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="input-group form-group">-->
-<!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-zone"><span class="text-danger">*</span> Region / State</label>-->
-<!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
-<!--                                                                        <select name="zone_id" id="input-zone" class="form-control nice-select">-->
-<!--                                                                            <option value=""> -&#45;&#45; Please Select -&#45;&#45; </option>-->
-<!--                                                                            <option value="">Alabama</option>-->
-<!--                                                                            <option value="">Arizona</option>-->
-<!--                                                                            <option value="">California</option>-->
-<!--                                                                            <option value="">Florida</option>-->
-<!--                                                                            <option value="">Newyork</option>-->
-<!--                                                                        </select>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="input-group form-group mb-5">-->
-<!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-postcode"><span class="text-danger">*</span> Post Code</label>-->
-<!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
-<!--                                                                        <input type="text" name="postcode" value="" placeholder="Post Code" id="input-postcode" class="form-control mb-0">-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                                <button type="button" id="button-quote" class="btn btn-secondary">Get Quotes</button>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="card">-->
-<!--                                                        <div class="card-header" role="tab" id="headingGift">-->
-<!--                                                            <h4 class="mb-0">-->
-<!--                                                                <a class="collapsed" data-bs-toggle="collapse" href="#collapseGift" aria-expanded="false" aria-controls="collapseGift">Use Gift Certificate<i class="ion ion-ios-arrow-down"></i></a>-->
-<!--                                                              </h4>-->
-<!--                                                        </div>-->
-<!--                                                        <div id="collapseGift" class="collapse" role="tabpanel" aria-labelledby="headingGift" data-bs-parent="#cart_accordion">-->
-<!--                                                            <div class="card-body">-->
-<!--                                                                <div class="input-group">-->
-<!--                                                                    <label class="col-12 col-sm-12 col-md-3" for="input-voucher">Enter your gift certificate code here</label>-->
-<!--                                                                    <div class="col-12 col-sm-12 col-md-9">-->
-<!--                                                                        <div class="input-group">-->
-<!--                                                                            <input type="text" name="voucher" value="" placeholder="Enter your gift certificate code here" id="input-voucher" class="form-control">-->
-<!--                                                                            <input type="button" value="Apply Gift Certificate" id="button-boucher" class="btn btn-secondary">-->
-<!--                                                                        </div>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-
-                                            <div class="cart-amount-wrapper">
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-12 col-md-4 offset-md-8">
-                                                        <table class="table table-bordered">
-                                                            <tbody>
-<!--                                                                <tr>-->
-<!--                                                                    <td><strong>Sub-Total:</strong></td>-->
-<!--                                                                    <td>$860.00</td>-->
-<!--                                                                </tr>-->
-                                                                <tr>
-                                                                    <td><strong>Total:</strong></td>
-                                                                    <td><span class="color-primary total-price-display formatted-price" th:text="${totalPrice}">$860.00</span></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="cart-button-wrapper d-flex justify-content-between mt-4">
-                                                <a href="shop-grid.html" class="btn btn-secondary dark">Continue Shopping</a>
-                                                <a href="checkout.html" class="btn btn-secondary dark align-self-end">Checkout</a>
                                             </div>
                                         </div>
+                                        <div class="cart-button-wrapper d-flex justify-content-between mt-4">
+                                            <a href="shop-grid.html" class="btn btn-secondary dark">Continue
+                                                Shopping</a>
+                                            <a href="checkout.html" class="btn btn-secondary dark align-self-end">Checkout</a>
+                                        </div>
                                     </div>
-                                </div> <!-- end of shopping-cart -->
-                            </main> <!-- end of #primary -->
-                        </div>
-                    </div> <!-- end of row -->
-                </div> <!-- end of container -->
-            </div>
-            <!-- End of Shopping Cart Wrapper -->
-        </div>
-        <!-- End of Main Content Wrapper -->
-
-        <div th:replace="~{layout::footer}"></div>
-        <div th:replace="~{layout::scroll_to_top}"></div>
-
-    </div>
-    <!-- End of Whole Site Wrapper -->
-
-    <!-- Initializing Photoswipe -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
+                                </div>
                             </div>
+                            <!-- end of shopping-cart -->
+                        </main>
+                        <!-- end of #primary -->
+                    </div>
+                </div>
+                <!-- end of row -->
+            </div>
+            <!-- end of container -->
+        </div>
+        <!-- End of Shopping Cart Wrapper -->
+    </div>
+    <!-- End of Main Content Wrapper -->
+    <div th:replace="~{layout::footer}"></div>
+    <div th:replace="~{layout::scroll_to_top}"></div>
+</div>
+<!-- End of Whole Site Wrapper -->
+<!-- Initializing Photoswipe -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
                         </div>
                     </div>
                 </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
             </div>
         </div>
     </div>
-    <!-- End of Photoswipe -->
-
-
-    <!-- JS
-    ============================================ -->
-
-    <!-- jQuery JS -->
-    <script src="/assets/js/jquery.1.12.4.min.js"></script>
-
-    <!-- Popper JS -->
-    <script src="/assets/js/popper.min.js"></script>
-
-    <!-- Bootstrap JS -->
-    <script src="/assets/js/bootstrap.min.js"></script>
-
-    <!-- Plugins JS -->
-    <script src="/assets/js/plugins.js"></script>
-
-    <!-- Main JS -->
-    <script src="/assets/js/main.js"></script>
-
-    <script src="/assets/js/FormatPrice.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+</div>
+<!-- End of Photoswipe -->
+<!-- JS
+============================================ -->
+<!-- jQuery JS -->
+<script src="/assets/js/jquery.1.12.4.min.js"></script>
+<!-- Popper JS -->
+<script src="/assets/js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
+<!-- Plugins JS -->
+<script src="/assets/js/plugins.js"></script>
+<!-- Main JS -->
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/FormatPrice.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/toast.js"></script>
 <script>
     let productIdentifier = 36;
+
     function deleteCartItem(productId, userId) {
         productIdentifier = productId;
-        const xhr = new XMLHttpRequest();
-        xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                Swal.fire({
-                    title: "Success!",
-                    text: "Item removed from cart successfully",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 3500
-                });
-                updateCart();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this item from cart",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your item has been deleted from cart',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 3500
+                        });
+                        updateCart();
+                    }
+                };
+                xhr.send();
             }
-        };
-        xhr.send();
+        });
     }
-    
+
     // Update cart items
     function updateCartItem(productId, quantity) {
         productIdentifier = productId;
@@ -326,83 +347,62 @@
         xhr.open("GET", `/updateCartItem?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                Swal.fire({
-                    title: "Success!",
-                    text: "Item's quantity updated successfully",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 3500
-                });
+                toast("success", "Item updated successfully");
                 updateCart();
             } else if (xhr.readyState === 4 && xhr.status === 400) {
-                Swal.fire("Warning!", "You have reached the maximum quantity or entered invalid quantity of this product in your cart", "warning");
+                toast("error", "You have reached the maximum quantity or entered invalid quantity of this product in your cart");
             }
         };
         xhr.send();
     }
 
     function updateCart() {
-        fetch('/cart.html')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
-                const newCountStyle = doc.querySelector('.count-style').textContent;
-                // const newTbodyContent = doc.querySelector('tbody').innerHTML;
-                let newItemContent = null;
-                console.log("Product ID:", productIdentifier);
-                const itemElement = doc.querySelector('.item' + productIdentifier);
-                if (itemElement === null) {
-                document.querySelector('.item' + productIdentifier).remove();
-                } else {
-                    newItemContent = itemElement.innerHTML;
-                    }
-                const newTotalPrice = doc.querySelector('.total-price-display').textContent;
-
-
-                console.log("New Item Content:", newItemContent);
-
-                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
-                document.querySelector('.count-style').textContent = newCountStyle;
-                if(newItemContent!=null){
-                    document.querySelector('.item'+productIdentifier).innerHTML = newItemContent;
+        fetch('/cart.html').then(response => response.text()).then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+            const newCountStyle = doc.querySelector('.count-style').textContent;
+            let newItemContent = null;
+            const itemElement = doc.querySelector('.item' + productIdentifier);
+            if (itemElement) {
+                newItemContent = itemElement.innerHTML;
+            } else {
+                let itemToRemove = document.querySelector('.item' + productIdentifier);
+                if (itemToRemove) {
+                    itemToRemove.remove();
                 }
-                // document.querySelector('tbody').innerHTML = newTbodyContent;
-                document.querySelector('.total-price-display').textContent = newTotalPrice;
-                formatPrices();
-            })
-            .catch(error => console.error('Error fetching cart items:', error));
+            }
+            const newTotalPrice = doc.querySelector('.total-price-display').textContent;
+            document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+            document.querySelector('.count-style').textContent = newCountStyle;
+            if (newItemContent != null) {
+                document.querySelector('.item' + productIdentifier).innerHTML = newItemContent;
+            }
+            document.querySelector('.total-price-display').textContent = newTotalPrice;
+            formatPrices();
+        }).catch(error => console.error('Error fetching cart items:', error));
     }
 
     function updateCartStartup() {
-        fetch('/cart.html')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
-                const newCountStyle = doc.querySelector('.count-style').textContent;
-                const newTbodyContent = doc.querySelector('tbody').innerHTML;
-                const newTotalPrice = doc.querySelector('.total-price-display').textContent;
-
-
-                console.log("New Item Content:", newItemContent);
-
-                document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
-                document.querySelector('.count-style').textContent = newCountStyle;
-                document.querySelector('tbody').innerHTML = newTbodyContent;
-                document.querySelector('.total-price-display').textContent = newTotalPrice;
-                formatPrices();
-            })
-            .catch(error => console.error('Error fetching cart items:', error));
+        fetch('/cart.html').then(response => response.text()).then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+            const newCountStyle = doc.querySelector('.count-style').textContent;
+            const newTbodyContent = doc.querySelector('tbody').innerHTML;
+            const newTotalPrice = doc.querySelector('.total-price-display').textContent;
+            console.log("New Item Content:", newItemContent);
+            document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+            document.querySelector('.count-style').textContent = newCountStyle;
+            document.querySelector('tbody').innerHTML = newTbodyContent;
+            document.querySelector('.total-price-display').textContent = newTotalPrice;
+            formatPrices();
+        }).catch(error => console.error('Error fetching cart items:', error));
     }
 
     document.addEventListener("DOMContentLoaded", function () {
         updateCart();
     });
 </script>
-
 </body>
-
 </html>

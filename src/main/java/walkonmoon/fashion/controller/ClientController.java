@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Controller
@@ -497,6 +500,7 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
 
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request) {
+        var random = new Random();
         Cookie[] cookies = request.getCookies();
         Integer userID = null;
         if (cookies != null) {
@@ -520,9 +524,15 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
         List<Image> productImages = imageService.findByProductId(product.getId());
         model.addAttribute("productImages", productImages);
         List<Product> relatedProducts = productService.findByCategoryId(product.getCategoryId());
-        relatedProducts = relatedProducts.stream()
+        List<Product> filteredProducts = relatedProducts.stream()
                 .filter(p -> p.getId() != product.getId())
                 .collect(Collectors.toList());
+        Collections.shuffle(filteredProducts, random);
+        List<Product> limitedProducts = filteredProducts.stream()
+                .limit(6)
+                .collect(Collectors.toList());
+        relatedProducts.clear();
+        relatedProducts = limitedProducts;
         model.addAttribute("relatedProducts", relatedProducts);
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
