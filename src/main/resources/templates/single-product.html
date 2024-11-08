@@ -20,7 +20,7 @@
 <div id="whole" class="whole-site-wrapper color-scheme-one">
 
     <!-- Start of Header -->
-    <div th:replace="~{layout::headernormal}"></div>
+    <div th:replace="~{layout::headernormal(${user})}"></div>
     <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
     <!-- End of Header -->
 
