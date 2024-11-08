@@ -31,7 +31,8 @@
     <!-- Responsive stylesheet -->
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=arrow_drop_down" />
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=arrow_drop_down"/>
     <!-- modernizr JS
     ============================================ -->
     <script src="/assets/js/modernizr-2.8.3.min.js"></script>
@@ -103,7 +104,8 @@
                 <div class="col-12 col-sm-12 col-md-8 col-lg-6">
                     <div class="row align-items-center">
                         <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-                            <div class="header-text"><span class="phone"><a href="#">0809-908-809</a></span><span>Customer Service</span></div>
+                            <div class="header-text"><span class="phone"><a href="#">0809-908-809</a></span><span>Customer Service</span>
+                            </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
                             <div class="header-cart-area">
@@ -118,7 +120,7 @@
                                                     <li><a th:href="@{/register.html}">Register</a></li>
                                                     <li><a th:href="@{/login.html}">Login</a></li>
                                                     <li><a href="my-account.html">My Account</a></li>
-<!--                                                    <li><a href="wishlist.html">Wishlist</a></li>-->
+                                                    <!--                                                    <li><a href="wishlist.html">Wishlist</a></li>-->
                                                     <li><a href="checkout.html">Checkout</a></li>
                                                     <li><a th:href="@{/logout}">Log out</a></li>
                                                 </ul>
@@ -126,8 +128,10 @@
                                         </div>
                                         <!--Avatar User-->
                                         <div th:if="${user}" class="dropdown">
-                                            <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
-                                                <img src="/assets/images/avatarUser.png" alt="User Image" class="avatar">
+                                            <div class="btn-link dropdown-toggle"
+                                                 style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
+                                                <img src="/assets/images/avatarUser.png" alt="User Image"
+                                                     class="avatar">
                                                 <span class="material-symbols-outlined" style="margin-left: -10px">arrow_drop_down</span>
                                             </div>
                                             <div class="dropdown-menu">
@@ -140,18 +144,18 @@
 
                                         </div>
                                         <!--                End Avatar User-->
-                          <!-- end of header-cart-area -->
+                                        <!-- end of header-cart-area -->
                                     </li>
                                 </ul>
 
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
 
-            </div>
-        </div> <!-- end of container -->
-    </div> <!-- end of header-top -->
+                </div>
+            </div> <!-- end of container -->
+        </div> <!-- end of header-top -->
     </div>
 </header>
 <!-- End of Header -->
@@ -182,7 +186,8 @@
 
                         </div>
                         <div class="shopping-cart-delete">
-                            <button class="btn-cart" th:onclick="'deleteCartItem(' + ${item.getId()} + ')'" ><i class="ion ion-md-close"></i></button>
+                            <button class="btn-cart" th:onclick="'deleteCartItem(' + ${item.getId()} + ')'"><i
+                                    class="ion ion-md-close"></i></button>
                         </div>
                     </li>
                 </ul>
@@ -245,7 +250,8 @@
                                 </div>
                                 <!--Avatar User-->
                                 <div th:if="${user}" class="dropdown">
-                                    <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
+                                    <div class="btn-link dropdown-toggle"
+                                         style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
                                         <img src="/assets/images/avatarUser.png" alt="User Image" class="avatar">
                                         <span class="material-symbols-outlined" style="margin-left: -10px">arrow_drop_down</span>
                                     </div>
@@ -291,7 +297,7 @@
 <div th:fragment="nav(categories1,categories2,categories3,categories4)" class="main-nav-area">
     <div class="container">
         <nav id="main_nav" class="stellarnav white-scheme">
-<!--             <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a>-->
+            <!--             <a href="#" class="menu-toggle full"><i class="fa fa-bars"></i> Menu</a>-->
             <ul>
                 <li class="active"><a href="/" th:href="@{/index.html}"><span>Home</span></a></li>
                 <li class="mega" data-columns="4"><a th:href="@{/shop-grid.html}"><span>Shop</span></a>
@@ -299,25 +305,29 @@
                         <li>
                             <a href="#" class="mega-menu-title"><h3></h3></a>
                             <ul>
-                                <li th:each="category: ${categories1}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                                <li th:each="category: ${categories1}"><a th:href="@{'/shop-grid/' + ${category.id}}"
+                                                                          th:text="${category.name}"></a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#" class="mega-menu-title"><h3></h3></a>
                             <ul>
-                                <li th:each="category: ${categories2}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                                <li th:each="category: ${categories2}"><a th:href="@{'/shop-grid/' + ${category.id}}"
+                                                                          th:text="${category.name}"></a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#" class="mega-menu-title"><h3></h3></a>
                             <ul>
-                                <li th:each="category: ${categories3}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                                <li th:each="category: ${categories3}"><a th:href="@{'/shop-grid/' + ${category.id}}"
+                                                                          th:text="${category.name}"></a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#" class="mega-menu-title"><h3></h3></a>
                             <ul>
-                                <li th:each="category: ${categories4}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
+                                <li th:each="category: ${categories4}"><a th:href="@{'/shop-grid/' + ${category.id}}"
+                                                                          th:text="${category.name}"></a></li>
                             </ul>
                         </li>
                         <li class="fullwidth-banner">
@@ -429,14 +439,10 @@
                                     <img src="/assets/images/PEBONA rmbg.png" style="object-fit: contain;"
                                          alt="Footer Logo">
                                 </div>
-                                <p>We are a team of designers and developers that create high quality Magento,
-                                    Prestashop, Opencart.</p>
-                                <div class="footer-contact">
-                                    <p><span>Address:</span>6688Princess Road, London, Greater London BAS 23JK,
-                                        UK</p>
-                                    <p><span>Phone:</span><a href="#">(012) 800 456 789-987</a></p>
-                                    <p><span>Email:</span><a href="#">support@example.com</a></p>
-                                </div>
+                                <p>Chroma is a vibrant e-commerce fashion shop for trendsetters who crave style and
+                                    quality. Explore our curated collection of clothing, accessories, and footwear, all
+                                    with fast shipping and customer-focused service. Find your next favorite look with
+                                    us!</p>
                             </div> <!-- end of widget-content -->
                         </aside> <!-- end of widget-container -->
                     </div>
@@ -447,11 +453,11 @@
                             <div class="widget-content">
                                 <div class="widgetized-menu">
                                     <ul class="list-unstyled">
-                                        <li><a href="#">Prices drop</a></li>
-                                        <li><a href="#">New Products</a></li>
-                                        <li><a href="#">Best Sales</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Login</a></li>
+                                        <li><a th:href="@{/shop-grid.html}">All products</a></li>
+                                        <!--                                        <li><a href="#">New Products</a></li>-->
+                                        <!--                                        <li><a href="#">Best Sales</a></li>-->
+                                        <li><a th:href="@{/contact.html}">Contact Us</a></li>
+                                        <!--                                        <li><a href="#">Login</a></li>-->
                                     </ul>
                                 </div>
                             </div> <!-- end of widget-content -->
@@ -464,11 +470,9 @@
                             <div class="widget-content">
                                 <div class="widgetized-menu">
                                     <ul class="list-unstyled">
-                                        <li><a href="#">About Us</a></li>
-                                        <li><a href="#">Site Map</a></li>
-                                        <li><a href="#">Stores</a></li>
-                                        <li><a href="#">Terms &amp; Conditions</a></li>
-                                        <li><a href="#">My Account</a></li>
+                                        <li><a th:href="@{/about.html.html}">About Us</a></li>
+                                        <li><a href="https://test.io/terms-of-service">Terms &amp; Conditions</a></li>
+                                        <li><a th:href="@{/my-account.html}">My Account</a></li>
                                     </ul>
                                 </div>
                             </div> <!-- end of widget-content -->
@@ -479,23 +483,29 @@
                         <aside class="widget-container">
                             <h4 class="widgettitle">Sign up for our newsletter</h4>
                             <div class="widget-content">
-                                <div class="newsletter-widget">
-                                    <p>You may unsubscribe at any moment. For that purpose, please find our
-                                        contact info in the legal notice.</p>
-                                    <form class="mc-subscribe-form">
-                                        <div class="input-group">
-                                            <input type="email" autocomplete="off"
-                                                   placeholder="Your Email Address" required>
-                                            <button class="default-btn" type="submit">Sign Up</button>
-                                        </div>
-                                    </form> <!-- end of form -->
-
-                                    <div class="mailchimp-alerts">
-                                        <div class="mailchimp-submitting"></div>
-                                        <div class="mailchimp-success"></div>
-                                        <div class="mailchimp-error"></div>
-                                    </div><!-- end of mailchimp-alerts -->
+                                <div class="footer-contact">
+                                    <p><span>Address:</span>Nam Ky Khoi Nghia Street, Dinh Hoa, Thu Dau Mot City, Binh
+                                        Duong</p>
+                                    <p><span>Phone:</span><a>(+84) 794002175</a></p>
+                                    <p><span>Email:</span><a>support@chroma.com</a></p>
                                 </div>
+                                <!--                                <div class="newsletter-widget">-->
+                                <!--                                    <p>You may unsubscribe at any moment. For that purpose, please find our-->
+                                <!--                                        contact info in the legal notice.</p>-->
+                                <!--                                    <form class="mc-subscribe-form">-->
+                                <!--                                        <div class="input-group">-->
+                                <!--                                            <input type="email" autocomplete="off"-->
+                                <!--                                                   placeholder="Your Email Address" required>-->
+                                <!--                                            <button class="default-btn" type="submit">Sign Up</button>-->
+                                <!--                                        </div>-->
+                                <!--                                    </form> &lt;!&ndash; end of form &ndash;&gt;-->
+
+                                <!--                                    <div class="mailchimp-alerts">-->
+                                <!--                                        <div class="mailchimp-submitting"></div>-->
+                                <!--                                        <div class="mailchimp-success"></div>-->
+                                <!--                                        <div class="mailchimp-error"></div>-->
+                                <!--                                    </div>&lt;!&ndash; end of mailchimp-alerts &ndash;&gt;-->
+                                <!--                                </div>-->
                             </div> <!-- end of widget-content -->
                         </aside> <!-- end of widget-container -->
 
@@ -537,16 +547,14 @@
     <!-- Footer Copyright -->
     <div class="footer-copyright">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <p class="copyright-text">Copyright © 2018 <a href="#" rel="nofollow">Pebona Themes</a>. All
-                        Right Reserved.</p>
-                </div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="footer-payment">
-                        <a href="#"><img src="/assets/images/icons/payment.png" alt="Payment Icons"></a>
-                    </div>
-                </div>
+            <div class="row align-items-center" style="text-align: center">
+                <p class="copyright-text">Copyright © 2018 <a th:href="@{/index.html}" rel="nofollow">Chroma Fashion Shop</a>. All
+                    Right Reserved.</p>
+                <!--                <div class="col-12 col-sm-12 col-md-6 col-lg-6">-->
+                <!--                    <div class="footer-payment">-->
+                <!--                        <a href="#"><img src="/assets/images/icons/payment.png" alt="Payment Icons"></a>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </div> <!-- end of footer-copyright -->
