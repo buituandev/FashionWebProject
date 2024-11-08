@@ -424,6 +424,35 @@
     </div><!-- end of product-thumb -->
 </article>
 
+<div th:fragment="team(imgSrc,name)" class="team-wrapper">
+    <div class="team-media">
+        <a href="#">
+            <img th:src="${imgSrc}" alt="Team Image" style="width: 270px; height: 330px; object-fit: cover">
+        </a>
+        <div class="team-socials">
+            <div class="chain-animation">
+                <a class="bg-facebook" href="#">
+                    <i class="fa fa-facebook"></i>
+                </a>
+            </div>
+            <div class="chain-animation">
+                <a class="bg-twitter" href="#">
+                    <i class="fa fa-twitter"></i>
+                </a>
+            </div>
+            <div class="chain-animation">
+                <a class="bg-gplus" href="#">
+                    <i class="fa fa-google-plus"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="team-content">
+        <h4 th:text="${name}">Tu Thi Hong Diep</h4>
+        <span>Developer</span>
+    </div>
+</div>
+
 <!-- Start of Footer -->
 <footer th:fragment="footer" id="colophon" class="bgc-secondary pt-full">
 
