@@ -1533,13 +1533,16 @@ header.header-type-3 .list-inline .language-menu ul a.current,
 .default-btn.secondary:focus,
 .btn.btn-secondary.dark,
 .search-widget input[type="submit"]:hover,
-#to_top:hover,
 .blog-grid .post-category li a:hover,
 .blog-grid .element-carousel .swiper-arrow,
 .newsletter-section .newsletter-form-wrapper input[type="submit"]:hover,
 #whole .contact-form-wrapper .btn.btn-secondary:hover,
 .error-wrapper .btn.btn-secondary:hover {
     background-color: #252525;
+}
+
+#to_top:hover{
+    background-color: red;
 }
 
 .bgc-black,
@@ -6173,7 +6176,7 @@ header.header-type-4 .header-text span:first-child {
  */
 
 .shopping-cart-wrapper .table {
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .shopping-cart-wrapper .table thead td {
