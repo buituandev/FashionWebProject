@@ -52,13 +52,13 @@
 <!-- Start of Whole Site Wrapper with mobile menu support -->
 <div id="whole" class="whole-site-wrapper">
 
-    <div th:replace="~{layout::headernormal}"></div>
+    <div th:replace="~{layout::headernormal(${user})}"></div>
     <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
 
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
     <!-- Start of Breadcrumbs -->
-    <div class="breadcrumb-section bgc-offset mb-full">
+    <div class="breadcrumb-section bgc-offset mb-full" style="marb">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12">

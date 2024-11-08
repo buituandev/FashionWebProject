@@ -116,23 +116,19 @@
                                                 <ul>
                                                     <li><a th:href="@{/register.html}">Register</a></li>
                                                     <li><a th:href="@{/login.html}">Login</a></li>
-                                                    <li><a href="my-account.html">My Account</a></li>
-<!--                                                    <li><a href="wishlist.html">Wishlist</a></li>-->
-                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                    <li><a th:href="@{/logout}">Log out</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                         <!--Avatar User-->
                                         <div th:if="${user}" class="dropdown">
-                                            <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
-                                                <img src="/assets/images/avatarUser.png" alt="User Image" class="avatar">
-                                                <span class="material-symbols-outlined" style="margin-left: -10px">arrow_drop_down</span>
+                                            <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center;">
+                                                <p th:text="'Hi '+${user.getFull_name()}" style="padding-top: 10px !important;margin-left: 20px !important;"></p>
+                                                <span class="material-symbols-outlined" style="margin-left: 0px">arrow_drop_down</span>
                                             </div>
                                             <div class="dropdown-menu">
                                                 <ul id="dropdown-list" class="dropdown-list">
-                                                    <li><a href="my-account.html">My Account</a></li>
-                                                    <li><a href="checkout.html">Checkout</a></li>
+                                                    <li><a th:href="@{/my-account.html}">My Account</a></li>
+                                                    <li><a th:href="@{/checkout.html}">Checkout</a></li>
                                                     <li><a th:href="@{/logout}">Log out</a></li>
                                                 </ul>
                                             </div>
@@ -198,23 +194,23 @@
 </div>
 
 <!-- Start of Header -->
-<header th:fragment="headernormal" class="header bgc-white header-type-1">
+<header th:fragment="headernormal(user)" class="header bgc-white header-type-1">
     <div class="header-area">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-6 order-2 col-sm-6 order-sm-2 col-md-4 order-md-1 col-lg-3">
-                    <div class="header-search-area">
-                        <form action="#">
-                            <div class="input-group">
-                                <input type="text" class="form-control"
-                                       placeholder="Search entire store here ...">
-                                <div class="input-group-append">
-                                    <button class="header-search-btn" type="submit"><i class="pe-7s-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+<!--                    <div class="header-search-area">-->
+<!--                        <form action="#">-->
+<!--                            <div class="input-group">-->
+<!--                                <input type="text" class="form-control"-->
+<!--                                       placeholder="Search entire store here ...">-->
+<!--                                <div class="input-group-append">-->
+<!--                                    <button class="header-search-btn" type="submit"><i class="pe-7s-search"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
                 </div>
                 <div class="col-12 order-1 col-sm-12 order-sm-1 col-md-4 order-md-2 col-lg-6">
                     <div class="logo">
@@ -235,23 +231,19 @@
                                         <ul>
                                             <li><a th:href="@{/register.html}">Register</a></li>
                                             <li><a th:href="@{/login.html}">Login</a></li>
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <!--                                                    <li><a href="wishlist.html">Wishlist</a></li>-->
-                                            <li><a href="checkout.html">Checkout</a></li>
-                                            <li><a th:href="@{/logout}">Log out</a></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <!--Avatar User-->
                                 <div th:if="${user}" class="dropdown">
                                     <div class="btn-link dropdown-toggle" style="text-decoration: none !important; display: flex; flex-direction: row; align-items: center">
-                                        <img src="/assets/images/avatarUser.png" alt="User Image" class="avatar">
-                                        <span class="material-symbols-outlined" style="margin-left: -10px">arrow_drop_down</span>
+                                        <p th:text="'Hi '+${user.getFull_name()}" style="padding-top: 10px !important;margin-left: 20px !important;"></p>
+                                        <span class="material-symbols-outlined" style="margin-left: 0px">arrow_drop_down</span>
                                     </div>
                                     <div class="dropdown-menu">
                                         <ul id="dropdown-list" class="dropdown-list">
-                                            <li><a href="my-account.html">My Account</a></li>
-                                            <li><a href="checkout.html">Checkout</a></li>
+                                            <li><a th:href="@{/my-account.html}">My Account</a></li>
+                                            <li><a th:href="@{/checkout.html}">Checkout</a></li>
                                             <li><a th:href="@{/logout}">Log out</a></li>
                                         </ul>
                                     </div>
@@ -319,9 +311,9 @@
                                 <li th:each="category: ${categories4}"><a th:href="@{'/shop-grid/' + ${category.id}}" th:text="${category.name}" ></a></li>
                             </ul>
                         </li>
-                        <li class="fullwidth-banner">
-                            <a href="#"><img src="/assets/images/banners/menu-banner.jpg" alt="Menu Banner"></a>
-                        </li>
+<!--                        <li class="fullwidth-banner">-->
+<!--                            <a href="#"><img src="/assets/images/banners/menu-banner.jpg" alt="Menu Banner"></a>-->
+<!--                        </li>-->
                     </ul>
                 </li>
 
@@ -553,7 +545,7 @@
 <!-- End of Footer -->
 
 <!-- Start of Scroll to Top -->
-<div th:fragment="scroll_to_top" id="to_top">
+<div th:fragment="scroll_to_top" id="to_top" style=":hover">
     <i class="ion ion-ios-arrow-forward"></i>
     <i class="ion ion-ios-arrow-forward"></i>
 </div>
