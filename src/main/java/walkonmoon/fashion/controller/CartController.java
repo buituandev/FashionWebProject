@@ -26,11 +26,12 @@ public class CartController {
     @ResponseBody
     public void addCartItem(@RequestParam("productId") int productId, @RequestParam("quantity") int quantity, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         User user = (User) session.getAttribute("user");
-        String userId = user.getId().toString();
+        
 
-        if (userId.equals("null")) {
+        if (user == null) {
             response.sendError(401);
         } else {
+            String userId = user.getId().toString();
             CartItemDTO cartItemDTO = new CartItemDTO();
             cartItemDTO.setUserId(Integer.parseInt(userId));
             cartItemDTO.setId(productId);
@@ -43,9 +44,10 @@ public class CartController {
     public String getCartItems(Model model, HttpServletRequest request, HttpSession session) {
         List<CartItemDTO> cartItems = new ArrayList<>();
         User user = (User) session.getAttribute("user");
-        String userId = user.getId().toString();
+        
 
-        if (!(userId.equals("null"))) {
+        if (!(user == null)) {
+            String userId = user.getId().toString();
             cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
         }
         
@@ -59,10 +61,11 @@ public class CartController {
     @GetMapping("/deleteCartItem")
     public void deleteCartItem(@RequestParam("productId") int productId, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         User user = (User) session.getAttribute("user");
-        String userId = user.getId().toString();
-        if (userId.equals("null")) {
+        
+        if (user == null) {
             response.sendRedirect("/login.html");
         } else {
+            String userId = user.getId().toString();
             cartItemService.deleteCartItem(Integer.parseInt(userId), productId);
         }
     }
@@ -70,10 +73,10 @@ public class CartController {
     @GetMapping("/updateCartItem")
     public void updateCartItem(@RequestParam("productId") int productId, @RequestParam("quantity") int quantity, HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException {
         User user = (User) session.getAttribute("user");
-        String userId = user.getId().toString();
-        if (userId.equals("null")) {
+        if (user == null) {
             response.sendRedirect("/login.html");
         } else {
+            String userId = user.getId().toString();
             cartItemService.updateCartItem(Integer.parseInt(userId), productId, quantity, response);
         }
     }
