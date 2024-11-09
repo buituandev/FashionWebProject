@@ -97,7 +97,7 @@
             <div class="shopping-cart-content" th:fragment="cart-content">
                 <ul class="list-unstyled">
                     <li class="cart-tempty-title" th:if="${#lists.isEmpty(cartItems)}" style="display:block;">
-                        <h3>Your cart is currently empty.</h3>
+                        <h3 style="line-height: 1.5">Your cart is currently empty.</h3>
                     </li>
                     <li class="single-cart-item media" th:each="item : ${cartItems}" th:disabled="${item.quantity==0}">
                         <div class="shopping-cart-img me-4">

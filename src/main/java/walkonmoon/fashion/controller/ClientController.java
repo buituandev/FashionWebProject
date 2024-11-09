@@ -45,479 +45,75 @@ public class ClientController {
     @Autowired
     private CartItemService cartItemService;
 
-    @GetMapping("/")
+    @RequestMapping(value = {"/", "/index.html"})
     public String index(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        List<CartItemDTO> cartItems = new ArrayList<>();
+        mainAction(request, model);
 
-        // Retrieve userID from cookies and fetch user and cart items if found
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName()) && !cookie.getValue().isEmpty()) {
-                    userID = Integer.parseInt(cookie.getValue());
-                    break;
-                }
-            }
-        }
+        setModelProductList(model);
 
-        // Add user to the model if userID is found
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-            cartItems = cartItemService.getCartItems(userID);
-        } else {
-            model.addAttribute("user", null);
-        }
+        var categories = setModelCategoryList(model);
 
-//         Get and add all products and categories to the model
-        List<Product> products = productService.getListProducts();
-        model.addAttribute("products", products);
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-
-        // Create a Map for category products
         Map<Integer, List<Product>> categoryProductsMap = new HashMap<>();
         for (Category category : categories) {
             List<Product> filteredProducts = productService.findByCategoryId(category.getId());
             categoryProductsMap.put(category.getId(), filteredProducts);
         }
 
-        // Add category-products map to the model
         model.addAttribute("categoryProductsMap", categoryProductsMap);
-
-        // Categories chunk size
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
-
-        // Calculate total price and add cart items to the model
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("cartItems", cartItems);
-
         return "index";
     }
 
-    @GetMapping("/index.html")
-    public String indexHtml(HttpServletRequest request, Model model) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        List<CartItemDTO> cartItems = new ArrayList<>();
+    @RequestMapping(value = {"/shop-grid", "/shop-grid.html"})
+    public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request) {
+        mainAction(request, model);
 
-        // Retrieve userID from cookies and fetch user and cart items if found
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName()) && !cookie.getValue().isEmpty()) {
-                    userID = Integer.parseInt(cookie.getValue());
-                    break;
-                }
-            }
-        }
-
-        // Add user to the model if userID is found
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-            cartItems = cartItemService.getCartItems(userID);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        // Get and add all products and categories to the model
-        List<Product> products = productService.getListProducts();
-        model.addAttribute("products", products);
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-
-        // Create a Map for category products
-        Map<Integer, List<Product>> categoryProductsMap = new HashMap<>();
-        for (Category category : categories) {
-            List<Product> filteredProducts = productService.findByCategoryId(category.getId());
-            categoryProductsMap.put(category.getId(), filteredProducts);
-        }
-
-        // Add category-products map to the model
-        model.addAttribute("categoryProductsMap", categoryProductsMap);
-
-        // Categories chunk size
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
-
-        // Calculate total price and add cart items to the model
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("cartItems", cartItems);
-
-        return "index";
-    }
-
-
-
-//    @GetMapping("/index.html")
-//    public String indexHtml(HttpServletRequest request, Model model) {
-//        Cookie[] cookies = request.getCookies();
-//        Integer userID = null;
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("userID")) {
-//                    if (!cookie.getValue().equalsIgnoreCase("")) {
-//                        userID = Integer.parseInt(cookie.getValue());
-//                    }
-//                }
-//            }
-//        }
-//        if (userID != null) {
-//            User user = userService.findUserById(userID);
-//            model.addAttribute("user", user);
-//        } else {
-//            model.addAttribute("user", null);
-//        }
-//
-//        List<Product> products = productService.getListProducts();
-//        model.addAttribute("products", products);
-//
-//        List<Category> categories = categoryService.getListCategories();
-//        model.addAttribute("categories", categories);
-//        List<Category> topCategories = categories.stream()
-//                .sorted((c1, c2) -> {
-//                    int count1 = productService.findByCategoryId(c1.getId()).size();
-//                    int count2 = productService.findByCategoryId(c2.getId()).size();
-//                    return Integer.compare(count2, count1); // descending order
-//                })
-//                .limit(4)
-//                .toList();
-////        model.addAttribute("topCategories", topCategories);
-//
-//        for (int i = 0; i < categories.size(); i++) {
-//            Category category = topCategories.get(i);
-//            model.addAttribute("category" + (i + 1), category);
-//            List<Product> filteredProducts = productService.findByCategoryId(category.getId());
-//            model.addAttribute("topCategoryProducts" + (category.getId()), filteredProducts);
-//        }
-//
-//        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-//
-//        for (int i = 0; i < 4; i++) {
-//            int start = i * chunkSize;
-//            int end = Math.min(start + chunkSize, categories.size());
-//
-//            if (start < categories.size()) {
-//                if (i == 3) {
-//                    List<Category> chunk = categories.subList(start, categories.size());
-//                    model.addAttribute("categories" + (i + 1), chunk);
-//                } else {
-//                    List<Category> chunk = categories.subList(start, end);
-//                    model.addAttribute("categories" + (i + 1), chunk);
-//                }
-//            }
-//        }
-//
-//        List<CartItemDTO> cartItems = new ArrayList<>();
-//        String userId = null;
-//
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if ("userID".equals(cookie.getName())) {
-//                    userId = cookie.getValue();
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if (!(userId == null)) {
-//            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-//        }
-//
-//        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-//        model.addAttribute("totalPrice", totalPrice);
-//
-//        model.addAttribute("cartItems", cartItems);
-//
-//        return "index";
-//    }
-
-//    @GetMapping("/shop-grid.html")
-//    public String shopGridHtml(Model model, HttpServletRequest request) {
-//        Cookie[] cookies = request.getCookies();
-//        Integer userID = null;
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if (cookie.getName().equals("userID")) {
-//                    if (!cookie.getValue().equalsIgnoreCase("")) {
-//                        userID = Integer.parseInt(cookie.getValue());
-//                    }
-//                }
-//            }
-//        }
-//        if (userID != null) {
-//            User user = userService.findUserById(userID);
-//            model.addAttribute("user", user);
-//        } else {
-//            model.addAttribute("user", null);
-//        }
-//
-//        List<Product> products = productService.getListProducts();
-//        List<Category> categories = categoryService.getListCategories();
-//        model.addAttribute("products", products);
-//        model.addAttribute("categories", categories);
-//        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-//
-//        for (int i = 0; i < 4; i++) {
-//            int start = i * chunkSize;
-//            int end = Math.min(start + chunkSize, categories.size());
-//
-//            if (start < categories.size()) {
-//                if (i == 3) {
-//                    List<Category> chunk = categories.subList(start, categories.size());
-//                    model.addAttribute("categories" + (i + 1), chunk);
-//                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
-//                } else {
-//                    List<Category> chunk = categories.subList(start, end);
-//                    model.addAttribute("categories" + (i + 1), chunk);
-//                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
-//                }
-//            }
-//        }
-//        List<CartItemDTO> cartItems = new ArrayList<>();
-//        String userId = null;
-//
-//        if (cookies != null) {
-//            for (Cookie cookie : cookies) {
-//                if ("userID".equals(cookie.getName())) {
-//                    userId = cookie.getValue();
-//                    break;
-//                }
-//            }
-//        }
-//
-//        if (!(userId == null)) {
-//            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-//        }
-//
-//        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-//        model.addAttribute("totalPrice", totalPrice);
-//
-//        model.addAttribute("cartItems", cartItems);
-//        return "shop-grid";
-//    }
-@GetMapping("/shop-grid.html")
-public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request) {
-    Cookie[] cookies = request.getCookies();
-    Integer userID = null;
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("userID")) {
-                if (!cookie.getValue().isEmpty()) {
-                    userID = Integer.parseInt(cookie.getValue());
-                }
-            }
-        }
-    }
-
-    // Fetch user information if available
-    if (userID != null) {
-        User user = userService.findUserById(userID);
-        model.addAttribute("user", user);
-        System.out.println(user);
-    }
-    else {
-        System.out.println("null user in shop-grid");
-        model.addAttribute("user", null);
-    }
-
-    // Fetch products and categories
-    List<Product> products = productService.getListProducts();
-    List<Category> categories = categoryService.getListCategories();
-
-    model.addAttribute("categories", categories);
-    // chunk categories
-    int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                    System.out.println("Chunk " + (i + 1) + " size: " + chunk.size());
-                }
-            }
-        }
-
-    // Pagination logic
-    int pageSize = 8; // Number of products per page
-    int totalProducts = products.size();
-    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-    int start = (page - 1) * pageSize;
-    int end = Math.min(start + pageSize, totalProducts);
-
-    // Sublist for the current page
-    List<Product> paginatedProducts = products.subList(start, end);
-    model.addAttribute("products", paginatedProducts);
-    model.addAttribute("currentPage", page);
-    model.addAttribute("totalPages", totalPages);
-
-    // Existing logic for cart items
-    List<CartItemDTO> cartItems = new ArrayList<>();
-    String userId = null;
-
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if ("userID".equals(cookie.getName())) {
-                userId = cookie.getValue();
-                break;
-            }
-        }
-    }
-
-    if (userId != null) {
-        cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-    }
-
-    int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-    model.addAttribute("totalPrice", totalPrice);
-    model.addAttribute("cartItems", cartItems);
-
-    return "shop-grid";
-}
-
-
-
-    @GetMapping("/shop-grid/{categoryId}")
-    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
-        model.addAttribute("products", filteredProduct);
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        //chunk categries
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
+        // Fetch products and categories
+        List<Product> products = setModelProductList(model);
+        setModelCategoryList(model);
         // Pagination logic
         int pageSize = 8; // Number of products per page
-        int totalProducts = filteredProduct.size();
+        int totalProducts = products.size();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalProducts);
 
         // Sublist for the current page
-        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+        List<Product> paginatedProducts = products.subList(start, end);
         model.addAttribute("products", paginatedProducts);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
         // Existing logic for cart items
+        return "shop-grid";
+    }
+
+
+    @GetMapping("/shop-grid/{categoryId}")
+    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request) {
+        mainAction(request, model);
+
+        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
+        model.addAttribute("products", filteredProduct);
+        setModelCategoryList(model);
+        // Pagination logic
+        int pageSize = 8;
+        int totalProducts = filteredProduct.size();
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, totalProducts);
+
+        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+        model.addAttribute("products", paginatedProducts);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
         model.addAttribute("selectedCategoryId", categoryId);
-        // cart
-        List<CartItemDTO> cartItems = new ArrayList<>();
-        String userId = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (!(userId == null)) {
-            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-        }
-
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-
-        model.addAttribute("cartItems", cartItems);
         return "shop-grid";
     }
 
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request) {
         var random = new Random();
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
+        mainAction(request, model);
 
         Product product = productService.getProductById(Integer.parseInt(id));
         model.addAttribute("product", product);
@@ -534,257 +130,25 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
         relatedProducts.clear();
         relatedProducts = limitedProducts;
         model.addAttribute("relatedProducts", relatedProducts);
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
-        List<CartItemDTO> cartItems = new ArrayList<>();
-//        Cookie[] cookies = request.getCookies();
-        String userId = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (!(userId == null)) {
-            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-        }
-
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-
-        model.addAttribute("cartItems", cartItems);
         return "single-product";
     }
 
     @GetMapping("/categories")
     public String getCategories(Model model, HttpServletRequest request) {
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
-        List<CartItemDTO> cartItems = new ArrayList<>();
-        Cookie[] cookies = request.getCookies();
-        Integer userId = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName())) {
-                    userId = Integer.parseInt(cookie.getValue());
-                    break;
-                }
-            }
-        }
-
-        if (!(userId == null)) {
-            cartItems = cartItemService.getCartItems((userId));
-//            model.addAttribute("user",userService.findUserById(userId));
-        }
-//        else{
-//            model.addAttribute("user", null);
-//        }
-
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-
-        model.addAttribute("cartItems", cartItems);
+       mainAction(request, model);
         return "layout";
-    }
-
-    @GetMapping("/single-product.html")
-    public String singleProductHtml(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
-        List<CartItemDTO> cartItems = new ArrayList<>();
-        String userId = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (!(userId == null)) {
-            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-        }
-
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-
-        model.addAttribute("cartItems", cartItems);
-        return "single-product";
     }
 
     @GetMapping("/cart.html")
     public String cartHtml(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
-
-        List<CartItemDTO> cartItems = new ArrayList<>();
-        String userId = null;
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("userID".equals(cookie.getName())) {
-                    userId = cookie.getValue();
-                    break;
-                }
-            }
-        }
-
-        if (!(userId == null)) {
-            cartItems = cartItemService.getCartItems(Integer.parseInt(userId));
-        }
-
-        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
-        model.addAttribute("totalPrice", totalPrice);
-
-        model.addAttribute("cartItems", cartItems);
+        mainAction(request, model);
         return "cart";
     }
 
 
     @GetMapping("/checkout.html")
     public String checkoutHtml(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
+        mainAction(request, model);
         return "checkout";
     }
 
@@ -822,10 +186,10 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
             }
         }
         if ((userId != null)) {
-            model.addAttribute("user",userService.findUserById(userId));
+            model.addAttribute("user", userService.findUserById(userId));
             return "redirect:/index.html";
-        }else{
-            model.addAttribute("user",null);
+        } else {
+            model.addAttribute("user", null);
         }
         return "login";
     }
@@ -986,87 +350,13 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
 
     @GetMapping("/contact.html")
     public String contactHtml(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-
-                }
-            }
-        }
+        mainAction(request, model);
         return "contact";
     }
 
     @GetMapping("/about.html")
     public String aboutHtml(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-
-                }
-            }
-        }
+        mainAction(request, model);
         return "about";
     }
 
@@ -1114,42 +404,7 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
 
     @GetMapping("/blog-details.html")
     public String blogDetailsHtml(Model model, HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        Integer userID = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("userID")) {
-                    if (!cookie.getValue().equalsIgnoreCase("")) {
-                        userID = Integer.parseInt(cookie.getValue());
-                    }
-                }
-            }
-        }
-        if (userID != null) {
-            User user = userService.findUserById(userID);
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
-
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
-        int chunkSize = (int) Math.floor((double) categories.size() / (double) 4); // Calculate how many chunks
-
-        for (int i = 0; i < 4; i++) {
-            int start = i * chunkSize;
-            int end = Math.min(start + chunkSize, categories.size());
-
-            if (start < categories.size()) {
-                if (i == 3) {
-                    List<Category> chunk = categories.subList(start, categories.size());
-                    model.addAttribute("categories" + (i + 1), chunk);
-                } else {
-                    List<Category> chunk = categories.subList(start, end);
-                    model.addAttribute("categories" + (i + 1), chunk);
-                }
-            }
-        }
+        mainAction(request, model);
         return "blog-details";
     }
 
@@ -1281,4 +536,69 @@ public String shopGridHtml(@RequestParam(defaultValue = "1") int page, Model mod
         return "upload";
     }
 
+    private Integer getUserIdFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("userID".equals(cookie.getName()) && !cookie.getValue().isEmpty()) {
+                    return Integer.parseInt(cookie.getValue());
+                }
+            }
+        }
+        return null;
+    }
+
+    private void addUserToModel(Integer userID, Model model) {
+        if (userID != null) {
+            User user = userService.findUserById(userID);
+            model.addAttribute("user", user);
+        } else {
+            model.addAttribute("user", null);
+        }
+    }
+
+    private void addCategoriesToModel(Model model) {
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        int chunkSize = (int) Math.floor((double) categories.size() / 4);
+
+        for (int i = 0; i < 4; i++) {
+            int start = i * chunkSize;
+            int end = Math.min(start + chunkSize, categories.size());
+
+            if (start < categories.size()) {
+                List<Category> chunk = (i == 3) ? categories.subList(start, categories.size()) : categories.subList(start, end);
+                model.addAttribute("categories" + (i + 1), chunk);
+            }
+        }
+    }
+
+    private void addCartItemsToModel(Integer userID, Model model) {
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        if (userID != null) {
+            cartItems = cartItemService.getCartItems(userID);
+        }
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("cartItems", cartItems);
+    }
+
+    private List<Product> setModelProductList(Model model){
+        List<Product> products = productService.getListProducts();
+        model.addAttribute("products", products);
+        return products;
+    }
+
+    private List<Category> setModelCategoryList(Model model) {
+        List<Category> categories = categoryService.getListCategories();
+        model.addAttribute("categories", categories);
+        return categories;
+    }
+
+    private void mainAction(HttpServletRequest request, Model model) {
+        Integer userID = getUserIdFromCookies(request);
+        addUserToModel(userID, model);
+        addCategoriesToModel(model);
+        addCartItemsToModel(userID, model);
+    }
 }
