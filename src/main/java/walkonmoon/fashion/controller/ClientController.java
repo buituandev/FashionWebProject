@@ -600,5 +600,6 @@ public class ClientController {
         addUserToModel(userID, model);
         addCategoriesToModel(model);
         addCartItemsToModel(userID, model);
+        model.addAttribute("requestURI", request.getRequestURI());
     }
 }
