@@ -70,18 +70,17 @@
                         <div class="card-body">
                             <form th:action="@{/admin/category/save}" method="post" th:object="${category}">
                                 <div class="form-body">
-                                    <hr>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Category Name</label>
+                                                <label class="form-label" style="font-weight: 400">Category Name</label>
                                                 <input type="text" id="firstName" th:field="*{name}" class="form-control"> </div>
                                                 <input type="hidden" th:field="*{id}" />
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Description</label>
+                                                <label class="form-label" style="font-weight: 400">Description</label>
                                                 <input type="text" id="lastName" th:field="*{description}" class="form-control"> </div>
                                         </div>
                                         <!--/span-->

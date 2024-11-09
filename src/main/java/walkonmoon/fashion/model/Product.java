@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import lombok.Data;
 import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@Data
 @Table(name = "products")
 public class Product {
     @Id
@@ -24,8 +25,6 @@ public class Product {
     private int categoryId; // Changed here
     @Column(name = "stock")
     private int stock;
-    @Column(name = "title")
-    private String title;
     @Column(name = "short_description")
     private String short_description;
     @Column(name = "updated_date")
@@ -38,21 +37,10 @@ public class Product {
     private String image_collection_url;
     @Column(name = "price")
     private int price;
-    
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", product_name='" + product_name + '\'' +
-                ", category_id=" + categoryId +
-                ", stock=" + stock +
-                ", title='" + title + '\'' +
-                ", short_description='" + short_description + '\'' +
-                ", update_date=" + update_date +
-                ", SKU='" + SKU + '\'' +
-                ", long_description='" + long_description + '\'' +
-                ", image_collection_id=" + image_collection_url +
-                ", price=" + price +
-                '}';
-    }
+    @Getter
+    @Column(name = "is_trend")
+    private Boolean isTrend = false;
+    @Column(name = "is_new")
+    private Boolean isNew = false;
+
 }

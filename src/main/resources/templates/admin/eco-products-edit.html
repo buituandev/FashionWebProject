@@ -67,6 +67,22 @@
         font-size: 20px;
         cursor: pointer;
     }
+    .large-checkbox {
+        width: 20px;
+        height: 17px;
+    }
+
+    .large-label {
+        font-size: 14px;
+        padding-left: 5px;
+    }
+
+    .check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
 </style>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -134,11 +150,10 @@
                             <form th:action="@{/admin/eco-products/save}" method="post" th:object="${product}"
                                   enctype="multipart/form-data">
                                 <div class="form-body">
-                                    <hr>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Product Name</label>
+                                                <label class="form-label" style="font-weight: 600">Product Name</label>
                                                 <input type="text" id="firstName" th:field="*{product_name}"
                                                        class="form-control">
                                                 <input type="hidden" th:field="*{id}"/>
@@ -147,7 +162,7 @@
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Short Description</label>
+                                                <label class="form-label" style="font-weight: 600">Short Description</label>
                                                 <input type="text" id="lastName" th:field="*{short_description}"
                                                        class="form-control"></div>
                                         </div>
@@ -158,7 +173,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Category</label>
+                                                <label class="form-label" style="font-weight: 600">Category</label>
                                                 <select th:field="*{categoryId}" class="form-control category-select" tabindex="1">
                                                     <option th:each="category : ${categories}"
                                                             th:text="${category.getName()}"
@@ -173,21 +188,21 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Price</label>
+                                                <label class="form-label" style="font-weight: 600">Price</label>
                                                 <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="basic-addon1">VND</span>
-                                                    </div>
-                                                    <input type="number" class="form-control" th:field="*{price}"
+                                                    <input type="text" class="form-control" th:field="*{price}"
                                                            placeholder="price" aria-label="price"
                                                            aria-describedby="basic-addon1">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1" style="font-size: 16px">VND</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Stock</label>
+                                                <label class="form-label" style="font-weight: 600">Stock</label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                     </div>
@@ -199,7 +214,7 @@
                                         </div>
                                         <!--/span-->
                                     </div>
-                                    <h5 class="card-title m-t-40">Product Description</h5>
+                                    <h5 class="card-title m-t-40" style="font-weight: 600">Product Description</h5>
                                     <div class="row">
                                         <div class="col-md-12 ">
                                             <div class="form-group">
@@ -211,19 +226,24 @@
                                     <!--/row-->
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <div class="form-group">
+                                            <div class="form-group" style="font-weight: 600">
                                                 <label class="form-label">SKU</label>
                                                 <input type="text" th:field="*{SKU}" class="form-control"></div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">Title</label>
-<!--                                                <input type="text" th:field="*{title}" class="form-control">-->
-                                                    <select th:field="*{title}" class="form-control category-select" tabindex="1">
-                                                        <option th:value="New" selected>New</option>
-                                                        <option th:value="Trend">Trend</option>
-                                                    </select>
+                                                <label class="form-label" style="font-weight: 600">Title</label>
+                                                <div class="checkbox-container" style="display: flex; gap: 5rem; align-items: center; margin-top: 2%">
+                                                    <div class="check">
+                                                        <input type="checkbox" th:field="*{isNew}" id="titleNew" class="large-checkbox">
+                                                        <label for="titleNew" class="large-label" style="font-weight: 400">New</label>
+                                                    </div>
+                                                    <div class="check">
+                                                        <input type="checkbox" th:field="*{isTrend}" id="titleTrend" class="large-checkbox">
+                                                        <label for="titleTrend" class="large-label" style="font-weight: 400">Trend</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--/span-->
@@ -443,7 +463,7 @@
                                     text: 'Your image has been deleted.',
                                     icon: 'success',
                                     showConfirmButton: false,
-                                    timer: 2500
+                                    timer: 1500
                                 });
                             })
                             .catch(error => {
@@ -455,7 +475,7 @@
                                     text: 'Your image has been deleted.',
                                     icon: 'success',
                                     showConfirmButton: false,
-                                    timer: 2500
+                                    timer: 1500
                                 });
                             });
                     }

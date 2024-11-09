@@ -76,7 +76,6 @@
                                 <th>ID</th>
                                 <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Password</th>
                                 <th>DOB</th>
                                 <th>Address</th>
                                 <th>Phone Number</th>
@@ -92,7 +91,6 @@
                                 <td th:text="${user.getId()}"></td>
                                 <td th:text="${user.getFull_name()}"></td>
                                 <td th:text="${user.getEmail()}"></td>
-                                <td th:text="${user.getPassword()}"></td>
                                 <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td>
                                 <td th:text="${user.getAddress()}"></td>
                                 <td th:text="${user.getPhone_number()}"></td>
