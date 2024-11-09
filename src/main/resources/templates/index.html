@@ -919,6 +919,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 toast('success', 'Item added to cart');
+                updateCart();
             }
             if (xhr.readyState === 4 && xhr.status === 400) {
                 toast('error', 'Item out of stock');
