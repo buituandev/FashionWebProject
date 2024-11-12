@@ -93,5 +93,9 @@ public class CartItemService {
         cartItem.setQuantity(quantity);
         cartItemRepository.save(cartItem);
     }
-    
+
+    @Transactional
+    public void clearCartItems(int userId) {
+        cartItemRepository.deleteByUserId(userId);
+    }
 }

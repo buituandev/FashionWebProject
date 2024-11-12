@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import walkonmoon.fashion.dto.CartItemDTO;
 import org.springframework.web.bind.annotation.*;
-import walkonmoon.fashion.model.Category;
-import walkonmoon.fashion.model.Image;
-import walkonmoon.fashion.model.Product;
-import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.model.*;
 import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
@@ -44,6 +41,13 @@ public class ClientController {
     private CategoryService categoryService;
     @Autowired
     private CartItemService cartItemService;
+    @Autowired
+    private OrderService oderService;
+    @Autowired
+    private OrderDetailService orderDetailService;
+    @Autowired
+    private OrderService orderService;
+
 
     @RequestMapping(value = {"/", "/index.html"})
     public String index(Model model, HttpServletRequest request, HttpSession session) {
@@ -145,7 +149,64 @@ public class ClientController {
     @GetMapping("/checkout.html")
     public String checkoutHtml(Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login.html";
+        } else {
+            addUserToModel(user, model);
+        }
         return "checkout";
+    }
+
+    @PostMapping("/checkout")
+    public String checkOut(Model model, HttpServletRequest request, @ModelAttribute User user, @RequestParam("order_note") String orderNote, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("user");
+
+        if (sessionUser != null) {
+            if (user.getFull_name() != null && !user.getFull_name().isEmpty()) {
+                sessionUser.setFull_name(user.getFull_name());
+            }
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+                sessionUser.setEmail(user.getEmail());
+            }
+            if (user.getAddress() != null && !user.getAddress().isEmpty()) {
+                sessionUser.setAddress(user.getAddress());
+            }
+            if (user.getPhone_number() != null && !user.getPhone_number().isEmpty()) {
+                sessionUser.setPhone_number(user.getPhone_number());
+            }
+            if (user.getProvince() != null && !user.getProvince().isEmpty()) {
+                sessionUser.setProvince(user.getProvince());
+            }
+            userService.saveUser(sessionUser);
+        } else {
+            return "redirect:/login.html";
+        }
+
+        Order order = new Order();
+        order.setUser_id(sessionUser.getId());
+        order.setOrder_date(new java.util.Date());
+        order.setNote(orderNote);
+        order.setPhoneNumber(sessionUser.getPhone_number());
+        order.setAddress(sessionUser.getAddress());
+        order.setStatus(0);
+
+        List<CartItemDTO> cartItems = cartItemService.getCartItems(sessionUser.getId());
+        order.setTotal_price(cartItemService.calculateTotalPrice(cartItems));
+        orderService.saveOrder(order);
+
+        for (CartItemDTO cartItem : cartItems) {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrderID(order.getId());
+            orderDetail.setProductID(cartItem.getId());
+            orderDetail.setQuantity(cartItem.getQuantity());
+            orderDetail.setPrice(cartItem.getPrice()*cartItem.getQuantity());
+            orderDetailService.saveOrderDetail(orderDetail);
+        }
+
+        cartItemService.clearCartItems(sessionUser.getId());
+
+        return "redirect:/my-account.html";
     }
 
 
@@ -170,7 +231,7 @@ public class ClientController {
             }
         }
         User user = (User) session.getAttribute("user");
-        if(user!=null){
+        if (user != null) {
             return "redirect:/index.html";
         }
         return "login";
@@ -296,11 +357,7 @@ public class ClientController {
     }
 
     private void addUserToModel(User user, Model model) {
-        if (user != null) {
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
+        model.addAttribute("user", user);
     }
 
     private void addCategoriesToModel(Model model) {
