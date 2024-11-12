@@ -69,25 +69,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-row mb-3">
-                                                    <div class="form-group col-12 col-sm-12 col-md-12">
+                                                    <div class="form-group col-12 col-sm-12 col-md-6">
                                                         <label for="p_address">Address <span
                                                                 class="text-danger">*</span></label>
                                                         <input th:field="*{address}" type="text" class="form-control" id="p_address" required>
                                                     </div>
-                                                </div>
-                                                <div class="form-row mb-3">
                                                     <div class="form-group col-12 col-sm-12 col-md-6">
                                                         <label for="city_name">Phone Number <span
                                                                 class="text-danger">*</span></label>
                                                         <input th:field="*{phone_number}" type="number"
                                                                class="form-control" id="city_name" required>
-                                                    </div>
-                                                    <div class="form-group col-12 col-sm-12 col-md-6">
-                                                        <label for="country_name" class="d-block">Province <span
-                                                                class="text-danger">*</span></label>
-                                                        <select th:field="*{province}" name="country_id" id="country_name" class="form-control nice-select" required>
-                                                            <option value=""> --- Please Select ---</option>
-                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-row">
@@ -255,7 +246,6 @@
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/FormatPrice.js"></script>
-<script src="/assets/js/province-data.js"></script>
 <script>
     document.querySelector('form').addEventListener('submit', function () {
         document.getElementById('order_note').value = document.getElementById('order_notes').value;

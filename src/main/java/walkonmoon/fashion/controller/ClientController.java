@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import static java.io.IO.println;
+
 @Controller
 public class ClientController {
     @Autowired
@@ -175,23 +177,37 @@ public class ClientController {
             if (user.getPhone_number() != null && !user.getPhone_number().isEmpty()) {
                 sessionUser.setPhone_number(user.getPhone_number());
             }
-            if (user.getProvince() != null && !user.getProvince().isEmpty()) {
-                sessionUser.setProvince(user.getProvince());
-            }
             userService.saveUser(sessionUser);
         } else {
             return "redirect:/login.html";
         }
 
         Order order = new Order();
-        order.setUser_id(sessionUser.getId());
+        order.setUserID(sessionUser.getId());
         order.setOrder_date(new java.util.Date());
         order.setNote(orderNote);
         order.setPhoneNumber(sessionUser.getPhone_number());
         order.setAddress(sessionUser.getAddress());
-        order.setStatus(0);
+        order.setStatus(OrderStatus.PENDING);
 
         List<CartItemDTO> cartItems = cartItemService.getCartItems(sessionUser.getId());
+        List<Product> products = new ArrayList<>();
+
+        for (CartItemDTO cartItem : cartItems) {
+            Product product = productService.getProductById(cartItem.getId());
+            products.add(product);
+        }
+
+        for (int i = 0; i < cartItems.size(); i++) {
+            Product product = products.get(i);
+            CartItemDTO cartItem = cartItems.get(i);
+            if(product.getStock() < cartItem.getQuantity()){
+               continue;
+            }
+            product.setStock(product.getStock() - cartItem.getQuantity());
+            productService.saveProduct(product);
+        }
+
         order.setTotal_price(cartItemService.calculateTotalPrice(cartItems));
         orderService.saveOrder(order);
 
@@ -206,7 +222,7 @@ public class ClientController {
 
         cartItemService.clearCartItems(sessionUser.getId());
 
-        return "redirect:/my-account.html";
+        return "redirect:/my-account.html#order-history";
     }
 
 
@@ -351,6 +367,27 @@ public class ClientController {
             model.addAttribute("user", null);
             return "redirect:/login.html";
         }
+        List<Order> orders = orderService.getOrdersByUserID(user.getId());
+        // Sort the list by order.order_date
+        orders.sort((o1, o2) -> o2.getOrder_date().compareTo(o1.getOrder_date()));
+
+        List<List<OrderDetail>> orderDetails = new ArrayList<>();
+        for (var o : orders){
+            orderDetails.add(orderDetailService.getOrderDetailByOrderID(o.getId()));
+        }
+
+        List<List<Product>> products = new ArrayList<>();
+        for (var od : orderDetails){
+            List<Product> p = new ArrayList<>();
+            for (var o : od){
+                p.add(productService.getProductById(o.getProductID()));
+            }
+            products.add(p);
+        }
+
+        model.addAttribute("products", products);
+        model.addAttribute("orders", orders);
+        model.addAttribute("orderDetails", orderDetails);
         addCartItemsToModel(user.getId(), model);
         addCategoriesToModel(model);
         return "my-account";
@@ -407,7 +444,7 @@ public class ClientController {
         } else {
             addCartItemsToModel(user.getId(), model);
             addUserToModel(user, model);
-            System.out.println("seesion got user");
+            println("Debug: Session got user");
         }
         model.addAttribute("requestURI", request.getRequestURI());
     }

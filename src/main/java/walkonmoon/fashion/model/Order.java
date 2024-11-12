@@ -17,7 +17,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "customer_id")
-    private int user_id;
+    private int userID;
     @Column(name = "order_date")
     private Date order_date;
     @Column(name = "total_price")
@@ -28,6 +28,7 @@ public class Order {
     private String phoneNumber;
     @Column(name = "address")
     private String address;
+    @Convert(converter = walkonmoon.fashion.model.OrderStatusConverter.class)
     @Column(name = "status")
-    private int status;
+    private OrderStatus status;
 }

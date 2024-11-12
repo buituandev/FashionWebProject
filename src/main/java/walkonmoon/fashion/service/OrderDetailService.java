@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.OrderDetail;
 import walkonmoon.fashion.repository.OrderDetailRepository;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class OrderDetailService {
@@ -14,5 +16,9 @@ public class OrderDetailService {
 
     public void saveOrderDetail(OrderDetail orderDetail) {
         orderDetailRepository.save(orderDetail);
+    }
+
+    public List<OrderDetail> getOrderDetailByOrderID(int id) {
+        return orderDetailRepository.findByOrderID(id);
     }
 }
