@@ -9,6 +9,12 @@
 
 
 <body class="skin-default fixed-layout">
+<style>
+    .price{
+        width: 15%;
+        text-align: right;
+    }
+</style>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -75,34 +81,33 @@
                         <table id="myTable" class="table table-striped border">
                             <thead>
                             <tr>
-                                <th>ID</th>
+                                <th></th>
+                                <th style="text-align: right">Number</th>
                                 <th>Name</th>
                                 <th>Category</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Title</th>
+                                <th style="text-align: right" class="price">Price</th>
+                                <th style="text-align: right">Stock</th>
                                 <th>Photo</th>
                                 <th>SKU</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="product : ${productList}">
-                                <td th:text="${product.getId()}" style="text-align: right; margin-right: 0.5vw;"></td>
+                            <tr th:each="product, status : ${productList}" th:data-id="${product.getId()}" onclick="editProduct(this, event)" style="cursor: pointer">
+                                <td><input type="checkbox" onclick="event.stopPropagation();" style="width: 1rem; height: 1rem; align-items: center; padding-top: 20px"></td>
+                                <td th:text="${status.index + 1}" style="text-align: right; margin-right: 0.5vw;"></td>
                                 <td th:text="${product.getProduct_name()}"></td>
                                 <td th:text="${categoryMap[product.getCategoryId()]}"></td>
                                 <td th:text="${product.getPrice()}" style="text-align: right; margin-right: 0.5vw;"></td>
                                 <td th:text="${product.getStock()}" style="text-align: right; margin-right: 0.5vw;"></td>
-                                <td th:text="${product.getTitle()}"></td>
                                 <td>
                                     <img th:src="${product.getImage_collection_url()}" alt="Product Image" width="100" height="100" />
                                 </td>
                                 <td th:text="${product.getSKU()}"></td>
                                 <td>
-                                    <a th:href="@{'/admin/eco-products-edit/' + ${product.getId()}}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
                                     <a href="#" class="text-inverse" title="Delete" data-bs-toggle="tooltip"
-                                       th:onclick="'deleteItem(event, ' + ${product.getId()} + ')'">
-                                        <i class="ti-trash"></i>
+                                       th:onclick="'deleteItem(event, ' + ${product.getId()} + ')'" onclick="event.stopPropagation();" >
+                                        <i class="ti-trash" style="display: flex;" title="Delete"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -163,7 +168,7 @@
 <!-- end - This is for export functionality only -->
 <script>
     function deleteItem(event, productId) {
-        event.preventDefault(); // Prevent the default action of the link
+        event.preventDefault();
 
         confirmDelete().then((isConfirmed) => {
             if (isConfirmed) {
@@ -173,7 +178,7 @@
                         text: 'Your product has been deleted.',
                         icon: 'success',
                         showConfirmButton: false,
-                        timer: 3500
+                        timer: 1500
                     });
             }
         });
@@ -185,13 +190,22 @@
             text: "This action cannot be undone!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             return result.isConfirmed;
         });
     }
+
+    function editProduct(row, event){
+        if (event.target.type === 'checkbox' || event.target.title === 'Delete') {
+            return;
+        }
+        var productID = row.getAttribute('data-id');
+        window.location.href = `/admin/eco-products-edit/${productID}`;
+    }
+
 </script>
 <script>
     $(function () {
@@ -201,6 +215,7 @@
                 "visible": false,
                 "targets": 2
             }],
+
             "order": [
                 [2, 'asc']
             ],
@@ -254,7 +269,7 @@
                 text:  confirmMessage,
                 icon: "success",
                 showConfirmButton: false,
-                timer: 3000
+                timer: 1500
             });
         }
     });
