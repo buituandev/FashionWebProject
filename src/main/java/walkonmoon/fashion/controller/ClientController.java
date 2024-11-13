@@ -35,15 +35,15 @@ import java.util.stream.Collectors;
 @Controller
 public class ClientController {
     @Autowired
-    private UserService userService;
+    private  UserService userService;
     @Autowired
-    private ProductService productService;
+    private  ProductService productService;
     @Autowired
-    private ImageService imageService;
+    private  ImageService imageService;
     @Autowired
-    private CategoryService categoryService;
+    private  CategoryService categoryService;
     @Autowired
-    private CartItemService cartItemService;
+    private  CartItemService cartItemService;
 
     @RequestMapping(value = {"/", "/index.html"})
     public String index(Model model, HttpServletRequest request, HttpSession session) {
@@ -64,7 +64,8 @@ public class ClientController {
         mainAction(request, model, session);
 
         // Fetch products and categories
-        List<Product> products = setModelProductList(model);
+//        List<Product> products = setModelProductList(model);
+        List<Product> products = productService.getListProducts();
         setModelCategoryList(model);
         // Pagination logic
         int pageSize = 8; // Number of products per page
@@ -74,6 +75,7 @@ public class ClientController {
         int end = Math.min(start + pageSize, totalProducts);
 
         // Sublist for the current page
+        model.addAttribute("totalProducts", totalProducts);
         List<Product> paginatedProducts = products.subList(start, end);
         model.addAttribute("products", paginatedProducts);
         model.addAttribute("currentPage", page);
@@ -105,6 +107,40 @@ public class ClientController {
         model.addAttribute("selectedCategoryId", categoryId);
         return "shop-grid";
     }
+//@GetMapping("/shop-grid/{categoryId}")
+//public String filterShopGrid(
+//        @PathVariable int categoryId,
+//        @RequestParam(defaultValue = "1") int page,
+//        Model model,
+//        HttpServletRequest request,
+//        HttpSession session) {
+//
+//    mainAction(request, model, session);
+//
+//    List<Product> filteredProduct = productService.findByCategoryId(categoryId);
+//    setModelCategoryList(model);
+//    System.out.println("num of product in this cate "+filteredProduct.size());
+//
+//    // Pagination logic
+//    int pageSize = 8;
+//    int totalProducts = filteredProduct.size();
+//    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+//    System.out.println("totalpages "+totalPages);
+//    int start = (page - 1) * pageSize;
+//    int end = Math.min(start + pageSize, totalProducts);
+//
+//    List<Product> paginatedProducts = filteredProduct.subList(start, end);
+//
+//    model.addAttribute("products", paginatedProducts);
+//    model.addAttribute("currentPage", page);
+//    model.addAttribute("totalPages", totalPages);
+//    model.addAttribute("selectedCategoryId", categoryId);
+//
+//    return "shop-grid";
+//}
+
+
+
 
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
@@ -295,7 +331,7 @@ public class ClientController {
         return "my-account";
     }
 
-    private void addUserToModel(User user, Model model) {
+    public void addUserToModel(User user, Model model) {
         if (user != null) {
             model.addAttribute("user", user);
         } else {
@@ -303,7 +339,7 @@ public class ClientController {
         }
     }
 
-    private void addCategoriesToModel(Model model) {
+    public void addCategoriesToModel(Model model) {
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         int chunkSize = (int) Math.floor((double) categories.size() / 4);
@@ -341,7 +377,7 @@ public class ClientController {
         return categories;
     }
 
-    private void mainAction(HttpServletRequest request, Model model, HttpSession session) {
+    public void mainAction(HttpServletRequest request, Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         addCategoriesToModel(model);
         if (user == null) {
@@ -350,7 +386,6 @@ public class ClientController {
         } else {
             addCartItemsToModel(user.getId(), model);
             addUserToModel(user, model);
-            System.out.println("seesion got user");
         }
         model.addAttribute("requestURI", request.getRequestURI());
     }
