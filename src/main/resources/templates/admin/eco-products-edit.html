@@ -183,6 +183,16 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Status</label>
+                                                <select th:field="*{status}" class="form-control category-select" tabindex="1">
+                                                    <option th:value="Enable" selected>Enable</option>
+                                                    <option th:value="Disable">Disable</option>
+                                                    <option th:value="Delete">Delete</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <!--/row-->
                                     <div class="row">
@@ -248,7 +258,7 @@
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-3">
-                                            <h5 class="card-title m-t-20">Upload Main Image</h5>
+                                            <h5 class="card-title m-t-20" style="font-weight: 600">Upload Main Image</h5>
                                             <div class="product-img" id="image-main-container">
                                                 <div class="image-preview-wrapper" id="image-main-container-wrapper"
                                                      style="width: 80vw; display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto; position: relative;">
@@ -272,7 +282,7 @@
 
                                             <!-- File upload button for new images -->
                                             <div class="fileupload btn btn-info waves-effect waves-light text-whitecategory" style="background-color: #da9e79; border: #da9e79;">
-                                                <span><i class="ion-upload m-r-5"></i>Upload Main Image</span>
+                                                <span><i class="ion-upload m-r-5" style="font-weight: 600"></i>Upload Main Image</span>
                                                 <input type="file" class="upload" id="file" name="file" multiple accept="image/*">
                                             </div>
                                             <input type="text" th:field="*{image_collection_url}" style="visibility: hidden">

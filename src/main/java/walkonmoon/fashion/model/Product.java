@@ -42,5 +42,7 @@ public class Product {
     private Boolean isTrend = false;
     @Column(name = "is_new")
     private Boolean isNew = false;
+    @Column(name = "status")
+    private String status;
 
 }

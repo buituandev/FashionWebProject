@@ -55,7 +55,6 @@
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
                             <li class="breadcrumb-item active">Orders</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a href="eco-products-edit.html" style="color: white;"><i class="fa fa-plus-circle"></i> Create New</a></button>
                     </div>
                 </div>
             </div>
@@ -77,14 +76,25 @@
                                 <th>Order ID</th>
                                 <th>Username</th>
                                 <th>Order Date</th>
-                                <th>Total Price</th>
+                                <th style="text-align: right">Total Price</th>
                                 <th>Note</th>
                                 <th>Phone Number</th>
                                 <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
-
+                            <tr th:each="order : ${orderList}">
+                            <td th:text="${order.getId()}" style="text-align: center"></td>
+                            <td th:text="${userName[order.getUserID()]}"></td>
+                            <td th:text="${order.getOrder_date()}"></td>
+                            <td th:text="${order.getTotal_price()}" style="text-align: right"></td>
+                            <td th:text="${order.getNote()}"></td>
+                            <td th:text="${order.getPhoneNumber()}"></td>
+                                <td th:text="${order.getStatus()}"
+                                    th:if="${order.getStatus().name() == 'PENDING'}"
+                                    style="color: #0a58ca; font-weight: bold; font-style: italic">
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

@@ -90,13 +90,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="category, status : ${categories}">
+                            <tr th:each="category, status : ${categories}"
+                                th:data="${category.getId()}"
+                                th:onclick="|window.location.href='/admin/category-edit/' + ${category.getId()}|"
+                                style="cursor: pointer;">
                                 <td th:text="${status.index + 1}" style="text-align: right"></td>
                                 <td th:text="${category.getName()}"></td>
                                 <td th:text="${category.getDescription()}"></td>
                                 <td th:text="${category.getQuantity()}" style="text-align: right"></td>
-                                <td style="text-align: center"><a th:href="@{'/admin/category-edit/' + ${category.getId()}}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
-                                    <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"  th:onclick="|deleteItem(event, '${category.id}', ${category.quantity})|"><i class="ti-trash"></i></a>
+                                <td style="text-align: center">
+<!--                                    <a th:href="@{'/admin/category-edit/' + ${category.getId()}}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>-->
+                                    <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"
+                                       th:onclick="|event.stopPropagation() ;deleteItem(event, '${category.id}', ${category.quantity})|">
+                                        <i class="ti-trash" style="font-size: 20px"></i>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

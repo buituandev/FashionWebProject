@@ -14,14 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import walkonmoon.fashion.config.FirebaseConfig;
-import walkonmoon.fashion.model.Category;
-import walkonmoon.fashion.model.Image;
-import walkonmoon.fashion.model.Product;
-import walkonmoon.fashion.model.User;
-import walkonmoon.fashion.service.CategoryService;
-import walkonmoon.fashion.service.ImageService;
-import walkonmoon.fashion.service.ProductService;
-import walkonmoon.fashion.service.UserService;
+import walkonmoon.fashion.model.*;
+import walkonmoon.fashion.service.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -49,6 +43,10 @@ public class AdminController {
     private final FirebaseConfig firebaseConfig;
     @Autowired
     private ImageService imageService;
+    @Autowired
+    private CartItemService  cartItemService;
+    @Autowired
+    private OrderService orderService;
 
 
     public AdminController(FirebaseConfig firebaseConfig) {
@@ -77,14 +75,21 @@ public class AdminController {
     }
 
 
-    @GetMapping("/edo-products-detail.html")
+    @GetMapping("/eco-products-detail.html")
     public String productDetail() {
         return "admin/eco-products-detail";
     }
 
 
     @GetMapping("/eco-products-orders.html")
-    public String orderManagement() {
+    public String orderManagement(Model model) {
+        List<Order>  orders = orderService.getOrderList();
+        Map<Integer, String> userName = new HashMap<>();
+        for(User user : userService.getListUser()){
+             userName.put(user.getId(), user.getFull_name());
+        }
+        model.addAttribute("userName",userName);
+        model.addAttribute("orderList", orders);
         return "admin/eco-products-orders";
     }
 
@@ -220,8 +225,15 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
 }
 
     @GetMapping("/product-delete/{id}")
-    public String deleteProduct(@PathVariable("id") Integer id, Model model) {
+    public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         String fileUrl = productService.getProductById(id).getImage_collection_url();
+        List<CartItem> cartitem = cartItemService.getAllCartItems();
+        for(CartItem cart : cartitem){
+            if(cart.getProductId() == id){
+                redirectAttributes.addFlashAttribute("errorMessage",  "The product already in customer cart");
+                return "redirect:/admin/eco-products.html";
+            }
+        }
 //        Path path = Paths.get("/ProjectB/FashionWebProject/src/main/resources/static" + fileUrl);;
 
         ResponseEntity<String> deleteImg = deleteFile(fileUrl);
@@ -265,9 +277,39 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
 //            }
 //        }
 
-
+        redirectAttributes.addFlashAttribute( "successMessage", "Product deleted successfully");
         return "redirect:/admin/eco-products.html";
     }
+
+//    @PostMapping("/deleteProducts")
+//    public ResponseEntity<?> deleteProducts(@RequestBody Map<String, List<Integer>> request) {
+//        List<Integer> productIds = request.get("productIds");
+//        if (productIds != null && !productIds.isEmpty()) {
+//            for(Integer id : productIds){
+//                String fileUrl = productService.getProductById(id).getImage_collection_url();
+//                ResponseEntity<String> deleteImg = deleteFile(fileUrl);
+//                for (Image img : imageService.findByProductId(id)) {
+//                    String url = img.getImageurl();
+//                    ResponseEntity<String> delete = deleteFile(url);
+//                }
+//
+//                if (deleteImg.getStatusCode() != HttpStatus.OK) {
+//                    System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
+//                }
+//                imageService.deleteByProductId(id);
+//
+//                Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
+//                if (category.getQuantity() > 0) {
+//                    category.setQuantity(category.getQuantity() - 1);
+//                    categoryService.saveCategory(category);
+//                }
+//                productService.deleteProductById(id);
+//            }
+//            return ResponseEntity.ok(Map.of("success", true));
+//        } else {
+//            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "No products to delete."));
+//        }
+//    }
 
     @PostMapping("/eco-products/save")
     public String saveProduct(@ModelAttribute Product product, Model model,
@@ -336,7 +378,7 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
                 categoryService.saveCategory(newCategory);
             }
         }
-        redirectAttributes.addFlashAttribute("confirmMessage", "Product saved successfully");
+        redirectAttributes.addFlashAttribute("successMessage", "Product saved successfully");
         return "redirect:/admin/eco-products.html";
     }
 
@@ -395,6 +437,21 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         return "admin/user-management";
     }
 
+    @GetMapping("/user-form/{id}")
+    public String userForm(@PathVariable("id") Integer id, Model model){
+        User user = userService.findUserById(id);
+        model.addAttribute(user);
+        return "admin/user-form";
+    }
+
+    @PostMapping("/user-form/edit")
+    public String userSave(@ModelAttribute User user, RedirectAttributes redirectAttributes){
+        User user1 = userService.findUserById(user.getId());
+        user.setPassword(user1.getPassword());
+         userService.saveUser(user);
+         redirectAttributes.addFlashAttribute("successMessages", "User Information saved successfully");
+         return  "redirect:/admin/user-management.html";
+    }
 
     @GetMapping("/pages-login.html")
     public String loginPages(Model model) {

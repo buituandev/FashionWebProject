@@ -45,4 +45,11 @@ public class ProductService {
     public List<Product> getProductsByIds(List<Integer> productIds) {
         return proRepo.findByIdIn(productIds);
     }
+
+//    @Transactional
+//    public void  deleteProducts(List<Integer> productIds) {
+//        for(Integer id : productIds){
+//            proRepo.deleteById(id);
+//        }
+//    }
 }
