@@ -57,7 +57,7 @@
                                                 <a class="default-btn" href="shop-grid.html" title="Shop Now"
                                                    style="border: 1px solid white !important;">Shop
                                                     Now</a>
-                                            </div>
+                                            </div>user
                                         </div> <!-- end of slide-content -->
                                     </div>
                                 </div>
@@ -919,6 +919,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 toast('success', 'Item added to cart');
+                updateCart();
             }
             if (xhr.readyState === 4 && xhr.status === 400) {
                 toast('error', 'Item out of stock');

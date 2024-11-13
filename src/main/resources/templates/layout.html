@@ -31,6 +31,8 @@
     <!-- Responsive stylesheet -->
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=arrow_drop_down"/>
     <!-- modernizr JS
@@ -87,7 +89,7 @@
 </div>
 <!-- End of Newsletter Popup -->
 
-<div th:fragment="cart-nav" class="header-cart">
+<div th:fragment="cart-nav" class="header-cart" th:if="${requestURI != '/checkout.html'}">
     <div class="btn-group">
         <button class="btn-link dropdown-toggle icon-cart">
             <i class="pe-7s-shopbag"></i>
@@ -97,7 +99,7 @@
             <div class="shopping-cart-content" th:fragment="cart-content">
                 <ul class="list-unstyled">
                     <li class="cart-tempty-title" th:if="${#lists.isEmpty(cartItems)}" style="display:block;">
-                        <h3>Your cart is currently empty.</h3>
+                        <h3 style="line-height: 1.5">Your cart is currently empty.</h3>
                     </li>
                     <li class="single-cart-item media" th:each="item : ${cartItems}" th:disabled="${item.quantity==0}">
                         <div class="shopping-cart-img me-4">
@@ -259,7 +261,7 @@
                     </ul>
                 </li>
 
-                <li><a href="/" th:href="@{/blog-right-sidebar.html}"><span>Blogs</span></a>
+                <li><a href="/" th:href="@{/blog.html}"><span>Blogs</span></a>
                 </li>
                 <li><a href="/" th:href="@{/about.html}"><span>About Us</span></a></li>
                 <li><a href="/" th:href="@{/contact.html}"><span>Contact Us</span></a></li>
@@ -500,7 +502,7 @@
     <div class="footer-copyright">
         <div class="container">
             <div class="row align-items-center" style="text-align: center">
-                <p class="copyright-text">Copyright © 2018 <a th:href="@{/index.html}" rel="nofollow">Chroma Fashion Shop</a>. All
+                <p class="copyright-text">Copyright © 2025 <a th:href="@{/index.html}" rel="nofollow">Chroma Fashion Shop</a>. All
                     Right Reserved.</p>
                 <!--                <div class="col-12 col-sm-12 col-md-6 col-lg-6">-->
                 <!--                    <div class="footer-payment">-->

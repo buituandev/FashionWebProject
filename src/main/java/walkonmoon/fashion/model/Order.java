@@ -28,7 +28,7 @@ public class Order {
     private String phoneNumber;
     @Column(name = "address")
     private String address;
-    @Convert(converter = walkonmoon.fashion.converter.OrderStatusConverter.class)
+    @Convert(converter = walkonmoon.fashion.model.OrderStatusConverter.class)
     @Column(name = "status")
     private OrderStatus status;
 }

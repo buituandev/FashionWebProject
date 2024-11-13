@@ -50,7 +50,7 @@ public class CartItemService {
             cartItemRepository.save(cartItem);
         }
     }
-
+    
     @Transactional
     public List<CartItemDTO> getCartItems(int userId) {
         List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
@@ -72,17 +72,17 @@ public class CartItemService {
             return cartItemDTO;
         }).collect(Collectors.toList());
     }
-
+    
     @Transactional
     public void deleteCartItem(int userId, int productId) {
         cartItemRepository.deleteByUserIdAndProductId(userId, productId);
     }
-
+    
     @Transactional
     public int calculateTotalPrice(List<CartItemDTO> cartItems) {
         return cartItems.stream().mapToInt(cartItem -> cartItem.getPrice() * cartItem.getQuantity()).sum();
     }
-
+    
     @Transactional
     public void updateCartItem(int userId, int productId, int quantity, HttpServletResponse response) throws IOException {
         CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
@@ -97,10 +97,5 @@ public class CartItemService {
     @Transactional
     public void clearCartItems(int userId) {
         cartItemRepository.deleteByUserId(userId);
-    }
-
-    @Transactional
-    public List<CartItem> getAllCartItems(){
-        return (List<CartItem>) cartItemRepository.findAll();
     }
 }

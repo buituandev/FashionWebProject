@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head('Chroma - Blogs')}">
+</head>
+
+<body>
+
+    <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Start of Whole Site Wrapper with mobile menu support -->
+    <div id="whole" class="whole-site-wrapper color-scheme-one">
+
+        <!-- Start of Header -->
+        <div th:replace="~{layout::headernormal(${user})}"></div>
+        <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
+
+        <!-- End of Header -->
+
+        <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
+
+        <!-- Start of Breadcrumbs -->
+        <div class="breadcrumb-section bgc-offset mb-full">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="archive/index-main.html">Home</a>
+                            <span class="breadcrumb-item active">Blog</span>
+                        </nav>
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of Breadcrumbs -->
+
+        <!-- Start of Main Content Wrapper -->
+        <div id="content" class="main-content-wrapper">
+            
+            <!-- Start of Blog Posts Section -->
+            <div class="blog-posts-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <main id="primary" class="site-main">
+                                <div class="blog-grid-area">
+                                   <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+											<article class="blog-post post-entry">
+												<div class="blog-grid">
+													<div class="content-wrapper">
+	                                                    <div class="post-media">
+	                                                        <a href="blog-details.html"><img src="../assets/images/blog/blog-1-1.jpg" alt="Blog Image"></a>
+	                                                    </div>
+	                                                    <div class="post-content">
+	                                                        <ul class="post-category">
+	                                                        	<li><a href="#">Tech</a></li>
+	                                                        </ul>
+	                                                        <h3 class="post-title"><a href="blog-details.html">When an unknown printer took a galley of type.</a></h3>
+	                                                        <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
+	                                                    </div>
+	                                                    <div class="post-footer">
+															<div class="post-meta">
+																<ul>
+																	<li>Jun 20, 2018</li>
+																	<li>3 Comments</li>
+																</ul>
+															</div>
+															<div class="post-more">
+																<a href="blog-details.html">Read more <i class="fa fa-angle-double-right"></i></a>
+															</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div> <!-- end of blog-grid -->
+											</article> <!-- end of blog-post -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+											<article class="blog-post post-entry">
+												<div class="blog-grid">
+													<div class="content-wrapper">
+	                                                    <div class="post-media">
+	                                                        <a href="blog-details.html">
+                                                                <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="5000" data-effect="fade">
+                                                                    <div class="swiper-wrapper">
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-2.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-3.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-4.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-5.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-6.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="swiper-arrow prev fa fa-angle-left"></div>
+                                                                    <div class="swiper-arrow next fa fa-angle-right"></div>
+                                                                </div>
+                                                            </a>
+	                                                    </div>
+	                                                    <div class="post-content">
+	                                                        <ul class="post-category">
+	                                                        	<li><a href="#">World</a></li>
+	                                                        	<li><a href="#">Travel</a></li>
+	                                                        </ul>
+	                                                        <h3 class="post-title"><a href="blog-details.html">Many desktop publishing packages and web page editors.</a></h3>
+	                                                        <p>Competently brand compelling results with premier solutions. Dynamically generate inexpensive web-readiness whereas e-business expertise. Globally.</p>
+	                                                    </div>
+	                                                    <div class="post-footer">
+															<div class="post-meta">
+																<ul>
+																	<li>May 10, 2018</li>
+																	<li>10 Comments</li>
+																</ul>
+															</div>
+															<div class="post-more">
+																<a href="blog-details.html">Read more <i class="fa fa-angle-double-right"></i></a>
+															</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div> <!-- end of blog-grid -->
+											</article> <!-- end of blog-post -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+											<article class="blog-post post-entry">
+												<div class="blog-grid">
+													<div class="content-wrapper">
+	                                                    <div class="post-media">
+	                                                        <a href="blog-details.html"><img src="../assets/images/blog/blog-1-7.jpg" alt="Blog Image"></a>
+	                                                    </div>
+	                                                    <div class="post-content">
+	                                                        <ul class="post-category">
+	                                                        	<li><a href="#">Digital Design</a></li>
+	                                                        </ul>
+	                                                        <h3 class="post-title"><a href="blog-details.html">Various versions have evolved over the years sometimes.</a></h3>
+	                                                        <p>Assertively streamline e-business "outside the box" thinking vis-a-vis future-proof functionalities. Dynamically revolutionize highly efficient relationships.</p>
+	                                                    </div>
+	                                                    <div class="post-footer">
+															<div class="post-meta">
+																<ul>
+																	<li>Apr 20, 2018</li>
+																	<li>1 Comment</li>
+																</ul>
+															</div>
+															<div class="post-more">
+																<a href="blog-details.html">Read more <i class="fa fa-angle-double-right"></i></a>
+															</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div> <!-- end of blog-grid -->
+											</article> <!-- end of blog-post -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+											<article class="blog-post post-entry">
+												<div class="blog-grid">
+													<div class="content-wrapper">
+	                                                    <div class="post-media">
+	                                                        <a href="blog-details.html">
+                                                                <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="4500" data-space-between="0" data-effect="slide">
+                                                                    <div class="swiper-wrapper">
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-8.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-9.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-10.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-11.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                        <div class="swiper-slide">
+                                                                            <img src="../assets/images/blog/blog-1-12.jpg" alt="Blog Image">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="swiper-arrow prev fa fa-angle-left"></div>
+                                                                    <div class="swiper-arrow next fa fa-angle-right"></div>
+                                                                </div>
+                                                            </a>
+	                                                    </div>
+	                                                    <div class="post-content">
+	                                                        <ul class="post-category">
+	                                                        	<li><a href="#">Recent Trends</a></li>
+	                                                        </ul>
+	                                                        <h3 class="post-title"><a href="blog-details.html">Various versions have evolved over the years sometimes.</a></h3>
+	                                                        <p>Assertively streamline e-business "outside the box" thinking vis-a-vis future-proof functionalities. Dynamically revolutionize highly efficient relationships.</p>
+	                                                    </div>
+	                                                    <div class="post-footer">
+															<div class="post-meta">
+																<ul>
+																	<li>Apr 20, 2018</li>
+																	<li>1 Comment</li>
+																</ul>
+															</div>
+															<div class="post-more">
+																<a href="blog-details.html">Read more <i class="fa fa-angle-double-right"></i></a>
+															</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div> <!-- end of blog-grid -->
+											</article> <!-- end of blog-post -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+											<article class="blog-post post-entry">
+												<div class="blog-grid">
+													<div class="content-wrapper">
+	                                                    <div class="post-media">
+	                                                        <a href="blog-details.html"><img src="../assets/images/blog/blog-1-13.jpg" alt="Blog Image"></a>
+	                                                    </div>
+	                                                    <div class="post-content">
+	                                                        <ul class="post-category">
+	                                                        	<li><a href="#">Design</a></li>
+	                                                        </ul>
+	                                                        <h3 class="post-title"><a href="blog-details.html">When an unknown printer took a galley of type.</a></h3>
+	                                                        <p>Distinctively simplify dynamic resources whereas prospective core competencies. Objectively pursue multidisciplinary human capital for interoperable.</p>
+	                                                    </div>
+	                                                    <div class="post-footer">
+															<div class="post-meta">
+																<ul>
+																	<li>Jun 20, 2018</li>
+																	<li>3 Comments</li>
+																</ul>
+															</div>
+															<div class="post-more">
+																<a href="blog-details.html">Read more <i class="fa fa-angle-double-right"></i></a>
+															</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div> <!-- end of blog-grid -->
+											</article> <!-- end of blog-post -->
+                                        </div>
+
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-4">
+											<article class="blog-post post-entry">
+												<div class="blog-grid">
+													<div class="content-wrapper">
+	                                                    <div class="post-media">
+	                                                        <a href="blog-details.html"><img src="../assets/images/blog/blog-1-14.jpg" alt="Blog Image"></a>
+	                                                    </div>
+	                                                    <div class="post-content">
+	                                                        <ul class="post-category">
+	                                                        	<li><a href="#">beauty</a></li>
+	                                                        	<li><a href="#">fashion</a></li>
+	                                                        </ul>
+	                                                        <h3 class="post-title"><a href="blog-details.html">Many desktop publishing packages and web page editors.</a></h3>
+	                                                        <p>Competently brand compelling results with premier solutions. Dynamically generate inexpensive web-readiness whereas e-business expertise. Globally.</p>
+	                                                    </div>
+	                                                    <div class="post-footer">
+															<div class="post-meta">
+																<ul>
+																	<li>May 10, 2018</li>
+																	<li>10 Comments</li>
+																</ul>
+															</div>
+															<div class="post-more">
+																<a href="blog-details.html">Read more <i class="fa fa-angle-double-right"></i></a>
+															</div>
+	                                                    </div>
+	                                                </div>
+	                                            </div> <!-- end of blog-grid -->
+											</article> <!-- end of blog-post -->
+                                        </div>
+                                    </div> <!-- end of row -->
+                                </div> <!-- end of blog-grid-area -->
+
+                                <div class="pagination-area">
+                                    <div class="row align-items-center">
+                                        <div class="col-12 order-2 col-sm-12 col-md-6 order-md-1 col-lg-6">
+                                            <div class="page-amount d-flex justify-content-center justify-content-md-start">
+                                                <p>Showing 7 to 12 of 30 (5 Pages)</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 order-1 col-sm-12 col-md-6 order-md-2 col-lg-6">
+                                            <ul class="pagination">
+                                                <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-left"></i> <span>Previous</span></a></li>
+                                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                                <li class="page-item active"><span class="page-link">2</span></li>
+                                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                                <li class="page-item"><a href="#" class="page-link"><span>Next</span> <i class="fa fa-angle-right"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of pagination-area -->
+                            </main> <!-- end of #primary -->
+                        </div>
+                    </div> <!-- end of row -->
+                </div> <!-- end of container -->
+            </div>
+            <!-- End of Blog Posts Section -->
+        </div>
+        <!-- End of Main Content Wrapper -->
+
+        <!-- Start of Footer -->
+        <div th:replace="~{layout::footer}"></div>
+        <!-- End of Footer -->
+
+        <!-- Start of Scroll to Top -->
+        <div th:replace="~{layout::scroll_to_top}"></div>
+        <!-- End of Scroll to Top -->
+    </div>
+    <!-- End of Whole Site Wrapper -->
+
+    <!-- Initializing Photoswipe -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of Photoswipe -->
+
+
+    <!-- JS
+    ============================================ -->
+
+    <!-- jQuery JS -->
+    <script src="../assets/js/jquery.1.12.4.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="../assets/js/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="../assets/js/bootstrap.min.js"></script>
+
+    <!-- Plugins JS -->
+    <script src="../assets/js/plugins.js"></script>
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
+</body>
+
+<!-- Mirrored from htmldemo.net/pebona/pebona/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Sep 2024 06:10:27 GMT -->
+</html>
