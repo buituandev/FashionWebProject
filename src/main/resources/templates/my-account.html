@@ -279,8 +279,9 @@
                                                                             </div>
                                                                             <!-- Buy Again Button -->
                                                                             <div class="ms-auto">
-                                                                                <a th:href="@{'/single-product/' + ${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).id}}" class="btn btn-secondary d-flex align-items-center">
-<!--                                                                                    <i class="material-icons">replay</i>-->
+                                                                                <a th:href="@{'/single-product/' + ${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).id}}"
+                                                                                   class="btn btn-secondary d-flex align-items-center">
+                                                                                    <!--                                                                                    <i class="material-icons">replay</i>-->
                                                                                     Buy Again
                                                                                 </a>
                                                                             </div>
@@ -293,12 +294,17 @@
                                                                     <div class="card border-light">
                                                                         <div class="card-body">
                                                                             <!-- Shipping Address Section -->
-                                                                            <h4 class="d-flex align-items-center"><i class="material-icons me-2">location_on</i>
+                                                                            <h4 class="d-flex align-items-center"><i
+                                                                                    class="material-icons me-2">location_on</i>
                                                                                 Shipping Address</h4>
                                                                             <p class="mb-3"
                                                                                th:text="${order.address}"></p>
 
                                                                             <!-- User Note, Order Date -->
+                                                                            <p class="card-text mb-1">
+                                                                                <strong>Phone number:</strong> <span
+                                                                                    th:text="${order.phoneNumber}"></span>
+                                                                            </p>
                                                                             <p class="card-text mb-1">
                                                                                 <strong>User Note:</strong> <span
                                                                                     th:text="${order.note}"></span>
@@ -311,7 +317,8 @@
                                                                             <!-- Total Price, Positioned Bottom Right -->
                                                                             <div class="d-flex justify-content-between align-items-center">
                                                                                 <strong>Total Price:</strong>
-                                                                                <span class="formatted-price fs-4 fw-bold" style="color: #cc2121"
+                                                                                <span class="formatted-price fs-4 fw-bold"
+                                                                                      style="color: #cc2121"
                                                                                       th:text="${order.total_price} + ' VND'"></span>
                                                                             </div>
                                                                         </div>
@@ -403,7 +410,37 @@
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/FormatPrice.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const badges = document.querySelectorAll('.badge');
 
+        badges.forEach(badge => {
+            const status = badge.textContent.trim().toUpperCase();
+
+            switch (status) {
+                case 'PENDING':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-warning');
+                    break;
+                case 'SHIPPING':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-info');
+                    break;
+                case 'DELIVERED':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-success');
+                    break;
+                case 'CANCELLED':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-danger');
+                    break;
+                default:
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-secondary');
+                    break;
+            }
+        });
+    });</script>
 </body>
 
 </html>
