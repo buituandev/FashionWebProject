@@ -46,6 +46,9 @@ public class User {
     private String province;
     @Column
     private String email;
-
+    @Column(nullable = true)
+    private String token;
+    @Column
+    private LocalDateTime tokenExpired;
 
 }

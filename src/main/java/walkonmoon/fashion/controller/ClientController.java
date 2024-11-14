@@ -1,5 +1,6 @@
 package walkonmoon.fashion.controller;
 
+import com.google.cloud.storage.Acl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -22,28 +23,29 @@ import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
 
-import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
 @Controller
 public class ClientController {
     @Autowired
-    private  UserService userService;
+    private UserService userService;
     @Autowired
-    private  ProductService productService;
+    private ProductService productService;
     @Autowired
-    private  ImageService imageService;
+    private ImageService imageService;
     @Autowired
-    private  CategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    private  CartItemService cartItemService;
+    private CartItemService cartItemService;
+    @Autowired
+    private EmailService emailService;
 
     @RequestMapping(value = {"/", "/index.html"})
     public String index(Model model, HttpServletRequest request, HttpSession session) {
@@ -107,40 +109,6 @@ public class ClientController {
         model.addAttribute("selectedCategoryId", categoryId);
         return "shop-grid";
     }
-//@GetMapping("/shop-grid/{categoryId}")
-//public String filterShopGrid(
-//        @PathVariable int categoryId,
-//        @RequestParam(defaultValue = "1") int page,
-//        Model model,
-//        HttpServletRequest request,
-//        HttpSession session) {
-//
-//    mainAction(request, model, session);
-//
-//    List<Product> filteredProduct = productService.findByCategoryId(categoryId);
-//    setModelCategoryList(model);
-//    System.out.println("num of product in this cate "+filteredProduct.size());
-//
-//    // Pagination logic
-//    int pageSize = 8;
-//    int totalProducts = filteredProduct.size();
-//    int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-//    System.out.println("totalpages "+totalPages);
-//    int start = (page - 1) * pageSize;
-//    int end = Math.min(start + pageSize, totalProducts);
-//
-//    List<Product> paginatedProducts = filteredProduct.subList(start, end);
-//
-//    model.addAttribute("products", paginatedProducts);
-//    model.addAttribute("currentPage", page);
-//    model.addAttribute("totalPages", totalPages);
-//    model.addAttribute("selectedCategoryId", categoryId);
-//
-//    return "shop-grid";
-//}
-
-
-
 
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
@@ -171,6 +139,65 @@ public class ClientController {
         return "layout";
     }
 
+    @GetMapping("/forgot-password.html")
+    public String forgotPassword(Model model, HttpServletRequest request, HttpSession session) {
+        mainAction(request, model, session);
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            return "redirect:/index.html";
+        }
+        return "forgot-password";
+    }
+
+    @PostMapping("/recover-password")
+    public String recoverPassword(@RequestParam("email") String email, Model model, HttpServletRequest request, HttpSession session) {
+        mainAction(request, model, session);
+        String token = userService.createPasswordResetToken(email);
+        if (token != null) {
+            session.setAttribute("token", token);
+            emailService.sendPasswordRecoveryEmail(email, token);
+            model.addAttribute("email", email);
+            return "redirect:/announce-email-success.html?email=" + email;
+        } else {
+            return "forgot-password";
+        }
+    }
+
+    @GetMapping("/announce-email-success.html")
+    public String showAnnounceForm(@RequestParam("email") String email, HttpSession session, HttpServletRequest request, Model model) {
+        mainAction(request, model, session);
+        System.out.println("Received email: " + email);  // This will log the email
+        model.addAttribute("email", email);
+        return "announce-email-success";
+    }
+
+    @GetMapping("/reset-password.html")
+    public String showResetPasswordForm(@RequestParam("token") String token, HttpSession session, HttpServletRequest request, Model model) {
+        mainAction(request, model, session);
+        model.addAttribute("token", token);
+        return "reset-password";
+    }
+
+    @PostMapping("/reset-password/access")
+    public String resetPassword(@RequestParam("token") String token,
+                                @RequestParam("newPassword") String newPassword,
+                                Model model, HttpServletRequest request, HttpSession session) {
+        mainAction(request, model, session);
+        // find user by the token
+        User user = userService.getUserByToken(token);
+        if (user != null && user.getToken() != null
+                && user.getToken().equals(token)
+                && (user.getTokenExpired().isAfter(LocalDateTime.now())
+                && user.getTokenExpired().isBefore(LocalDateTime.now().plusHours(1)))) {
+            user.setPassword(UserService.toSHA1(newPassword));
+            userService.saveUser(user);
+            return "redirect:/login.html";
+        } else {
+
+            return "forgot-password";
+        }
+    }
+
     @GetMapping("/cart.html")
     public String cartHtml(Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
@@ -187,8 +214,7 @@ public class ClientController {
 
     @GetMapping("/login.html")
     public String loginHtml(Model model, HttpServletRequest request, HttpSession session) {
-        List<Category> categories = categoryService.getListCategories();
-        model.addAttribute("categories", categories);
+        List<Category> categories = setModelCategoryList(model);
         int chunkSize = (int) Math.floor((double) categories.size() / (double) 4);
 
         for (int i = 0; i < 4; i++) {
@@ -206,7 +232,7 @@ public class ClientController {
             }
         }
         User user = (User) session.getAttribute("user");
-        if(user!=null){
+        if (user != null) {
             return "redirect:/index.html";
         }
         return "login";
@@ -238,14 +264,12 @@ public class ClientController {
                                HttpServletResponse response, HttpSession session) {
         User currentUser = userService.getUserByEmail(email);
 
-        // Check if the user exists
         if (currentUser == null) {
             return "redirect:/login.html?loginSuccess=false"; // User not found
         }
 
         String encryptedPassword = UserService.toSHA1(password);
 
-        // Check if the password matches
         if (currentUser.getPassword().equals(encryptedPassword)) {
             session.setAttribute("user", currentUser);
             model.addAttribute("user", currentUser);
@@ -253,7 +277,6 @@ public class ClientController {
             return "redirect:/index.html"; // Successful login
         }
 
-        // If password does not match, redirect with failure
         return "redirect:/login.html?loginSuccess=false"; // Incorrect password
     }
 
@@ -303,6 +326,12 @@ public class ClientController {
         mainAction(request, model, session);
         return "about";
     }
+
+//    @GetMapping("/reset-password.html")
+//    public String verifyCodetHtml(Model model, HttpServletRequest request, HttpSession session) {
+//        mainAction(request, model, session);
+//        return "reset-password";
+//    }
 
     @GetMapping("/blog.html")
     public String blogLeftSidebarHtml(Model model, HttpServletRequest request, HttpSession session) {
