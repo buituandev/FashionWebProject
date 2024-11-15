@@ -62,17 +62,18 @@
                                                                required>
                                                     </div>
                                                     <div class="form-group col-12 col-sm-12 col-md-6">
-                                                        <label for="last_name">Email Address<span
+                                                        <label for="email_input">Email Address<span
                                                                 class="text-danger">*</span></label>
                                                         <input th:field="*{email}" type="text" class="form-control"
-                                                               id="last_name" required>
+                                                               id="email_input" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-row mb-3">
                                                     <div class="form-group col-12 col-sm-12 col-md-6">
                                                         <label for="p_address">Address <span
                                                                 class="text-danger">*</span></label>
-                                                        <input th:field="*{address}" type="text" class="form-control" id="p_address" required>
+                                                        <input th:field="*{address}" type="text" class="form-control"
+                                                               id="p_address" required>
                                                     </div>
                                                     <div class="form-group col-12 col-sm-12 col-md-6">
                                                         <label for="city_name">Phone Number <span
@@ -86,7 +87,6 @@
                                                         <label for="order_notes">Order Notes</label>
                                                         <textarea class="form-control" id="order_notes"
                                                                   placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                                                        <input type="hidden" id="order_note" name="order_note">
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +137,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="checkout-payment">
+                                            <div class="checkout-payment" th:if="${!cartItems.isEmpty()}">
                                                 <div>
                                                     <div class="form-row">
                                                         <div class="custom-radio">
@@ -147,25 +147,26 @@
                                                             <label class="form-check-label" for="cash_delivery_payment">Cash
                                                                 on Delivery</label>
 
-                                                            <div class="payment-info" id="cash_pay">
-                                                                <p>Pay with cash upon delivery.</p>
-                                                            </div>
+<!--                                                            <div class="payment-info" id="cash_pay">-->
+<!--                                                                <p>Pay with cash upon delivery.</p>-->
+<!--                                                            </div>-->
                                                         </div>
                                                     </div>
-                                                    <div class="form-row">
-                                                        <div class="form-check">
-                                                            <div class="custom-checkbox">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                       id="terms_acceptance" required>
-                                                                <span class="checkmark"></span>
-                                                                <label class="form-check-label" for="terms_acceptance">I
-                                                                    agree to the <a href="#">terms of service</a> and
-                                                                    will adhere to them unconditionally.</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+<!--                                                    <div class="form-row">-->
+<!--                                                        <div class="form-check">-->
+<!--                                                            <div class="custom-checkbox">-->
+<!--                                                                <input class="form-check-input" type="checkbox"-->
+<!--                                                                       id="terms_acceptance" required>-->
+<!--                                                                <span class="checkmark"></span>-->
+<!--                                                                <label class="form-check-label" for="terms_acceptance">I-->
+<!--                                                                    agree to the <a href="#">terms of service</a> and-->
+<!--                                                                    will adhere to them unconditionally.</label>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
                                                     <div class="form-row justify-content-end">
-                                                        <input th:if="${cartItems.size()>0}" type="submit" class="btn btn-secondary dark"
+                                                        <input type="submit"
+                                                               class="btn btn-secondary dark"
                                                                value="Check Out">
                                                     </div>
                                                 </div>
@@ -246,9 +247,41 @@
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/toast.js"></script>
 <script>
-    document.querySelector('form').addEventListener('submit', function () {
-        document.getElementById('order_note').value = document.getElementById('order_notes').value;
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        formData.append('order_note', document.getElementById('order_notes').value);
+        formData.append('order_phone_number', document.getElementById('city_name').value);
+        formData.append('order_address', document.getElementById('p_address').value);
+        formData.append('order_email', document.getElementById('email_input').value);
+        console.log( document.getElementById('order_notes').value);
+        fetch('/checkout', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 400) {
+                        toast("error", 'Some items are out of stock. Please review your cart.');
+                    } else {
+                        toast("error", 'An error occurred. Please try again.');
+                    }
+                    throw new Error('Server response was not ok.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                window.location.href = '/my-account.html#order-history';
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
     });
 </script>
 </body>

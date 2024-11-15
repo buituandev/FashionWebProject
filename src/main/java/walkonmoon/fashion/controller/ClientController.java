@@ -19,6 +19,7 @@ import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,20 +162,22 @@ public class ClientController {
     }
 
     @PostMapping("/checkout")
-    public String checkOut(Model model, HttpServletRequest request, @ModelAttribute User user, @RequestParam("order_note") String orderNote, HttpSession session) {
+    public String checkOut(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute User user, @RequestParam("order_note") String orderNote,
+                           @RequestParam("order_phone_number") String orderPhoneNumber, @RequestParam("order_address") String orderAddress, @RequestParam("order_email") String orderEmail,
+                           HttpSession session) throws IOException {
         User sessionUser = (User) session.getAttribute("user");
 
         if (sessionUser != null) {
-            if (user.getFull_name() != null && !user.getFull_name().isEmpty()) {
+            if (user.getFull_name() != null && !user.getFull_name().isEmpty() && !user.getFull_name().equals(sessionUser.getFull_name())) {
                 sessionUser.setFull_name(user.getFull_name());
             }
-            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+            if (user.getEmail() != null && !user.getEmail().isEmpty() && !user.getEmail().equals(sessionUser.getEmail())) {
                 sessionUser.setEmail(user.getEmail());
             }
-            if (user.getAddress() != null && !user.getAddress().isEmpty()) {
+            if (user.getAddress() != null && !user.getAddress().isEmpty() && !user.getAddress().equals(sessionUser.getAddress())) {
                 sessionUser.setAddress(user.getAddress());
             }
-            if (user.getPhone_number() != null && !user.getPhone_number().isEmpty()) {
+            if (user.getPhone_number() != null && !user.getPhone_number().isEmpty() && !user.getPhone_number().equals(sessionUser.getPhone_number())) {
                 sessionUser.setPhone_number(user.getPhone_number());
             }
             userService.saveUser(sessionUser);
@@ -186,8 +189,8 @@ public class ClientController {
         order.setUserID(sessionUser.getId());
         order.setOrder_date(new java.util.Date());
         order.setNote(orderNote);
-        order.setPhoneNumber(sessionUser.getPhone_number());
-        order.setAddress(sessionUser.getAddress());
+        order.setPhoneNumber(orderPhoneNumber);
+        order.setAddress(orderAddress);
         order.setStatus(OrderStatus.PENDING);
 
         List<CartItemDTO> cartItems = cartItemService.getCartItems(sessionUser.getId());
@@ -201,8 +204,9 @@ public class ClientController {
         for (int i = 0; i < cartItems.size(); i++) {
             Product product = products.get(i);
             CartItemDTO cartItem = cartItems.get(i);
-            if(product.getStock() < cartItem.getQuantity()){
-               continue;
+            if (product.getStock() < cartItem.getQuantity()) {
+                response.sendError(400);
+                return null;
             }
             product.setStock(product.getStock() - cartItem.getQuantity());
             productService.saveProduct(product);
@@ -216,7 +220,7 @@ public class ClientController {
             orderDetail.setOrderID(order.getId());
             orderDetail.setProductID(cartItem.getId());
             orderDetail.setQuantity(cartItem.getQuantity());
-            orderDetail.setPrice(cartItem.getPrice()*cartItem.getQuantity());
+            orderDetail.setPrice(cartItem.getPrice() * cartItem.getQuantity());
             orderDetailService.saveOrderDetail(orderDetail);
         }
 
@@ -372,14 +376,14 @@ public class ClientController {
         orders.sort((o1, o2) -> o2.getOrder_date().compareTo(o1.getOrder_date()));
 
         List<List<OrderDetail>> orderDetails = new ArrayList<>();
-        for (var o : orders){
+        for (var o : orders) {
             orderDetails.add(orderDetailService.getOrderDetailByOrderID(o.getId()));
         }
 
         List<List<Product>> products = new ArrayList<>();
-        for (var od : orderDetails){
+        for (var od : orderDetails) {
             List<Product> p = new ArrayList<>();
-            for (var o : od){
+            for (var o : od) {
                 p.add(productService.getProductById(o.getProductID()));
             }
             products.add(p);
