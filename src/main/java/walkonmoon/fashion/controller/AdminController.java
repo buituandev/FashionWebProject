@@ -263,23 +263,23 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         }
 //        Path path = Paths.get("/ProjectB/FashionWebProject/src/main/resources/static" + fileUrl);;
 
-        ResponseEntity<String> deleteImg = deleteFile(fileUrl);
-        for (Image img : imageService.findByProductId(id)) {
-            String url = img.getImageurl();
-            ResponseEntity<String> delete = deleteFile(url);
-        }
-
-        if (deleteImg.getStatusCode() != HttpStatus.OK) {
-            System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
-        }
+//        ResponseEntity<String> deleteImg = deleteFile(fileUrl);
+//        for (Image img : imageService.findByProductId(id)) {
+//            String url = img.getImageurl();
+//            ResponseEntity<String> delete = deleteFile(url);
+//        }
+//
+//        if (deleteImg.getStatusCode() != HttpStatus.OK) {
+//            System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
+//        }
         imageService.deleteByProductId(id);
-
+        productService.deleteProductById(id);
         Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
         if (category.getQuantity() > 0) {
             category.setQuantity(category.getQuantity() - 1);
             categoryService.saveCategory(category);
         }
-        productService.deleteProductById(id);
+
 //        if (Files.exists(path)) {
 //            try {
 //                Files.delete(path);

@@ -44,5 +44,7 @@ public class Product {
     private Boolean isNew = false;
     @Column(name = "status")
     private String status;
+    @Column(name="title")
+    private String title;
 
 }
