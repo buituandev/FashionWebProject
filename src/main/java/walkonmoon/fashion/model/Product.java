@@ -43,7 +43,7 @@ public class Product {
     @Column(name = "is_new")
     private Boolean isNew = false;
     @Column(name = "status")
-    private String status;
+    private ProductStatus status;
     @Column(name="title")
     private String title;
 

@@ -257,6 +257,9 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         List<CartItem> cartitem = cartItemService.getAllCartItems();
         for(CartItem cart : cartitem){
             if(cart.getProductId() == id){
+                Product product = productService.getProductById(id);
+                product.setStatus(ProductStatus.DISABLE);
+                productService.saveProduct(product);
                 redirectAttributes.addFlashAttribute("errorMessage",  "The product already in customer cart");
                 return "redirect:/admin/eco-products.html";
             }
@@ -273,12 +276,13 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
 //            System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
 //        }
         imageService.deleteByProductId(id);
-        productService.deleteProductById(id);
+
         Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
         if (category.getQuantity() > 0) {
             category.setQuantity(category.getQuantity() - 1);
             categoryService.saveCategory(category);
         }
+        productService.deleteProductById(id);
 
 //        if (Files.exists(path)) {
 //            try {
@@ -308,21 +312,38 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         return "redirect:/admin/eco-products.html";
     }
 
-    @PostMapping("/delete-multiple-products")
-    public ResponseEntity<String> deleteProducts(@RequestBody List<Integer> productIds) {
+    @PostMapping("/delete-more-products")
+    public ResponseEntity<?> deleteMultipleProducts(@RequestBody Map<String, List<Integer>> payload) {
+        List<Integer> productIds = payload.get("productIds");
         if (productIds.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No products selected for deletion");
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "No products selected for deletion"));
         }
 
-
-        boolean deleted = productService.deleteProducts(productIds);
-
-        if (deleted) {
-            return ResponseEntity.ok("Products deleted successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting products");
+        try {
+            for(Integer id : productIds){
+                List<CartItem> cartItem = cartItemService.getAllCartItems();
+                for(CartItem cart : cartItem){
+                    if(cart.getProductId() == id){
+                        Product product = productService.getProductById(id);
+                        product.setStatus(ProductStatus.DISABLE);
+                        productService.saveProduct(product);
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("error", "Some products in cart"));
+                    }
+                }
+                imageService.deleteByProductId(id);
+                Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
+                if (category.getQuantity() > 0) {
+                    category.setQuantity(category.getQuantity() - 1);
+                    categoryService.saveCategory(category);
+                }
+            }
+            productService.deleteProducts(productIds);
+            return ResponseEntity.ok().body(Collections.singletonMap("message", "Products deleted successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "Failed to delete products"));
         }
     }
+
 
     @PostMapping("/eco-products/save")
     public String saveProduct(@ModelAttribute Product product, Model model,
@@ -448,13 +469,6 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         List<User> users = userService.getListUser(); // Fetch all users
         model.addAttribute("userList", users);
         return "admin/user-management";
-    }
-
-    @GetMapping("/user-form/{id}")
-    public String userForm(@PathVariable("id") Integer id, Model model){
-        User user = userService.findUserById(id);
-        model.addAttribute(user);
-        return "admin/user-form";
     }
 
     @PostMapping("/user-form/edit")
