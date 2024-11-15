@@ -62,6 +62,9 @@ public class UserService {
             UUID uuid = UUID.randomUUID();
             user.setToken(uuid.toString());
             user.setTokenExpired(LocalDateTime.now().plusHours(1));
+            System.out.println("test token");
+            System.out.println(user.getToken());
+            System.out.println(user.getTokenExpired());
             userRepo.save(user);
             return uuid.toString();
         }

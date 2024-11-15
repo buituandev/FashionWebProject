@@ -335,18 +335,26 @@ public class ClientController {
 //        return "redirect:/my-account.html";
 //    }
     @PostMapping("/editProfile")
-    public String editProfileHtml(@ModelAttribute User user, Model model) {
-        User existingUser = userService.findUserById(user.getId());
+    public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session) {
+        User existingUser = (User) session.getAttribute("user");
         if (existingUser != null) {
-            existingUser.setGender(user.getGender());
-            existingUser.setPhone_number(user.getPhone_number());
-            existingUser.setDob(user.getDob());
-            existingUser.setFull_name(user.getFull_name());
-            // Update only necessary fields
-            userService.saveUser(existingUser);
-            model.addAttribute("user", existingUser);
+//            if (user.getFull_name() != null && !user.getFull_name().isEmpty()) {
+                existingUser.setGender(user.getGender());
+                existingUser.setPhone_number(user.getPhone_number());
+                existingUser.setDob(user.getDob());
+                existingUser.setFull_name(user.getFull_name());
+//            user.setPassword(user.getPassword());
+//            user.setEmail(user.getEmail());
+//            user.setAddress(user.getAddress());
+//            user.setTokenExpired(user.getTokenExpired());
+//            user.setToken(user.getToken());
+                session.removeAttribute("user");
+                session.setAttribute("user", existingUser);
+                userService.saveUser(existingUser);
+                model.addAttribute("user", existingUser);
+//            }
         }
-        return "my-account";
+        return "redirect:/my-account.html";
     }
 
     @PostMapping("/login/access")
@@ -441,6 +449,7 @@ public class ClientController {
     @GetMapping("/my-account.html")
     public String myAccountHtml(Model model, HttpServletRequest request, HttpSession session) {
         User user = (User) session.getAttribute("user");
+        System.out.println(user);
         if (user != null) {
             model.addAttribute("user", user);
         } else {
