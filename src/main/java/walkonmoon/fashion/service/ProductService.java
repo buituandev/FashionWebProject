@@ -45,4 +45,16 @@ public class ProductService {
     public List<Product> getProductsByIds(List<Integer> productIds) {
         return proRepo.findByIdIn(productIds);
     }
+
+    @Transactional
+    public boolean deleteProducts(List<Integer> productIds) {
+        try {
+            proRepo.deleteAllById(productIds);
+            return true;
+        } catch (Exception e) {
+            // Log the error and return false if deletion fails
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

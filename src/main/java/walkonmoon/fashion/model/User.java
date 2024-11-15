@@ -1,5 +1,4 @@
 package walkonmoon.fashion.model;
-
 import jakarta.persistence.*;
 import lombok.Cleanup;
 import lombok.Getter;
@@ -7,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -16,8 +16,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
-
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -42,10 +42,11 @@ public class User {
     private int type;
     @Column
     private int is_deleted;
-    @Column(nullable = true)
+    @Column(name = "province", nullable = true)
     private String province;
     @Column
     private String email;
-
+    @Column
+    private String status;
 
 }

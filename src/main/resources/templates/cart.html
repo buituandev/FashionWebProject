@@ -59,9 +59,9 @@
                                                     <td>Image</td>
                                                     <td>Product Name</td>
                                                     <!--                                                                <td>Model</td>-->
-                                                    <td>Quantity</td>
-                                                    <td>Unit Price</td>
-                                                    <td>Total</td>
+                                                    <td style="text-align: center">Quantity</td>
+                                                    <td style="text-align: right">Unit Price</td>
+                                                    <td style="text-align: right">Total</td>
                                                 </tr>
                                                 </thead>
                                                 <tbody class="cart-table">
@@ -103,11 +103,11 @@
                                                         </div>
                                                     </td>
                                                     <td class="price-new formatted-price"
-                                                        th:text="${cartItem.price}+' VND'">
+                                                        th:text="${cartItem.price}+' VND'" style="text-align: right">
                                                         <span></span>
                                                     </td>
                                                     <td class="formatted-price"
-                                                        th:text="${cartItem.price}*${cartItem.quantity} +' VND'">$200.00
+                                                        th:text="${cartItem.price}*${cartItem.quantity} +' VND'" style="text-align: right">$200.00
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -222,7 +222,7 @@
                                                             </td>
                                                             <td>
                                                                 <span class="color-primary total-price-display formatted-price"
-                                                                      th:text="${totalPrice}">$860.00</span>
+                                                                      th:text="${totalPrice}" style="text-align: right">$860.00</span>
                                                             </td>
                                                         </tr>
                                                         </tbody>

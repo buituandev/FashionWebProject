@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products-edit.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
+<head th:replace="~{admin/admin_layout :: head}">
+</head>
+
+<body class="skin-default fixed-layout">
+<style>
+    .user-select {
+        appearance: none; /* Remove default arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="black" stroke-width=".5" d="M0 0L2 2L4 0"/></svg>') no-repeat right 10px center;
+        background-color: #fff;
+        background-size: 10px;
+        padding-right: 30px; /* Ensure space for arrow */
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+</style>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<!--<div th:replace="admin/admin_layout :: preload"></div>-->
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header th:replace="~{admin/admin_layout :: header}"></header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside th:replace="~{admin/admin_layout :: navbar}"></aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h4 class="text-themecolor" style="font-weight: 600">Edit User</h4>
+                </div>
+                <div class="col-md-7 align-self-center text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb justify-content-end">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active">User edit</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Info box Content -->
+            <!-- ============================================================== -->
+
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/admin/user-form/edit}" method="post" th:object="${user}"
+                                  enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Full Name</label>
+                                                <input type="text" th:field="*{full_name}"
+                                                       class="form-control">
+                                                <input type="hidden" th:field="*{id}"/>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Address</label>
+                                                <input type="text" th:field="*{address}"
+                                                       class="form-control"></div>
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Email</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                    </div>
+                                                    <input type="text" class="form-control" th:field="*{email}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Gender</label>
+                                                <select th:field="*{gender}" class="form-control user-select"
+                                                        tabindex="1">
+                                                    <option th:value="Male" selected>Male</option>
+                                                    <option th:value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--span-->
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Date of Birth</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" th:field="*{dob}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Phone Number</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                    </div>
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{phone_number}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Type</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                    </div>
+                                                    <input type="text" class="form-control"
+                                                           th:if="${user.getType() == 1}" th:value="Admin" readonly>
+                                                    <input type="text" class="form-control"
+                                                           th:if="${user.getType() == 0}" th:value="User" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group" style="font-weight: 600">
+                                                <label class="form-label">Status</label>
+                                                <select th:field="*{status}" class="form-control user-select"
+                                                        tabindex="1">
+                                                    <option th:value="Enable" selected>Enable</option>
+                                                    <option th:value="Disable">Disable</option>
+                                                    <option th:value="Delete">Delete</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="form-actions m-t-40">
+                                            <button type="submit" class="btn btn-success text-white"><i
+                                                    class="fa fa-check"></i> Save
+                                            </button>
+                                            <button type="button" class="btn btn-dark"><a
+                                                    th:href="@{'/admin/eco-products.html'}"
+                                                    style="color: white">Cancel</a></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <div th:replace="~{admin/admin_layout :: rightsidebar}"></div>
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer th:replace="~{admin/admin_layout :: footer}"></footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<div th:replace="admin/admin_layout :: jscript"></div>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
