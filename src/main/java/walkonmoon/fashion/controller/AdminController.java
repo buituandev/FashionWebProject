@@ -47,6 +47,8 @@ public class AdminController {
     private CartItemService  cartItemService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderDetailService orderDetailService;
 
 
     public AdminController(FirebaseConfig firebaseConfig) {
@@ -91,6 +93,31 @@ public class AdminController {
         model.addAttribute("userName",userName);
         model.addAttribute("orderList", orders);
         return "admin/eco-products-orders";
+    }
+
+    @GetMapping("/eco-order-detail/{id}")
+    public String orderDetail(@PathVariable("id") Integer id,  Model model){
+        List<OrderDetail> orderdetail =  orderDetailService.getOrderDetailByOrderID(id);
+        List<Product> products = new ArrayList<>();
+        for(OrderDetail orderDetail : orderdetail){
+             Product product = productService.getProductById(orderDetail.getProductID());
+             products.add(product);
+        }
+        model.addAttribute("productList", products);
+        model.addAttribute("orderItems", orderdetail);
+        return "admin/eco-order-detail";
+    }
+
+    @PostMapping("/update-order-status/{id}")
+    @ResponseBody
+    public ResponseEntity<?> updateOrderStatus(@PathVariable("id") Integer id, @RequestBody Map<String, String> request) {
+        String newStatus = request.get("status");
+
+        Order order = orderService.getOrderbyOrderID(id);
+        order.setStatus(OrderStatus.valueOf(newStatus));
+        orderService.saveOrder(order);
+
+        return ResponseEntity.ok(Collections.singletonMap("success", true));
     }
 
     @GetMapping("/eco-products-edit.html")
@@ -281,35 +308,21 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         return "redirect:/admin/eco-products.html";
     }
 
-//    @PostMapping("/deleteProducts")
-//    public ResponseEntity<?> deleteProducts(@RequestBody Map<String, List<Integer>> request) {
-//        List<Integer> productIds = request.get("productIds");
-//        if (productIds != null && !productIds.isEmpty()) {
-//            for(Integer id : productIds){
-//                String fileUrl = productService.getProductById(id).getImage_collection_url();
-//                ResponseEntity<String> deleteImg = deleteFile(fileUrl);
-//                for (Image img : imageService.findByProductId(id)) {
-//                    String url = img.getImageurl();
-//                    ResponseEntity<String> delete = deleteFile(url);
-//                }
-//
-//                if (deleteImg.getStatusCode() != HttpStatus.OK) {
-//                    System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
-//                }
-//                imageService.deleteByProductId(id);
-//
-//                Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
-//                if (category.getQuantity() > 0) {
-//                    category.setQuantity(category.getQuantity() - 1);
-//                    categoryService.saveCategory(category);
-//                }
-//                productService.deleteProductById(id);
-//            }
-//            return ResponseEntity.ok(Map.of("success", true));
-//        } else {
-//            return ResponseEntity.badRequest().body(Map.of("success", false, "message", "No products to delete."));
-//        }
-//    }
+    @PostMapping("/delete-multiple-products")
+    public ResponseEntity<String> deleteProducts(@RequestBody List<Integer> productIds) {
+        if (productIds.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No products selected for deletion");
+        }
+
+
+        boolean deleted = productService.deleteProducts(productIds);
+
+        if (deleted) {
+            return ResponseEntity.ok("Products deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting products");
+        }
+    }
 
     @PostMapping("/eco-products/save")
     public String saveProduct(@ModelAttribute Product product, Model model,

@@ -21,4 +21,10 @@ public class OrderService {
     public List<Order> getOrdersByUserID(Integer userID) {
         return orderRepository.findByUserID(userID);
     }
+    public List<Order> getOrderList(){
+        return orderRepository.findAll();
+    }
+    public Order getOrderbyOrderID(int id){
+         return orderRepository.findById(id).orElse(null);
+    }
 }

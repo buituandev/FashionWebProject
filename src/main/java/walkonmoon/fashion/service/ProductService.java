@@ -46,10 +46,15 @@ public class ProductService {
         return proRepo.findByIdIn(productIds);
     }
 
-//    @Transactional
-//    public void  deleteProducts(List<Integer> productIds) {
-//        for(Integer id : productIds){
-//            proRepo.deleteById(id);
-//        }
-//    }
+    @Transactional
+    public boolean deleteProducts(List<Integer> productIds) {
+        try {
+            proRepo.deleteAllById(productIds);
+            return true;
+        } catch (Exception e) {
+            // Log the error and return false if deletion fails
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -98,4 +98,9 @@ public class CartItemService {
     public void clearCartItems(int userId) {
         cartItemRepository.deleteByUserId(userId);
     }
+
+    @Transactional
+    public List<CartItem> getAllCartItems(){
+        return (List<CartItem>) cartItemRepository.findAll();
+    }
 }
