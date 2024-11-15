@@ -9,4 +9,5 @@ public interface CartItemRepository extends CrudRepository<CartItem,Integer> {
     CartItem findByUserIdAndProductId(int userId, int productId);
     List<CartItem> findByUserId(int userId);
     void deleteByUserIdAndProductId(int userId, int productId);
+    void deleteByUserId(int userId);
 }

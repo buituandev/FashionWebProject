@@ -15,13 +15,11 @@ public class StartupTaskRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        int totalTasks = 5; // Number of startup tasks
+        int totalTasks = 2;
         for (int i = 1; i <= totalTasks; i++) {
-            // Simulate a startup task
-            Thread.sleep(1000); // Replace with actual startup task
+            Thread.sleep(1000);
             int progress = (i * 100) / totalTasks;
             progressListener.updateProgress(progress);
         }
-        System.out.println("\nThe application is ready to serve requests. Visit http://localhost:8080");
     }
 }

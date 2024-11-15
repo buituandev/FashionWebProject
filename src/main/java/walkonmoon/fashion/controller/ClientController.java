@@ -13,17 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import walkonmoon.fashion.dto.CartItemDTO;
 import org.springframework.web.bind.annotation.*;
-import walkonmoon.fashion.model.Category;
-import walkonmoon.fashion.model.Image;
-import walkonmoon.fashion.model.Product;
-import walkonmoon.fashion.model.User;
+import walkonmoon.fashion.model.*;
 import walkonmoon.fashion.service.CategoryService;
 import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
-
 import java.time.LocalDateTime;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +29,8 @@ import java.util.Map;
 import java.util.Collections;
 import java.util.Random;
 import java.util.stream.Collectors;
+
+import static java.io.IO.println;
 
 @Controller
 public class ClientController {
@@ -46,6 +46,11 @@ public class ClientController {
     private CartItemService cartItemService;
     @Autowired
     private EmailService emailService;
+    private OrderService oderService;
+    @Autowired
+    private OrderDetailService orderDetailService;
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping(value = {"/", "/index.html"})
     public String index(Model model, HttpServletRequest request, HttpSession session) {
@@ -208,7 +213,81 @@ public class ClientController {
     @GetMapping("/checkout.html")
     public String checkoutHtml(Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            return "redirect:/login.html";
+        } else {
+            addUserToModel(user, model);
+        }
         return "checkout";
+    }
+
+    @PostMapping("/checkout")
+    public String checkOut(Model model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute User user, @RequestParam("order_note") String orderNote,
+                           @RequestParam("order_phone_number") String orderPhoneNumber, @RequestParam("order_address") String orderAddress, @RequestParam("order_email") String orderEmail,
+                           HttpSession session) throws IOException {
+        User sessionUser = (User) session.getAttribute("user");
+
+        if (sessionUser != null) {
+            if (user.getFull_name() != null && !user.getFull_name().isEmpty() && !user.getFull_name().equals(sessionUser.getFull_name())) {
+                sessionUser.setFull_name(user.getFull_name());
+            }
+            if (user.getEmail() != null && !user.getEmail().isEmpty() && !user.getEmail().equals(sessionUser.getEmail())) {
+                sessionUser.setEmail(user.getEmail());
+            }
+            if (user.getAddress() != null && !user.getAddress().isEmpty() && !user.getAddress().equals(sessionUser.getAddress())) {
+                sessionUser.setAddress(user.getAddress());
+            }
+            if (user.getPhone_number() != null && !user.getPhone_number().isEmpty() && !user.getPhone_number().equals(sessionUser.getPhone_number())) {
+                sessionUser.setPhone_number(user.getPhone_number());
+            }
+            userService.saveUser(sessionUser);
+        } else {
+            return "redirect:/login.html";
+        }
+
+        Order order = new Order();
+        order.setUserID(sessionUser.getId());
+        order.setOrder_date(new java.util.Date());
+        order.setNote(orderNote);
+        order.setPhoneNumber(orderPhoneNumber);
+        order.setAddress(orderAddress);
+        order.setStatus(OrderStatus.PENDING);
+
+        List<CartItemDTO> cartItems = cartItemService.getCartItems(sessionUser.getId());
+        List<Product> products = new ArrayList<>();
+
+        for (CartItemDTO cartItem : cartItems) {
+            Product product = productService.getProductById(cartItem.getId());
+            products.add(product);
+        }
+
+        for (int i = 0; i < cartItems.size(); i++) {
+            Product product = products.get(i);
+            CartItemDTO cartItem = cartItems.get(i);
+            if (product.getStock() < cartItem.getQuantity()) {
+                response.sendError(400);
+                return null;
+            }
+            product.setStock(product.getStock() - cartItem.getQuantity());
+            productService.saveProduct(product);
+        }
+
+        order.setTotal_price(cartItemService.calculateTotalPrice(cartItems));
+        orderService.saveOrder(order);
+
+        for (CartItemDTO cartItem : cartItems) {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrderID(order.getId());
+            orderDetail.setProductID(cartItem.getId());
+            orderDetail.setQuantity(cartItem.getQuantity());
+            orderDetail.setPrice(cartItem.getPrice() * cartItem.getQuantity());
+            orderDetailService.saveOrderDetail(orderDetail);
+        }
+
+        cartItemService.clearCartItems(sessionUser.getId());
+
+        return "redirect:/my-account.html#order-history";
     }
 
 
@@ -368,17 +447,34 @@ public class ClientController {
             model.addAttribute("user", null);
             return "redirect:/login.html";
         }
+        List<Order> orders = orderService.getOrdersByUserID(user.getId());
+        // Sort the list by order.order_date
+        orders.sort((o1, o2) -> o2.getOrder_date().compareTo(o1.getOrder_date()));
+
+        List<List<OrderDetail>> orderDetails = new ArrayList<>();
+        for (var o : orders) {
+            orderDetails.add(orderDetailService.getOrderDetailByOrderID(o.getId()));
+        }
+
+        List<List<Product>> products = new ArrayList<>();
+        for (var od : orderDetails) {
+            List<Product> p = new ArrayList<>();
+            for (var o : od) {
+                p.add(productService.getProductById(o.getProductID()));
+            }
+            products.add(p);
+        }
+
+        model.addAttribute("products", products);
+        model.addAttribute("orders", orders);
+        model.addAttribute("orderDetails", orderDetails);
         addCartItemsToModel(user.getId(), model);
         addCategoriesToModel(model);
         return "my-account";
     }
 
-    public void addUserToModel(User user, Model model) {
-        if (user != null) {
-            model.addAttribute("user", user);
-        } else {
-            model.addAttribute("user", null);
-        }
+    private void addUserToModel(User user, Model model) {
+        model.addAttribute("user", user);
     }
 
     public void addCategoriesToModel(Model model) {
@@ -428,6 +524,7 @@ public class ClientController {
         } else {
             addCartItemsToModel(user.getId(), model);
             addUserToModel(user, model);
+            println("Debug: Session got user");
         }
         model.addAttribute("requestURI", request.getRequestURI());
     }

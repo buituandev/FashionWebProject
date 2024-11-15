@@ -78,6 +78,8 @@
                                             <ul class="nav flex-column dashboard-list" role="tablist">
                                                 <li><a class="nav-link" data-bs-toggle="tab" href="#account-details">Account
                                                     details</a></li>
+                                                <li><a class="nav-link" data-bs-toggle="tab" href="#order-history">Order
+                                                    History</a></li>
                                                 <li><a class="nav-link" th:href="@{/logout}">Log out</a></li>
                                             </ul> <!-- end of dashboard-list -->
                                         </div>
@@ -188,29 +190,111 @@
                                                                    th:field="*{dob}">
                                                         </div>
                                                     </div>
-                                                    <!--                                                                <div class="form-check row p-0 mt-5">-->
-                                                    <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
-                                                    <!--                                                                        <div class="custom-checkbox">-->
-                                                    <!--                                                                            <input class="form-check-input" type="checkbox" id="offer">-->
-                                                    <!--                                                                            <span class="checkmark"></span>-->
-                                                    <!--                                                                            <label class="form-check-label" for="offer">Receive offers from our partners</label>-->
-                                                    <!--                                                                        </div>-->
-                                                    <!--                                                                    </div>-->
-                                                    <!--                                                                </div>-->
-                                                    <!--                                                                <div class="form-check row p-0 mt-4">-->
-                                                    <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
-                                                    <!--                                                                        <div class="custom-checkbox">-->
-                                                    <!--                                                                            <input class="form-check-input" type="checkbox" id="subscribe" required>-->
-                                                    <!--                                                                            <span class="checkmark"></span>-->
-                                                    <!--                                                                            <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>-->
-                                                    <!--                                                                        </div>-->
-                                                    <!--                                                                    </div>-->
-                                                    <!--                                                                </div>-->
+                                                   
                                                     <div class="register-box d-flex justify-content-end mt-half">
                                                         <button type="submit" class="btn btn-secondary">Save
                                                         </button>
                                                     </div>
                                                     </form>
+=======
+                                                </div> <!-- end of tab-pane -->
+                                                <div id="order-history" class="tab-pane fade">
+                                                    <h3>Order History</h3>
+                                                    <div th:if="${orders != null}">
+                                                        <div th:each="order, orderStat : ${orders}"
+                                                             class="card mb-3 shadow-sm">
+                                                            <div class="card-header d-flex justify-content-between align-items-center">
+                                                                <span>Order #<span th:text="${order.id}"></span></span>
+                                                                <span class="badge bg-primary text-uppercase"
+                                                                      th:text="${order.status}"></span>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <!-- Order Details Header -->
+                                                                <h4 class="card-title mb-3 d-flex align-items-center">
+                                                                    <i class="material-icons me-2">receipt</i> Order
+                                                                    Details
+                                                                </h4>
+                                                                <ul class="list-group overflow-auto"
+                                                                    style="max-height: 300px;">
+                                                                    <!-- Item List -->
+                                                                    <li class="list-group-item"
+                                                                        th:each="detail : ${orderDetails[orderStat.index]}">
+                                                                        <div class="d-flex align-items-center">
+                                                                            <!-- Product Image -->
+                                                                            <div class="me-3">
+                                                                                <a th:href="@{'/single-product/' + ${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).id}}">
+                                                                                    <img class="img-fluid rounded"
+                                                                                         style="max-width: 100px; height: auto;"
+                                                                                         th:src="${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).getImage_collection_url()}"
+                                                                                         th:alt="${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).getProduct_name()}">
+                                                                                </a>
+                                                                            </div>
+                                                                            <!-- Product Info -->
+                                                                            <div class="flex-grow-1">
+                                                                                <h6 th:text="${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).getProduct_name()}"></h6>
+                                                                                <p class="mb-1 d-flex align-items-center">
+                                                                                    <i class="material-icons">shopping_cart</i>
+                                                                                    <span th:text="'Quantity: ' + ${detail.quantity}"></span>
+                                                                                </p>
+                                                                                <p class="mb-0 d-flex align-items-center">
+                                                                                    <i class="material-icons">attach_money</i>
+                                                                                    <span class="formatted-price"
+                                                                                          th:text="${detail.price} + ' VND'"></span>
+                                                                                </p>
+                                                                            </div>
+                                                                            <!-- Buy Again Button -->
+                                                                            <div class="ms-auto">
+                                                                                <a th:href="@{'/single-product/' + ${products[orderStat.index].get(orderDetails[orderStat.index].indexOf(detail)).id}}"
+                                                                                   class="btn btn-secondary d-flex align-items-center">
+                                                                                    <!--                                                                                    <i class="material-icons">replay</i>-->
+                                                                                    Buy Again
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <!-- Order Summary and Shipping Address -->
+                                                                <div class="mt-4">
+                                                                    <div class="card border-light">
+                                                                        <div class="card-body">
+                                                                            <!-- Shipping Address Section -->
+                                                                            <h4 class="d-flex align-items-center"><i
+                                                                                    class="material-icons me-2">location_on</i>
+                                                                                Shipping Address</h4>
+                                                                            <p class="mb-3"
+                                                                               th:text="${order.address}"></p>
+
+                                                                            <!-- User Note, Order Date -->
+                                                                            <p class="card-text mb-1">
+                                                                                <strong>Phone number:</strong> <span
+                                                                                    th:text="${order.phoneNumber}"></span>
+                                                                            </p>
+                                                                            <p class="card-text mb-1">
+                                                                                <strong>User Note:</strong> <span
+                                                                                    th:text="${order.note}"></span>
+                                                                            </p>
+                                                                            <p class="card-text mb-3">
+                                                                                <strong>Order Date:</strong> <span
+                                                                                    th:text="${order.order_date}"></span>
+                                                                            </p>
+
+                                                                            <!-- Total Price, Positioned Bottom Right -->
+                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                <strong>Total Price:</strong>
+                                                                                <span class="formatted-price fs-4 fw-bold"
+                                                                                      style="color: #cc2121"
+                                                                                      th:text="${order.total_price} + ' VND'"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div th:if="${orders == null}">
+                                                        <p>There's no order. Order some and come back again!</p>
+                                                    </div>
                                                 </div>
                                             </div> <!-- end of tab-pane -->
                                         </div> <!-- end of tab-pane -->
@@ -278,21 +362,51 @@
 ============================================ -->
 
 <!-- jQuery JS -->
-<script src="assets/js/jquery.1.12.4.min.js"></script>
+<script src="/assets/js/jquery.1.12.4.min.js"></script>
 
 <!-- Popper JS -->
-<script src="assets/js/popper.min.js"></script>
+<script src="/assets/js/popper.min.js"></script>
 
 <!-- Bootstrap JS -->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/bootstrap.min.js"></script>
 
 <!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
+<script src="/assets/js/plugins.js"></script>
 
 <!-- Main JS -->
-<script src="assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 <script src="/assets/js/FormatPrice.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const badges = document.querySelectorAll('.badge');
 
+        badges.forEach(badge => {
+            const status = badge.textContent.trim().toUpperCase();
+
+            switch (status) {
+                case 'PENDING':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-warning');
+                    break;
+                case 'SHIPPING':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-info');
+                    break;
+                case 'DELIVERED':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-success');
+                    break;
+                case 'CANCELLED':
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-danger');
+                    break;
+                default:
+                    badge.classList.remove('bg-primary');
+                    badge.classList.add('bg-secondary');
+                    break;
+            }
+        });
+    });</script>
 </body>
 
 </html>

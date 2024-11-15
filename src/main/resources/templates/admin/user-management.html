@@ -5,7 +5,6 @@
 <head th:replace = "admin/admin_layout :: head"></head>
 <link rel="stylesheet" type="text/css"
       href="../assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
-=======
 
 
 <body class="skin-default fixed-layout">
@@ -76,14 +75,14 @@
                                 <th>ID</th>
                                 <th>Full Name</th>
                                 <th>Email</th>
-                                <th>Password</th>
                                 <th>DOB</th>
                                 <th>Address</th>
                                 <th>Phone Number</th>
                                 <th>Image</th>
                                 <th>Gender</th>
                                 <th>Type</th>
-                                <th>Province</th>
+                                <th>Status</th>
+<!--                                <th>Province</th>-->
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -92,15 +91,17 @@
                                 <td th:text="${user.getId()}"></td>
                                 <td th:text="${user.getFull_name()}"></td>
                                 <td th:text="${user.getEmail()}"></td>
-                                <td th:text="${user.getPassword()}"></td>
                                 <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td>
                                 <td th:text="${user.getAddress()}"></td>
                                 <td th:text="${user.getPhone_number()}"></td>
                                 <td th:text="${user.getImage()}"></td>
                                 <td th:text="${user.getGender()}"></td>
-                                <td th:text="${user.getType()}"></td>
-                                <td th:text="${user.getProvince()}"></td>
-                                <td><a href="javascript:void(0)" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a> <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
+                                <td th:if="${user.getType() == 0}" th:text="User"></td>
+                                <td th:if="${user.getType() == 1}" th:text="Admin"></td>
+                                <td th:text="${user.getStatus()}"></td>
+<!--                                <td th:text="${user.getProvince()}"></td>-->
+                                <td><a th:href="@{'/admin/user-form/' + ${user.getId()}}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
+                                    <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
                             </tr>
                             </tbody>
                         </table>

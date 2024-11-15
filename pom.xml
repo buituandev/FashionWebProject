@@ -117,8 +117,8 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson -->
-            <version>0.11.2</version>
-        </dependency>
+          <version>0.11.2</version>
+      </dependency>
     </dependencies>
     <build>
         <plugins>
