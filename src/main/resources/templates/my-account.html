@@ -165,84 +165,66 @@
                                                                            th:field="*{full_name}">
                                                                 </div>
                                                             </div>
-                                                            <!--
-                                                                                                                            <div class="form-group row">
-                                                                                                                                <label for="email" class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Email Address</label>
-                                                                                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                                                                                    <input type="text" class="form-control" id="email" required th:value="${user.email}" th:field="*{user.email}">
-                                                                                                                                </div>
-                                                                                                                            </div                                                                <div class="form-group row">-->
-                                                            <!--                                                                    <label for="inputpassword" class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Current Password</label>-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-6">-->
-                                                            <!--                                                                        <input type="password" class="form-control" id="inputpassword" required>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <!--                                                                <div class="form-group row">-->
-                                                            <!--                                                                    <label for="newpassword" class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">New Password</label>-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-6">-->
-                                                            <!--                                                                        <input type="password" class="form-control" id="newpassword" required>-->
-                                                            <!--                                                                        <button class="pass-show-btn" type="button">Show</button>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <div class="form-group row">
-                                                                <label for="phonenumber"
-                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Phone
-                                                                    number</label>
-                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                    <input type="text" class="form-control"
-                                                                           id="phonenumber" required
-                                                                           th:value="${user.getPhone_number()}"
-                                                                           th:field="*{phone_number}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="birth"
-                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Birthdate
-                                                                    (Optional)</label>
-                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                    <input type="date" class="form-control" id="birth"
-                                                                           placeholder="YYYY//MM/DD" required
-                                                                           th:value="${user.getDob()}"
-                                                                           th:field="*{dob}">
-                                                                </div>
-                                                            </div>
-                                                            <!--                                                                <div class="form-check row p-0 mt-5">-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
-                                                            <!--                                                                        <div class="custom-checkbox">-->
-                                                            <!--                                                                            <input class="form-check-input" type="checkbox" id="offer">-->
-                                                            <!--                                                                            <span class="checkmark"></span>-->
-                                                            <!--                                                                            <label class="form-check-label" for="offer">Receive offers from our partners</label>-->
-                                                            <!--                                                                        </div>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <!--                                                                <div class="form-check row p-0 mt-4">-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
-                                                            <!--                                                                        <div class="custom-checkbox">-->
-                                                            <!--                                                                            <input class="form-check-input" type="checkbox" id="subscribe" required>-->
-                                                            <!--                                                                            <span class="checkmark"></span>-->
-                                                            <!--                                                                            <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>-->
-                                                            <!--                                                                        </div>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <div class="register-box d-flex justify-content-end mt-half">
-                                                                <button type="submit" class="btn btn-secondary">Save
-                                                                </button>
-                                                            </div>
-                                                        </form>
+<!--                                                    </div>-->
+                                                    <div class="form-group row">
+                                                        <label for="phonenumber"
+                                                               class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Phone
+                                                            number</label>
+                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                            <input type="text" class="form-control"
+                                                                   id="phonenumber" required
+                                                                   th:value="${user.getPhone_number()}"
+                                                                   th:field="*{phone_number}">
+                                                        </div>
                                                     </div>
-                                                </div> <!-- end of tab-pane -->
+                                                    <div class="form-group row">
+                                                        <label for="birth"
+                                                               class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Birthdate
+                                                            (Optional)</label>
+                                                        <div class="col-12 col-sm-12 col-md-8 col-lg-6">
+                                                            <input type="date" class="form-control" id="birth"
+                                                                   placeholder="YYYY//MM/DD" required
+                                                                   th:value="${user.getDob()}"
+                                                                   th:field="*{dob}">
+                                                        </div>
+                                                    </div>
+                                                    <!--                                                                <div class="form-check row p-0 mt-5">-->
+                                                    <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
+                                                    <!--                                                                        <div class="custom-checkbox">-->
+                                                    <!--                                                                            <input class="form-check-input" type="checkbox" id="offer">-->
+                                                    <!--                                                                            <span class="checkmark"></span>-->
+                                                    <!--                                                                            <label class="form-check-label" for="offer">Receive offers from our partners</label>-->
+                                                    <!--                                                                        </div>-->
+                                                    <!--                                                                    </div>-->
+                                                    <!--                                                                </div>-->
+                                                    <!--                                                                <div class="form-check row p-0 mt-4">-->
+                                                    <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
+                                                    <!--                                                                        <div class="custom-checkbox">-->
+                                                    <!--                                                                            <input class="form-check-input" type="checkbox" id="subscribe" required>-->
+                                                    <!--                                                                            <span class="checkmark"></span>-->
+                                                    <!--                                                                            <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>-->
+                                                    <!--                                                                        </div>-->
+                                                    <!--                                                                    </div>-->
+                                                    <!--                                                                </div>-->
+                                                    <div class="register-box d-flex justify-content-end mt-half">
+                                                        <button type="submit" class="btn btn-secondary">Save
+                                                        </button>
+                                                    </div>
+                                                    </form>
+                                                </div>
                                             </div> <!-- end of tab-pane -->
-                                        </div>
+                                        </div> <!-- end of tab-pane -->
                                     </div>
-                                </div> <!-- end of row -->
-                            </div> <!-- end of main-dashboard -->
-                    </div> <!-- end of user-dashboard -->
-                    </main> <!-- end of #primary -->
-                </div>
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div>
-    <!-- End of My Account Wrapper -->
+                                </div>
+                            </div> <!-- end of row -->
+                    </div> <!-- end of main-dashboard -->
+<!--                </div> &lt;!&ndash; end of user-dashboard &ndash;&gt;-->
+                </main> <!-- end of #primary -->
+            </div>
+        </div> <!-- end of row -->
+    </div> <!-- end of container -->
+</div>
+<!-- End of My Account Wrapper -->
 </div>
 <!-- End of Main Content Wrapper -->
 

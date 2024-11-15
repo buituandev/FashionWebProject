@@ -238,24 +238,37 @@ public class ClientController {
         return "login";
     }
 
+    //    @PostMapping("/editProfile")
+//    public String editProfileHtml(Model model, HttpServletRequest request, @ModelAttribute User user) {
+//        User check = userService.findUserById(user.getId());
+//        if (check != null) {
+//            check.setGender(user.getGender());
+//            check.setPhone_number(user.getPhone_number());
+//            check.setDob(user.getDob());
+//            check.setType(0);
+//            check.setIs_deleted(0);
+//            check.setAddress("");
+//            check.setImage("");
+//            check.setProvince("");
+//        }
+//        model.addAttribute("user", check);
+//        userService.saveUser(check);
+//        return "redirect:/my-account.html";
+//    }
     @PostMapping("/editProfile")
-    public String editProfileHtml(Model model, HttpServletRequest request, @ModelAttribute User user) {
-        User check = userService.findUserById(user.getId());
-        if (check != null) {
-            check.setGender(user.getGender());
-            check.setPhone_number(user.getPhone_number());
-            check.setDob(user.getDob());
-            check.setType(0);
-            check.setIs_deleted(0);
-            check.setAddress("");
-            check.setImage("");
-            check.setProvince("");
+    public String editProfileHtml(@ModelAttribute User user, Model model) {
+        User existingUser = userService.findUserById(user.getId());
+        if (existingUser != null) {
+            existingUser.setGender(user.getGender());
+            existingUser.setPhone_number(user.getPhone_number());
+            existingUser.setDob(user.getDob());
+            existingUser.setFull_name(user.getFull_name());
+            // Update only necessary fields
+            userService.saveUser(existingUser);
+            model.addAttribute("user", existingUser);
         }
-        model.addAttribute("user", check);
-        userService.saveUser(check);
-        return "redirect:/my-account.html";
+        return "my-account";
     }
-
 
     @PostMapping("/login/access")
     public String loginAccount(@RequestParam("email") String email,
