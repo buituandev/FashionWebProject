@@ -8,7 +8,20 @@
 
 
 <body class="skin-default fixed-layout">
-<!-- ============================================================== -->
+<style>
+    .category-select {
+        appearance: none; /* Remove default arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="black" stroke-width=".5" d="M0 0L2 2L4 0"/></svg>') no-repeat right 10px center;
+        background-size: 10px;
+        background-color: #fff;
+        padding-right: 30px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+</style>
+    <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
 
@@ -78,7 +91,7 @@
                                 <th>DOB</th>
                                 <th>Address</th>
                                 <th>Phone Number</th>
-                                <th>Image</th>
+<!--                                <th>Image</th>-->
                                 <th>Gender</th>
                                 <th>Type</th>
                                 <th>Status</th>
@@ -94,14 +107,22 @@
                                 <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td>
                                 <td th:text="${user.getAddress()}"></td>
                                 <td th:text="${user.getPhone_number()}"></td>
-                                <td th:text="${user.getImage()}"></td>
+<!--                                <td th:text="${user.getImage()}"></td>-->
                                 <td th:text="${user.getGender()}"></td>
                                 <td th:if="${user.getType() == 0}" th:text="User"></td>
                                 <td th:if="${user.getType() == 1}" th:text="Admin"></td>
-                                <td th:text="${user.getStatus()}"></td>
+                                <td style="padding-top: 10px">
+                                    <select th:id="'status-' + ${user.getId()}" class="form-control category-select" style="padding-top: 10px">
+                                        <option value="ACTIVE" th:selected="${user.status.name() == 'ACTIVE'}">Active</option>
+                                        <option value="SUSPENDED" th:selected="${user.status.name() == 'SUSPENDED'}">Suspended</option>
+                                        <option value="DEACTIVATE" th:selected="${user.status.name() == 'DEACTIVATE'}">Deactivate</option>
+                                    </select>
+                                </td>
 <!--                                <td th:text="${user.getProvince()}"></td>-->
-                                <td><a th:href="@{'/admin/user-form/' + ${user.getId()}}" class="text-inverse p-r-10" data-bs-toggle="tooltip" title="Edit"><i class="ti-marker-alt"></i></a>
-                                    <a href="javascript:void(0)" class="text-inverse" title="Delete" data-bs-toggle="tooltip"><i class="ti-trash"></i></a></td>
+                                <td style="padding-top: 10px">
+                                    <button type="button" class="btn btn-primary"><i class="ti-reload"></i></button>
+                                </td>
+
                             </tr>
                             </tbody>
                         </table>

@@ -141,9 +141,10 @@
                                     </select>
                                 </td>
 
-                                <td style="text-align: center" th:onclick="|event.stopPropagation(); updateOrderStatus(${order.getId()})|">
-                                    <i class="ti-reload" style="cursor: pointer; color: orange; font-size: 15px"
-                                       title="Update Status"></i>
+                                <td style="text-align: center; padding-top:10px" th:onclick="|event.stopPropagation(); updateOrderStatus(${order.getId()})|">
+<!--                                    <i class="ti-reload" style="cursor: pointer; color: orange; font-size: 15px"-->
+<!--                                       title="Update Status"></i>-->
+                                    <button type="button" class="btn btn-primary"><i class="ti-reload"></i></button>
                                 </td>
                             </tr>
                             </tbody>

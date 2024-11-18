@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{layout::head('Chroma - Login')}">
+<head th:replace="~{layout::head('Chroma - Checking Email')}">
 </head>
 <body>
 
@@ -25,7 +25,7 @@
                 <div class="col-12 col-sm-12 col-md-12">
                     <nav class="breadcrumb" style="padding: 20px">
                         <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
-                        <span class="breadcrumb-item active">Login</span>
+                        <span class="breadcrumb-item active">Checking Email</span>
                     </nav>
                 </div>
             </div> <!-- end of row -->
@@ -46,7 +46,7 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12">
                                         <div class="section-title">
-                                            <h2>Log in to your account</h2>
+                                            <h2>Checking Your Email Now!</h2>
                                         </div>
                                     </div>
                                 </div> <!-- end of row -->
@@ -54,30 +54,22 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 offset-lg-2 offset-xl-3">
                                         <div class="login-form">
-                                            <form th:action="@{/login/access}" method="post">
-                                                <div class="form-group row align-items-center mb-4">
-                                                    <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email
-                                                        address</label>
-                                                    <div class="col-12 col-sm-12 col-md-8">
-                                                        <input type="text" class="form-control" id="email" name="email"
-                                                               placeholder="Email" required>
+                                            <form>
+                                                <div class="form-group row align-items-center mb-4" style="margin: -30px;">
+                                                    <label class="col-12 col-sm-12 col-md-4 col-form-label">We've sent password reset instruction to:</label>
+                                                    <p th:text="${email}" style="color: #cd2626; font-size: large"></p>
+                                                    <p>If it does not arrive soon, please check your spam folder or <a th:href="@{/forgot-password.html}" style="color: #cd2626">send the email again!</a></p>
+                                                    <div class="col-12 col-sm-12 col-md-8" style="padding-top: 15px">
+<!--                                                        <input type="text" class="form-control" id="newpass" name="newpass"-->
+<!--                                                               placeholder="New Password" required>-->
                                                     </div>
                                                 </div>
-                                                <div class="form-group row align-items-center mb-4">
-                                                    <label for="c-password"
-                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>
-                                                    <div class="col-12 col-sm-12 col-md-8">
-                                                        <input type="password" class="form-control" id="c-password"
-                                                               name="password" placeholder="Password" required>
-                                                    </div>
+                                                <div class="login-box text-center" style="margin-top: -15px">
+<!--                                                    <button type="submit" class="default-btn tiny-btn mt-4">Recover-->
+<!--                                                    </button>-->
                                                 </div>
-                                                <div class="login-box mt-5 text-center">
-                                                    <p><a th:href="@{/forgot-password.html}">Forgot your password?</a></p>
-                                                    <button type="submit" class="default-btn tiny-btn mt-4">Sign In
-                                                    </button>
-                                                </div>
-                                                <div class="text-center mt-half pt-half top-bordered">
-                                                    <p>No account? <a th:href="@{/register.html}">Create one here</a>.
+                                                <div class="text-center mt-half top-bordered" style="padding-top: 5px">
+                                                    <p>Back to your login ? <a th:href="@{/login.html}">Login</a>.
                                                     </p>
                                                 </div>
                                             </form>

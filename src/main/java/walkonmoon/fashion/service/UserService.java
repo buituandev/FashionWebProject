@@ -7,8 +7,12 @@ import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.repository.UserRepository;
 
 import java.security.MessageDigest;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
+
 
 @Service
 public class UserService {
@@ -25,6 +29,9 @@ public class UserService {
     public User getUserByEmail(String email) {
         return userRepo.findByEmail(email);
     }
+    @Transactional
+    public User getUserByToken(String token) {return userRepo.findByToken(token);}
+
     public static String toSHA1(String password) {
         String salt = "chromashop";
         String result = null;
@@ -48,4 +55,20 @@ public class UserService {
         Optional<User> user =  userRepo.findById(id);
         return user.orElse(null);
     }
+
+    public String createPasswordResetToken(String email) {
+        User user = userRepo.findByEmail(email);
+        if (user != null) {
+            UUID uuid = UUID.randomUUID();
+            user.setToken(uuid.toString());
+            user.setTokenExpired(LocalDateTime.now().plusHours(1));
+            System.out.println("test token");
+            System.out.println(user.getToken());
+            System.out.println(user.getTokenExpired());
+            userRepo.save(user);
+            return uuid.toString();
+        }
+        return null;
+    }
+
 }
