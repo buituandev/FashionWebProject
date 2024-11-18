@@ -17,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+//    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -48,5 +48,9 @@ public class User implements Serializable {
     private String email;
     @Column(name = "status")
     private UserStatus status;
+    @Column(nullable = true)
+    private String token;
+    @Column(name = "token_expired", nullable = true)
+    private LocalDateTime tokenExpired;
 
 }

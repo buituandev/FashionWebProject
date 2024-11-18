@@ -19,11 +19,11 @@
     <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
     <!-- Start of Breadcrumbs -->
-    <div class="breadcrumb-section bgc-offset mb-full">
+    <div class="breadcrumb-section bgc-offset mb-full" style="margin-bottom: 40px">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12">
-                    <nav class="breadcrumb">
+                    <nav class="breadcrumb" style="padding: 20px">
                         <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
                         <span class="breadcrumb-item active">My Account</span>
                     </nav>
@@ -87,151 +87,94 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                                             <!-- Tab panes -->
                                             <div class="tab-content dashboard-content">
-                                                <div id="dashboard" class="tab-pane fade show active">
-                                                    <h3>Dashboard </h3>
-                                                    <p>From your account dashboard. you can easily check &amp; edit your
-                                                        <a href="#">recent account details</a></p>
-                                                </div> <!-- end of tab-pane -->
+<!--                                                <div id="dashboard" class="tab-pane fade show active">-->
+<!--                                                    <h3>Dashboard </h3>-->
+<!--                                                    <p>From your account dashboard. you can easily check &amp; edit your-->
+<!--                                                        <a href="#">recent account details</a></p>-->
+<!--                                                </div> &lt;!&ndash; end of tab-pane &ndash;&gt;-->
 
-                                                <div id="account-details" class="tab-pane fade">
+                                                <div id="account-details" class="tab-pane fade show active">
                                                     <h3>Account details </h3>
                                                     <div class="login-form">
-                                                        <form th:action="@{/editProfile}" method="post"
-                                                              th:object="${user}" th:if="${user}">
-                                                            <div class="form-group row align-items-center">
-                                                                <label class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Gender</label>
-                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                    <div class="form-row">
-                                                                        <div class="col-6 col-sm-3">
-                                                                            <div class="custom-radio">
-                                                                                <input class="form-check-input"
-                                                                                       type="radio" name="gender"
-                                                                                       id="male" th:value="'Male'"
-                                                                                       th:field="*{gender}"
-                                                                                       th:checked="${user.getGender().equalsIgnoreCase('Male')}">
-                                                                                <span class="checkmark"></span>
-                                                                                <label class="form-check-label"
-                                                                                       for="Male">Male</label>
-                                                                            </div>
-                                                                            <input type="hidden" th:field="*{id}"
-                                                                                   th:value="${user.getId()}"/>
-                                                                            <div class="form-group row"
-                                                                                 style="display: none">
-                                                                                <label for="email"
-                                                                                       class="col-12 col-sm-12 col-md-4 col-form-label">Email
-                                                                                    Address</label>
-                                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                                                    <input type="email"
-                                                                                           class="form-control"
-                                                                                           id="email"
-                                                                                           th:field="*{email}"
-                                                                                           th:value="${user.getEmail()}">
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="form-group row"
-                                                                                 style="display: none">
-                                                                                <label for="password"
-                                                                                       class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>
-                                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                                                    <input type="password"
-                                                                                           class="form-control"
-                                                                                           id="password"
-                                                                                           th:field="*{password}"
-                                                                                           th:value="${user.getPassword()}">
-                                                                                </div>
-                                                                            </div>
+                                                        <form th:action="@{/editProfile}" method="post" th:object="${user}" th:if="${user}">
+                                                            <div class="container p-4">
+                                                                <div class="row mb-3">
+                                                                    <div class="col-md-3">
+                                                                        <label class="form-label fw-bold">Gender</label>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="gender" id="male" th:value="'Male'"
+                                                                                   th:field="*{gender}" th:checked="${user.getGender().equalsIgnoreCase('Male')}">
+                                                                            <label class="form-check-label" for="male">Male</label>
                                                                         </div>
-                                                                        <div class="col-6 col-sm-3">
-                                                                            <div class="custom-radio">
-                                                                                <input class="form-check-input"
-                                                                                       type="radio" name="gender"
-                                                                                       id="female" th:value="'Female'"
-                                                                                       th:field="*{gender}"
-                                                                                       th:checked="${user.getGender().equalsIgnoreCase('Female')}">
-                                                                                <span class="checkmark"></span>
-                                                                                <label class="form-check-label"
-                                                                                       for="Female">Female</label>
-                                                                            </div>
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input class="form-check-input" type="radio" name="gender" id="female" th:value="'Female'"
+                                                                                   th:field="*{gender}" th:checked="${user.getGender().equalsIgnoreCase('Female')}">
+                                                                            <label class="form-check-label" for="female">Female</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="f-name"
-                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Full
-                                                                    Name</label>
-                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                    <input type="text" class="form-control" id="f-name"
-                                                                           required th:value="${user.getFull_name()}"
-                                                                           th:field="*{full_name}">
+
+<!--                                                                <input type="hidden" th:field="*{id}" th:value="${user.getId()}">-->
+
+                                                                <!-- Full Name -->
+                                                                <div class="row mb-3">
+                                                                    <div class="col-md-3">
+                                                                        <label for="f-name" class="form-label fw-bold">Full Name</label>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" class="form-control" id="f-name" required th:value="${user.getFull_name()}"
+                                                                               th:field="*{full_name}">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <!--
-                                                                                                                            <div class="form-group row">
-                                                                                                                                <label for="email" class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Email Address</label>
-                                                                                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                                                                                    <input type="text" class="form-control" id="email" required th:value="${user.email}" th:field="*{user.email}">
-                                                                                                                                </div>
-                                                                                                                            </div                                                                <div class="form-group row">-->
-                                                            <!--                                                                    <label for="inputpassword" class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Current Password</label>-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-6">-->
-                                                            <!--                                                                        <input type="password" class="form-control" id="inputpassword" required>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <!--                                                                <div class="form-group row">-->
-                                                            <!--                                                                    <label for="newpassword" class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">New Password</label>-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-6">-->
-                                                            <!--                                                                        <input type="password" class="form-control" id="newpassword" required>-->
-                                                            <!--                                                                        <button class="pass-show-btn" type="button">Show</button>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <div class="form-group row">
-                                                                <label for="phonenumber"
-                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Phone
-                                                                    number</label>
-                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                    <input type="text" class="form-control"
-                                                                           id="phonenumber" required
-                                                                           th:value="${user.getPhone_number()}"
-                                                                           th:field="*{phone_number}">
+
+                                                                <!-- Phone Number -->
+                                                                <div class="row mb-3">
+                                                                    <div class="col-md-3">
+                                                                        <label for="phonenumber" class="form-label fw-bold">Phone Number</label>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <input type="text" class="form-control" id="phonenumber" required th:value="${user.getPhone_number()}"
+                                                                               th:field="*{phone_number}">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="birth"
-                                                                       class="col-12 col-sm-12 col-md-4 col-lg-3 col-form-label">Birthdate
-                                                                    (Optional)</label>
-                                                                <div class="col-12 col-sm-12 col-md-8 col-lg-6">
-                                                                    <input type="date" class="form-control" id="birth"
-                                                                           placeholder="YYYY//MM/DD" required
-                                                                           th:value="${user.getDob()}"
-                                                                           th:field="*{dob}">
+
+                                                                <!-- Birthdate -->
+                                                                <div class="row mb-3">
+                                                                    <div class="col-md-3">
+                                                                        <label for="birth" class="form-label fw-bold">Birthdate (Optional)</label>
+                                                                    </div>
+                                                                    <div class="col-md-9">
+                                                                        <input type="date" class="form-control" id="birth" placeholder="YYYY-MM-DD" required
+                                                                               th:value="${user.getDob()}" th:field="*{dob}">
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <!--                                                                <div class="form-check row p-0 mt-5">-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
-                                                            <!--                                                                        <div class="custom-checkbox">-->
-                                                            <!--                                                                            <input class="form-check-input" type="checkbox" id="offer">-->
-                                                            <!--                                                                            <span class="checkmark"></span>-->
-                                                            <!--                                                                            <label class="form-check-label" for="offer">Receive offers from our partners</label>-->
-                                                            <!--                                                                        </div>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <!--                                                                <div class="form-check row p-0 mt-4">-->
-                                                            <!--                                                                    <div class="col-12 col-sm-12 col-md-8 offset-md-4 col-lg-6 offset-lg-3">-->
-                                                            <!--                                                                        <div class="custom-checkbox">-->
-                                                            <!--                                                                            <input class="form-check-input" type="checkbox" id="subscribe" required>-->
-                                                            <!--                                                                            <span class="checkmark"></span>-->
-                                                            <!--                                                                            <label class="form-check-label" for="subscribe">Sign up for our newsletter<br>Subscribe to our newsletters now and stay up-to-date with new collections, the latest lookbooks and exclusive offers..</label>-->
-                                                            <!--                                                                        </div>-->
-                                                            <!--                                                                    </div>-->
-                                                            <!--                                                                </div>-->
-                                                            <div class="register-box d-flex justify-content-end mt-half">
-                                                                <button type="submit" class="btn btn-secondary">Save
-                                                                </button>
+
+                                                                <!-- Hidden Email and Password -->
+<!--                                                                <div class="d-none">-->
+<!--                                                                    <div class="mb-3">-->
+<!--                                                                        <label for="email" class="form-label">Email Address</label>-->
+<!--                                                                        <input type="email" class="form-control" id="email" th:field="*{email}" th:value="${user.getEmail()}">-->
+<!--                                                                    </div>-->
+<!--                                                                    <div class="mb-3">-->
+<!--                                                                        <label for="password" class="form-label">Password</label>-->
+<!--                                                                        <input type="password" class="form-control" id="password" th:field="*{password}"-->
+<!--                                                                               th:value="${user.getPassword()}">-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+
+                                                                <!-- Save Button -->
+                                                                <div class="row">
+                                                                    <div class="col-md-9 offset-md-3 text-end">
+                                                                        <button type="submit" class="btn btn-primary" style="background-color: #cc2121; border-color: #cc2121">Save</button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </form>
+
                                                     </div>
+
                                                 </div> <!-- end of tab-pane -->
                                                 <div id="order-history" class="tab-pane fade">
                                                     <h3>Order History</h3>
@@ -332,22 +275,23 @@
                                                     </div>
                                                 </div>
                                             </div> <!-- end of tab-pane -->
-                                        </div>
+                                        </div> <!-- end of tab-pane -->
                                     </div>
-                                </div> <!-- end of row -->
-                            </div> <!-- end of main-dashboard -->
-                    </div> <!-- end of user-dashboard -->
-                    </main> <!-- end of #primary -->
-                </div>
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
+                                </div>
+                            </div> <!-- end of row -->
+                            <!--                    </div> &lt;!&ndash; end of main-dashboard &ndash;&gt;-->
+                            <!--                </div> &lt;!&ndash; end of user-dashboard &ndash;&gt;-->
+                        </main> <!-- end of #primary -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of My Account Wrapper -->
     </div>
-    <!-- End of My Account Wrapper -->
-</div>
-<!-- End of Main Content Wrapper -->
+    <!-- End of Main Content Wrapper -->
 
-<div th:replace="~{layout::footer}"></div>
-<div th:replace="~{layout::scroll_to_top}"></div>
+    <div th:replace="~{layout::footer}"></div>
+    <div th:replace="~{layout::scroll_to_top}"></div>
 
 </div>
 <!-- End of Whole Site Wrapper -->
@@ -442,5 +386,11 @@
         });
     });</script>
 </body>
+<style>
+    .form-check-input:checked {
+        background-color: #cc2121;
+        border-color: #cc2121;
+    }
+</style>
 
 </html>
