@@ -152,8 +152,20 @@
                                                         instead!</a></p>
                                                 </div>
 
+
+
+                                                <div class="form-group row">
+                                                    <label for="full_name"
+                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Full
+                                                        Name</label>
+                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                                                        <input type="text" class="form-control" id="full_name"
+                                                               th:field="*{full_name}" required>
+                                                    </div>
+                                                </div>
+
                                                 <div class="form-group row align-items-center">
-                                                    <label class="col-12 col-sm-12 col-md-4 col-form-label">Gender</label>
+                                                    <label class="col-12 col-sm-12 col-md-4 col-form-label" style="padding-bottom: 20px">Gender</label>
                                                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                                                         <div class="form-row">
                                                             <div class="col-6 col-sm-3">
@@ -180,16 +192,6 @@
                                                 </div>
 
                                                 <div class="form-group row">
-                                                    <label for="full_name"
-                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Full
-                                                        Name</label>
-                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="full_name"
-                                                               th:field="*{full_name}" required>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group row">
                                                     <label for="email" class="col-12 col-sm-12 col-md-4 col-form-label">Email
                                                         Address</label>
                                                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
@@ -201,9 +203,10 @@
                                                 <div class="form-group row">
                                                     <label for="password"
                                                            class="col-12 col-sm-12 col-md-4 col-form-label">Password</label>
-                                                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                        <input type="password" class="form-control" id="password"
-                                                               th:field="*{password}" required>
+                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                        <input type="password" class="form-control pr-5" id="password" name="password" placeholder="Password" required>
+                                                        <img src="/assets/images/eyes-icon.svg" onclick="togglePassword()" alt="Toggle visibility"
+                                                             style="position: absolute; right: 20px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
                                                     </div>
                                                 </div>
 
@@ -348,6 +351,13 @@
         }
     });
 
+</script>
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById('password');
+        const isPassword = passwordField.getAttribute('type') === 'password';
+        passwordField.setAttribute('type', isPassword ? 'text' : 'password');
+    }
 </script>
 
 </body>

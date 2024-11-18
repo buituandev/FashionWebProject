@@ -1,6 +1,5 @@
 package walkonmoon.fashion.controller;
 
-import com.google.cloud.storage.Acl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -19,9 +18,9 @@ import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
+
 import java.time.LocalDateTime;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,6 @@ public class ClientController {
         mainAction(request, model, session);
 
         // Fetch products and categories
-//        List<Product> products = setModelProductList(model);
         List<Product> products = productService.getListProducts();
         setModelCategoryList(model);
         // Pagination logic
@@ -88,7 +86,6 @@ public class ClientController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
-        // Existing logic for cart items
         return "shop-grid";
     }
 
@@ -158,13 +155,14 @@ public class ClientController {
     public String recoverPassword(@RequestParam("email") String email, Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
         String token = userService.createPasswordResetToken(email);
+        boolean isSent = false;
+        isSent = emailService.sendPasswordRecoveryEmail(email, token);
         if (token != null) {
             session.setAttribute("token", token);
-            emailService.sendPasswordRecoveryEmail(email, token);
             model.addAttribute("email", email);
-            return "redirect:/announce-email-success.html?email=" + email;
+            return "redirect:/announce-email-success.html?email=" + email + "&isSent=" + isSent;
         } else {
-            return "forgot-password";
+            return "redirect:/forgot-password.html?isSent=" + isSent;
         }
     }
 
@@ -196,10 +194,10 @@ public class ClientController {
                 && user.getTokenExpired().isBefore(LocalDateTime.now().plusHours(1)))) {
             user.setPassword(UserService.toSHA1(newPassword));
             userService.saveUser(user);
-            return "redirect:/login.html";
+            return "redirect:/login.html?resetPassSucess=true";
         } else {
 
-            return "forgot-password";
+            return "redirect:/forgot-password.html?resetPassSucess=false";
         }
     }
 
@@ -317,42 +315,18 @@ public class ClientController {
         return "login";
     }
 
-    //    @PostMapping("/editProfile")
-//    public String editProfileHtml(Model model, HttpServletRequest request, @ModelAttribute User user) {
-//        User check = userService.findUserById(user.getId());
-//        if (check != null) {
-//            check.setGender(user.getGender());
-//            check.setPhone_number(user.getPhone_number());
-//            check.setDob(user.getDob());
-//            check.setType(0);
-//            check.setIs_deleted(0);
-//            check.setAddress("");
-//            check.setImage("");
-//            check.setProvince("");
-//        }
-//        model.addAttribute("user", check);
-//        userService.saveUser(check);
-//        return "redirect:/my-account.html";
-//    }
     @PostMapping("/editProfile")
     public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session) {
         User existingUser = (User) session.getAttribute("user");
         if (existingUser != null) {
-//            if (user.getFull_name() != null && !user.getFull_name().isEmpty()) {
-                existingUser.setGender(user.getGender());
-                existingUser.setPhone_number(user.getPhone_number());
-                existingUser.setDob(user.getDob());
-                existingUser.setFull_name(user.getFull_name());
-//            user.setPassword(user.getPassword());
-//            user.setEmail(user.getEmail());
-//            user.setAddress(user.getAddress());
-//            user.setTokenExpired(user.getTokenExpired());
-//            user.setToken(user.getToken());
-                session.removeAttribute("user");
-                session.setAttribute("user", existingUser);
-                userService.saveUser(existingUser);
-                model.addAttribute("user", existingUser);
-//            }
+            existingUser.setGender(user.getGender());
+            existingUser.setPhone_number(user.getPhone_number());
+            existingUser.setDob(user.getDob());
+            existingUser.setFull_name(user.getFull_name());
+            session.removeAttribute("user");
+            session.setAttribute("user", existingUser);
+            userService.saveUser(existingUser);
+            model.addAttribute("user", existingUser);
         }
         return "redirect:/my-account.html";
     }
@@ -426,12 +400,6 @@ public class ClientController {
         mainAction(request, model, session);
         return "about";
     }
-
-//    @GetMapping("/reset-password.html")
-//    public String verifyCodetHtml(Model model, HttpServletRequest request, HttpSession session) {
-//        mainAction(request, model, session);
-//        return "reset-password";
-//    }
 
     @GetMapping("/blog.html")
     public String blogLeftSidebarHtml(Model model, HttpServletRequest request, HttpSession session) {

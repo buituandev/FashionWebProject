@@ -173,36 +173,17 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         const urlParams = new URLSearchParams(window.location.search);
-        const registerSuccess = urlParams.get('registerSuccess');
+        const isSent = urlParams.get('isSent');
 
-        if (registerSuccess === "false") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong! Your email may be used",
-            });
-        } else if (registerSuccess === "true") {
+        if (isSent === "true") {
             Swal.fire({
                 icon: "success",
                 title: "Success!",
-                text: "You have registered successfully!",
+                text: "You have been received a recovery email! Check it now!",
             });
         }
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const loginSuccess = urlParams.get('loginSuccess');
-
-        // Check if the login was unsuccessful
-        if (loginSuccess === "false") {
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Something went wrong! Your email or password may be wrong!!",
-            });
-        }
-    });
 
 </script>
 

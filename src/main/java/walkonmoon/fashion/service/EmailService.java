@@ -20,7 +20,7 @@ public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
-    public void sendPasswordRecoveryEmail(String toEmail, String token) {
+    public boolean sendPasswordRecoveryEmail(String toEmail, String token) {
         try {
             String subject = "Chroma Password Recovery";
             String link = baseUrl + "/reset-password.html?token=" + token;
@@ -30,8 +30,10 @@ public class EmailService {
                     "<p>If you did not request this, please ignore this email.</p>";
 
             sendHtmlEmail(toEmail, subject, content);
+            return true;
         } catch (MessagingException e) {
             logger.error("Failed to send email: {}", e.getMessage());
+            return false;
         }
     }
 
