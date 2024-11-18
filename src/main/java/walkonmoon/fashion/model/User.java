@@ -46,11 +46,11 @@ public class User implements Serializable {
     private String province;
     @Column
     private String email;
+    @Column(name = "status")
+    private UserStatus status;
     @Column(nullable = true)
     private String token;
     @Column(name = "token_expired", nullable = true)
     private LocalDateTime tokenExpired;
-    @Column
-    private String status;
 
 }

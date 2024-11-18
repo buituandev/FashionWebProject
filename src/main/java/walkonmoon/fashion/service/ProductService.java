@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,14 +46,13 @@ public class ProductService {
     }
 
     @Transactional
-    public boolean deleteProducts(List<Integer> productIds) {
+    public void deleteProducts(List<Integer> productIds) {
         try {
-            proRepo.deleteAllById(productIds);
-            return true;
+            for(Integer id : productIds){
+                proRepo.deleteById(id);
+            }
         } catch (Exception e) {
-            // Log the error and return false if deletion fails
             e.printStackTrace();
-            return false;
         }
     }
 }
