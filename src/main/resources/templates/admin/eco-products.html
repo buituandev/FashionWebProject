@@ -12,6 +12,16 @@
         width: 15%;
         text-align: right;
     }
+
+    .status-icon {
+        text-align: center;
+        font-size: 18px;
+    }
+    .dataTables_filter {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
 </style>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -77,8 +87,12 @@
                 <div class="card-body">
                     <h6 class="card-subtitle"></h6>
                     <div class="table-responsive m-t-40">
-                        <button type="button" onclick="deleteSelectedItems()">Delete Selected</button>
                         <table id="myTable" class="table table-striped border">
+<!--                            <div class="button-group">-->
+<!--                                <button type="button" class="btn waves-effect waves-light btn-rounded btn-outline-primary" onclick="deleteSelectedItems()">-->
+<!--                                    <i class="ti-trash"></i>-->
+<!--                                </button>-->
+<!--                            </div>-->
                             <thead>
                             <tr>
                                 <th></th>
@@ -115,8 +129,12 @@
                                          height="100"/>
                                 </td>
                                 <td th:text="${product.getSKU()}"></td>
-                                <td th:text="${product.getStatus()}" th:if="${product.getStatus().name() == 'ENABLE'}" style="color: #0f5132; font-weight: 500"></td>
-                                <td th:text="${product.getStatus()}" th:if="${product.getStatus().name() == 'DISABLE'}" style="color: #bc1a27; font-weight: 500"></td>
+                                <td th:if="${product.getStatus().name() == 'ENABLE'}" class="status-icon">
+                                    <i class="ti-check" style="color: #0f5132;"></i>
+                                </td>
+                                <td th:if="${product.getStatus().name() == 'DISABLE'}" class="status-icon">
+                                    <i class="ti-close" style="color: #bc1a27;"></i>
+                                </td>
                                 <td th:onclick="|event.stopPropagation();deleteItem(event, '${product.id}')|">
                                     <a href="#" class="text-inverse" title="Delete" data-bs-toggle="tooltip">
                                         <div style="display: flex; justify-content: center;">
@@ -205,18 +223,20 @@
             return result.isConfirmed;
         });
     }
-
-    // function editProduct(row, event){
-    //     if (event.target.type === 'checkbox' || event.target.title === 'Delete') {
-    //         return;
-    //     }
-    //     var productID = row.getAttribute('data-id');
-    //     window.location.href = `/admin/eco-products-edit/${productID}`;
-    // }
 </script>
 <script>
     $(function () {
-        $('#myTable').DataTable();
+        $('#myTable').DataTable({
+            dom: '<"d-flex justify-content-between align-items-center"lf>rt<"bottom"ip><"clear">',
+            initComplete: function () {
+                $("div.dataTables_filter").append(`
+                    <button type="button" class="btn waves-effect waves-light btn-outline-primary"
+                            onclick="deleteSelectedItems()">
+                        <i class="ti-trash" style="font-size: 18px"><i class="ti-list" style="font-size: 18px"></i></i>
+                    </button>
+                `);
+            }
+        });
         var table = $('#example').DataTable({
             "columnDefs": [{
                 "visible": false,
@@ -295,7 +315,7 @@
     function getSelectedProductIds() {
         const selectedCheckboxes = document.querySelectorAll('.product-checkbox:checked');
         const productIds = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
-        return productIds;  // This will be an array of strings representing product IDs
+        return productIds;
     }
 
     function deleteSelectedItems() {
@@ -310,17 +330,32 @@
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ productIds: productIds }),
+            body: JSON.stringify({productIds: productIds}),
         })
             .then(response => {
                 if (!response.ok) {
-                    return response.text().then(text => { throw new Error(text); });
+                    response.text().then(errorText => {
+                        Swal.fire({
+                            title: "Cannot delete product",
+                            text: errorText,
+                            icon: "error",
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    });
                 }
-                return response.json();
+                location.reload();
+                // return response.json();
             })
             .then(data => {
-                alert('Products deleted successfully');
-                location.reload(); // Reload page to show updated product list
+                Swal.fire({
+                    title: "Success",
+                    text: "Products have been deleted",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+                location.reload();
             })
             .catch(error => {
                 console.error('Error:', error);
