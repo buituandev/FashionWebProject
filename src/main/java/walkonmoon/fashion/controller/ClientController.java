@@ -20,13 +20,11 @@ import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -50,6 +48,10 @@ public class ClientController {
     private OrderDetailService orderDetailService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private BlogDetailService blogDetailService;
 
 
     @RequestMapping(value = {"/", "/index.html"})
@@ -352,12 +354,18 @@ public class ClientController {
     @GetMapping("/blog.html")
     public String blogLeftSidebarHtml(Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
+        var blogs = blogService.getListBlogs();
+        model.addAttribute("blogs", blogs);
         return "blog";
     }
 
-    @GetMapping("/blog-details.html")
-    public String blogDetailsHtml(Model model, HttpServletRequest request, HttpSession session) {
+    @GetMapping("/blog-details/{id}")
+    public String blogDetailsHtml(@PathVariable String id, Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
+        Blog blog = blogService.getBlogById(Integer.parseInt(id));
+        model.addAttribute("blog", blog);
+        BlogDetail blogDetail = blogDetailService.getBlogDetailByBlogID(blog.getId());
+        model.addAttribute("blogDetail", blogDetail);
         return "blog-details";
     }
 
