@@ -187,9 +187,16 @@
                                             <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Status</label>
                                                 <select th:field="*{status}" class="form-control category-select" tabindex="1">
-                                                    <option th:value="Enable" selected>Enable</option>
-                                                    <option th:value="Disable">Disable</option>
-                                                    <option th:value="Delete">Delete</option>
+                                                    <option th:text="'ENABLE'"
+                                                            th:selected="${product.getStatus() == null || product.getStatus().name() == 'ENABLE'}"
+                                                            th:value="ENABLE">
+                                                        ENABLE
+                                                    </option>
+                                                    <option th:text="'DISABLE'"
+                                                            th:selected="${product.getStatus() != null && product.getStatus().name() == 'DISABLE'}"
+                                                            th:value="DISABLE">
+                                                        DISABLE
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
