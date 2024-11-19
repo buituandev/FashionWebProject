@@ -98,7 +98,7 @@
                                                 <h2>Your Order</h2>
                                             </div>
                                             <div class="product-container">
-                                                <div class="product-list" th:each="cartItem:${cartItems}">
+                                                <div class="product-list" th:each="cartItem:${cartItemsFilter}">
                                                     <div class="product-inner d-flex align-items-center">
                                                         <div class="product-image me-4 me-sm-5 me-md-4 me-lg-5">
                                                             <a th:href="@{'/single-product/' + ${cartItem.id}}">
@@ -137,7 +137,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            <div class="checkout-payment" th:if="${!cartItems.isEmpty()}">
+                                            <div class="checkout-payment" th:if="${!cartItemsFilter.isEmpty()}">
                                                 <div>
                                                     <div class="form-row">
                                                         <div class="custom-radio">

@@ -1,6 +1,5 @@
 package walkonmoon.fashion.controller;
 
-import com.google.cloud.storage.Acl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +18,7 @@ import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
+
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,6 +66,13 @@ public class ClientController {
             categoryProductsMap.put(category.getId(), filteredProducts);
         }
         model.addAttribute("categoryProductsMap", categoryProductsMap);
+
+        //Blog
+        List<Blog> blogs = blogService.getListBlogs();
+        // Find the most 3 newest based on date
+        blogs.sort((b1, b2) -> b2.getDate().compareTo(b1.getDate()));
+        List<Blog> newestBlogs = blogs.stream().limit(3).collect(Collectors.toList());
+        model.addAttribute("newestBlogs", newestBlogs);
         return "index";
     }
 
@@ -221,6 +228,9 @@ public class ClientController {
             return "redirect:/login.html";
         } else {
             addUserToModel(user, model);
+            List<CartItemDTO> cartItems = cartItemService.getCartItems(user.getId());
+            cartItems = cartItems.stream().filter(cartItem -> productService.getProductById(cartItem.getId()).getStatus().compareTo(ProductStatus.DISABLE) != 0).collect(Collectors.toList());
+            model.addAttribute("cartItemsFilter", cartItems);
         }
         return "checkout";
     }
@@ -258,6 +268,9 @@ public class ClientController {
         order.setStatus(OrderStatus.PENDING);
 
         List<CartItemDTO> cartItems = cartItemService.getCartItems(sessionUser.getId());
+        cartItems = cartItems.stream().filter(cartItem -> productService.getProductById(cartItem.getId()).getStatus().compareTo(ProductStatus.DISABLE) != 0).collect(Collectors.toList());
+        model.addAttribute("cartItemsFilter", cartItems);
+
         List<Product> products = new ArrayList<>();
 
         for (CartItemDTO cartItem : cartItems) {
@@ -290,7 +303,7 @@ public class ClientController {
 
         cartItemService.clearCartItems(sessionUser.getId());
 
-        return "redirect:/my-account.html#order-history";
+        return "redirect:/my-account.html";
     }
 
 
@@ -339,22 +352,23 @@ public class ClientController {
 //    }
     @PostMapping("/editProfile")
     public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session) {
+        model.addAttribute("ProductService", productService);
         User existingUser = (User) session.getAttribute("user");
         if (existingUser != null) {
 //            if (user.getFull_name() != null && !user.getFull_name().isEmpty()) {
-                existingUser.setGender(user.getGender());
-                existingUser.setPhone_number(user.getPhone_number());
-                existingUser.setDob(user.getDob());
-                existingUser.setFull_name(user.getFull_name());
+            existingUser.setGender(user.getGender());
+            existingUser.setPhone_number(user.getPhone_number());
+            existingUser.setDob(user.getDob());
+            existingUser.setFull_name(user.getFull_name());
 //            user.setPassword(user.getPassword());
 //            user.setEmail(user.getEmail());
 //            user.setAddress(user.getAddress());
 //            user.setTokenExpired(user.getTokenExpired());
 //            user.setToken(user.getToken());
-                session.removeAttribute("user");
-                session.setAttribute("user", existingUser);
-                userService.saveUser(existingUser);
-                model.addAttribute("user", existingUser);
+            session.removeAttribute("user");
+            session.setAttribute("user", existingUser);
+            userService.saveUser(existingUser);
+            model.addAttribute("user", existingUser);
 //            }
         }
         return "redirect:/my-account.html";
@@ -457,6 +471,7 @@ public class ClientController {
 
     @GetMapping("/my-account.html")
     public String myAccountHtml(Model model, HttpServletRequest request, HttpSession session) {
+        model.addAttribute("ProductService", productService);
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (user != null) {
@@ -545,5 +560,6 @@ public class ClientController {
             println("Debug: Session got user");
         }
         model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("ProductService", productService);
     }
 }

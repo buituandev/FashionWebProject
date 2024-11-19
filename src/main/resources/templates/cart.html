@@ -69,7 +69,10 @@
                                                     <td style="width: 70px;">
                                                         <a th:href="@{'/single-product/' + ${cartItem.id}}">
                                                             <img th:src="${cartItem.image}" alt="Cart Product Image"
-                                                                 th:title="${cartItem.title}" class="img-thumbnail">
+                                                                 th:title="${cartItem.title}" class="img-thumbnail"
+                                                                th:style="${ProductService.getProductById(cartItem.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0 ? '-webkit-filter: grayscale(100%);'+
+            'filter: grayscale(100%);' : ''}"
+                                                            >
                                                         </a>
                                                     </td>
                                                     <td>
@@ -81,7 +84,8 @@
                                                     </td>
                                                     <!--                                                                <td th:text="${cartItem.getQuantity()}">3</td>-->
                                                     <td>
-                                                        <div class="input-group btn-block">
+                                                        <div class="input-group btn-block"
+                                                             th:if="${ProductService.getProductById(cartItem.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) != 0}">
                                                             <div>
                                                                 <input th:id="'quantity-input-'+${cartItem.id}"
                                                                        class="cart-input-box" type="number"
@@ -101,13 +105,24 @@
                                         </button>
                                       </span>
                                                         </div>
+                                                        <div class="d-flex" style="align-items: center; justify-content: center;" th:if="${ProductService.getProductById(cartItem.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0}">
+                                                            <span class="text-danger">Product is Unavailable</span>
+<!--                                                            <span class="input-group-btn">-->
+                                                            <!--                                        <button th:onclick="'deleteCartItem(' + ${cartItem.id} + ')'" type="button"-->
+                                                            <!--                                                data-bs-toggle="tooltip" data-direction="top"-->
+                                                            <!--                                                class="btn btn-danger pull-right" data-original-title="Remove">-->
+                                                            <!--                                          <i class="fa fa-times-circle"></i>-->
+                                                            <!--                                        </button>-->
+                                                            <!--                                      </span>-->
+                                                        </div>
                                                     </td>
                                                     <td class="price-new formatted-price"
                                                         th:text="${cartItem.price}+' VND'" style="text-align: right">
                                                         <span></span>
                                                     </td>
                                                     <td class="formatted-price"
-                                                        th:text="${cartItem.price}*${cartItem.quantity} +' VND'" style="text-align: right">$200.00
+                                                        th:text="${cartItem.price}*${cartItem.quantity} +' VND'"
+                                                        style="text-align: right">$200.00
                                                     </td>
                                                 </tr>
                                                 </tbody>
