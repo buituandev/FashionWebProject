@@ -19,6 +19,8 @@ import walkonmoon.fashion.service.ImageService;
 import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,27 +104,78 @@ public class ClientController {
     }
 
 
+//    @GetMapping("/shop-grid/{categoryId}")
+//    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request, HttpSession session) {
+//        mainAction(request, model, session);
+//
+//        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
+//        model.addAttribute("products", filteredProduct);
+//        setModelCategoryList(model);
+//        // Pagination logic
+//        int pageSize = 8;
+//        int totalProducts = filteredProduct.size();
+//        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+//        int start = (page - 1) * pageSize;
+//        int end = Math.min(start + pageSize, totalProducts);
+//
+//        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+//        model.addAttribute("products", paginatedProducts);
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("selectedCategoryId", categoryId);
+//        return "shop-grid";
+//    }
+
     @GetMapping("/shop-grid/{categoryId}")
-    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request, HttpSession session) {
+    public String filterShopGrid(
+            @PathVariable int categoryId,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            Model model,
+            HttpServletRequest request,
+            HttpSession session) {
+
         mainAction(request, model, session);
 
-        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
-        model.addAttribute("products", filteredProduct);
-        setModelCategoryList(model);
+        // Filter products by category
+        List<Product> filteredProducts;
+        if (categoryId == 0) {
+            filteredProducts = filterNotDeletedProducts();
+        } else {
+            filteredProducts = productService.findByCategoryId(categoryId);
+        }
+
+        // Further filter by price range if specified
+        if (minPrice != null && maxPrice != null) {
+            filteredProducts = filteredProducts.stream()
+                    .filter(product -> product.getPrice() >= minPrice && product.getPrice() <= maxPrice)
+                    .collect(Collectors.toList());
+        }
+
         // Pagination logic
         int pageSize = 8;
-        int totalProducts = filteredProduct.size();
+        int totalProducts = filteredProducts.size();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalProducts);
 
-        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+        List<Product> paginatedProducts = filteredProducts.subList(start, end);
+
+        // Add attributes to the model
         model.addAttribute("products", paginatedProducts);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalProducts", totalProducts); // Ensure this is set
         model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+
+        setModelCategoryList(model);
         return "shop-grid";
     }
+
 
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
@@ -545,7 +598,8 @@ public class ClientController {
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("ProductService", productService);
     }
-    public List<Product> filterNotDeletedProducts(){
+
+    public List<Product> filterNotDeletedProducts() {
         List<Product> temps = productService.getListProducts();
         List<Product> products = new ArrayList<>();
         for (Product product : temps) {
