@@ -3,8 +3,10 @@ package walkonmoon.fashion.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.Product;
+import walkonmoon.fashion.model.ProductStatus;
 import walkonmoon.fashion.repository.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,14 @@ public class ProductService {
     }
     @Transactional
     public List<Product> findByCategoryId(int categoryID){
-        return proRepo.findByCategoryId(categoryID);
+        List<Product> temps = proRepo.findAll();
+        List<Product> products = new ArrayList<Product>();
+        for(Product product : temps){
+            if(product.getStatus()== ProductStatus.ENABLE && product.getCategoryId() == categoryID){
+                products.add(product);
+            }
+        }
+        return products;
     }
 
     @Transactional
