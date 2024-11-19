@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import walkonmoon.fashion.config.FirebaseConfig;
 import walkonmoon.fashion.model.*;
+import walkonmoon.fashion.repository.BlogRepository;
 import walkonmoon.fashion.service.*;
 
 import javax.imageio.ImageIO;
@@ -48,7 +49,10 @@ public class AdminController {
     private OrderService orderService;
     @Autowired
     private OrderDetailService orderDetailService;
-
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private BlogDetailService blogDetailService;
 
     public AdminController(FirebaseConfig firebaseConfig) {
         this.firebaseConfig = firebaseConfig;
@@ -253,16 +257,17 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
         String fileUrl = productService.getProductById(id).getImage_collection_url();
+        Product product = productService.getProductById(id);
         List<CartItem> cartitem = cartItemService.getAllCartItems();
-        for(CartItem cart : cartitem){
-            if(cart.getProductId() == id){
-                Product product = productService.getProductById(id);
-                product.setStatus(ProductStatus.DISABLE);
-                productService.saveProduct(product);
-                redirectAttributes.addFlashAttribute("errorMessage",  "The product already in customer cart");
-                return "redirect:/admin/eco-products.html";
-            }
-        }
+//        for(CartItem cart : cartitem){
+//            if(cart.getProductId() == id){
+//                product.setStatus(ProductStatus.DISABLE);
+//                productService.saveProduct(product);
+//                redirectAttributes.addFlashAttribute("errorMessage",  "The product already in customer cart");
+//                return "redirect:/admin/eco-products.html";
+//            }
+//            }
+//        }
 //        Path path = Paths.get("/ProjectB/FashionWebProject/src/main/resources/static" + fileUrl);;
 
 //        ResponseEntity<String> deleteImg = deleteFile(fileUrl);
@@ -274,14 +279,17 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
 //        if (deleteImg.getStatusCode() != HttpStatus.OK) {
 //            System.out.println("Failed to delete file from Firebase: " + deleteImg.getBody());
 //        }
-        imageService.deleteByProductId(id);
+//        imageService.deleteByProductId(id);
 
         Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
         if (category.getQuantity() > 0) {
             category.setQuantity(category.getQuantity() - 1);
             categoryService.saveCategory(category);
         }
-        productService.deleteProductById(id);
+        product.setStatus(ProductStatus.DISABLE);
+        productService.saveProduct(product);
+//        productService.deleteProductById(id);
+
 
 //        if (Files.exists(path)) {
 //            try {
@@ -307,7 +315,7 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
 //            }
 //        }
 
-        redirectAttributes.addFlashAttribute( "successMessage", "Product deleted successfully");
+        redirectAttributes.addFlashAttribute( "successMessage", "Product disable successfully");
         return "redirect:/admin/eco-products.html";
     }
 
@@ -321,23 +329,26 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         try {
             for(Integer id : productIds){
                 List<CartItem> cartItem = cartItemService.getAllCartItems();
-                for(CartItem cart : cartItem){
-                    if(cart.getProductId() == id){
-                        Product product = productService.getProductById(id);
-                        product.setStatus(ProductStatus.DISABLE);
-                        productService.saveProduct(product);
-                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("error", "Some products in cart"));
-                    }
-                }
-                imageService.deleteByProductId(id);
+                Product product = productService.getProductById(id);
+//                for(CartItem cart : cartItem){
+//                    if(cart.getProductId() == id){
+//                        product.setStatus(ProductStatus.DISABLE);
+//                        productService.saveProduct(product);
+//                        return ResponseEntity.badRequest().body(Collections.singletonMap("success", "Product disable successfully"));
+//                    }
+//                }
+//                imageService.deleteByProductId(id);
                 Category category = categoryService.getCategoryById(productService.getProductById(id).getCategoryId());
                 if (category.getQuantity() > 0) {
                     category.setQuantity(category.getQuantity() - 1);
                     categoryService.saveCategory(category);
                 }
+                product.setStatus(ProductStatus.DISABLE);
+                productService.saveProduct(product);
             }
-            productService.deleteProducts(productIds);
-            return ResponseEntity.ok().body(Collections.singletonMap("message", "Products deleted successfully"));
+
+//            productService.deleteProducts(productIds);
+            return ResponseEntity.ok().body(Collections.singletonMap("message", "Products disable successfully"));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.singletonMap("error", "Failed to delete products"));
         }
@@ -397,19 +408,46 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
             originalCategoryId = null;
         }
         if (originalCategoryId != null && !originalCategoryId.equals(product.getCategoryId())) {
-            // If the category has changed, update the quantity
-            Category category = categoryService.getCategoryById(originalCategoryId);
-            if (category != null) {
-                category.setQuantity(category.getQuantity() - 1);
-                categoryService.saveCategory(category);
-            }
+            if(product.getStatus().equals(existPro.getStatus()) && existPro.getStatus().equals(ProductStatus.ENABLE)) {
+                Category category = categoryService.getCategoryById(originalCategoryId);
+                if (category != null) {
+                    category.setQuantity(category.getQuantity() - 1);
+                    categoryService.saveCategory(category);
+                }
 
-            // Increase quantity for the new category
-            Category newCategory = categoryService.getCategoryById(product.getCategoryId());
-            if (newCategory != null) {
-                newCategory.setQuantity(newCategory.getQuantity() + 1);
-                categoryService.saveCategory(newCategory);
+                Category newCategory = categoryService.getCategoryById(product.getCategoryId());
+                if (newCategory != null) {
+                    newCategory.setQuantity(newCategory.getQuantity() + 1);
+                    categoryService.saveCategory(newCategory);
+                }
+            }else if(existPro.getStatus().equals(ProductStatus.DISABLE) && product.getStatus().equals(ProductStatus.ENABLE)){
+                Category newCategory = categoryService.getCategoryById(product.getCategoryId());
+                if (newCategory != null) {
+                    newCategory.setQuantity(newCategory.getQuantity() + 1);
+                    categoryService.saveCategory(newCategory);
+                }
+            }else if(existPro.getStatus().equals(ProductStatus.ENABLE) && product.getStatus().equals(ProductStatus.DISABLE)){
+                 Category category = categoryService.getCategoryById(existPro.getCategoryId());
+                if (category != null) {
+                    category.setQuantity(category.getQuantity() - 1);
+                    categoryService.saveCategory(category);
+                }
             }
+        }else if(originalCategoryId != null){
+                if(product.getStatus().equals(ProductStatus.ENABLE) && product.getStatus() != existPro.getStatus()){
+                    Category category = categoryService.getCategoryById(originalCategoryId);
+                    if (category != null) {
+                        category.setQuantity(category.getQuantity() + 1);
+                        categoryService.saveCategory(category);
+                    }
+
+                }else{
+                    Category category = categoryService.getCategoryById(originalCategoryId);
+                    if (category != null) {
+                        category.setQuantity(category.getQuantity() - 1);
+                        categoryService.saveCategory(category);
+                    }
+                }
         }
         redirectAttributes.addFlashAttribute("successMessage", "Product saved successfully");
         return "redirect:/admin/eco-products.html";
@@ -497,6 +535,12 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         return "redirect:/admin/index.html";
     }
 
+    @GetMapping("/blog_admin.html")
+    public String blog(Model model){
+        List<Blog> blogList = blogService.getListBlogs();
+        model.addAttribute("blogs", blogList);
+        return  "admin/blog_admin";
+    }
 
     private String getFileName(MultipartFile file, InputStream inputStream) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
