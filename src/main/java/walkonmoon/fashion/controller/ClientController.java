@@ -70,7 +70,7 @@ public class ClientController {
         mainAction(request, model, session);
 
         // Fetch products and categories
-        List<Product> products = productService.getListProducts();
+        List<Product> products = filterNotDeletedProducts();
         setModelCategoryList(model);
         // Pagination logic
         int pageSize = 8; // Number of products per page
@@ -481,10 +481,18 @@ public class ClientController {
     }
 
     private List<Product> setModelProductList(Model model) {
-        List<Product> temps = productService.getListProducts();
-        List<Product> products = temps.stream().filter(product -> product.getStatus()== ProductStatus.ENABLE).collect(Collectors.toList());
-        List<Product> trendingProducts = products.stream().filter(Product::getIsTrend).toList();
-        List<Product> newProducts = products.stream().filter(Product::getIsNew).toList();
+        List<Product> products = filterNotDeletedProducts();
+        List<Product> trendingProducts = new ArrayList<>();
+        List<Product> newProducts = new ArrayList<>();
+
+        for (Product product : products) {
+            if (product.getIsTrend()) {
+                trendingProducts.add(product);
+            }
+            if (product.getIsNew()) {
+                newProducts.add(product);
+            }
+        }
         model.addAttribute("products", products);
         model.addAttribute("trendingProducts", trendingProducts);
         model.addAttribute("newProducts", newProducts);
@@ -509,5 +517,15 @@ public class ClientController {
             println("Debug: Session got user");
         }
         model.addAttribute("requestURI", request.getRequestURI());
+    }
+    public List<Product> filterNotDeletedProducts(){
+        List<Product> temps = productService.getListProducts();
+        List<Product> products = new ArrayList<>();
+        for (Product product : temps) {
+            if (product.getStatus() == ProductStatus.ENABLE) {
+                products.add(product);
+            }
+        }
+        return products;
     }
 }
