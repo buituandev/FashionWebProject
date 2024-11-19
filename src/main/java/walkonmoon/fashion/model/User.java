@@ -47,7 +47,7 @@ public class User implements Serializable {
     @Column
     private String email;
     @Column(name = "status")
-    private UserStatus status;
+    private UserStatus status = UserStatus.ACTIVE;
     @Column(nullable = true)
     private String token;
     @Column(name = "token_expired", nullable = true)

@@ -188,7 +188,7 @@ public class ClientController {
         mainAction(request, model, session);
         // find user by the token
         User user = userService.getUserByToken(token);
-        if (user != null && user.getToken() != null
+        if (user != null && user.getTokenExpired() != null
                 && user.getToken().equals(token)
                 && (user.getTokenExpired().isAfter(LocalDateTime.now())
                 && user.getTokenExpired().isBefore(LocalDateTime.now().plusHours(1)))) {
@@ -481,8 +481,13 @@ public class ClientController {
     }
 
     private List<Product> setModelProductList(Model model) {
-        List<Product> products = productService.getListProducts();
+        List<Product> temps = productService.getListProducts();
+        List<Product> products = temps.stream().filter(product -> product.getStatus()== ProductStatus.ENABLE).collect(Collectors.toList());
+        List<Product> trendingProducts = products.stream().filter(Product::getIsTrend).toList();
+        List<Product> newProducts = products.stream().filter(Product::getIsNew).toList();
         model.addAttribute("products", products);
+        model.addAttribute("trendingProducts", trendingProducts);
+        model.addAttribute("newProducts", newProducts);
         return products;
     }
 
