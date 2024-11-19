@@ -128,8 +128,8 @@
                                                                         <div class="product-stock"
                                                                              th:text="${product.getStock()}"
                                                                              style="visibility: hidden; display: none"></div>
-                                                                        <div class="label-product label-new"
-                                                                             th:text="${product.getTitle()}"></div>
+<!--                                                                        <div class="label-product label-new"-->
+<!--                                                                             th:text="${product.getTitle()}"></div>-->
                                                                         <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                             <img th:src="${product.getImage_collection_url()}"
                                                                                  th:alt="${product.getProduct_name()}"

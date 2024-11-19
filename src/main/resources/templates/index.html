@@ -247,155 +247,6 @@
             </div> <!-- end of container -->
         </section>
 
-        <!--        <section class="categories-section">-->
-<!--            <div class="container" th:each="category : ${categories}">-->
-<!--                <div class="row">-->
-<!--                    <div class="col-12 col-sm-12 col-md-12">-->
-<!--                        <div class="section-title">-->
-<!--                            <h2 th:text="${category.getName()}"></h2>-->
-<!--                            <p class="subtitle">Consequat magna, massa vel suspendisse morbi aliquam faucibus ligula-->
-<!--                                ante ipsum ac nulla.</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div> &lt;!&ndash; end of row &ndash;&gt;-->
-
-<!--                <div class="row product-row">-->
-<!--                    <div class="col-12 col-sm-12 col-md-12">-->
-
-<!--                        &lt;!&ndash; Nav Pills &ndash;&gt;-->
-<!--                        <ul class="nav nav-pills justify-content-center" id="our_categories" role="tablist">-->
-<!--                            <li class="nav-item">-->
-<!--                                <a class="nav-link active" th:id="nav_shop_new" data-bs-toggle="pill" href="#shop_new"-->
-<!--                                   role="tab" aria-controls="shop_new" aria-selected="true"-->
-<!--                                   th:text="${category.getName()}"></a>-->
-<!--                            </li>-->
-<!--&lt;!&ndash;                            <li class="nav-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="nav-link" id="nav_shop_shoes" data-bs-toggle="pill" href="#shop_shoes"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   role="tab" aria-controls="shop_shoes" aria-selected="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:text="${category2.getName()}"></a>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="nav-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="nav-link" id="nav_shop_bags" data-bs-toggle="pill" href="#shop_bags"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   role="tab" aria-controls="shop_bags" aria-selected="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:text="${category3.getName()}"></a>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="nav-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="nav-link" id="nav_shop_glasses" data-bs-toggle="pill" href="#shop_glasses"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   role="tab" aria-controls="shop_glasses" aria-selected="false"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:text="${category4.getName()}"></a>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--                        </ul> &lt;!&ndash; end of nav &ndash;&gt;-->
-
-<!--                        &lt;!&ndash; Tab Contents &ndash;&gt;-->
-<!--                        <div class="tab-content" id="our_categories_contents">-->
-<!--                            &lt;!&ndash;                            show active&ndash;&gt;-->
-<!--                            <div class="tab-pane show active anime-tab" id="shop_new" role="tabpanel"-->
-<!--                                 aria-labelledby="'nav_shop_new">-->
-<!--                                <div class="new-products pos-r">-->
-<!--                                    <div class="element-carousel" data-visible-slide="4" data-loop="false"-->
-<!--                                         data-space-between="0" data-speed="1000">-->
-
-<!--                                        &lt;!&ndash; Slides &ndash;&gt;-->
-<!--                                        <div class="swiper-wrapper">-->
-<!--                                            <article class="swiper-slide product-layout"-->
-<!--                                                     th:each="product:${topCategoryProducts+${category.getId()}}">-->
-<!--                                                <div class="product-thumb">-->
-<!--                                                    <div class="product-inner">-->
-<!--                                                        <div class="product-image">-->
-<!--                                                            <div class="product-id" th:text="${product.getId()}"-->
-<!--                                                                 style="visibility: hidden;display: none"></div>-->
-<!--                                                            <div class="product-price-hid"-->
-<!--                                                                 th:text="${product.getPrice()}"-->
-<!--                                                                 style="visibility: hidden;display: none"></div>-->
-<!--                                                            <div class="product-stock" th:text="${product.getStock()}"-->
-<!--                                                                 style="visibility: hidden;display: none"></div>-->
-<!--                                                            <div class="label-product label-sale">-7%</div>-->
-<!--                                                            <div class="label-product label-new"-->
-<!--                                                                 th:text="${product.getTitle()}"></div>-->
-<!--                                                            <a th:href="@{'/single-product/' + ${product.id}}">-->
-<!--                                                                <img th:src="${product.getImage_collection_url()}"-->
-<!--                                                                     th:alt="${product.getProduct_name()}"-->
-<!--                                                                     th:title="${product.getProduct_name()}">-->
-<!--                                                            </a>-->
-<!--                                                            <div class="action-links">-->
-<!--                                                                <a class="action-btn btn-cart"-->
-<!--                                                                   th:onclick="'addToCart(' + ${product.id} + ', 1)'"-->
-<!--                                                                   title="Add to Cart">-->
-<!--                                                                    <i class="pe-7s-shopbag"></i>-->
-<!--                                                                </a>-->
-
-<!--                                                                <a class="action-btn btn-wishlist" href="#"-->
-<!--                                                                   title="Add to Wishlist"><i-->
-<!--                                                                        class="pe-7s-like"></i></a>-->
-<!--                                                                <a class="action-btn btn-compare" href="#"-->
-<!--                                                                   title="Add to Compare"><i-->
-<!--                                                                        class="pe-7s-refresh-2"></i></a>-->
-<!--                                                                <a class="action-btn btn-quickview"-->
-<!--                                                                   data-bs-toggle="modal"-->
-<!--                                                                   data-bs-target="#product_quick_view" href="#"-->
-<!--                                                                   title="Quick View"><i-->
-<!--                                                                        class="pe-7s-search"></i></a>-->
-<!--                                                            </div>-->
-<!--                                                        </div> &lt;!&ndash; end of product-image &ndash;&gt;-->
-
-<!--                                                        <div class="product-caption">-->
-<!--                                                            <div-->
-<!--                                                                    class="product-meta d-flex justify-content-between align-items-center">-->
-<!--                                                                <div class="product-manufacturer">-->
-<!--                                                                    <a href="#"-->
-<!--                                                                       th:text="${product.getProduct_name()}"></a>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="product-ratings">-->
-<!--                                                                    <div class="rating-box">-->
-<!--                                                                        <ul class="rating d-flex">-->
-<!--                                                                            <li><i-->
-<!--                                                                                    class="ion ion-md-star-outline"></i>-->
-<!--                                                                            </li>-->
-<!--                                                                            <li><i-->
-<!--                                                                                    class="ion ion-md-star-outline"></i>-->
-<!--                                                                            </li>-->
-<!--                                                                            <li><i-->
-<!--                                                                                    class="ion ion-md-star-outline"></i>-->
-<!--                                                                            </li>-->
-<!--                                                                            <li><i-->
-<!--                                                                                    class="ion ion-md-star-outline"></i>-->
-<!--                                                                            </li>-->
-<!--                                                                            <li><i-->
-<!--                                                                                    class="ion ion-md-star-outline"></i>-->
-<!--                                                                            </li>-->
-<!--                                                                        </ul>-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                            <h4 class="product-name"><a-->
-<!--                                                                    th:href="@{'/single-product/' + ${product.id}}"-->
-<!--                                                                    th:text="${product.getProduct_name()}"></a></h4>-->
-<!--                                                            <p class="product-price">-->
-<!--                                                                <span class="price-new formatted-price"-->
-<!--                                                                      th:text="${product.getPrice()}+' VND'">$76.40</span>-->
-
-<!--                                                            </p>-->
-<!--                                                        </div>&lt;!&ndash; end of product-caption &ndash;&gt;-->
-<!--                                                    </div>&lt;!&ndash; end of product-inner &ndash;&gt;-->
-<!--                                                </div>&lt;!&ndash; end of product-thumb &ndash;&gt;-->
-<!--                                            </article> &lt;!&ndash; end of product-layout &ndash;&gt;-->
-
-
-<!--                                        </div> &lt;!&ndash; end of swiper-wrapper &ndash;&gt;-->
-
-<!--                                        &lt;!&ndash; Slider Navigation &ndash;&gt;-->
-<!--                                        <div class="swiper-arrow next"><i class="fa fa-angle-right"></i></div>-->
-<!--                                        <div class="swiper-arrow prev"><i class="fa fa-angle-left"></i></div>-->
-<!--                                    </div> &lt;!&ndash; end of element-carousel &ndash;&gt;-->
-<!--                                </div> &lt;!&ndash; end of new-products &ndash;&gt;-->
-<!--                            </div> &lt;!&ndash; end of tab-pane &ndash;&gt;-->
-<!--                        </div> &lt;!&ndash; end of tab-content &ndash;&gt;-->
-<!--                    </div>-->
-<!--                </div> &lt;!&ndash; end of row &ndash;&gt;-->
-<!--            </div> &lt;!&ndash; end of container &ndash;&gt;-->
-<!--        </section>-->
-        <!-- End of Categories Section -->
-
         <!-- Start of Banner Section -->
         <div class="banner-section mt-full mb-half">
             <div class="container">
@@ -407,13 +258,13 @@
         </div>
         <!-- End of Banner Section -->
 
-        <!-- Start of New Arrivals Section -->
+        <!-- Start of Trending Arrivals Section -->
         <section class="new-arrivals-section">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12">
                         <div class="section-title">
-                            <h2>New Trending Products</h2>
+                            <h2>Most Trending Products</h2>
                             <p class="subtitle">Accumsan vitae pede lacus ut ullamcorper sollicitudin quisque libero
                                 est</p>
                         </div>
@@ -434,7 +285,108 @@
                                     <!-- end of product-layout -->
                                     <!--                                    product layout big-->
                                     <article class="swiper-slide product-layout" style="width: 405px;"
-                                             th:each="product:${products}">
+                                             th:each="product:${trendingProducts}">
+                                        <div class="product-thumb">
+                                            <div class="product-inner">
+                                                <div class="product-image">
+                                                    <div class="product-id" th:text="${product.getId()}"
+                                                         style="visibility: hidden;display: none"></div>
+                                                    <div class="product-price-hid" th:text="${product.getPrice()}"
+                                                         style="visibility: hidden;display: none"></div>
+                                                    <div class="product-stock" th:text="${product.getStock()}"
+                                                         style="visibility: hidden;display: none"></div>
+                                                    <div class="label-product label-sale">-7%</div>
+
+                                                    <div class="label-product label-new"
+                                                         th:text="${product.getTitle()}"></div>
+                                                    <a th:href="@{'/single-product/' + ${product.getId()}}">
+                                                        <img th:src="${product.getImage_collection_url()}"
+                                                             th:alt="${product.getProduct_name()}"
+                                                             th:title="${product.getProduct_name()}">
+                                                    </a>
+                                                    <div class="action-links">
+                                                        <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', 1)'" title="Add to Cart"><i
+                                                                class="pe-7s-shopbag"></i></a>
+                                                        <a class="action-btn btn-wishlist" href="#"
+                                                           title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                        <a class="action-btn btn-compare" href="#"
+                                                           title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                        <a class="action-btn btn-quickview" data-bs-toggle="modal"
+                                                           data-bs-target="#product_quick_view" href="#"
+                                                           title="Quick View"><i class="pe-7s-search"></i></a>
+                                                    </div>
+                                                </div> <!-- end of product-image -->
+
+                                                <div class="product-caption">
+                                                    <div class="product-meta d-flex justify-content-between align-items-center">
+                                                        <div class="product-manufacturer">
+                                                            <a href="#" th:text="${product.getProduct_name()}"></a>
+                                                        </div>
+                                                        <div class="product-ratings">
+                                                            <div class="rating-box">
+                                                                <ul class="rating d-flex">
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline"></i></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <h4 class="product-name"><a
+                                                            th:href="@{'/single-product/' + ${product.getId()}}"
+                                                            th:text="${product.getProduct_name()}"></a></h4>
+                                                    <p class="product-price">
+                                                        <span class="price-new formatted-price"
+                                                              th:text="${product.getPrice()}+' VND'"></span>
+                                                    </p>
+                                                </div><!-- end of product-caption -->
+                                            </div><!-- end of product-inner -->
+                                        </div><!-- end of product-thumb -->
+                                    </article> <!-- end of product-layout -->
+                                </div>
+                                <!-- end of swiper-wrapper -->
+
+                                <!-- Slider Navigation -->
+                                <div class="swiper-arrow next"><i class="fa fa-angle-right"></i></div>
+                                <div class="swiper-arrow prev"><i class="fa fa-angle-left"></i></div>
+                            </div> <!-- end of element-carousel -->
+                        </div> <!-- end of new-products -->
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container-fluid -->
+        </section>
+        <!-- End of New Arrivals Section -->
+
+        <!-- Start of New Arrivals Section -->
+        <section class="new-arrivals-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <div class="section-title">
+                            <h2>Newest Products</h2>
+                            <p class="subtitle">Accumsan vitae pede lacus ut ullamcorper sollicitudin quisque libero
+                                est</p>
+                        </div>
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+
+            <div class="container-fluid">
+                <div class="row product-row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <div class="new-products pos-r">
+                            <div class="element-carousel anime-element" data-visible-slide="4" data-loop="false"
+                                 data-space-between="0" data-speed="1000" data-autoplay-delay="5000">
+
+                                <!-- Slides -->
+                                <div class="swiper-wrapper"
+                                     style="transform: translate3d(-4050px, 0px, 0px); transition-duration: 1000ms;">
+                                    <!-- end of product-layout -->
+                                    <!--                                    product layout big-->
+                                    <article class="swiper-slide product-layout" style="width: 405px;"
+                                             th:each="product:${newProducts}">
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
