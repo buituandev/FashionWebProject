@@ -102,24 +102,31 @@
                     <li class="cart-tempty-title" th:if="${#lists.isEmpty(cartItems)}" style="display:block;">
                         <h3 style="line-height: 1.5">Your cart is currently empty.</h3>
                     </li>
-                    <li class="single-cart-item media" th:each="item : ${cartItems}" th:disabled="${item.quantity==0}">
+                    <li class="single-cart-item media"
+                        th:each="item : ${cartItems}"
+                        th:disabled="${item.quantity==0}"
+                        th:classappend="${ProductService.getProductById(item.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0 ? 'disabled-overlay' : ''}">
                         <div class="shopping-cart-img me-4">
                             <a th:href="@{'/single-product/' + ${item.id}}">
-                                <img class="img-fluid" th:alt="${item.title}" th:src="${item.image}">
+                                <img class="img-fluid" th:alt="${item.title}" th:src="${item.image}"
+                                     th:style="${ProductService.getProductById(item.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0 ? '-webkit-filter: grayscale(100%);'+
+            'filter: grayscale(100%);' : ''}">
                                 <span class="product-quantity" th:text="${item.quantity}"></span>
                             </a>
                         </div>
                         <div class="shopping-cart-title flex-grow-1">
-
                             <h4><a th:href="@{'/single-product/' + ${item.id}}" th:text="${item.title}"></a></h4>
                             <p class="cart-price formatted-price" th:text="${item.price} + ' VND'"></p>
-
+                            <span th:if="${ProductService.getProductById(item.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0}"
+                                  style="color: red;">This product is not available!</span>
                         </div>
                         <div class="shopping-cart-delete">
-                            <button class="btn-cart" th:onclick="'deleteCartItem(' + ${item.getId()} + ')'"><i
-                                    class="ion ion-md-close"></i></button>
+                            <button th:onclick="'deleteCartItem(' + ${item.getId()} + ')'" style="background-color: #11111100;">
+                                <i class="ion ion-md-close"></i>
+                            </button>
                         </div>
                     </li>
+
                 </ul>
                 <div class="shopping-cart-total" th:if="${!#lists.isEmpty(cartItems)}">
                     <h4>Total : <span class="formatted-price" th:text="${totalPrice}+' VND'"></span></h4>

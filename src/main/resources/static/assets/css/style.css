@@ -6396,7 +6396,7 @@ header.header-type-4 .header-text span:first-child {
 .checkout-wrapper .order-summary .product-container {
     background-color: #f4f4f4;
     padding: 20px;
-    max-height: 450px;
+    max-height: 386px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -6414,10 +6414,9 @@ header.header-type-4 .header-text span:first-child {
 }
 
 .checkout-wrapper .order-summary .product-list img {
-    max-width: 120px;
+    width: 120px;
     border: 4px solid white;
 }
-
 .checkout-wrapper .order-summary .product-list .product-quantity {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -7394,4 +7393,26 @@ header.header-type-4 .header-text span:first-child {
 .modal-backdrop {
     background-color: #000;
     z-index: 9950;
+}
+
+/* Gray Overlay */
+.single-cart-item.disabled-overlay {
+    position: relative;
+    opacity: 0.6;
+}
+
+.single-cart-item.disabled-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(128, 128, 128, 0.5); /* Semi-transparent gray */
+    z-index: 1;
+}
+
+.single-cart-item.disabled-overlay * {
+    /*position: relative;*/
+    z-index: 2;
 }

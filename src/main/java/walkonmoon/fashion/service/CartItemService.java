@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import walkonmoon.fashion.dto.CartItemDTO;
 import walkonmoon.fashion.model.CartItem;
 import walkonmoon.fashion.model.Product;
+import walkonmoon.fashion.model.ProductStatus;
 import walkonmoon.fashion.repository.CartItemRepository;
 
 import java.io.IOException;
@@ -80,6 +81,7 @@ public class CartItemService {
     
     @Transactional
     public int calculateTotalPrice(List<CartItemDTO> cartItems) {
+        cartItems = cartItems.stream().filter(cartItem -> productService.getProductById(cartItem.getId()).getStatus().compareTo(ProductStatus.DISABLE) != 0).collect(Collectors.toList());
         return cartItems.stream().mapToInt(cartItem -> cartItem.getPrice() * cartItem.getQuantity()).sum();
     }
     
@@ -96,7 +98,12 @@ public class CartItemService {
 
     @Transactional
     public void clearCartItems(int userId) {
-        cartItemRepository.deleteByUserId(userId);
+        List<CartItem> cartItems = cartItemRepository.findByUserId(userId);
+        cartItems.forEach(cartItem -> {
+            if(productService.getProductById(cartItem.getProductId()).getStatus().compareTo(ProductStatus.DISABLE) != 0){
+                cartItemRepository.delete(cartItem);
+            }
+        });
     }
 
     @Transactional

@@ -107,7 +107,6 @@
                                 <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td>
                                 <td th:text="${user.getAddress()}"></td>
                                 <td th:text="${user.getPhone_number()}"></td>
-<!--                                <td th:text="${user.getImage()}"></td>-->
                                 <td th:text="${user.getGender()}"></td>
                                 <td th:if="${user.getType() == 0}" th:text="User"></td>
                                 <td th:if="${user.getType() == 1}" th:text="Admin"></td>

@@ -1,6 +1,5 @@
 package walkonmoon.fashion.controller;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -11,8 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import walkonmoon.fashion.dto.CartItemDTO;
+import walkonmoon.fashion.model.ProductStatus;
 import walkonmoon.fashion.model.User;
 import walkonmoon.fashion.service.CartItemService;
+import walkonmoon.fashion.service.ProductService;
 
 import java.io.IOException;
 import java.util.*;
@@ -21,6 +22,8 @@ import java.util.*;
 public class CartController {
     @Autowired
     private CartItemService cartItemService;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/cart")
     @ResponseBody
@@ -31,6 +34,10 @@ public class CartController {
         if (user == null) {
             response.sendError(401);
         } else {
+            if(productService.getProductById(productId).getStatus().compareTo(ProductStatus.DISABLE) == 0){
+                response.sendError(400);
+                return;
+            }
             String userId = user.getId().toString();
             CartItemDTO cartItemDTO = new CartItemDTO();
             cartItemDTO.setUserId(Integer.parseInt(userId));
@@ -76,6 +83,10 @@ public class CartController {
         if (user == null) {
             response.sendRedirect("/login.html");
         } else {
+            if(productService.getProductById(productId).getStatus().compareTo(ProductStatus.DISABLE) == 0){
+                response.sendError(400);
+                return;
+            }
             String userId = user.getId().toString();
             cartItemService.updateCartItem(Integer.parseInt(userId), productId, quantity, response);
         }

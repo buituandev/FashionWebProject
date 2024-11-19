@@ -1,5 +1,6 @@
 package walkonmoon.fashion.controller;
 
+import com.google.cloud.storage.Acl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import walkonmoon.fashion.service.ProductService;
 import walkonmoon.fashion.service.UserService;
 import walkonmoon.fashion.service.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,6 +52,10 @@ public class ClientController {
     private OrderDetailService orderDetailService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private BlogService blogService;
+    @Autowired
+    private BlogDetailService blogDetailService;
 
     @RequestMapping(value = {"/", "/index.html"})
     public String index(Model model, HttpServletRequest request, HttpSession session) {
@@ -62,6 +68,13 @@ public class ClientController {
             categoryProductsMap.put(category.getId(), filteredProducts);
         }
         model.addAttribute("categoryProductsMap", categoryProductsMap);
+
+        //Blog
+        List<Blog> blogs = blogService.getListBlogs();
+        // Find the most 3 newest based on date
+        blogs.sort((b1, b2) -> b2.getDate().compareTo(b1.getDate()));
+        List<Blog> newestBlogs = blogs.stream().limit(3).collect(Collectors.toList());
+        model.addAttribute("newestBlogs", newestBlogs);
         return "index";
     }
 
@@ -86,31 +99,83 @@ public class ClientController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
 
+        // Existing logic for cart items
         return "shop-grid";
     }
 
 
+//    @GetMapping("/shop-grid/{categoryId}")
+//    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request, HttpSession session) {
+//        mainAction(request, model, session);
+//
+//        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
+//        model.addAttribute("products", filteredProduct);
+//        setModelCategoryList(model);
+//        // Pagination logic
+//        int pageSize = 8;
+//        int totalProducts = filteredProduct.size();
+//        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+//        int start = (page - 1) * pageSize;
+//        int end = Math.min(start + pageSize, totalProducts);
+//
+//        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+//        model.addAttribute("products", paginatedProducts);
+//        model.addAttribute("currentPage", page);
+//        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("selectedCategoryId", categoryId);
+//        return "shop-grid";
+//    }
+
     @GetMapping("/shop-grid/{categoryId}")
-    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request, HttpSession session) {
+    public String filterShopGrid(
+            @PathVariable int categoryId,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            Model model,
+            HttpServletRequest request,
+            HttpSession session) {
+
         mainAction(request, model, session);
 
-        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
-        model.addAttribute("products", filteredProduct);
-        setModelCategoryList(model);
+        // Filter products by category
+        List<Product> filteredProducts;
+        if (categoryId == 0) {
+            filteredProducts = filterNotDeletedProducts();
+        } else {
+            filteredProducts = productService.findByCategoryId(categoryId);
+        }
+
+        // Further filter by price range if specified
+        if (minPrice != null && maxPrice != null) {
+            filteredProducts = filteredProducts.stream()
+                    .filter(product -> product.getPrice() >= minPrice && product.getPrice() <= maxPrice)
+                    .collect(Collectors.toList());
+        }
+
         // Pagination logic
         int pageSize = 8;
-        int totalProducts = filteredProduct.size();
+        int totalProducts = filteredProducts.size();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalProducts);
 
-        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+        List<Product> paginatedProducts = filteredProducts.subList(start, end);
+
+        // Add attributes to the model
         model.addAttribute("products", paginatedProducts);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalProducts", totalProducts); // Ensure this is set
         model.addAttribute("selectedCategoryId", categoryId);
+        model.addAttribute("minPrice", minPrice);
+        model.addAttribute("maxPrice", maxPrice);
+
+        setModelCategoryList(model);
         return "shop-grid";
     }
+
 
     @GetMapping("/single-product/{id}")
     public String singleProduct(Model model, @PathVariable String id, HttpServletRequest request, HttpSession session) {
@@ -188,7 +253,7 @@ public class ClientController {
         mainAction(request, model, session);
         // find user by the token
         User user = userService.getUserByToken(token);
-        if (user != null && user.getTokenExpired() != null
+        if (user != null && user.getToken() != null
                 && user.getToken().equals(token)
                 && (user.getTokenExpired().isAfter(LocalDateTime.now())
                 && user.getTokenExpired().isBefore(LocalDateTime.now().plusHours(1)))) {
@@ -216,6 +281,9 @@ public class ClientController {
             return "redirect:/login.html";
         } else {
             addUserToModel(user, model);
+            List<CartItemDTO> cartItems = cartItemService.getCartItems(user.getId());
+            cartItems = cartItems.stream().filter(cartItem -> productService.getProductById(cartItem.getId()).getStatus().compareTo(ProductStatus.DISABLE) != 0).collect(Collectors.toList());
+            model.addAttribute("cartItemsFilter", cartItems);
         }
         return "checkout";
     }
@@ -253,6 +321,9 @@ public class ClientController {
         order.setStatus(OrderStatus.PENDING);
 
         List<CartItemDTO> cartItems = cartItemService.getCartItems(sessionUser.getId());
+        cartItems = cartItems.stream().filter(cartItem -> productService.getProductById(cartItem.getId()).getStatus().compareTo(ProductStatus.DISABLE) != 0).collect(Collectors.toList());
+        model.addAttribute("cartItemsFilter", cartItems);
+
         List<Product> products = new ArrayList<>();
 
         for (CartItemDTO cartItem : cartItems) {
@@ -285,7 +356,7 @@ public class ClientController {
 
         cartItemService.clearCartItems(sessionUser.getId());
 
-        return "redirect:/my-account.html#order-history";
+        return "redirect:/my-account.html";
     }
 
 
@@ -317,6 +388,7 @@ public class ClientController {
 
     @PostMapping("/editProfile")
     public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session) {
+        model.addAttribute("ProductService", productService);
         User existingUser = (User) session.getAttribute("user");
         if (existingUser != null) {
             existingUser.setGender(user.getGender());
@@ -404,18 +476,25 @@ public class ClientController {
     @GetMapping("/blog.html")
     public String blogLeftSidebarHtml(Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
+        var blogs = blogService.getListBlogs();
+        model.addAttribute("blogs", blogs);
         return "blog";
     }
 
-    @GetMapping("/blog-details.html")
-    public String blogDetailsHtml(Model model, HttpServletRequest request, HttpSession session) {
+    @GetMapping("/blog-details/{id}")
+    public String blogDetailsHtml(@PathVariable String id, Model model, HttpServletRequest request, HttpSession session) {
         mainAction(request, model, session);
+        Blog blog = blogService.getBlogById(Integer.parseInt(id));
+        model.addAttribute("blog", blog);
+        BlogDetail blogDetail = blogDetailService.getBlogDetailByBlogID(blog.getId());
+        model.addAttribute("blogDetail", blogDetail);
         return "blog-details";
     }
 
 
     @GetMapping("/my-account.html")
     public String myAccountHtml(Model model, HttpServletRequest request, HttpSession session) {
+        model.addAttribute("ProductService", productService);
         User user = (User) session.getAttribute("user");
         System.out.println(user);
         if (user != null) {
@@ -517,8 +596,10 @@ public class ClientController {
             println("Debug: Session got user");
         }
         model.addAttribute("requestURI", request.getRequestURI());
+        model.addAttribute("ProductService", productService);
     }
-    public List<Product> filterNotDeletedProducts(){
+
+    public List<Product> filterNotDeletedProducts() {
         List<Product> temps = productService.getListProducts();
         List<Product> products = new ArrayList<>();
         for (Product product : temps) {

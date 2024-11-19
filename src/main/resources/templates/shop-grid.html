@@ -372,52 +372,104 @@
                             <div class="sidebar-widget list-widget">
                                 <h2 class="widgettitle">Categories</h2>
                                 <div class="list-widget-wrapper">
+<!--                                    <div class="list-group">-->
+<!--                                        <div th:each="category: ${categories}">-->
+<!--                                            <input-->
+<!--                                                    type="checkbox"-->
+<!--                                                    th:checked="${selectedCategoryId} == ${category.getId()}"-->
+<!--                                                    th:id="'checkbox-' + ${category.getId()}"-->
+<!--                                                    th:name="category-checkbox"-->
+<!--                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"-->
+<!--                                                    th:data-href="@{'/shop-grid/' + ${category.getId()}}"-->
+<!--                                                    onclick="selectOnlyOne(this);"-->
+<!--                                            />-->
+<!--                                            <label th:for="'checkbox-' + ${category.getId()}"></label>-->
+<!--                                            <a th:href="@{'/shop-grid/' + ${category.getId()}}"-->
+<!--                                               th:text="${category.getName()}"-->
+<!--                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"-->
+<!--                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                     <div class="list-group">
-                                        <div th:each="category: ${categories}">
+                                        <div th:each="category : ${categories}">
                                             <input
                                                     type="checkbox"
                                                     th:checked="${selectedCategoryId} == ${category.getId()}"
                                                     th:id="'checkbox-' + ${category.getId()}"
                                                     th:name="category-checkbox"
-                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"
                                                     th:data-href="@{'/shop-grid/' + ${category.getId()}}"
                                                     onclick="selectOnlyOne(this);"
                                             />
                                             <label th:for="'checkbox-' + ${category.getId()}"></label>
                                             <a th:href="@{'/shop-grid/' + ${category.getId()}}"
                                                th:text="${category.getName()}"
-                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"
-                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">
+                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}">
                                             </a>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <!--                            filter gia tien-->
-                            <div class="sidebar-widget list-widget">
+<!--                            <div class="sidebar-widget list-widget">-->
+<!--                                <h2 class="widgettitle">Price Range</h2>-->
+<!--                                <div class="list-widget-wrapper">-->
+<!--                                    <div class="list-group">-->
+<!--                                        <div th:each="category: ${categories}">-->
+<!--                                            <input-->
+<!--                                                    type="checkbox"-->
+<!--                                                    th:checked="${selectedCategoryId} == ${category.getId()}"-->
+<!--                                                    th:id="'checkbox-' + ${category.getId()}"-->
+<!--                                                    th:name="category-checkbox"-->
+<!--                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"-->
+<!--                                                    th:data-href="@{'/shop-grid/' + ${category.getId()}}"-->
+<!--                                                    onclick="selectOnlyOne(this);"-->
+<!--                                            />-->
+<!--                                            <label th:for="'checkbox-' + ${category.getId()}"></label>-->
+<!--                                            <a th:href="@{'/shop-grid/' + ${category.getId()}}"-->
+<!--                                               th:text="${category.getName()}"-->
+<!--                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"-->
+<!--                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+                            <div class="sidebar2-widget list-widget">
                                 <h2 class="widgettitle">Price Range</h2>
                                 <div class="list-widget-wrapper">
                                     <div class="list-group">
-                                        <div th:each="category: ${categories}">
-                                            <input
-                                                    type="checkbox"
-                                                    th:checked="${selectedCategoryId} == ${category.getId()}"
-                                                    th:id="'checkbox-' + ${category.getId()}"
-                                                    th:name="category-checkbox"
-                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"
-                                                    th:data-href="@{'/shop-grid/' + ${category.getId()}}"
-                                                    onclick="selectOnlyOne(this);"
-                                            />
-                                            <label th:for="'checkbox-' + ${category.getId()}"></label>
-                                            <a th:href="@{'/shop-grid/' + ${category.getId()}}"
-                                               th:text="${category.getName()}"
-                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"
-                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">
-                                            </a>
-                                        </div>
+                                        <label for="minPrice">Min Price:</label>
+                                        <input
+                                                type="number"
+                                                id="minPrice"
+                                                name="minPrice"
+                                                min="0"
+                                                placeholder="0"
+                                                th:value="${minPrice ?: ''}"
+                                        />
+                                        <label for="maxPrice">Max Price:</label>
+                                        <input
+                                                type="number"
+                                                id="maxPrice"
+                                                name="maxPrice"
+                                                min="0"
+                                                placeholder="0"
+                                                th:value="${maxPrice ?: ''}"
+                                        />
+                                        <button
+                                                onclick="filterByPrice()"
+                                                class="btn btn-primary mt-2"
+                                                style="width: 70%;"
+                                        >
+                                            Filter
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+
                             <!--                            end of filter gia tien-->
                         </aside> <!-- end of #secondary -->
                     </div>
@@ -831,6 +883,39 @@
 </script>
 
 <script>
+    // function selectOnlyOne(checkbox) {
+    //     // Deselect all checkboxes
+    //     var checkboxes = document.getElementsByName('category-checkbox');
+    //     checkboxes.forEach(function (item) {
+    //         if (item !== checkbox) item.checked = false;
+    //     });
+    //
+    //     // Redirect to the href associated with the checkbox
+    //     if (checkbox.checked) {
+    //         window.location.href = checkbox.getAttribute('data-href');
+    //     }
+    // }
+
+    function filterByPrice() {
+        // Get selected category ID
+        const selectedCategory = document.querySelector('input[name="category-checkbox"]:checked');
+        const categoryId = selectedCategory ? selectedCategory.getAttribute('data-href').split('/').pop() : '0'; // Default to 0 if no category selected
+
+        // Get price range values
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+
+        // Construct the URL for filtering
+        let url = `/shop-grid/${categoryId}`;
+        const params = [];
+        if (minPrice) params.push(`minPrice=${minPrice}`);
+        if (maxPrice) params.push(`maxPrice=${maxPrice}`);
+        if (params.length) url += `?${params.join('&')}`;
+
+        // Redirect to the filtered URL
+        window.location.href = url;
+    }
+
     function selectOnlyOne(checkbox) {
         // Deselect all checkboxes
         var checkboxes = document.getElementsByName('category-checkbox');
@@ -840,10 +925,21 @@
 
         // Redirect to the href associated with the checkbox
         if (checkbox.checked) {
-            window.location.href = checkbox.getAttribute('data-href');
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+
+            let url = checkbox.getAttribute('data-href');
+            const params = [];
+            if (minPrice) params.push(`minPrice=${minPrice}`);
+            if (maxPrice) params.push(`maxPrice=${maxPrice}`);
+            if (params.length) url += `?${params.join('&')}`;
+
+            window.location.href = url;
         }
     }
+
 </script>
+
 
 </body>
 <style>
@@ -852,13 +948,13 @@
         width: 20px;
         height: 20px;
         appearance: none;
-        border: 2px solid black;
+        border: 2px solid #ccc;
         cursor: pointer;
     }
 
     input[type="checkbox"]:checked {
         background-color: red;
-        border-color: black;
+        border-color: #ccc;
     }
 
 
@@ -873,6 +969,71 @@
         left: 7px;
         transform: rotate(45deg);
     }
+    /* Title for the widget */
+    .sidebar2-widget .widgettitle {
+        font-size: 20px;
+        line-height: 24px;
+        font-weight: 500;
+        letter-spacing: -.05em;
+        text-transform: capitalize;
+        font-family: "Rubik", sans-serif;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    /* Labels for Min and Max Price */
+    .sidebar2-widget .list-widget-wrapper .list-group label {
+        font-size: 13px;
+        font-family: "Rubik", sans-serif; /* Match the category filter font */
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    /* Input fields for Min and Max Price */
+    .sidebar2-widget .list-widget-wrapper .list-group input {
+        width: 70%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 13px;
+        font-family: "Rubik", sans-serif; /* Match the category filter font */
+        color: #333;
+        background-color: transparent; /* No background color */
+    }
+
+    /* Change input background on focus */
+    .sidebar2-widget .list-widget-wrapper .list-group input:focus {
+        border-color: #6c757d; /* Dark gray border on focus */
+        outline: none;
+    }
+
+    /* Button styling */
+    .sidebar2-widget .list-widget-wrapper .list-group button {
+        background-color: #333; /* Dark black for button */
+        color: #fff;
+        padding: 8px;
+        font-size: 14px;
+        font-family: inherit; /* Match the category filter font */
+        border: 1px solid #333;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Button hover effect */
+    .sidebar2-widget .list-widget-wrapper .list-group button:hover {
+        background-color: #555; /* Slightly lighter black */
+        color: #fff;
+    }
+
+    /* Button active state */
+    .sidebar2-widget .list-widget-wrapper .list-group button:active {
+        background-color: #000; /* Pure black for button press */
+        color: #fff;
+    }
+
 
 
 </style>

@@ -48,248 +48,121 @@
 											<article class="blog-post post-entry">
 												<div class="single-post">
 													<div class="content-wrapper">
-	                                                    <div class="post-media image-popup">
-                                                            <figure>
-                                                                <a href="assets/images/blog/blog-single-large.jpg" data-size="1920x930">
-                                                                    <img src="assets/images/blog/blog-single.jpg" alt="Blog Details">
-                                                                    <div class="image-overlay"><i class="ion ion-ios-add"></i></div>
-                                                                </a>
-                                                                <figcaption class="visually-hidden">
-                                                                    <span>Blog Details</span>
-                                                                </figcaption>
-                                                            </figure>
-	                                                    </div>
 	                                                    <div class="post-content">
-                                                            <h3 class="post-title">Top 10 buying tips to follow in 2018</h3>
+                                                            <h3 class="post-title" th:text="${blog.title}">Top 10 buying tips to follow in 2018</h3>
                                                             <div class="post-meta">
                                                                 <p>
                                                                     <span>By 
                                                                         <span class="single-meta">
-                                                                            <a href="#">Pebona Themes</a>
+                                                                            <a th:text="${blog.author}"></a>
                                                                         </span>
-                                                                    </span> 
-                                                                    <span class="post-categories">In 
-                                                                        <span class="single-meta">
-                                                                            <a href="#">Tips, </a>
-                                                                            <a href="#">Shopping</a>
-                                                                        </span>
-                                                                    </span> 
+                                                                    </span>
                                                                     <span>Posted on 
                                                                         <span class="single-meta">
-                                                                            <a href="#">Aug 14, 2018</a>
+                                                                            <a th:text="${blog.date}">Aug 14, 2018</a>
                                                                         </span>
                                                                     </span>
                                                                 </p>
                                                             </div>
                                                             <div class="post-description">
-                                                                <div class="post-details">
-                                                                    <p>There boluptatum deleniti atque corrupti sdolores et quas molestias cepturi sint  eca itate non similique sunt in culpa modi tempora incidunt  obtain pain of itself, because it is pain, but because occasionally <a href="#">circumstances occur</a> in which toil and pain can procure him some great pleasure  obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure corrupti sdolores et quas molestias cepturi sint  eca itate non similique sunt in culpa modi tempora incidunt  obtain pain of itself, because it is pain.</p>
+                                                                <div class="post-details" th:utext="${blogDetail.content}">
 
-                                                                    <p>Someone boluptatum deleniti atque corrupti sdolores et quas molestias cepturi sint  eca itate non similique sunt in culpa modi tempora incidunt obtain pain of itself, because it is pain, but <a href="#">because occasionally circumstances occur</a> in which toil and pain can procure him some great pleasure obtain.</p>
-
-                                                                    <div class="row align-items-center my-4 my-sm-5">
-                                                                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-4 mb-sm-4 mb-md-0">
-                                                                            <img src="assets/images/blog/blog-inner-1.jpg" alt="Post Inner Image">
-                                                                        </div>
-                                                                         <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                                                            <img src="assets/images/blog/blog-inner-2.jpg" alt="Post Inner Image">
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <p>Someone boluptatum deleniti atque corrupti sdolores et quas molestias cepturi sint  eca itate non similique sunt in culpa modi tempora incidunt  obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure obtain corrupti sdolores et quas molestias cepturi sint  eca itate non similique sunt in culpa modi tempora incidunt  obtain pain of itself, because it is pain</p>
-
-                                                                    <blockquote class="blockquote">
-                                                                        <p>"While most companies strive to deliver seamless and issue-free customer service, what they often fail to understand is just how significantly their processes good and bad can impact their overall service delivery and, ultimately, how their customers view them."</p>
-                                                                        <footer class="blockquote-footer">Devid Chory</footer>
-                                                                    </blockquote>
-
-                                                                    <p>There boluptatum deleniti atque corrupti sdolores et quas molestias cepturi sint  eca itate non similique sunt in culpa modi <a href="#">tempora incidunt obtain</a> pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure someone boluptatum deleniti atque corrupti sdolores et quas molestias cepturi sint  eca itate non </p>
-                                                                </div>
-                                                            </div>
-	                                                    </div>
-	                                                    <div class="post-footer">
-                                                            <div class="d-md-flex justify-content-sm-between">
-                                                                <div class="tags align-self-center">
-                                                                    <p>Tags:</p>
-                                                                    <ul class="list-inline">
-                                                                        <li class="list-inline-item"><a href="#">design,</a></li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div class="post-share">
-                                                                    <p>Share:</p>
-                                                                    <ul class="list-inline">
-                                                                        <li class="list-inline-item"><a href="#" class="bg-facebook"><i class="fa fa-facebook"></i></a></li>
-                                                                        <li class="list-inline-item"><a href="#" class="bg-twitter"><i class="fa fa-twitter"></i></a></li>
-                                                                        <li class="list-inline-item"><a href="#" class="bg-gplus"><i class="fa fa-google-plus"></i></a></li>
-                                                                        <li class="list-inline-item"><a href="#" class="bg-pinterest"><i class="fa fa-pinterest"></i></a></li>
-                                                                    </ul>
                                                                 </div>
                                                             </div>
 	                                                    </div>
 	                                                </div>
 	                                            </div> <!-- end of blog-grid -->
 											</article> <!-- end of blog-post -->
-
-                                            <div class="author-box">
-                                                <div class="media">
-                                                    <div class="author-image mb-4 mb-sm-4 mb-md-0 me-md-4">
-                                                        <img src="assets/images/testimonial/testimonial-2.jpg" alt="blog-comment">
-                                                    </div>
-                                                    <div class="author-description flex-grow-1">
-                                                        <h6>Author: <a href="#">Stuart Smith</a></h6>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus harum, est fuga veritatis esse dignissimos optio sunt obcaecati sit quos. Maiores tempora harum fugit voluptates?</p>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end of author-box -->
-
-                                            <div class="post-pagination">
-                                                <ul class="pagination">
-                                                    <li><a href="#"><i class="fa fa-long-arrow-left"></i>Previous</a></li>
-                                                    <li class="ml-auto"><a href="#">Next<i class="fa fa-long-arrow-right"></i></a></li>
-                                                </ul>
-                                            </div> <!-- end of post-pagination -->
-
-                                            <div id="comments" class="comments-area">
-                                                <h3>This post has 4 Comments</h3>
-                                                <ol class="comment-list list-unstyled">
-                                                    <li class="comment-single media">
-                                                        <div class="comment-author-thumb me-3 me-sm-4">
-                                                            <img src="assets/images/testimonial/testimonial-1.jpg" alt="Comment Author">
-                                                        </div>
-                                                        <div class="comment-content flex-grow-1">
-                                                            <div class="comment-meta d-flex justify-content-between align-items-top">
-                                                                <div class="comment-title">
-                                                                    <h6>Alva Ano</h6>
-                                                                    <span><span class="comment-date">July 14, 2018</span> at <span class="comment-time">11:27 am</span></span>
-                                                                </div>
-                                                                <div class="comment-reply">
-                                                                    <a href="#"><span>Reply</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <p>Efficiently drive robust niche markets and premium technologies. Distinctively maintain client-centric outsourcing.</p>
-                                                        </div>
-                                                    </li>
-                                                </ol> <!-- end of comment-list -->
-
-                                                <div class="comment-form">
-                                                    <h3>Leave a comment</h3>
-                                                    <form action="#" method="post" id="comment_form">
-                                                        <div class="row mb-3">
-                                                            <div class="form-group col-12 col-sm-12 col-md-12">
-                                                                <textarea id="comment" placeholder="Your Comment *" name="comment" class="form-control" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-3">
-                                                            <div class="form-group col-12 col-sm-12 col-md-4">
-                                                                <input type="text" class="form-control" id="com-name" placeholder="Name *" required>
-                                                            </div>
-                                                            <div class="form-group col-12 col-sm-12 col-md-4">
-                                                                <input type="email" class="form-control" id="com-email" placeholder="Email *" required>
-                                                            </div>
-                                                            <div class="form-group col-12 col-sm-12 col-md-4">
-                                                                <input type="email" class="form-control" id="com-website" placeholder="Website" required>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <div class="form-group col-12 col-sm-12 col-md-12 mb0">
-                                                                <input name="submit" type="submit" id="submit_my_comment" class="btn btn-secondary" value="Submit Comment">
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                    <!-- end of form -->
-                                                </div> <!-- end of comment form -->
-                                            </div> <!-- end of comment-area -->
                                         </div>
                                     </div> <!-- end of row -->
                                 </div> <!-- end of single-post-wrapper -->
                             </main> <!-- end of #primary -->
                         </div>
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">
-                            <aside id="secondary" class="widget-area">
-                                <div class="sidebar-widget search-widget">
-                                    <h2 class="widgettitle">Search</h2>
-                                    <div class="search-content">
-                                        <form action="#" class="input-group">
-                                            <input class="form-control" type="search" name="s" title="search" placeholder="Search...">
-                                            <input type="submit" class="btn btn-secondary" value="search">
-                                        </form>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
+<!--                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">-->
+<!--                            <aside id="secondary" class="widget-area">-->
+<!--                                <div class="sidebar-widget search-widget">-->
+<!--                                    <h2 class="widgettitle">Search</h2>-->
+<!--                                    <div class="search-content">-->
+<!--                                        <form action="#" class="input-group">-->
+<!--                                            <input class="form-control" type="search" name="s" title="search" placeholder="Search...">-->
+<!--                                            <input type="submit" class="btn btn-secondary" value="search">-->
+<!--                                        </form>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget recent-posts">
-                                    <h2 class="widgettitle">Recent Posts</h2>
-                                    <div class="recent-posts-widget-container">
-                                        <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="7000">
-                                            <div class="swiper-wrapper">
-                                                <div class="swiper-slide">
-                                                    <div class="posts-single media">
-                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">
-                                                            <a href="#">
-                                                                <img src="assets/images/blog/blog-thumb-1.jpg" alt="Blog Image">
-                                                                <div class="overlay"></div>
-                                                            </a>
-                                                        </div>
-                                                        <div class="post-content flex-grow-1">
-                                                            <div class="post-title">
-                                                                <h5><a href="blog-details.html">Aypi non habent claritatem insitam</a></h5>
-                                                            </div>
-                                                            <div class="post-date">09 Aug</div>
-                                                        </div>
-                                                    </div> <!-- end of posts-single -->
-                                                </div>
+<!--                                <div class="sidebar-widget recent-posts">-->
+<!--                                    <h2 class="widgettitle">Recent Posts</h2>-->
+<!--                                    <div class="recent-posts-widget-container">-->
+<!--                                        <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="7000">-->
+<!--                                            <div class="swiper-wrapper">-->
+<!--                                                <div class="swiper-slide">-->
+<!--                                                    <div class="posts-single media">-->
+<!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
+<!--                                                            <a href="#">-->
+<!--                                                                <img src="assets/images/blog/blog-thumb-1.jpg" alt="Blog Image">-->
+<!--                                                                <div class="overlay"></div>-->
+<!--                                                            </a>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="post-content flex-grow-1">-->
+<!--                                                            <div class="post-title">-->
+<!--                                                                <h5><a href="blog-details.html">Aypi non habent claritatem insitam</a></h5>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="post-date">09 Aug</div>-->
+<!--                                                        </div>-->
+<!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
+<!--                                                </div>-->
 
-                                                <div class="swiper-slide">
-                                                    <div class="posts-single media">
-                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">
-                                                            <a href="#">
-                                                                <img src="assets/images/blog/blog-thumb-4.jpg" alt="Blog Image">
-                                                                <div class="overlay"></div>
-                                                            </a>
-                                                        </div>
-                                                        <div class="post-content flex-grow-1">
-                                                            <div class="post-title">
-                                                                <h5><a href="blog-details.html">Cabent claritatem insitam</a></h5>
-                                                            </div>
-                                                            <div class="post-date">09 Aug</div>
-                                                        </div>
-                                                    </div> <!-- end of posts-single -->
-                                                </div>
-                                            </div>
+<!--                                                <div class="swiper-slide">-->
+<!--                                                    <div class="posts-single media">-->
+<!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
+<!--                                                            <a href="#">-->
+<!--                                                                <img src="assets/images/blog/blog-thumb-4.jpg" alt="Blog Image">-->
+<!--                                                                <div class="overlay"></div>-->
+<!--                                                            </a>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="post-content flex-grow-1">-->
+<!--                                                            <div class="post-title">-->
+<!--                                                                <h5><a href="blog-details.html">Cabent claritatem insitam</a></h5>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="post-date">09 Aug</div>-->
+<!--                                                        </div>-->
+<!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
+<!--                                                </div>-->
+<!--                                            </div>-->
 
-                                            <div class="swiper-arrow prev fa fa-angle-left"></div>
-                                            <div class="swiper-arrow next fa fa-angle-right"></div>
-                                        </div> <!-- end of element-carousel -->
-                                    </div> <!-- end of recent-posts-widget -->
-                                </div> <!-- end of sidebar-widget -->
+<!--                                            <div class="swiper-arrow prev fa fa-angle-left"></div>-->
+<!--                                            <div class="swiper-arrow next fa fa-angle-right"></div>-->
+<!--                                        </div> &lt;!&ndash; end of element-carousel &ndash;&gt;-->
+<!--                                    </div> &lt;!&ndash; end of recent-posts-widget &ndash;&gt;-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget list-widget">
-                                    <h2 class="widgettitle">Categories</h2>
-                                    <div class="categories-widget">
-                                        <ul class="categorie-list">
-                                            <li><a href="#">creative<span>(20)</span></a></li>
-                                        </ul>
-                                    </div> <!-- end of categories-widget -->
-                                </div> <!-- end of sidebar-widget -->
+<!--                                <div class="sidebar-widget list-widget">-->
+<!--                                    <h2 class="widgettitle">Categories</h2>-->
+<!--                                    <div class="categories-widget">-->
+<!--                                        <ul class="categorie-list">-->
+<!--                                            <li><a href="#">creative<span>(20)</span></a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div> &lt;!&ndash; end of categories-widget &ndash;&gt;-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget tag-cloud">
-                                    <h2 class="widgettitle">Tag Cloud</h2>
-                                    <div class="tags-widget">
-                                        <ul>
-                                            <li><a href="#">Ecommerce</a></li>
-                                        </ul>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
+<!--                                <div class="sidebar-widget tag-cloud">-->
+<!--                                    <h2 class="widgettitle">Tag Cloud</h2>-->
+<!--                                    <div class="tags-widget">-->
+<!--                                        <ul>-->
+<!--                                            <li><a href="#">Ecommerce</a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                                <div class="sidebar-widget instagram-widget">
-                                    <h2 class="widgettitle">Latest Instagram</h2>
-                                    <div class="instagram-area">
-                                        <div id="instagram_feed" class="image-popup"></div>
-                                        <p>Follow Us <a href="https://www.instagram.com/themeitems/" target="_blank">@Instagram</a>.</p>
-                                    </div>
-                                </div> <!-- end of sidebar-widget -->
-                            </aside> <!-- end of #secondary -->
-                        </div>
+<!--                                <div class="sidebar-widget instagram-widget">-->
+<!--                                    <h2 class="widgettitle">Latest Instagram</h2>-->
+<!--                                    <div class="instagram-area">-->
+<!--                                        <div id="instagram_feed" class="image-popup"></div>-->
+<!--                                        <p>Follow Us <a href="https://www.instagram.com/themeitems/" target="_blank">@Instagram</a>.</p>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+<!--                            </aside> &lt;!&ndash; end of #secondary &ndash;&gt;-->
+<!--                        </div>-->
                     </div> <!-- end of row -->
                 </div> <!-- end of container -->
             </div>
@@ -346,21 +219,19 @@
     ============================================ -->
 
     <!-- jQuery JS -->
-    <script src="assets/js/jquery.1.12.4.min.js"></script>
+    <script src="/assets/js/jquery.1.12.4.min.js"></script>
 
     <!-- Popper JS -->
-    <script src="assets/js/popper.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
 
     <!-- Bootstrap JS -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
 
     <!-- Plugins JS -->
-    <script src="assets/js/plugins.js"></script>
+    <script src="/assets/js/plugins.js"></script>
 
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 
 </body>
-
-<!-- Mirrored from htmldemo.net/pebona/pebona/blog-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 13 Sep 2024 06:10:30 GMT -->
 </html>
