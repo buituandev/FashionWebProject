@@ -388,7 +388,7 @@ public class ClientController {
 
     @PostMapping("/editProfile")
     public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session) {
-        model.addAttribute("ProductService", productService);
+//        model.addAttribute("ProductService", productService);
         User existingUser = (User) session.getAttribute("user");
         if (existingUser != null) {
             existingUser.setGender(user.getGender());
@@ -403,6 +403,28 @@ public class ClientController {
         return "redirect:/my-account.html";
     }
 
+    @PostMapping("/changePassword")
+    public String changePasswordHtml(@ModelAttribute User user, Model model, HttpSession session, @RequestParam("old-password") String oldPass, @RequestParam("new-password")String newPass) {
+        User existingUser = (User) session.getAttribute("user");
+        if (existingUser != null) {
+            if(existingUser.getPassword().equals(UserService.toSHA1(oldPass))) {
+                String newPassword = UserService.toSHA1(newPass);
+                existingUser.setPassword(newPassword);
+                session.removeAttribute("user");
+                session.setAttribute("user", existingUser);
+                userService.saveUser(existingUser);
+                model.addAttribute("user", existingUser);
+                return "redirect:/my-account.html?changePasswordSuccess=true";
+            }else{
+                return "redirect:/my-account.html?changePasswordSuccess=false";
+            }
+
+        }else{
+            return "redirect:/login.html";
+        }
+
+    }
+
     @PostMapping("/login/access")
     public String loginAccount(@RequestParam("email") String email,
                                @RequestParam("password") String password,
@@ -411,7 +433,7 @@ public class ClientController {
         User currentUser = userService.getUserByEmail(email);
 
         if (currentUser == null) {
-            return "redirect:/login.html?loginSuccess=false"; // User not found
+            return "redirect:/login.html?loginSuccess=false";
         }
 
         String encryptedPassword = UserService.toSHA1(password);
@@ -420,10 +442,10 @@ public class ClientController {
             session.setAttribute("user", currentUser);
             model.addAttribute("user", currentUser);
             addCartItemsToModel(currentUser.getId(), model);
-            return "redirect:/index.html"; // Successful login
+            return "redirect:/index.html";
         }
 
-        return "redirect:/login.html?loginSuccess=false"; // Incorrect password
+        return "redirect:/login.html?loginSuccess=false";
     }
 
 
