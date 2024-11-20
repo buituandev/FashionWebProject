@@ -80,6 +80,8 @@
                                                     details</a></li>
                                                 <li><a class="nav-link" data-bs-toggle="tab" href="#order-history">Order
                                                     History</a></li>
+                                                <li><a class="nav-link" data-bs-toggle="tab" href="#change-password">Change
+                                                    Password</a></li>
                                                 <li><a class="nav-link" th:href="@{/logout}">Log out</a></li>
                                             </ul> <!-- end of dashboard-list -->
                                         </div>
@@ -255,6 +257,43 @@
                                                         <p>There's no order. Order some and come back again!</p>
                                                     </div>
                                                 </div>
+                                                <div id="change-password" class="tab-pane fade">
+                                                    <h3>Change Password</h3>
+                                                    <div class="login-form">
+                                                        <form th:action="@{/changePassword}" method="post" th:object="${user}" th:if="${user}">
+                                                            <div class="container p-4">
+                                                                <!-- Old pasword -->
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label for="old-password" class="col-12 col-sm-12 col-md-4 col-form-label">Current Password</label>
+                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                                        <input type="password" class="form-control pr-5" id="old-password" name="old-password" placeholder="Current password" required>
+                                                                        <img src="/assets/images/eyes-icon.svg" onclick="toggleOldPassword()" alt="Toggle visibility"
+                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- New password -->
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label for="new-password" class="col-12 col-sm-12 col-md-4 col-form-label">New Password</label>
+                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                                        <input type="password" class="form-control pr-5" id="new-password" name="new-password" placeholder="New password" required>
+                                                                        <img src="/assets/images/eyes-icon.svg" onclick="toggleNewPassword()" alt="Toggle visibility"
+                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Save Button -->
+                                                                <div class="row">
+                                                                    <div class="col-md-9 offset-md-3 text-end">
+                                                                        <button type="submit" class="btn btn-primary" style="background-color: #cc2121; border-color: #cc2121">Save</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+
+                                                </div> <!-- end of tab-pane -->
+
                                             </div> <!-- end of tab-pane -->
                                         </div> <!-- end of tab-pane -->
                                     </div>
@@ -335,6 +374,8 @@
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/FormatPrice.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const badges = document.querySelectorAll('.badge');
@@ -366,12 +407,52 @@
             }
         });
     });</script>
+<script>
+    function toggleNewPassword() {
+        const passwordField = document.getElementById('new-password');
+        const isPassword = passwordField.getAttribute('type') === 'password';
+        passwordField.setAttribute('type', isPassword ? 'text' : 'password');
+    }
+    function toggleOldPassword() {
+        const passwordField = document.getElementById('old-password');
+        const isPassword = passwordField.getAttribute('type') === 'password';
+        passwordField.setAttribute('type', isPassword ? 'text' : 'password');
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const changePasswordSuccess = urlParams.get('changePasswordSuccess');
+
+        if (changePasswordSuccess === "true") {
+            Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "You have reset your password successfully!",
+            });
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const changePasswordSuccess = urlParams.get('changePasswordSuccess');
+
+        // Check if the login was unsuccessful
+        if (changePasswordSuccess === "false") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops! Failed to reset password",
+                text: "Something went wrong! Your current password is not right!",
+            });
+        }
+    });
+</script>
 </body>
 <style>
     .form-check-input:checked {
         background-color: #cc2121;
         border-color: #cc2121;
     }
+     .swal2-confirm,.swal2-cancel{
+         padding: 0.5px 20px;
+     }
 </style>
 
 </html>
