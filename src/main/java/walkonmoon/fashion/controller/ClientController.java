@@ -231,6 +231,23 @@ public class ClientController {
         }
     }
 
+    @PostMapping("/sending-contact")
+    public String sendContact(@RequestParam("email") String email,
+                              @RequestParam("message") String message,
+                              Model model,
+                              HttpServletRequest request,
+                              HttpSession session) {
+        mainAction(request, model, session);
+        boolean isSent = false;
+        try {
+            isSent = emailService.sendContactResponse(email, message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/contact.html?isSent=" + isSent;
+    }
+
+
     @GetMapping("/announce-email-success.html")
     public String showAnnounceForm(@RequestParam("email") String email, HttpSession session, HttpServletRequest request, Model model) {
         mainAction(request, model, session);

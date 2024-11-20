@@ -37,6 +37,25 @@ public class EmailService {
         }
     }
 
+    public boolean sendContactResponse(String toEmail, String contactInfo) {
+        try {
+            String subject = "Chroma Contact Response";
+            String content = "<p>Hello,</p>" +
+                    "<p>We received a contact message from you.</p>" +
+                    "<p>Thank you for contacting us. We will reply you as soon as possible</p>" +
+                    "<p>Here is your message : <p>"+
+                    "<p>"+contactInfo+"</p>"+
+                    "<p>If you did not send this, please ignore this email.</p>";
+
+            sendHtmlEmail(toEmail, subject, content);
+            return true;
+        } catch (MessagingException e) {
+            logger.error("Failed to send email: {}", e.getMessage());
+            return false;
+        }
+    }
+
+
     private void sendHtmlEmail(String toEmail, String subject, String htmlContent) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "utf-8");
