@@ -883,47 +883,28 @@
 </script>
 
 <script>
-    // function selectOnlyOne(checkbox) {
-    //     // Deselect all checkboxes
-    //     var checkboxes = document.getElementsByName('category-checkbox');
-    //     checkboxes.forEach(function (item) {
-    //         if (item !== checkbox) item.checked = false;
-    //     });
-    //
-    //     // Redirect to the href associated with the checkbox
-    //     if (checkbox.checked) {
-    //         window.location.href = checkbox.getAttribute('data-href');
-    //     }
-    // }
-
     function filterByPrice() {
-        // Get selected category ID
         const selectedCategory = document.querySelector('input[name="category-checkbox"]:checked');
-        const categoryId = selectedCategory ? selectedCategory.getAttribute('data-href').split('/').pop() : '0'; // Default to 0 if no category selected
+        const categoryId = selectedCategory ? selectedCategory.getAttribute('data-href').split('/').pop() : '0';
 
-        // Get price range values
         const minPrice = document.getElementById('minPrice').value;
         const maxPrice = document.getElementById('maxPrice').value;
 
-        // Construct the URL for filtering
         let url = `/shop-grid/${categoryId}`;
         const params = [];
         if (minPrice) params.push(`minPrice=${minPrice}`);
         if (maxPrice) params.push(`maxPrice=${maxPrice}`);
         if (params.length) url += `?${params.join('&')}`;
 
-        // Redirect to the filtered URL
         window.location.href = url;
     }
 
     function selectOnlyOne(checkbox) {
-        // Deselect all checkboxes
         var checkboxes = document.getElementsByName('category-checkbox');
         checkboxes.forEach(function (item) {
             if (item !== checkbox) item.checked = false;
         });
 
-        // Redirect to the href associated with the checkbox
         if (checkbox.checked) {
             const minPrice = document.getElementById('minPrice').value;
             const maxPrice = document.getElementById('maxPrice').value;
@@ -948,8 +929,9 @@
         width: 20px;
         height: 20px;
         appearance: none;
-        border: 2px solid #ccc;
+        border: 1px solid #ccc;
         cursor: pointer;
+        border-radius: 4px;
     }
 
     input[type="checkbox"]:checked {
@@ -969,7 +951,6 @@
         left: 7px;
         transform: rotate(45deg);
     }
-    /* Title for the widget */
     .sidebar2-widget .widgettitle {
         font-size: 20px;
         line-height: 24px;
@@ -981,16 +962,14 @@
         margin-bottom: 10px;
     }
 
-    /* Labels for Min and Max Price */
     .sidebar2-widget .list-widget-wrapper .list-group label {
         font-size: 13px;
-        font-family: "Rubik", sans-serif; /* Match the category filter font */
+        font-family: "Rubik", sans-serif;
         color: #333;
         margin-bottom: 5px;
         display: block;
     }
 
-    /* Input fields for Min and Max Price */
     .sidebar2-widget .list-widget-wrapper .list-group input {
         width: 70%;
         padding: 8px;
@@ -998,39 +977,35 @@
         border: 1px solid #ccc;
         border-radius: 4px;
         font-size: 13px;
-        font-family: "Rubik", sans-serif; /* Match the category filter font */
+        font-family: "Rubik", sans-serif;
         color: #333;
-        background-color: transparent; /* No background color */
+        background-color: transparent;
     }
 
-    /* Change input background on focus */
     .sidebar2-widget .list-widget-wrapper .list-group input:focus {
-        border-color: #6c757d; /* Dark gray border on focus */
+        border-color: #6c757d;
         outline: none;
     }
 
-    /* Button styling */
     .sidebar2-widget .list-widget-wrapper .list-group button {
-        background-color: #333; /* Dark black for button */
+        background-color: #333;
         color: #fff;
         padding: 8px;
         font-size: 14px;
-        font-family: inherit; /* Match the category filter font */
+        font-family: inherit;
         border: 1px solid #333;
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    /* Button hover effect */
     .sidebar2-widget .list-widget-wrapper .list-group button:hover {
-        background-color: #555; /* Slightly lighter black */
+        background-color: #555;
         color: #fff;
     }
 
-    /* Button active state */
     .sidebar2-widget .list-widget-wrapper .list-group button:active {
-        background-color: #000; /* Pure black for button press */
+        background-color: #000;
         color: #fff;
     }
 
