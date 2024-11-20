@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12">
                         <nav class="breadcrumb" style="padding: 20px">
-                            <a class="breadcrumb-item" href="index.html">Home</a>
+                            <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
                             <span class="breadcrumb-item active">Contact Us</span>
                         </nav>
                     </div>
@@ -52,32 +52,84 @@
                                 <div class="section-title left-aligned with-border">
                                     <h2>get In Touch</h2>
                                 </div>
-                                <form id="contact-form" action="https://whizthemes.com/nazmul/php/mail.php" method="post">
+<!--                                <form id="contact-form" th:action="/sending-contact" method="post">-->
+<!--                                    <div class="form-row mb-2">-->
+<!--                                        <div class="form-group col-12 col-sm-12 col-md-6">-->
+<!--                                            <input th:if="${user!=null}" th:value="${user.getFull_name()}" type="text" name="name" class="form-control" id="com-name" placeholder="Your Name *" required>-->
+<!--                                            <input th:if="${user==null}" type="text" name="name" class="form-control" id="com-name" placeholder="Your Name *" required>-->
+
+<!--                                        </div>-->
+<!--                                        <div class="form-group col-12 col-sm-12 col-md-6">-->
+<!--                                            <input th:if="${user!=null}" th:value="${user.getEmail()}" type="email" name="email" class="form-control" id="com-email" placeholder="Your Email *" required>-->
+<!--                                            <input th:if="${user==null}" type="email" name="email" class="form-control" id="com-email" placeholder="Your Email *" required>-->
+
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-row mb-2">-->
+<!--                                        <div class="form-group col-12 col-sm-12 col-md-12">-->
+<!--                                            <input type="text" name="subject" class="form-control" id="subject" placeholder="Your Subject">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-row mb-2">-->
+<!--                                        <div class="form-group col-12 col-sm-12 col-md-12">-->
+<!--                                            <textarea id="comment" placeholder="Type Your Message....." name="message" class="form-control" required></textarea>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-row">-->
+<!--                                        <div class="col-12 col-sm-12 col-md-12">-->
+<!--                                            <button name="send_message" type="submit" class="btn btn-secondary">Send Your Message</button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+                                <form th:action="@{/sending-contact}" method="post">
                                     <div class="form-row mb-2">
                                         <div class="form-group col-12 col-sm-12 col-md-6">
-                                            <input type="text" name="name" class="form-control" id="com-name" placeholder="Your Name *" required>
+                                            <label for="com-name">Your Name *</label>
+                                            <input type="text"
+                                                   name="name"
+                                                   class="form-control"
+                                                   id="com-name"
+                                                   placeholder="Your Name *"
+                                                   th:value="${user != null ? user.getFull_name() : ''}"
+                                                   required>
                                         </div>
                                         <div class="form-group col-12 col-sm-12 col-md-6">
-                                            <input type="email" name="email" class="form-control" id="com-email" placeholder="Your Email *" required>
+                                            <label for="com-email">Your Email *</label>
+                                            <input type="email"
+                                                   name="email"
+                                                   class="form-control"
+                                                   id="com-email"
+                                                   placeholder="Your Email *"
+                                                   th:value="${user != null ? user.getEmail() : ''}"
+                                                   required>
                                         </div>
                                     </div>
                                     <div class="form-row mb-2">
-                                        <div class="form-group col-12 col-sm-12 col-md-12">
-                                            <input type="text" name="subject" class="form-control" id="subject" placeholder="Your Subject">
+                                        <div class="form-group col-12">
+                                            <label for="subject">Your Subject</label>
+                                            <input type="text"
+                                                   name="subject"
+                                                   class="form-control"
+                                                   id="subject"
+                                                   placeholder="Your Subject">
                                         </div>
                                     </div>
                                     <div class="form-row mb-2">
-                                        <div class="form-group col-12 col-sm-12 col-md-12">
-                                            <textarea id="comment" placeholder="Type Your Message....." name="message" class="form-control" required></textarea>
+                                        <div class="form-group col-12">
+                                            <label for="comment">Type Your Message.....</label>
+                                            <textarea id="comment"
+                                                      name="message"
+                                                      class="form-control"
+                                                      placeholder="Type Your Message....."
+                                                      required></textarea>
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-12 col-sm-12 col-md-12">
-                                            <button name="send_message" type="submit" class="btn btn-secondary">Send Your Message</button>
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-secondary">Send Your Message</button>
                                         </div>
                                     </div>
                                 </form>
-                                <p class="form-messege"></p>
                             </div> <!-- end of contact-form-wrapper -->
                         </div>
                     </div> <!-- end of row -->
@@ -263,6 +315,27 @@
 
     <!-- Main JS -->
     <script src="/assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isSent = urlParams.get('isSent');
+
+            if (isSent === "true") {
+                Swal.fire({
+                    icon: "success",
+                    title: "Success!",
+                    text: "You have gotten in touch with us successfully! Check your mail now!",
+                });
+            } else if (isSent === "false") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops! Failed to get in touch",
+                    text: "Something went wrong! Your email may be wrong or not exist!",
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
