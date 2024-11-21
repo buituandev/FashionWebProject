@@ -5,34 +5,33 @@
 </head>
 <body>
 
-<!--[if lt IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve
-    your experience.</p>
-<![endif]-->
+    <!--[if lt IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+    <![endif]-->
 
-<!-- Start of Whole Site Wrapper with mobile menu support -->
-<div id="whole" class="whole-site-wrapper color-scheme-one">
+    <!-- Start of Whole Site Wrapper with mobile menu support -->
+    <div id="whole" class="whole-site-wrapper color-scheme-one">
 
-    <div th:replace="~{layout::headernormal(${user})}"></div>
-    <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
+        <div th:replace="~{layout::headernormal(${user})}"></div>
+        <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
 
-    <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
+        <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
-    <!-- Start of Breadcrumbs -->
-    <div class="breadcrumb-section bgc-offset mb-full">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-12 col-md-12">
-                    <nav class="breadcrumb">
-                        <a class="breadcrumb-item" href="index.html">Home</a>
-                        <a class="breadcrumb-item" href="blog-right-sidebar.html">Blog</a>
-                        <span class="breadcrumb-item active">Blog Details</span>
-                    </nav>
-                </div>
-            </div> <!-- end of row -->
-        </div> <!-- end of container -->
-    </div>
-    <!-- End of Breadcrumbs -->
+        <!-- Start of Breadcrumbs -->
+        <div class="breadcrumb-section bgc-offset mb-full">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <nav class="breadcrumb">
+                            <a class="breadcrumb-item" href="index.html">Home</a>
+                            <a class="breadcrumb-item" href="blog-right-sidebar.html">Blog</a>
+                            <span class="breadcrumb-item active">Blog Details</span>
+                        </nav>
+                    </div>
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- End of Breadcrumbs -->
 
     <!-- Start of Main Content Wrapper -->
     <div id="content" class="main-content-wrapper">
@@ -90,149 +89,225 @@
                     <!--                                    </div>-->
                     <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                    <!--                                <div class="sidebar-widget recent-posts">-->
-                    <!--                                    <h2 class="widgettitle">Recent Posts</h2>-->
-                    <!--                                    <div class="recent-posts-widget-container">-->
-                    <!--                                        <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="7000">-->
-                    <!--                                            <div class="swiper-wrapper">-->
-                    <!--                                                <div class="swiper-slide">-->
-                    <!--                                                    <div class="posts-single media">-->
-                    <!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
-                    <!--                                                            <a href="#">-->
-                    <!--                                                                <img src="assets/images/blog/blog-thumb-1.jpg" alt="Blog Image">-->
-                    <!--                                                                <div class="overlay"></div>-->
-                    <!--                                                            </a>-->
-                    <!--                                                        </div>-->
-                    <!--                                                        <div class="post-content flex-grow-1">-->
-                    <!--                                                            <div class="post-title">-->
-                    <!--                                                                <h5><a href="blog-details.html">Aypi non habent claritatem insitam</a></h5>-->
-                    <!--                                                            </div>-->
-                    <!--                                                            <div class="post-date">09 Aug</div>-->
-                    <!--                                                        </div>-->
-                    <!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
-                    <!--                                                </div>-->
+<!--                                <div class="sidebar-widget recent-posts">-->
+<!--                                    <h2 class="widgettitle">Recent Posts</h2>-->
+<!--                                    <div class="recent-posts-widget-container">-->
+<!--                                        <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="7000">-->
+<!--                                            <div class="swiper-wrapper">-->
+<!--                                                <div class="swiper-slide">-->
+<!--                                                    <div class="posts-single media">-->
+<!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
+<!--                                                            <a href="#">-->
+<!--                                                                <img src="assets/images/blog/blog-thumb-1.jpg" alt="Blog Image">-->
+<!--                                                                <div class="overlay"></div>-->
+<!--                                                            </a>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="post-content flex-grow-1">-->
+<!--                                                            <div class="post-title">-->
+<!--                                                                <h5><a href="blog-details.html">Aypi non habent claritatem insitam</a></h5>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="post-date">09 Aug</div>-->
+<!--                                                        </div>-->
+<!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
+<!--                                                </div>-->
 
-                    <!--                                                <div class="swiper-slide">-->
-                    <!--                                                    <div class="posts-single media">-->
-                    <!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
-                    <!--                                                            <a href="#">-->
-                    <!--                                                                <img src="assets/images/blog/blog-thumb-4.jpg" alt="Blog Image">-->
-                    <!--                                                                <div class="overlay"></div>-->
-                    <!--                                                            </a>-->
-                    <!--                                                        </div>-->
-                    <!--                                                        <div class="post-content flex-grow-1">-->
-                    <!--                                                            <div class="post-title">-->
-                    <!--                                                                <h5><a href="blog-details.html">Cabent claritatem insitam</a></h5>-->
-                    <!--                                                            </div>-->
-                    <!--                                                            <div class="post-date">09 Aug</div>-->
-                    <!--                                                        </div>-->
-                    <!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
-                    <!--                                                </div>-->
-                    <!--                                            </div>-->
+<!--                                                <div class="swiper-slide">-->
+<!--                                                    <div class="posts-single media">-->
+<!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
+<!--                                                            <a href="#">-->
+<!--                                                                <img src="assets/images/blog/blog-thumb-4.jpg" alt="Blog Image">-->
+<!--                                                                <div class="overlay"></div>-->
+<!--                                                            </a>-->
+<!--                                                        </div>-->
+<!--                                                        <div class="post-content flex-grow-1">-->
+<!--                                                            <div class="post-title">-->
+<!--                                                                <h5><a href="blog-details.html">Cabent claritatem insitam</a></h5>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="post-date">09 Aug</div>-->
+<!--                                                        </div>-->
+<!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
+<!--                                                </div>-->
+<!--                                            </div>-->
 
-                    <!--                                            <div class="swiper-arrow prev fa fa-angle-left"></div>-->
-                    <!--                                            <div class="swiper-arrow next fa fa-angle-right"></div>-->
-                    <!--                                        </div> &lt;!&ndash; end of element-carousel &ndash;&gt;-->
-                    <!--                                    </div> &lt;!&ndash; end of recent-posts-widget &ndash;&gt;-->
-                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+<!--                                            <div class="swiper-arrow prev fa fa-angle-left"></div>-->
+<!--                                            <div class="swiper-arrow next fa fa-angle-right"></div>-->
+<!--                                        </div> &lt;!&ndash; end of element-carousel &ndash;&gt;-->
+<!--                                    </div> &lt;!&ndash; end of recent-posts-widget &ndash;&gt;-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                    <!--                                <div class="sidebar-widget list-widget">-->
-                    <!--                                    <h2 class="widgettitle">Categories</h2>-->
-                    <!--                                    <div class="categories-widget">-->
-                    <!--                                        <ul class="categorie-list">-->
-                    <!--                                            <li><a href="#">creative<span>(20)</span></a></li>-->
-                    <!--                                        </ul>-->
-                    <!--                                    </div> &lt;!&ndash; end of categories-widget &ndash;&gt;-->
-                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+<!--                                <div class="sidebar-widget list-widget">-->
+<!--                                    <h2 class="widgettitle">Categories</h2>-->
+<!--                                    <div class="categories-widget">-->
+<!--                                        <ul class="categorie-list">-->
+<!--                                            <li><a href="#">creative<span>(20)</span></a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div> &lt;!&ndash; end of categories-widget &ndash;&gt;-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                    <!--                                <div class="sidebar-widget tag-cloud">-->
-                    <!--                                    <h2 class="widgettitle">Tag Cloud</h2>-->
-                    <!--                                    <div class="tags-widget">-->
-                    <!--                                        <ul>-->
-                    <!--                                            <li><a href="#">Ecommerce</a></li>-->
-                    <!--                                        </ul>-->
-                    <!--                                    </div>-->
-                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+<!--                                <div class="sidebar-widget tag-cloud">-->
+<!--                                    <h2 class="widgettitle">Tag Cloud</h2>-->
+<!--                                    <div class="tags-widget">-->
+<!--                                        <ul>-->
+<!--                                            <li><a href="#">Ecommerce</a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
 
-                    <!--                                <div class="sidebar-widget instagram-widget">-->
-                    <!--                                    <h2 class="widgettitle">Latest Instagram</h2>-->
-                    <!--                                    <div class="instagram-area">-->
-                    <!--                                        <div id="instagram_feed" class="image-popup"></div>-->
-                    <!--                                        <p>Follow Us <a href="https://www.instagram.com/themeitems/" target="_blank">@Instagram</a>.</p>-->
-                    <!--                                    </div>-->
-                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
-                    <!--                            </aside> &lt;!&ndash; end of #secondary &ndash;&gt;-->
-                    <!--                        </div>-->
-                </div> <!-- end of row -->
-            </div> <!-- end of container -->
+<!--                                <div class="sidebar-widget instagram-widget">-->
+<!--                                    <h2 class="widgettitle">Latest Instagram</h2>-->
+<!--                                    <div class="instagram-area">-->
+<!--                                        <div id="instagram_feed" class="image-popup"></div>-->
+<!--                                        <p>Follow Us <a href="https://www.instagram.com/themeitems/" target="_blank">@Instagram</a>.</p>-->
+<!--                                    </div>-->
+<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+<!--                            </aside> &lt;!&ndash; end of #secondary &ndash;&gt;-->
+<!--                        </div>-->
+                    </div> <!-- end of row -->
+                </div> <!-- end of container -->
+            </div>
+            <!-- End of Blog Posts Section -->
         </div>
-        <!-- End of Blog Posts Section -->
+        <!-- End of Main Content Wrapper -->
+
+        <div th:replace="~{layout::footer}"></div>
+        <div th:replace="~{layout::scroll_to_top}"></div>
     </div>
-    <!-- End of Main Content Wrapper -->
+    <!-- End of Whole Site Wrapper -->
 
-    <div th:replace="~{layout::footer}"></div>
-    <div th:replace="~{layout::scroll_to_top}"></div>
-</div>
-<!-- End of Whole Site Wrapper -->
-
-<!-- Initializing Photoswipe -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="pswp__bg"></div>
-    <div class="pswp__scroll-wrap">
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
+    <!-- Initializing Photoswipe -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div>
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div>
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- End of Photoswipe -->
+    <!-- End of Photoswipe -->
 
 
-<!-- JS
-============================================ -->
+    <!-- JS
+    ============================================ -->
 
-<!-- jQuery JS -->
-<script src="/assets/js/jquery.1.12.4.min.js"></script>
+    <!-- jQuery JS -->
+    <script src="/assets/js/jquery.1.12.4.min.js"></script>
 
-<!-- Popper JS -->
-<script src="/assets/js/popper.min.js"></script>
+    <!-- Popper JS -->
+    <script src="/assets/js/popper.min.js"></script>
 
-<!-- Bootstrap JS -->
-<script src="/assets/js/bootstrap.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="/assets/js/bootstrap.min.js"></script>
 
-<!-- Plugins JS -->
-<script src="/assets/js/plugins.js"></script>
+    <!-- Plugins JS -->
+    <script src="/assets/js/plugins.js"></script>
 
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/toast.js"></script>
+<script src="/assets/js/FormatPrice.js"></script>
+<script>function addToCart(productId, quantity) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            toast('success', 'Item added to cart');
+            updateCart();
+        }
+        if (xhr.readyState === 4 && xhr.status === 400) {
+            toast("error", "Product is not available for order! Try again later.");
+        }
+        if (xhr.readyState === 4 && xhr.status === 401) {
+            window.location.href = "/login.html";
+        }
+    };
+    xhr.send();
+}
 
+function deleteCartItem(productId, userId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this item from cart",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your item has been deleted from cart',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 3500
+                    });
+                    updateCart();
+                }
+            };
+            xhr.send();
+        }
+    });
+}
+
+function updateCart() {
+    fetch('/shop-grid.html')
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+            const newCountStyle = doc.querySelector('.count-style').textContent;
+
+            document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+            document.querySelector('.count-style').textContent = newCountStyle;
+            formatPrices();
+        })
+        .catch(error => console.error('Error fetching cart items:', error));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateCart();
+
+// Add event listener to buttons with class 'cart-btn'
+    document.querySelectorAll('.btn-cart').forEach(button => {
+        button.addEventListener('click', updateCart);
+    });
+});
+</script>
 </body>
 <style>
     .post-content .blog-image {

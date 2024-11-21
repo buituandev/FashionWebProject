@@ -109,8 +109,8 @@
                         <div class="shopping-cart-img me-4">
                             <a th:href="@{'/single-product/' + ${item.id}}">
                                 <img class="img-fluid" th:alt="${item.title}" th:src="${item.image}"
-                                     th:style="${ProductService.getProductById(item.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0 ? '-webkit-filter: grayscale(100%);'+
-            'filter: grayscale(100%);' : ''}">
+                                     th:style="${ProductService.getProductById(item.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0 ? '-webkit-filter: brightness(0.5);'+
+            'filter: brightness(0.5);' : ''}">
                                 <span class="product-quantity" th:text="${item.quantity}"></span>
                             </a>
                         </div>
