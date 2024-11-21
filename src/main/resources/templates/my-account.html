@@ -87,16 +87,17 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                                             <!-- Tab panes -->
                                             <div class="tab-content dashboard-content">
-<!--                                                <div id="dashboard" class="tab-pane fade show active">-->
-<!--                                                    <h3>Dashboard </h3>-->
-<!--                                                    <p>From your account dashboard. you can easily check &amp; edit your-->
-<!--                                                        <a href="#">recent account details</a></p>-->
-<!--                                                </div> &lt;!&ndash; end of tab-pane &ndash;&gt;-->
+                                                <!--                                                <div id="dashboard" class="tab-pane fade show active">-->
+                                                <!--                                                    <h3>Dashboard </h3>-->
+                                                <!--                                                    <p>From your account dashboard. you can easily check &amp; edit your-->
+                                                <!--                                                        <a href="#">recent account details</a></p>-->
+                                                <!--                                                </div> &lt;!&ndash; end of tab-pane &ndash;&gt;-->
 
                                                 <div id="account-details" class="tab-pane fade show active">
                                                     <h3>Account details </h3>
                                                     <div class="login-form">
-                                                        <form th:action="@{/editProfile}" method="post" th:object="${user}" th:if="${user}">
+                                                        <form th:action="@{/editProfile}" method="post"
+                                                              th:object="${user}" th:if="${user}">
                                                             <div class="container p-4">
                                                                 <div class="row mb-3">
                                                                     <div class="col-md-3">
@@ -104,27 +105,37 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" type="radio" name="gender" id="male" th:value="'Male'"
-                                                                                   th:field="*{gender}" th:checked="${user.getGender().equalsIgnoreCase('Male')}">
+                                                                            <input class="form-check-input" type="radio"
+                                                                                   name="gender" id="male"
+                                                                                   th:value="'Male'"
+                                                                                   th:field="*{gender}"
+                                                                                   th:checked="${user.getGender().equalsIgnoreCase('Male')}">
                                                                             <label class="form-check-label" for="male">Male</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" type="radio" name="gender" id="female" th:value="'Female'"
-                                                                                   th:field="*{gender}" th:checked="${user.getGender().equalsIgnoreCase('Female')}">
-                                                                            <label class="form-check-label" for="female">Female</label>
+                                                                            <input class="form-check-input" type="radio"
+                                                                                   name="gender" id="female"
+                                                                                   th:value="'Female'"
+                                                                                   th:field="*{gender}"
+                                                                                   th:checked="${user.getGender().equalsIgnoreCase('Female')}">
+                                                                            <label class="form-check-label"
+                                                                                   for="female">Female</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
-<!--                                                                <input type="hidden" th:field="*{id}" th:value="${user.getId()}">-->
+                                                                <!--                                                                <input type="hidden" th:field="*{id}" th:value="${user.getId()}">-->
 
                                                                 <!-- Full Name -->
                                                                 <div class="row mb-3">
                                                                     <div class="col-md-3">
-                                                                        <label for="f-name" class="form-label fw-bold">Full Name</label>
+                                                                        <label for="f-name" class="form-label fw-bold">Full
+                                                                            Name</label>
                                                                     </div>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="f-name" required th:value="${user.getFull_name()}"
+                                                                        <input type="text" class="form-control"
+                                                                               id="f-name" required
+                                                                               th:value="${user.getFull_name()}"
                                                                                th:field="*{full_name}">
                                                                     </div>
                                                                 </div>
@@ -132,10 +143,14 @@
                                                                 <!-- Phone Number -->
                                                                 <div class="row mb-3">
                                                                     <div class="col-md-3">
-                                                                        <label for="phonenumber" class="form-label fw-bold">Phone Number</label>
+                                                                        <label for="phonenumber"
+                                                                               class="form-label fw-bold">Phone
+                                                                            Number</label>
                                                                     </div>
                                                                     <div class="col-md-9">
-                                                                        <input type="text" class="form-control" id="phonenumber" required th:value="${user.getPhone_number()}"
+                                                                        <input type="text" class="form-control"
+                                                                               id="phonenumber" required
+                                                                               th:value="${user.getPhone_number()}"
                                                                                th:field="*{phone_number}">
                                                                     </div>
                                                                 </div>
@@ -143,31 +158,38 @@
                                                                 <!-- Birthdate -->
                                                                 <div class="row mb-3">
                                                                     <div class="col-md-3">
-                                                                        <label for="birth" class="form-label fw-bold">Birthdate (Optional)</label>
+                                                                        <label for="birth" class="form-label fw-bold">Birthdate
+                                                                            (Optional)</label>
                                                                     </div>
                                                                     <div class="col-md-9">
-                                                                        <input type="date" class="form-control" id="birth" placeholder="YYYY-MM-DD" required
-                                                                               th:value="${user.getDob()}" th:field="*{dob}">
+                                                                        <input type="date" class="form-control"
+                                                                               id="birth" placeholder="YYYY-MM-DD"
+                                                                               required
+                                                                               th:value="${user.getDob()}"
+                                                                               th:field="*{dob}">
                                                                     </div>
                                                                 </div>
 
                                                                 <!-- Hidden Email and Password -->
-<!--                                                                <div class="d-none">-->
-<!--                                                                    <div class="mb-3">-->
-<!--                                                                        <label for="email" class="form-label">Email Address</label>-->
-<!--                                                                        <input type="email" class="form-control" id="email" th:field="*{email}" th:value="${user.getEmail()}">-->
-<!--                                                                    </div>-->
-<!--                                                                    <div class="mb-3">-->
-<!--                                                                        <label for="password" class="form-label">Password</label>-->
-<!--                                                                        <input type="password" class="form-control" id="password" th:field="*{password}"-->
-<!--                                                                               th:value="${user.getPassword()}">-->
-<!--                                                                    </div>-->
-<!--                                                                </div>-->
+                                                                <!--                                                                <div class="d-none">-->
+                                                                <!--                                                                    <div class="mb-3">-->
+                                                                <!--                                                                        <label for="email" class="form-label">Email Address</label>-->
+                                                                <!--                                                                        <input type="email" class="form-control" id="email" th:field="*{email}" th:value="${user.getEmail()}">-->
+                                                                <!--                                                                    </div>-->
+                                                                <!--                                                                    <div class="mb-3">-->
+                                                                <!--                                                                        <label for="password" class="form-label">Password</label>-->
+                                                                <!--                                                                        <input type="password" class="form-control" id="password" th:field="*{password}"-->
+                                                                <!--                                                                               th:value="${user.getPassword()}">-->
+                                                                <!--                                                                    </div>-->
+                                                                <!--                                                                </div>-->
 
                                                                 <!-- Save Button -->
                                                                 <div class="row">
                                                                     <div class="col-md-9 offset-md-3 text-end">
-                                                                        <button type="submit" class="btn btn-primary" style="background-color: #cc2121; border-color: #cc2121">Save</button>
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                                style="background-color: #cc2121; border-color: #cc2121">
+                                                                            Save
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
