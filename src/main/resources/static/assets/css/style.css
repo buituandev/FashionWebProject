@@ -6894,9 +6894,9 @@ header.header-type-4 .header-text span:first-child {
 }
 
 .single-post-wrapper .post-meta {
-    border-bottom: 1px solid #ebebeb;
+    /*border-bottom: 1px solid #ebebeb;*/
     margin-top: 15px;
-    padding-bottom: 15px;
+    /*padding-bottom: 15px;*/
 }
 
 .single-post-wrapper .post-meta p span {

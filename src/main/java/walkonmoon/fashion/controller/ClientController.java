@@ -167,7 +167,7 @@ public class ClientController {
         model.addAttribute("products", paginatedProducts);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("totalProducts", totalProducts); // Ensure this is set
+        model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
@@ -251,7 +251,7 @@ public class ClientController {
     @GetMapping("/announce-email-success.html")
     public String showAnnounceForm(@RequestParam("email") String email, HttpSession session, HttpServletRequest request, Model model) {
         mainAction(request, model, session);
-        System.out.println("Received email: " + email);  // This will log the email
+        System.out.println("Received email: " + email);
         model.addAttribute("email", email);
         return "announce-email-success";
     }
