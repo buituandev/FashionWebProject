@@ -15,6 +15,9 @@ import walkonmoon.fashion.config.FirebaseConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -90,4 +93,5 @@ public class FileUploadController {
 //        String fileName = parts[parts.length - 1].split("\\?")[0];
 //        return fileName;
 //    }
+
 }

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+
+<!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/eco-products-edit.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:06:27 GMT -->
+<head th:replace="~{admin/admin_layout :: head}">
+</head>
+
+<body class="skin-default fixed-layout">
+<!-- Froala Editor CSS -->
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@4.0.15/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+
+<!-- Froala Editor JS -->
+
+
+<style>
+    .category-select {
+        appearance: none; /* Remove default arrow */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="black" stroke-width=".5" d="M0 0L2 2L4 0"/></svg>') no-repeat right 10px center;
+        background-color: #fff;
+        background-size: 10px;
+        padding-right: 30px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .product-img .pro-img-overlay a {
+        margin: 50% 5px;
+
+    }
+
+    .category-select:hover, .category-select:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .image-preview-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 10px;
+    }
+
+    .image-container {
+        position: relative; /* Allows overlay to be positioned on top of the image */
+        display: inline-block;
+
+    }
+
+    .preview-image {
+        max-width: 150px;
+        height: auto;
+        display: block;
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    .pro-img-overlay {
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s;
+    }
+
+    .image-container:hover .pro-img-overlay {
+        opacity: 1; /* Show overlay on hover */
+    }
+
+    .delete-icon {
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .large-checkbox {
+        width: 20px;
+        height: 17px;
+    }
+
+    .large-label {
+        font-size: 14px;
+        padding-left: 5px;
+    }
+
+    .check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+</style>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<!--<div th:replace="admin/admin_layout :: preload"></div>-->
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header th:replace="~{admin/admin_layout :: header}"></header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside th:replace="~{admin/admin_layout :: navbar}"></aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h4 class="text-themecolor" th:if="${mode == 'create'}" style="font-weight: 600">Add Blog</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'edit'}" style="font-weight: 600">Edit Blog</h4>
+                </div>
+                <div class="col-md-7 align-self-center text-end">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <ol class="breadcrumb justify-content-end">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a
+                                    href="eco-products-edit.html" style="color: rgb(228, 106, 118)">Create Blog</a>
+                            </li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Edit Blog</li>
+                        </ol>
+                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a
+                                href="blog-form.html" style="color: white"><i
+                                class="fa fa-plus-circle" th:if="${mode == 'create'}"></i> Create New</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Info box Content -->
+            <!-- ============================================================== -->
+
+            <div class="row">
+                <!-- Column -->
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form th:action="@{/admin/blog/save}" method="post" th:object="${blog}"
+                                  enctype="multipart/form-data">
+                                <div class="form-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Title</label>
+                                                <input type="text" id="firstName" th:field="*{title}"
+                                                       class="form-control">
+                                                <input type="hidden" th:field="*{id}"/>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Short
+                                                    Description</label>
+                                                <input type="text" id="lastName" th:field="*{shortDescription}"
+                                                       class="form-control"></div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Author</label>
+                                                <input type="text" th:field="*{author}"
+                                                       class="form-control"></div>
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Content</label>
+                                                <textarea class="form-control" name="content" id="content"
+                                                            rows="4" ></textarea>
+                                                <div class="content" th:utext="${content}" hidden="hidden"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <!--/span-->
+                                        <div class="col-md-3">
+                                            <h5 class="card-title m-t-20" style="font-weight: 600">Upload Thumbnail</h5>
+                                            <div class="product-img" id="image-main-container">
+                                                <div class="image-preview-wrapper" id="image-main-container-wrapper"
+                                                     style="width: 80vw; display: flex; gap: 10px; flex-wrap: nowrap; overflow-x: auto; position: relative;">
+
+                                                    <div class="image-container"
+                                                         style="position: relative; display: inline-block;">
+                                                        <!-- Main image preview -->
+                                                        <img id="main-image-preview" alt="Main Image Preview"
+                                                             class="preview-image"
+                                                             th:if="${blog.thumbnail}" th:src="${blog.getThumbnail()}">
+                                                        <!-- Overlay with delete icon -->
+                                                        <div class="pro-img-overlay" id="main-image-overlay"
+                                                             style="position: absolute; top: 0; right: 0; display: flex; align-items: center; justify-content: center;">
+                                                            <a href="javascript:void(0)" class="bg-danger delete-icon"
+                                                               id="delete-main-image"
+                                                               th:attr="data-image-id=${blog.id}, data-file-url=${blog.getThumbnail()}"
+                                                               style="color: white; padding: 5px;">
+                                                                <i class="ti-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                            </div>
+
+                                        <!-- File upload button for new images -->
+                                        <div class="fileupload btn btn-info waves-effect waves-light text-whitecategory"
+                                             style="background-color: #da9e79; border: #da9e79;">
+                                    <span><i class="ion-upload m-r-5"
+                                             style="font-weight: 600"></i>Upload Main Image</span>
+                                            <input type="file" class="upload" id="file" name="file" multiple
+                                                   accept="image/*">
+                                        </div>
+                                        <input type="text" th:field="*{thumbnail}" style="visibility: hidden">
+                                        <hr>
+                                        <div class="form-actions m-t-40">
+                                            <button type="submit" class="btn btn-success text-white"><i
+                                                    class="fa fa-check"></i> Save
+                                            </button>
+                                            <button type="button" class="btn btn-dark"><a
+                                                    th:href="@{'/admin/eco-products.html'}"
+                                                    style="color: white">Cancel</a>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <div th:replace="~{admin/admin_layout :: rightsidebar}"></div>
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- footer -->
+    <!-- ============================================================== -->
+    <footer th:replace="~{admin/admin_layout :: footer}"></footer>
+    <!-- ============================================================== -->
+    <!-- End footer -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<div th:replace="~{admin/admin_layout :: jscript}"></div>
+<!-- ============================================================== -->
+<!-- This page plugins -->
+<!-- ============================================================== -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/froala-editor@4.0.15/js/froala_editor.pkgd.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.delete-icon').forEach(function (deleteButton) {
+            deleteButton.addEventListener('click', function () {
+                const deleteIcon = this;
+                const imageContainer = deleteIcon.closest('.image-container');
+                const imageId = deleteIcon.dataset.imageId;
+                const fileUrl = deleteIcon.dataset.fileUrl;
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you want to delete this image?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#AAAAAA',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`/BlogImage/${imageId}`, {
+                            method: 'DELETE'
+                        })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to delete image metadata');
+                                }
+                                console.log('Deleted image metadata with ID:', imageId);
+
+                                // Then delete the file from Firebase Storage
+                                return fetch(`/delete?fileUrl=${encodeURIComponent(fileUrl)}`, {
+                                    method: 'DELETE'
+                                });
+                            })
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('Failed to delete image file');
+                                }
+                                console.log('Deleted file from Firebase Storage with URL:', fileUrl);
+                                imageContainer.remove();
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Your image has been deleted.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                // Swal.fire('Error', 'An error occurred while deleting the image.', 'error');
+                                // imageContainer.remove();  // Remove the image from the DOM
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Your image has been deleted.',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            });
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+
+<script>
+    const mainImageContainer = document.getElementById('image-main-container-wrapper');
+    const mainImageInput = document.getElementById('file');
+
+    // Handle main image upload and display
+    mainImageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            mainImageContainer.innerHTML = '';
+
+
+            const imgContainer = document.createElement('div');
+            imgContainer.classList.add('image-container');
+
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.classList.add('preview-image');
+
+            const overlay = document.createElement('div');
+            overlay.classList.add('pro-img-overlay');
+
+            const deleteIcon = document.createElement('a');
+            deleteIcon.href = 'javascript:void(0)';
+            deleteIcon.classList.add('bg-danger', 'delete-icon');
+            deleteIcon.innerHTML = '<i class="ti-trash"></i>';
+
+            deleteIcon.addEventListener('click', () => {
+                imgContainer.remove();
+                mainImageInput.value = '';
+            });
+
+            overlay.appendChild(deleteIcon);
+            imgContainer.appendChild(img);
+            imgContainer.appendChild(overlay);
+
+            mainImageContainer.appendChild(imgContainer);
+        }
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const content = document.getElementsByClassName("fr-element fr-view")[0];
+        const textContent = document.querySelector(".content").innerHTML;
+        console.log(textContent);
+        content.innerHTML += textContent;
+    });
+</script>
+<script>
+    var editor = new FroalaEditor('#content', {
+        imageUploadURL: '/upload-image',
+        imageUploadMethod: 'POST',
+        events: {
+            'image.beforeUpload': function (images) {
+            },
+            'image.uploaded': function (response) {
+                // Image was uploaded to the server.
+            },
+            'image.inserted': function ($img, response) {
+                // Image was inserted in the editor.
+            },
+            'image.replaced': function ($img, response) {
+                // Image was replaced in the editor.
+            },
+            'image.error': function (error, response) {
+                // Bad link.
+                if (error.code == 1) {
+
+                }
+
+                // No link in upload response.
+                else if (error.code == 2) {
+
+                }
+
+                // Error during image upload.
+                else if (error.code == 3) {
+
+                }
+
+                // Parsing response failed.
+                else if (error.code == 4) {
+
+                }
+
+                // Image too text-large.
+                else if (error.code == 5) {
+
+                }
+
+                // Invalid image type.
+                else if (error.code == 6) {
+
+                }
+
+                // Image can be uploaded only to same domain in IE 8 and IE 9.
+                else if (error.code == 7) {
+
+                }
+
+                // Response contains the original server response to the request if available.
+            }
+        }
+    });
+
+
+</script>
+</body>
+</html>
