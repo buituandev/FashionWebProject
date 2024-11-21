@@ -52,5 +52,4 @@ public class User implements Serializable {
     private String token;
     @Column(name = "token_expired", nullable = true)
     private LocalDateTime tokenExpired;
-
 }

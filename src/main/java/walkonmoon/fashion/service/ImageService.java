@@ -3,6 +3,7 @@ package walkonmoon.fashion.service;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import walkonmoon.fashion.model.Blog;
 import walkonmoon.fashion.model.Image;
 import walkonmoon.fashion.model.Product;
 import walkonmoon.fashion.repository.ImageRepository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class ImageService {
     @Autowired
     private final ImageRepository imageRepository;
+
 
     public ImageService(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
@@ -59,5 +61,4 @@ public class ImageService {
         public void deleteImagesbyId(int id){
             imageRepository.deleteById(id);
         }
-
 }

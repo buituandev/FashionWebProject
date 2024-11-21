@@ -18,4 +18,12 @@ public class BlogDetailService {
         Optional<BlogDetail> blogDetail = blogDetailRepository.findByBlogID(id);
         return blogDetail.orElse(null);
     }
+
+    public void saveBlogDetail(BlogDetail blogDetail) {
+        blogDetailRepository.save(blogDetail);
+    }
+
+    public void deleteBlogDetailById(int id){
+         blogDetailRepository.deleteById(id);
+    }
 }
