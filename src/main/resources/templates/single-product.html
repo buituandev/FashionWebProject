@@ -4,7 +4,7 @@
 <head th:replace="~{layout::head(${product.getProduct_name()})}">
 </head>
 <style>
-    .swal2-confirm, .swal2-cancel{
+    .swal2-confirm, .swal2-cancel {
         text-align: center;
         padding: 0.5px 20px;
         font-size: 16px;
@@ -13,7 +13,8 @@
 
 <body>
 <!--[if lt IE 9]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve
+    your experience.</p>
 <![endif]-->
 
 <!-- Start of Whole Site Wrapper with mobile menu support -->
@@ -34,7 +35,8 @@
                     <nav class="breadcrumb" style="padding: 20px">
                         <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
                         <a class="breadcrumb-item" th:href="@{/shop-grid.html}">Shop</a>
-                        <a class="breadcrumb-item active" th:text="${product.getProduct_name()}" th:href="@{'/single-product/'+${product.getId()}}"></a>
+                        <a class="breadcrumb-item active" th:text="${product.getProduct_name()}"
+                           th:href="@{'/single-product/'+${product.getId()}}"></a>
                     </nav>
                 </div>
             </div> <!-- end of row -->
@@ -52,11 +54,16 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <main id="primary" class="site-main">
                             <div class="single-product-wrapper">
-                                <div class="product-id" th:text="${product.getId()}" style="visibility: hidden; display: none" ></div>
-                                <div class="product-price-hid" th:text="${product.getPrice()}" style="visibility: hidden; display: none"></div>
-                                <image class="product-img" th:src="${product.getImage_collection_url()}" style="visibility: hidden; display: none"></image>
-                                <div class="product-name-hid" th:text="${product.getProduct_name()}" style="visibility: hidden; display: none"></div>
-                                <div class="product-stock" th:text="${product.getStock()}" style="visibility: hidden"></div>
+                                <div class="product-id" th:text="${product.getId()}"
+                                     style="visibility: hidden; display: none"></div>
+                                <div class="product-price-hid" th:text="${product.getPrice()}"
+                                     style="visibility: hidden; display: none"></div>
+                                <image class="product-img" th:src="${product.getImage_collection_url()}"
+                                       style="visibility: hidden; display: none"></image>
+                                <div class="product-name-hid" th:text="${product.getProduct_name()}"
+                                     style="visibility: hidden; display: none"></div>
+                                <div class="product-stock" th:text="${product.getStock()}"
+                                     style="visibility: hidden"></div>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="product-gallery">
@@ -67,10 +74,13 @@
                                                         <!-- Slides -->
                                                         <div class="swiper-wrapper">
 
-                                                            <figure class="swiper-slide" th:each="image:${productImages}">
+                                                            <figure class="swiper-slide"
+                                                                    th:each="image:${productImages}">
                                                                 <a th:href="${image.getImageurl()}">
-                                                                    <img th:src="${image.getImageurl()}" alt="Product Image" style="object-fit: cover; width: 600px; height: 600px">
-<!--                                                                    <div class="image-overlay"><i class="fa fa-search-plus"></i></div>-->
+                                                                    <img th:src="${image.getImageurl()}"
+                                                                         alt="Product Image"
+                                                                         style="object-fit: cover; width: 600px; height: 600px">
+                                                                    <!--                                                                    <div class="image-overlay"><i class="fa fa-search-plus"></i></div>-->
                                                                 </a>
                                                                 <figcaption class="visually-hidden">
                                                                     <span>Product Image</span>
@@ -85,14 +95,18 @@
                                                         <div class="nav-slider">
                                                             <!-- Slides -->
                                                             <div class="swiper-wrapper">
-                                                                <div class="swiper-slide" th:each="image:${productImages}">
-                                                                    <img th:src="${image.getImageurl()}" alt="Product Thumbnail Image">
+                                                                <div class="swiper-slide"
+                                                                     th:each="image:${productImages}">
+                                                                    <img th:src="${image.getImageurl()}"
+                                                                         alt="Product Thumbnail Image">
                                                                 </div>
                                                             </div>
 
                                                             <!-- Navigation -->
-                                                            <div class="swiper-arrow next"><i class="fa fa-angle-down"></i></div>
-                                                            <div class="swiper-arrow prev"><i class="fa fa-angle-up"></i></div>
+                                                            <div class="swiper-arrow next"><i
+                                                                    class="fa fa-angle-down"></i></div>
+                                                            <div class="swiper-arrow prev"><i
+                                                                    class="fa fa-angle-up"></i></div>
                                                         </div>
                                                     </div> <!-- end of product-thumb-image -->
                                                 </div>
@@ -104,9 +118,10 @@
                                             <h3 class="product-name" th:text="${product.getProduct_name()}"></h3>
                                             <div class="product-price">
                                                 <p class="d-flex align-items-center">
-<!--                                                    <span class="price-old" th:text="${product.getPrice()}+' VND'"></span>-->
-                                                    <span class="price-new formatted-price" th:text="${product.getPrice()}+' VND'"></span>
-<!--                                                    <span class="price-discount">-20%</span>-->
+                                                    <!--                                                    <span class="price-old" th:text="${product.getPrice()}+' VND'"></span>-->
+                                                    <span class="price-new formatted-price"
+                                                          th:text="${product.getPrice()}+' VND'"></span>
+                                                    <!--                                                    <span class="price-discount">-20%</span>-->
                                                 </p>
                                             </div>
                                             <div class="product-description">
@@ -118,36 +133,64 @@
                                                     <p style="color: red">Out of Stock</p>
                                                 </div>
                                                 <div th:if="${product.getStock() > 0}">
-                                                    <p>In Stock</p>
+                                                    <p th:text="'There are ' + ${product.getStock()} + ' products left'">In Stock</p>
                                                 </div>
                                                 <div class="product-stock">
 
-                                                        <label>Quantity</label>
-                                                        <ul class="d-flex flex-wrap align-items-center">
-                                                            <li class="box-quantity">
-                                                                <div class="cart-input2">
-                                                                    <input id="quantity-input" class="cart-input-box" type="number" th:min="${product.getStock()>= 1 ? 1 : 0}" th:value="${product.getStock()>= 1 ? 1 : 0}" th:max="${product.getStock()}">
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <button type="button" class="default-btn btn-cart" th:onclick="'addToCart(' + ${product.id} + ', document.getElementById(\'quantity-input\').value)'" th:text="${product.getStock() > 0 ? 'Add to Cart' : 'Out of Stock'}" th:disabled="${product.getStock() == 0}"></button>
-                                                            </li>
-                                                        </ul>
+                                                    <label>Quantity</label>
+                                                    <ul class="d-flex flex-wrap align-items-center">
+                                                        <li class="box-quantity">
+                                                            <div class="cart-input2">
+                                                                <input id="quantity-input" class="cart-input-box"
+                                                                       type="number"
+                                                                       th:min="${product.getStock()>= 1 ? 1 : 0}"
+                                                                       th:value="${product.getStock()>= 1 ? 1 : 0}"
+                                                                       th:max="${product.getStock()}">
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <button type="button" class="default-btn btn-cart"
+                                                                    th:onclick="'addToCart(' + ${product.id} + ', ' + document.getElementById('quantity-input').value + ')'"
+                                                                    th:text="${product.getStock() > 0 && ProductService.getProductById(product.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) != 0 ? 'Add to Cart' : 'Unavailable'}"
+                                                                    th:disabled="${product.getStock() == 0 || ProductService.getProductById(product.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0}">
+                                                            </button>
+                                                        </li>
+                                                    </ul>
 
                                                 </div>
-<!--                                                <div class="wishlist-compare">-->
-<!--                                                    <button class="btn-wishlist" type="button" title="Add to Wishlist">Add to Wishlist</button>-->
-<!--                                                    <button class="btn-compare" type="button" title="Add to Compare">Add to Compare</button>-->
-<!--                                                </div>-->
+                                                <!--                                                <div class="wishlist-compare">-->
+                                                <!--                                                    <button class="btn-wishlist" type="button" title="Add to Wishlist">Add to Wishlist</button>-->
+                                                <!--                                                    <button class="btn-compare" type="button" title="Add to Compare">Add to Compare</button>-->
+                                                <!--                                                </div>-->
                                             </div>
 
                                             <div class="social-sharing d-flex align-items-center">
                                                 <span>Share</span>
                                                 <ul class="list-inline">
-                                                    <li class="list-inline-item"><a href="#" class="bg-facebook" data-bs-toggle="tooltip" data-position="top" data-original-title="Facebook" target="_blank"><i class="fa fa-facebook"></i><span>Share</span></a></li>
-                                                    <li class="list-inline-item"><a href="#" class="bg-twitter" data-bs-toggle="tooltip" data-position="top" data-original-title="Twitter" target="_blank"><i class="fa fa-twitter"></i><span>Tweet</span></a></li>
-                                                    <li class="list-inline-item"><a href="#" class="bg-gplus" data-bs-toggle="tooltip" data-position="top" data-original-title="Google Plus" target="_blank"><i class="fa fa-google-plus"></i><span>Google+</span></a></li>
-                                                    <li class="list-inline-item"><a href="#" class="bg-pinterest" data-bs-toggle="tooltip" data-position="top" data-original-title="Pinterest" target="_blank"><i class="fa fa-pinterest"></i><span>Pinterest</span></a></li>
+                                                    <li class="list-inline-item"><a href="#" class="bg-facebook"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    data-position="top"
+                                                                                    data-original-title="Facebook"
+                                                                                    target="_blank"><i
+                                                            class="fa fa-facebook"></i><span>Share</span></a></li>
+                                                    <li class="list-inline-item"><a href="#" class="bg-twitter"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    data-position="top"
+                                                                                    data-original-title="Twitter"
+                                                                                    target="_blank"><i
+                                                            class="fa fa-twitter"></i><span>Tweet</span></a></li>
+                                                    <li class="list-inline-item"><a href="#" class="bg-gplus"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    data-position="top"
+                                                                                    data-original-title="Google Plus"
+                                                                                    target="_blank"><i
+                                                            class="fa fa-google-plus"></i><span>Google+</span></a></li>
+                                                    <li class="list-inline-item"><a href="#" class="bg-pinterest"
+                                                                                    data-bs-toggle="tooltip"
+                                                                                    data-position="top"
+                                                                                    data-original-title="Pinterest"
+                                                                                    target="_blank"><i
+                                                            class="fa fa-pinterest"></i><span>Pinterest</span></a></li>
                                                 </ul>
                                             </div>
                                         </div> <!-- end of product-details -->
@@ -157,14 +200,25 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12">
                                         <div class="product-info mt-half">
-                                            <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+                                            <ul class="nav nav-pills justify-content-center" id="pills-tab"
+                                                role="tablist">
                                                 <li class="nav-item">
-                                                    <a class="nav-link active" id="nav_desctiption" data-bs-toggle="pill" href="#tab_description" role="tab" aria-controls="tab_description" aria-selected="true">Description</a>
+                                                    <a class="nav-link active" id="nav_desctiption"
+                                                       data-bs-toggle="pill" href="#tab_description" role="tab"
+                                                       aria-controls="tab_description"
+                                                       aria-selected="true">Description</a>
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane fade show active" id="tab_description" role="tabpanel" aria-labelledby="nav_desctiption">
-                                                    <p th:text="${product.getLong_description()}">Studio Design' PolyFaune collection features classic products with colorful patterns, inspired by the traditional japanese origamis. To wear with a chino or jeans. The sublimation textile printing process provides an exceptional color rendering and a color, guaranteed overtime. Regular fit, round neckline, long sleeves. 100% cotton, brushed inner side for extra comfort.</p>
+                                                <div class="tab-pane fade show active" id="tab_description"
+                                                     role="tabpanel" aria-labelledby="nav_desctiption">
+                                                    <p th:text="${product.getLong_description()}">Studio Design'
+                                                        PolyFaune collection features classic products with colorful
+                                                        patterns, inspired by the traditional japanese origamis. To wear
+                                                        with a chino or jeans. The sublimation textile printing process
+                                                        provides an exceptional color rendering and a color, guaranteed
+                                                        overtime. Regular fit, round neckline, long sleeves. 100%
+                                                        cotton, brushed inner side for extra comfort.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,32 +241,46 @@
                             <h2>Related Products</h2>
                         </div>
                         <div class="latest-product-wrapper pos-r">
-                            <div class="element-carousel anime-element" data-visible-slide="4" data-loop="false" data-space-between="0" data-speed="1000">
+                            <div class="element-carousel anime-element" data-visible-slide="4" data-loop="false"
+                                 data-space-between="0" data-speed="1000">
 
                                 <!-- Slides -->
                                 <div class="swiper-wrapper">
-                                    <article class="swiper-slide product-layout" th:each="relatedProduct:${relatedProducts}">
+                                    <article class="swiper-slide product-layout"
+                                             th:each="relatedProduct:${relatedProducts}">
                                         <div class="product-thumb">
                                             <div class="product-inner">
                                                 <div class="product-image">
-                                                    <div class="product-id" th:text="${relatedProduct.getId()}" style="visibility: hidden; display: none"></div>
-                                                    <div class="product-price-hid" th:text="${relatedProduct.getPrice()}" style="visibility: hidden; display: none"></div>
-                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}" style="visibility: hidden; display: none"></div>
-                                                    <div class="label-product label-new" th:text="${relatedProduct.getTitle()}"></div>
+                                                    <div class="product-id" th:text="${relatedProduct.getId()}"
+                                                         style="visibility: hidden; display: none"></div>
+                                                    <div class="product-price-hid"
+                                                         th:text="${relatedProduct.getPrice()}"
+                                                         style="visibility: hidden; display: none"></div>
+                                                    <div class="product-stock" th:text="${relatedProduct.getStock()}"
+                                                         style="visibility: hidden; display: none"></div>
+                                                    <div class="label-product label-new"
+                                                         th:text="${relatedProduct.getTitle()}"></div>
                                                     <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}">
-                                                        <img th:src="${relatedProduct.getImage_collection_url()}" th:alt="${relatedProduct.getProduct_name()}" th:title="${relatedProduct.getProduct_name()}">
+                                                        <img th:src="${relatedProduct.getImage_collection_url()}"
+                                                             th:alt="${relatedProduct.getProduct_name()}"
+                                                             th:title="${relatedProduct.getProduct_name()}">
                                                     </a>
                                                     <div class="action-links">
-                                                        <a class="action-btn btn-cart" th:onclick="'addToCart(' + ${relatedProduct.id} + ', 1)'" title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
-                                                        <a class="action-btn btn-wishlist" href="#" title="Add to Wishlist"><i class="pe-7s-like"></i></a>
-                                                        <a class="action-btn btn-compare" href="#" title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
+                                                        <a class="action-btn btn-cart"
+                                                           th:onclick="'addToCart(' + ${relatedProduct.id} + ', 1)'"
+                                                           title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
+                                                        <a class="action-btn btn-wishlist" href="#"
+                                                           title="Add to Wishlist"><i class="pe-7s-like"></i></a>
+                                                        <a class="action-btn btn-compare" href="#"
+                                                           title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
                                                     </div>
                                                 </div> <!-- end of product-image -->
 
                                                 <div class="product-caption">
                                                     <div class="product-meta d-flex justify-content-between align-items-center">
                                                         <div class="product-manufacturer">
-                                                            <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}" th:text="${relatedProduct.getProduct_name()}"></a>
+                                                            <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}"
+                                                               th:text="${relatedProduct.getProduct_name()}"></a>
                                                         </div>
                                                         <div class="product-ratings">
                                                             <div class="rating-box">
@@ -220,18 +288,21 @@
                                                                     <li><i class="ion ion-md-star-outline"></i></li>
                                                                     <li><i class="ion ion-md-star-outline"></i></li>
                                                                     <li><i class="ion ion-md-star-outline"></i></li>
-                                                                    <li><i class="ion ion-md-star-outline disabled"></i></li>
-                                                                    <li><i class="ion ion-md-star-outline disabled"></i></li>
+                                                                    <li><i class="ion ion-md-star-outline disabled"></i>
+                                                                    </li>
+                                                                    <li><i class="ion ion-md-star-outline disabled"></i>
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
-<!--                                                    note ti sua-->
-<!--                                                    <h4 class="product-name"><a th:href="@{'/single-product/' + ${relatedProduct.getId()}}" th:text="${relatedProduct.getProduct_name()}"></a></h4>-->
-<!--                                                    <h4 class="product-name" th:text="${relatedProduct.getProduct_name()}"></h4>-->
+                                                    <!--                                                    note ti sua-->
+                                                    <!--                                                    <h4 class="product-name"><a th:href="@{'/single-product/' + ${relatedProduct.getId()}}" th:text="${relatedProduct.getProduct_name()}"></a></h4>-->
+                                                    <!--                                                    <h4 class="product-name" th:text="${relatedProduct.getProduct_name()}"></h4>-->
 
                                                     <p class="product-price">
-                                                        <span class="price-new formatted-price" th:text="${relatedProduct.getPrice()}+' VND'"></span>
+                                                        <span class="price-new formatted-price"
+                                                              th:text="${relatedProduct.getPrice()}+' VND'"></span>
                                                     </p>
                                                 </div><!-- end of product-caption -->
                                             </div><!-- end of product-inner -->
@@ -325,6 +396,7 @@
 <script src="/assets/js/toast.js"></script>
 <script>
     let productIdentifier = document.querySelector('.product-id').textContent;
+
     function addToCart(productId, quantity) {
         productIdentifier = productId;
         const xhr = new XMLHttpRequest();
@@ -332,11 +404,12 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 toast('success', 'Item added to cart');
+                updateCart();
             }
             if (xhr.readyState === 4 && xhr.status === 400) {
-                toast("error", "You have reached the maximum quantity of this product in your cart");
+                toast("error", "Product is not available for order! Try again later.");
             }
-            if(xhr.readyState===4 && xhr.status === 401){
+            if (xhr.readyState === 4 && xhr.status === 401) {
                 window.location.href = "/login.html";
             }
         };
@@ -352,8 +425,8 @@
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes, delete it!',
-        }).then((result) =>{
-            if(result.isConfirmed) {
+        }).then((result) => {
+            if (result.isConfirmed) {
                 const xhr = new XMLHttpRequest();
                 xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
                 xhr.onreadystatechange = function () {

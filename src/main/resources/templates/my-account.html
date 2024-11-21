@@ -80,8 +80,6 @@
                                                     details</a></li>
                                                 <li><a class="nav-link" data-bs-toggle="tab" href="#order-history">Order
                                                     History</a></li>
-                                                <li><a class="nav-link" data-bs-toggle="tab" href="#change-password">Change
-                                                    Password</a></li>
                                                 <li><a class="nav-link" th:href="@{/logout}">Log out</a></li>
                                             </ul> <!-- end of dashboard-list -->
                                         </div>
@@ -374,8 +372,6 @@
 <!-- Main JS -->
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/FormatPrice.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const badges = document.querySelectorAll('.badge');
@@ -450,9 +446,6 @@
         background-color: #cc2121;
         border-color: #cc2121;
     }
-     .swal2-confirm,.swal2-cancel{
-         padding: 0.5px 20px;
-     }
 </style>
 
 </html>

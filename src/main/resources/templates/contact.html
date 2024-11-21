@@ -15,20 +15,20 @@
 
         <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
-        <!-- Start of Breadcrumbs -->
-        <div class="breadcrumb-section bgc-offset mb-full" style="margin-bottom: 40px">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12">
-                        <nav class="breadcrumb" style="padding: 20px">
-                            <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
-                            <span class="breadcrumb-item active">Contact Us</span>
-                        </nav>
-                    </div>
-                </div> <!-- end of row -->
-            </div> <!-- end of container -->
-        </div>
-        <!-- End of Breadcrumbs -->
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section bgc-offset mb-full" style="margin-bottom: 40px">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb" style="padding: 20px">
+                        <a class="breadcrumb-item" th:href="@{/index.html}">Home</a>
+                        <span class="breadcrumb-item active">Contact Us</span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
 
         
 
@@ -313,6 +313,75 @@
     <!-- Ajax JS -->
     <script src="/assets/js/ajax.js"></script>
 
+<!-- Main JS -->
+<script src="/assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/toast.js"></script>
+<script src="/assets/js/FormatPrice.js"></script>
+<script>function addToCart(productId, quantity) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            toast('success', 'Item added to cart');
+            updateCart();
+        }
+        if (xhr.readyState === 4 && xhr.status === 400) {
+            toast("error", "You have reached the maximum quantity of this product in your cart");
+        }
+        if (xhr.readyState === 4 && xhr.status === 401) {
+            window.location.href = "/login.html";
+        }
+    };
+    xhr.send();
+}
+
+function deleteCartItem(productId, userId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this item from cart",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your item has been deleted from cart',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 3500
+                    });
+                    updateCart();
+                }
+            };
+            xhr.send();
+        }
+    });
+}
+
+function updateCart() {
+    fetch('/shop-grid.html')
+        .then(response => response.text())
+        .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const newCartContent = doc.querySelector('.shopping-cart-content').innerHTML;
+            const newCountStyle = doc.querySelector('.count-style').textContent;
+
+            document.querySelector('.shopping-cart-content').innerHTML = newCartContent;
+            document.querySelector('.count-style').textContent = newCountStyle;
+            formatPrices();
+        })
+        .catch(error => console.error('Error fetching cart items:', error));
+}
     <!-- Main JS -->
     <script src="/assets/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -335,7 +404,14 @@
                 });
             }
         });
-    </script>
+document.addEventListener("DOMContentLoaded", function () {
+    updateCart();
 
+// Add event listener to buttons with class 'cart-btn'
+    document.querySelectorAll('.btn-cart').forEach(button => {
+        button.addEventListener('click', updateCart);
+    });
+});
+</script>
 </body>
 </html>
