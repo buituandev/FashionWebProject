@@ -5,233 +5,278 @@
 </head>
 <body>
 
-    <!--[if lt IE 9]>
-        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve your experience.</p>
-    <![endif]-->
+<!--[if lt IE 9]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please upgrade your browser to improve
+    your experience.</p>
+<![endif]-->
 
-    <!-- Start of Whole Site Wrapper with mobile menu support -->
-    <div id="whole" class="whole-site-wrapper color-scheme-one">
+<!-- Start of Whole Site Wrapper with mobile menu support -->
+<div id="whole" class="whole-site-wrapper color-scheme-one">
 
-        <div th:replace="~{layout::headernormal(${user})}"></div>
-        <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
+    <div th:replace="~{layout::headernormal(${user})}"></div>
+    <div th:replace="~{layout :: nav(${categories1},${categories2},${categories3},${categories4})}"></div>
 
-        <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
+    <div class="fixed-header-space"></div> <!-- empty placeholder div for Fixed Menu bar height-->
 
-        <!-- Start of Breadcrumbs -->
-        <div class="breadcrumb-section bgc-offset mb-full">
+    <!-- Start of Breadcrumbs -->
+    <div class="breadcrumb-section bgc-offset mb-full">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12">
+                    <nav class="breadcrumb">
+                        <a class="breadcrumb-item" href="index.html">Home</a>
+                        <a class="breadcrumb-item" href="blog-right-sidebar.html">Blog</a>
+                        <span class="breadcrumb-item active">Blog Details</span>
+                    </nav>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div>
+    <!-- End of Breadcrumbs -->
+
+    <!-- Start of Main Content Wrapper -->
+    <div id="content" class="main-content-wrapper">
+
+        <!-- Start of Blog Posts Section -->
+        <div class="blog-posts-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12">
-                        <nav class="breadcrumb">
-                            <a class="breadcrumb-item" href="index.html">Home</a>
-                            <a class="breadcrumb-item" href="blog-right-sidebar.html">Blog</a>
-                            <span class="breadcrumb-item active">Blog Details</span>
-                        </nav>
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9">
+                        <main id="primary" class="site-main">
+                            <div class="single-post-wrapper">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <article class="blog-post post-entry">
+                                            <div class="single-post">
+                                                <div class="content-wrapper">
+                                                    <div class="post-content">
+                                                        <h3 class="post-title" th:text="${blog.title}">Top 10 buying
+                                                            tips to follow in 2018</h3>
+                                                        <div class="post-meta">
+                                                            <p><span>By <span class="single-meta"><a
+                                                                    th:text="${blog.author}"></a></span></span><span>Posted on<span
+                                                                    class="single-meta">
+                                                            <a th:text="${blog.date}">Aug 14, 2018</a>
+                                                            </span>
+                                                            </span>
+                                                            </p>
+                                                            <img th:src="${blog.getThumbnail()}" alt="blog image"
+                                                                 class="blog-image">
+                                                        </div>
+                                                        <div class="post-description">
+                                                            <div class="post-details" th:utext="${blogDetail.content}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+
+
+                                </div> <!-- end of row -->
+                            </div> <!-- end of single-post-wrapper -->
+                        </main> <!-- end of #primary -->
                     </div>
+                    <!--                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">-->
+                    <!--                            <aside id="secondary" class="widget-area">-->
+                    <!--                                <div class="sidebar-widget search-widget">-->
+                    <!--                                    <h2 class="widgettitle">Search</h2>-->
+                    <!--                                    <div class="search-content">-->
+                    <!--                                        <form action="#" class="input-group">-->
+                    <!--                                            <input class="form-control" type="search" name="s" title="search" placeholder="Search...">-->
+                    <!--                                            <input type="submit" class="btn btn-secondary" value="search">-->
+                    <!--                                        </form>-->
+                    <!--                                    </div>-->
+                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+
+                    <!--                                <div class="sidebar-widget recent-posts">-->
+                    <!--                                    <h2 class="widgettitle">Recent Posts</h2>-->
+                    <!--                                    <div class="recent-posts-widget-container">-->
+                    <!--                                        <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="7000">-->
+                    <!--                                            <div class="swiper-wrapper">-->
+                    <!--                                                <div class="swiper-slide">-->
+                    <!--                                                    <div class="posts-single media">-->
+                    <!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
+                    <!--                                                            <a href="#">-->
+                    <!--                                                                <img src="assets/images/blog/blog-thumb-1.jpg" alt="Blog Image">-->
+                    <!--                                                                <div class="overlay"></div>-->
+                    <!--                                                            </a>-->
+                    <!--                                                        </div>-->
+                    <!--                                                        <div class="post-content flex-grow-1">-->
+                    <!--                                                            <div class="post-title">-->
+                    <!--                                                                <h5><a href="blog-details.html">Aypi non habent claritatem insitam</a></h5>-->
+                    <!--                                                            </div>-->
+                    <!--                                                            <div class="post-date">09 Aug</div>-->
+                    <!--                                                        </div>-->
+                    <!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
+                    <!--                                                </div>-->
+
+                    <!--                                                <div class="swiper-slide">-->
+                    <!--                                                    <div class="posts-single media">-->
+                    <!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
+                    <!--                                                            <a href="#">-->
+                    <!--                                                                <img src="assets/images/blog/blog-thumb-4.jpg" alt="Blog Image">-->
+                    <!--                                                                <div class="overlay"></div>-->
+                    <!--                                                            </a>-->
+                    <!--                                                        </div>-->
+                    <!--                                                        <div class="post-content flex-grow-1">-->
+                    <!--                                                            <div class="post-title">-->
+                    <!--                                                                <h5><a href="blog-details.html">Cabent claritatem insitam</a></h5>-->
+                    <!--                                                            </div>-->
+                    <!--                                                            <div class="post-date">09 Aug</div>-->
+                    <!--                                                        </div>-->
+                    <!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+
+                    <!--                                            <div class="swiper-arrow prev fa fa-angle-left"></div>-->
+                    <!--                                            <div class="swiper-arrow next fa fa-angle-right"></div>-->
+                    <!--                                        </div> &lt;!&ndash; end of element-carousel &ndash;&gt;-->
+                    <!--                                    </div> &lt;!&ndash; end of recent-posts-widget &ndash;&gt;-->
+                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+
+                    <!--                                <div class="sidebar-widget list-widget">-->
+                    <!--                                    <h2 class="widgettitle">Categories</h2>-->
+                    <!--                                    <div class="categories-widget">-->
+                    <!--                                        <ul class="categorie-list">-->
+                    <!--                                            <li><a href="#">creative<span>(20)</span></a></li>-->
+                    <!--                                        </ul>-->
+                    <!--                                    </div> &lt;!&ndash; end of categories-widget &ndash;&gt;-->
+                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+
+                    <!--                                <div class="sidebar-widget tag-cloud">-->
+                    <!--                                    <h2 class="widgettitle">Tag Cloud</h2>-->
+                    <!--                                    <div class="tags-widget">-->
+                    <!--                                        <ul>-->
+                    <!--                                            <li><a href="#">Ecommerce</a></li>-->
+                    <!--                                        </ul>-->
+                    <!--                                    </div>-->
+                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+
+                    <!--                                <div class="sidebar-widget instagram-widget">-->
+                    <!--                                    <h2 class="widgettitle">Latest Instagram</h2>-->
+                    <!--                                    <div class="instagram-area">-->
+                    <!--                                        <div id="instagram_feed" class="image-popup"></div>-->
+                    <!--                                        <p>Follow Us <a href="https://www.instagram.com/themeitems/" target="_blank">@Instagram</a>.</p>-->
+                    <!--                                    </div>-->
+                    <!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
+                    <!--                            </aside> &lt;!&ndash; end of #secondary &ndash;&gt;-->
+                    <!--                        </div>-->
                 </div> <!-- end of row -->
             </div> <!-- end of container -->
         </div>
-        <!-- End of Breadcrumbs -->
-
-        <!-- Start of Main Content Wrapper -->
-        <div id="content" class="main-content-wrapper">
-            
-            <!-- Start of Blog Posts Section -->
-            <div class="blog-posts-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9">
-                            <main id="primary" class="site-main">
-                                <div class="single-post-wrapper">
-                                   <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-											<article class="blog-post post-entry">
-												<div class="single-post">
-													<div class="content-wrapper">
-	                                                    <div class="post-content">
-                                                            <h3 class="post-title" th:text="${blog.title}">Top 10 buying tips to follow in 2018</h3>
-                                                            <div class="post-meta">
-                                                                <p>
-                                                                    <span>By 
-                                                                        <span class="single-meta">
-                                                                            <a th:text="${blog.author}"></a>
-                                                                        </span>
-                                                                    </span>
-                                                                    <span>Posted on 
-                                                                        <span class="single-meta">
-                                                                            <a th:text="${blog.date}">Aug 14, 2018</a>
-                                                                        </span>
-                                                                    </span>
-                                                                </p>
-                                                            </div>
-                                                            <div class="post-description">
-                                                                <div class="post-details" th:utext="${blogDetail.content}">
-
-                                                                </div>
-                                                            </div>
-	                                                    </div>
-	                                                </div>
-	                                            </div> <!-- end of blog-grid -->
-											</article> <!-- end of blog-post -->
-                                        </div>
-                                    </div> <!-- end of row -->
-                                </div> <!-- end of single-post-wrapper -->
-                            </main> <!-- end of #primary -->
-                        </div>
-<!--                        <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">-->
-<!--                            <aside id="secondary" class="widget-area">-->
-<!--                                <div class="sidebar-widget search-widget">-->
-<!--                                    <h2 class="widgettitle">Search</h2>-->
-<!--                                    <div class="search-content">-->
-<!--                                        <form action="#" class="input-group">-->
-<!--                                            <input class="form-control" type="search" name="s" title="search" placeholder="Search...">-->
-<!--                                            <input type="submit" class="btn btn-secondary" value="search">-->
-<!--                                        </form>-->
-<!--                                    </div>-->
-<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
-
-<!--                                <div class="sidebar-widget recent-posts">-->
-<!--                                    <h2 class="widgettitle">Recent Posts</h2>-->
-<!--                                    <div class="recent-posts-widget-container">-->
-<!--                                        <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="7000">-->
-<!--                                            <div class="swiper-wrapper">-->
-<!--                                                <div class="swiper-slide">-->
-<!--                                                    <div class="posts-single media">-->
-<!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
-<!--                                                            <a href="#">-->
-<!--                                                                <img src="assets/images/blog/blog-thumb-1.jpg" alt="Blog Image">-->
-<!--                                                                <div class="overlay"></div>-->
-<!--                                                            </a>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="post-content flex-grow-1">-->
-<!--                                                            <div class="post-title">-->
-<!--                                                                <h5><a href="blog-details.html">Aypi non habent claritatem insitam</a></h5>-->
-<!--                                                            </div>-->
-<!--                                                            <div class="post-date">09 Aug</div>-->
-<!--                                                        </div>-->
-<!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
-<!--                                                </div>-->
-
-<!--                                                <div class="swiper-slide">-->
-<!--                                                    <div class="posts-single media">-->
-<!--                                                        <div class="post-thumbnail me-4 me-lg-3 me-xl-4">-->
-<!--                                                            <a href="#">-->
-<!--                                                                <img src="assets/images/blog/blog-thumb-4.jpg" alt="Blog Image">-->
-<!--                                                                <div class="overlay"></div>-->
-<!--                                                            </a>-->
-<!--                                                        </div>-->
-<!--                                                        <div class="post-content flex-grow-1">-->
-<!--                                                            <div class="post-title">-->
-<!--                                                                <h5><a href="blog-details.html">Cabent claritatem insitam</a></h5>-->
-<!--                                                            </div>-->
-<!--                                                            <div class="post-date">09 Aug</div>-->
-<!--                                                        </div>-->
-<!--                                                    </div> &lt;!&ndash; end of posts-single &ndash;&gt;-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-
-<!--                                            <div class="swiper-arrow prev fa fa-angle-left"></div>-->
-<!--                                            <div class="swiper-arrow next fa fa-angle-right"></div>-->
-<!--                                        </div> &lt;!&ndash; end of element-carousel &ndash;&gt;-->
-<!--                                    </div> &lt;!&ndash; end of recent-posts-widget &ndash;&gt;-->
-<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
-
-<!--                                <div class="sidebar-widget list-widget">-->
-<!--                                    <h2 class="widgettitle">Categories</h2>-->
-<!--                                    <div class="categories-widget">-->
-<!--                                        <ul class="categorie-list">-->
-<!--                                            <li><a href="#">creative<span>(20)</span></a></li>-->
-<!--                                        </ul>-->
-<!--                                    </div> &lt;!&ndash; end of categories-widget &ndash;&gt;-->
-<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
-
-<!--                                <div class="sidebar-widget tag-cloud">-->
-<!--                                    <h2 class="widgettitle">Tag Cloud</h2>-->
-<!--                                    <div class="tags-widget">-->
-<!--                                        <ul>-->
-<!--                                            <li><a href="#">Ecommerce</a></li>-->
-<!--                                        </ul>-->
-<!--                                    </div>-->
-<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
-
-<!--                                <div class="sidebar-widget instagram-widget">-->
-<!--                                    <h2 class="widgettitle">Latest Instagram</h2>-->
-<!--                                    <div class="instagram-area">-->
-<!--                                        <div id="instagram_feed" class="image-popup"></div>-->
-<!--                                        <p>Follow Us <a href="https://www.instagram.com/themeitems/" target="_blank">@Instagram</a>.</p>-->
-<!--                                    </div>-->
-<!--                                </div> &lt;!&ndash; end of sidebar-widget &ndash;&gt;-->
-<!--                            </aside> &lt;!&ndash; end of #secondary &ndash;&gt;-->
-<!--                        </div>-->
-                    </div> <!-- end of row -->
-                </div> <!-- end of container -->
-            </div>
-            <!-- End of Blog Posts Section -->
-        </div>
-        <!-- End of Main Content Wrapper -->
-
-        <div th:replace="~{layout::footer}"></div>
-        <div th:replace="~{layout::scroll_to_top}"></div>
+        <!-- End of Blog Posts Section -->
     </div>
-    <!-- End of Whole Site Wrapper -->
+    <!-- End of Main Content Wrapper -->
 
-    <!-- Initializing Photoswipe -->
-    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div>
-                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                    <button class="pswp__button pswp__button--share" title="Share"></button>
-                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
+    <div th:replace="~{layout::footer}"></div>
+    <div th:replace="~{layout::scroll_to_top}"></div>
+</div>
+<!-- End of Whole Site Wrapper -->
+
+<!-- Initializing Photoswipe -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+    <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
                         </div>
                     </div>
                 </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div>
-                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-                </button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-                </button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
             </div>
         </div>
     </div>
-    <!-- End of Photoswipe -->
+</div>
+<!-- End of Photoswipe -->
 
 
-    <!-- JS
-    ============================================ -->
+<!-- JS
+============================================ -->
 
-    <!-- jQuery JS -->
-    <script src="/assets/js/jquery.1.12.4.min.js"></script>
+<!-- jQuery JS -->
+<script src="/assets/js/jquery.1.12.4.min.js"></script>
 
-    <!-- Popper JS -->
-    <script src="/assets/js/popper.min.js"></script>
+<!-- Popper JS -->
+<script src="/assets/js/popper.min.js"></script>
 
-    <!-- Bootstrap JS -->
-    <script src="/assets/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="/assets/js/bootstrap.min.js"></script>
 
-    <!-- Plugins JS -->
-    <script src="/assets/js/plugins.js"></script>
+<!-- Plugins JS -->
+<script src="/assets/js/plugins.js"></script>
 
-    <!-- Main JS -->
-    <script src="/assets/js/main.js"></script>
+<!-- Main JS -->
+<script src="/assets/js/main.js"></script>
 
 </body>
+<style>
+    .post-content .blog-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        margin-top: 20px;
+    }
+
+    .post-content .blog-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .post-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+        margin-top: 15px;
+    }
+
+    .post-meta {
+        font-size: 0.9rem;
+        color: #666;
+        margin: 10px 0;
+    }
+
+    .post-meta a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .post-meta a:hover {
+        text-decoration: underline;
+    }
+
+    .post-description .post-details {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #444;
+    }
+
+</style>
 </html>
