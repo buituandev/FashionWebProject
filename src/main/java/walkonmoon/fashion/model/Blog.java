@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,7 +26,7 @@ public class Blog {
     private String author;
 
     @Column(name = "date")
-    private String date;
+    private Date date;
 
     @Column(name = "short description")
     private String shortDescription;

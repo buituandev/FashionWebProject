@@ -763,9 +763,10 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 toast('success', 'Item added to cart');
+                updateCart();
             }
             if (xhr.readyState === 4 && xhr.status === 400) {
-                toast("error", "You have reached the maximum quantity of this product in your cart");
+                toast("error", "Product is not available for order! Try again later.");
             }
             if (xhr.readyState === 4 && xhr.status === 401) {
                 window.location.href = "/login.html";
