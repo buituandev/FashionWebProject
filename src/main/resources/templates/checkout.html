@@ -147,23 +147,23 @@
                                                             <label class="form-check-label" for="cash_delivery_payment">Cash
                                                                 on Delivery</label>
 
-<!--                                                            <div class="payment-info" id="cash_pay">-->
-<!--                                                                <p>Pay with cash upon delivery.</p>-->
-<!--                                                            </div>-->
+                                                            <!--                                                            <div class="payment-info" id="cash_pay">-->
+                                                            <!--                                                                <p>Pay with cash upon delivery.</p>-->
+                                                            <!--                                                            </div>-->
                                                         </div>
                                                     </div>
-<!--                                                    <div class="form-row">-->
-<!--                                                        <div class="form-check">-->
-<!--                                                            <div class="custom-checkbox">-->
-<!--                                                                <input class="form-check-input" type="checkbox"-->
-<!--                                                                       id="terms_acceptance" required>-->
-<!--                                                                <span class="checkmark"></span>-->
-<!--                                                                <label class="form-check-label" for="terms_acceptance">I-->
-<!--                                                                    agree to the <a href="#">terms of service</a> and-->
-<!--                                                                    will adhere to them unconditionally.</label>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
+                                                    <!--                                                    <div class="form-row">-->
+                                                    <!--                                                        <div class="form-check">-->
+                                                    <!--                                                            <div class="custom-checkbox">-->
+                                                    <!--                                                                <input class="form-check-input" type="checkbox"-->
+                                                    <!--                                                                       id="terms_acceptance" required>-->
+                                                    <!--                                                                <span class="checkmark"></span>-->
+                                                    <!--                                                                <label class="form-check-label" for="terms_acceptance">I-->
+                                                    <!--                                                                    agree to the <a href="#">terms of service</a> and-->
+                                                    <!--                                                                    will adhere to them unconditionally.</label>-->
+                                                    <!--                                                            </div>-->
+                                                    <!--                                                        </div>-->
+                                                    <!--                                                    </div>-->
                                                     <div class="form-row justify-content-end">
                                                         <input type="submit"
                                                                class="btn btn-secondary dark"
@@ -251,38 +251,45 @@
 <script src="/assets/js/toast.js"></script>
 <script>
     document.querySelector('form').addEventListener('submit', function (event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        const form = event.target;
-        const formData = new FormData(form);
+    const form = event.target;
+    const submitButton = form.querySelector('input[type="submit"]');
+    submitButton.disabled = true;
 
-        formData.append('order_note', document.getElementById('order_notes').value);
-        formData.append('order_phone_number', document.getElementById('city_name').value);
-        formData.append('order_address', document.getElementById('p_address').value);
-        formData.append('order_email', document.getElementById('email_input').value);
-        console.log( document.getElementById('order_notes').value);
-        fetch('/checkout', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => {
-                if (!response.ok) {
-                    if (response.status === 400) {
-                        toast("error", 'Some items are out of stock. Please review your cart.');
-                    } else {
-                        toast("error", 'An error occurred. Please try again.');
-                    }
-                    throw new Error('Server response was not ok.');
+    const formData = new FormData(form);
+
+    formData.append('order_note', document.getElementById('order_notes').value);
+    formData.append('order_phone_number', document.getElementById('city_name').value);
+    formData.append('order_address', document.getElementById('p_address').value);
+    formData.append('order_email', document.getElementById('email_input').value);
+
+    fetch('/checkout', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                if (response.status === 400) {
+                    toast("error", 'Some items are out of stock. Please review your cart.');
+                } else {
+                    toast("error", 'An error occurred. Please try again.');
                 }
-                return response.text();
-            })
-            .then(data => {
+                throw new Error('Server response was not ok.');
+            }
+            return response.text();
+        })
+        .then(data => {
+            toast("success", 'Order placed successfully!');
+            setTimeout(() => {
                 window.location.href = '/my-account.html#order-history';
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    });
+            }, 2000);
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+            submitButton.disabled = false;
+        });
+});
 </script>
 </body>
 </html>
