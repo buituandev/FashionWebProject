@@ -73,7 +73,7 @@ public class ClientController {
         List<Blog> blogs = blogService.getListBlogs();
         // Find the most 3 newest based on date
         blogs.sort((b1, b2) -> b2.getDate().compareTo(b1.getDate()));
-        List<Blog> newestBlogs = blogs.stream().limit(3).collect(Collectors.toList());
+        List<Blog> newestBlogs = blogs.stream().limit(5).collect(Collectors.toList());
         model.addAttribute("newestBlogs", newestBlogs);
         return "index";
     }
