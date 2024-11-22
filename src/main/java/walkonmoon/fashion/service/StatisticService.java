@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import walkonmoon.fashion.model.Order;
 import walkonmoon.fashion.repository.OrderRepository;
 import walkonmoon.fashion.repository.ProductRepository;
+import walkonmoon.fashion.model.OrderDetail;
 import walkonmoon.fashion.model.OrderStatus;
 
 import java.time.LocalDate;
@@ -76,12 +77,13 @@ public class StatisticService {
     public int getTotalPurchasedProductPerMonth(){
         LocalDate now = LocalDate.now();
         List<Order> orders = orderService.getOrderList();
-        return (int) orders.stream()
+        return orders.stream()
                 .filter(order -> order.getOrder_date() != null)
                 .filter(order -> order.getStatus() == OrderStatus.DELIVERED)
                 .filter(order -> order.getOrder_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonth() == now.getMonth())
                 .map(order -> orderDetailService.getOrderDetailByOrderID(order.getId()))
-                .mapToLong(Collection::size)
+                .flatMap(Collection::stream)
+                .mapToInt(OrderDetail::getQuantity)
                 .sum();
     }
 }
