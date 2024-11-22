@@ -592,6 +592,15 @@ public class AdminController {
          model.addAttribute("admin", admin);
          return "/admin/user-form";
     }
+
+    @GetMapping("/deleteAdmin/{id}")
+    public String userDelete(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+        User admin = userService.findUserById(id);
+        admin.setStatus(UserStatus.DEACTIVATE);
+        userService.saveUser(admin);
+        redirectAttributes.addFlashAttribute("successMessage", "You have deactivate this account");
+        return "redirect:/admin/user-management.html";
+    }
     @GetMapping("/pages-login.html")
     public String loginPages(Model model) {
         model.addAttribute("user", new User());

@@ -131,10 +131,10 @@
                                 <td th:text="${users.getStatus()}" th:if="${users.getStatus().name() == 'DEACTIVATE'}" class="deactivate-option"></td>
 <!--                                <td th:text="${user.getProvince()}"></td>-->
                                 <td th:if="${user.getType().name() == 'SUPER_ADMIN'}">
-                                    <a th:href="@{'/admin/user-form/edit/' +  ${users.getId()}}" class="text-inverse" title="Delete" data-bs-toggle="tooltip">
-                                            <i class="ti-pencil" title="Edit"></i>
+                                    <a th:href="@{'/admin/user-form/edit/' +  ${users.getId()}}" class="text-inverse" title="Delete" data-bs-toggle="tooltip" style="cursor: pointer">
+                                            <i class="ti-pencil" title="Edit" ></i>
                                     </a>
-                                    <a th:onclick="|deleteAdmin(event, '${users.id}')|" class="text-inverse" title="Delete" data-bs-toggle="tooltip">
+                                    <a th:onclick="|deleteAdmin(event, '${users.id}')|" class="text-inverse" title="Delete" data-bs-toggle="tooltip" style="cursor: pointer">
                                             <i class="ti-trash" title="Edit"></i>
                                     </a>
                                 </td>
