@@ -14,11 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import walkonmoon.fashion.config.FirebaseConfig;
 import walkonmoon.fashion.model.*;
-import walkonmoon.fashion.repository.BlogRepository;
 import walkonmoon.fashion.service.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +41,7 @@ public class AdminController {
     @Autowired
     private ImageService imageService;
     @Autowired
-    private CartItemService  cartItemService;
+    private CartItemService cartItemService;
     @Autowired
     private OrderService orderService;
     @Autowired
@@ -88,23 +85,23 @@ public class AdminController {
 
     @GetMapping("/eco-products-orders.html")
     public String orderManagement(Model model) {
-        List<Order>  orders = orderService.getOrderList();
+        List<Order> orders = orderService.getOrderList();
         Map<Integer, String> userName = new HashMap<>();
-        for(User user : userService.getListUser()){
-             userName.put(user.getId(), user.getFull_name());
+        for (User user : userService.getListUser()) {
+            userName.put(user.getId(), user.getFull_name());
         }
-        model.addAttribute("userName",userName);
+        model.addAttribute("userName", userName);
         model.addAttribute("orderList", orders);
         return "admin/eco-products-orders";
     }
 
     @GetMapping("/eco-order-detail/{id}")
-    public String orderDetail(@PathVariable("id") Integer id,  Model model){
-        List<OrderDetail> orderdetail =  orderDetailService.getOrderDetailByOrderID(id);
+    public String orderDetail(@PathVariable("id") Integer id, Model model) {
+        List<OrderDetail> orderdetail = orderDetailService.getOrderDetailByOrderID(id);
         List<Product> products = new ArrayList<>();
-        for(OrderDetail orderDetail : orderdetail){
-             Product product = productService.getProductById(orderDetail.getProductID());
-             products.add(product);
+        for (OrderDetail orderDetail : orderdetail) {
+            Product product = productService.getProductById(orderDetail.getProductID());
+            products.add(product);
         }
         model.addAttribute("productList", products);
         model.addAttribute("orderItems", orderdetail);
@@ -134,7 +131,7 @@ public class AdminController {
 
     //save images local
 
-//    @PostMapping("/eco-products/save")
+    //    @PostMapping("/eco-products/save")
 //    public String saveProduct(@ModelAttribute Product product, Model model,
 //                              @RequestParam("files") MultipartFile[] files,
 //                              @RequestParam("file") MultipartFile file,
@@ -241,18 +238,18 @@ public class AdminController {
 //
 //        return "/assets/upload/" + fileName;
 //    }
-@GetMapping("/eco-products-edit/{id}")
-public String editProduct(@PathVariable("id") Integer id, Model model) {
-    Product product = productService.getProductById(id);
-    List<Category> categories = categoryService.getListCategories();
-    List<Image> images = imageService.findImageByProductId(id);
-    model.addAttribute("categories", categories);
-    model.addAttribute("images", images);
-    model.addAttribute("product", product);
-    model.addAttribute("mode", "edit");
-    Category currentCategory = categoryService.getCategoryById(product.getCategoryId());
-    return "admin/eco-products-edit";
-}
+    @GetMapping("/eco-products-edit/{id}")
+    public String editProduct(@PathVariable("id") Integer id, Model model) {
+        Product product = productService.getProductById(id);
+        List<Category> categories = categoryService.getListCategories();
+        List<Image> images = imageService.findImageByProductId(id);
+        model.addAttribute("categories", categories);
+        model.addAttribute("images", images);
+        model.addAttribute("product", product);
+        model.addAttribute("mode", "edit");
+        Category currentCategory = categoryService.getCategoryById(product.getCategoryId());
+        return "admin/eco-products-edit";
+    }
 
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
@@ -315,7 +312,7 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
 //            }
 //        }
 
-        redirectAttributes.addFlashAttribute( "successMessage", "Product disable successfully");
+        redirectAttributes.addFlashAttribute("successMessage", "Product disable successfully");
         return "redirect:/admin/eco-products.html";
     }
 
@@ -327,7 +324,7 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         }
 
         try {
-            for(Integer id : productIds){
+            for (Integer id : productIds) {
                 List<CartItem> cartItem = cartItemService.getAllCartItems();
                 Product product = productService.getProductById(id);
 //                for(CartItem cart : cartItem){
@@ -363,14 +360,14 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         product.setUpdate_date(updatedNow);
 
         Product existPro = productService.getProductById(product.getId());
-        if(existPro == null){
+        if (existPro == null) {
             productService.saveProduct(product);
             Category newCategory = categoryService.getCategoryById(product.getCategoryId());
             if (newCategory != null) {
                 newCategory.setQuantity(newCategory.getQuantity() + 1);
                 categoryService.saveCategory(newCategory);
             }
-        }else {
+        } else {
             product.setImage_collection_url(existPro.getImage_collection_url());
         }
         if (!file.isEmpty()) {
@@ -408,7 +405,7 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
             originalCategoryId = null;
         }
         if (originalCategoryId != null && !originalCategoryId.equals(product.getCategoryId())) {
-            if(product.getStatus().equals(existPro.getStatus()) && existPro.getStatus().equals(ProductStatus.ENABLE)) {
+            if (product.getStatus().equals(existPro.getStatus()) && existPro.getStatus().equals(ProductStatus.ENABLE)) {
                 Category category = categoryService.getCategoryById(originalCategoryId);
                 if (category != null) {
                     category.setQuantity(category.getQuantity() - 1);
@@ -420,34 +417,34 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
                     newCategory.setQuantity(newCategory.getQuantity() + 1);
                     categoryService.saveCategory(newCategory);
                 }
-            }else if(existPro.getStatus().equals(ProductStatus.DISABLE) && product.getStatus().equals(ProductStatus.ENABLE)){
+            } else if (existPro.getStatus().equals(ProductStatus.DISABLE) && product.getStatus().equals(ProductStatus.ENABLE)) {
                 Category newCategory = categoryService.getCategoryById(product.getCategoryId());
                 if (newCategory != null) {
                     newCategory.setQuantity(newCategory.getQuantity() + 1);
                     categoryService.saveCategory(newCategory);
                 }
-            }else if(existPro.getStatus().equals(ProductStatus.ENABLE) && product.getStatus().equals(ProductStatus.DISABLE)){
-                 Category category = categoryService.getCategoryById(existPro.getCategoryId());
+            } else if (existPro.getStatus().equals(ProductStatus.ENABLE) && product.getStatus().equals(ProductStatus.DISABLE)) {
+                Category category = categoryService.getCategoryById(existPro.getCategoryId());
                 if (category != null) {
                     category.setQuantity(category.getQuantity() - 1);
                     categoryService.saveCategory(category);
                 }
             }
-        }else if(originalCategoryId != null){
-                if(product.getStatus().equals(ProductStatus.ENABLE) && product.getStatus() != existPro.getStatus()){
-                    Category category = categoryService.getCategoryById(originalCategoryId);
-                    if (category != null) {
-                        category.setQuantity(category.getQuantity() + 1);
-                        categoryService.saveCategory(category);
-                    }
-
-                }else{
-                    Category category = categoryService.getCategoryById(originalCategoryId);
-                    if (category != null) {
-                        category.setQuantity(category.getQuantity() - 1);
-                        categoryService.saveCategory(category);
-                    }
+        } else if (originalCategoryId != null) {
+            if (product.getStatus().equals(ProductStatus.ENABLE) && product.getStatus() != existPro.getStatus()) {
+                Category category = categoryService.getCategoryById(originalCategoryId);
+                if (category != null) {
+                    category.setQuantity(category.getQuantity() + 1);
+                    categoryService.saveCategory(category);
                 }
+
+            } else {
+                Category category = categoryService.getCategoryById(originalCategoryId);
+                if (category != null) {
+                    category.setQuantity(category.getQuantity() - 1);
+                    categoryService.saveCategory(category);
+                }
+            }
         }
         redirectAttributes.addFlashAttribute("successMessage", "Product saved successfully");
         return "redirect:/admin/eco-products.html";
@@ -509,12 +506,12 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
     }
 
     @PostMapping("/user-form/edit")
-    public String userSave(@ModelAttribute User user, RedirectAttributes redirectAttributes){
+    public String userSave(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
         User user1 = userService.findUserById(user.getId());
         user.setPassword(user1.getPassword());
-         userService.saveUser(user);
-         redirectAttributes.addFlashAttribute("successMessages", "User Information saved successfully");
-         return  "redirect:/admin/user-management.html";
+        userService.saveUser(user);
+        redirectAttributes.addFlashAttribute("successMessages", "User Information saved successfully");
+        return "redirect:/admin/user-management.html";
     }
 
     @GetMapping("/pages-login.html")
@@ -535,13 +532,82 @@ public String editProduct(@PathVariable("id") Integer id, Model model) {
         return "redirect:/admin/index.html";
     }
 
-    @GetMapping("/blog_admin.html")
-    public String blog(Model model){
+    @GetMapping("/blog-admin.html")
+    public String blog(Model model) {
         List<Blog> blogList = blogService.getListBlogs();
         model.addAttribute("blogs", blogList);
-        return  "admin/blog_admin";
+        return "admin/blog-admin";
     }
 
+
+    @GetMapping("/blog-form.html")
+    public String formBlog(Model model) {
+        model.addAttribute("blog", new Blog());
+        model.addAttribute("mode", "create");
+        return "admin/blog-form";
+    }
+
+    @PostMapping("/blog/save")
+    private String saveBlog(@ModelAttribute  Blog blog, @RequestParam("content") String content, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
+        Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        Blog existBlog = blogService.getBlogById(blog.getId());
+        blog.setDate(updatedNow);
+        if(existBlog == null){
+            blogService.saveBlog(blog);
+        }else{
+            blog.setThumbnail(existBlog.getThumbnail());
+        }
+
+        if (!file.isEmpty()) {
+            try (InputStream inputStream = file.getInputStream()) {
+                String fileUrl = getFileName(file, inputStream);
+                blog.setThumbnail(fileUrl);
+            } catch (IOException e) {
+                return null;
+            }
+        }
+        blogService.saveBlog(blog);
+        int id = 0;
+        BlogDetail blogDetail;
+        if(existBlog != null){
+            id = existBlog.getId();
+            blogDetail = blogDetailService.getBlogDetailByBlogID(id);
+        }else{
+            id = blog.getId();
+            blogDetail = new BlogDetail();
+            blogDetail.setBlogID(id);
+        }
+
+        blogDetail.setContent(content);
+        blogDetailService.saveBlogDetail(blogDetail);
+        return "redirect:/admin/blog-admin.html";
+    }
+
+    @GetMapping("/blog-form/{id}")
+    public String editBlog(@PathVariable("id") Integer id, Model model){
+         Blog blog = blogService.getBlogById(id);
+         BlogDetail blogDetail = blogDetailService.getBlogDetailByBlogID(blog.getId());
+         String content = blogDetail.getContent();
+         model.addAttribute("blog",  blog);
+         model.addAttribute("content", content);
+         model.addAttribute("mode", "edit");
+         return  "admin/blog-form";
+    }
+
+    @GetMapping("/blog-delete/{id}")
+    public String deleteBlog(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+        int bdId = blogDetailService.getBlogDetailByBlogID(id).getId();
+        blogDetailService.deleteBlogDetailById(bdId);
+
+        Blog blog = blogService.getBlogById(id);
+        ResponseEntity<String> response =  deleteFile(blog.getThumbnail());
+        blogService.deleteBlog(id);
+         if(response.getStatusCode() != HttpStatus.OK){
+             redirectAttributes.addFlashAttribute("errorMessage",  "Failed to delete Blog");
+         }
+         redirectAttributes.addFlashAttribute("successMessage", "Blog Delete Successfully");
+         return "redirect:/admin/blog-admin.html";
+    }
     private String getFileName(MultipartFile file, InputStream inputStream) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());

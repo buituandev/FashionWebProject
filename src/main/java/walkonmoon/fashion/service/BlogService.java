@@ -24,4 +24,11 @@ public class BlogService {
         Optional<Blog> blog = blogRepository.findById(id);
         return blog.orElse(null);
     }
+    public void saveBlog(Blog blog){
+        blogRepository.save(blog);
+    }
+    public void deleteBlog(int id){
+        blogRepository.deleteById(id);
+    }
+
 }
