@@ -39,7 +39,7 @@ public class User implements Serializable {
     @Column(nullable = true)
     private String image;
     @Column(nullable = true)
-    private int type;
+    private UserType type;
     @Column
     private int is_deleted;
     @Column(name = "province", nullable = true)

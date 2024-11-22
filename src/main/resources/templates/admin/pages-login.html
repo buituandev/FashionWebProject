@@ -6,11 +6,12 @@
 </head>
 
 <body class="skin-default card-no-border">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <div th:replace="admin/admin_layout :: preload"></div>
+    <div th:replace="~{admin/admin_layout :: preload}"></div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -27,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control" type="password" required="" id="password" name="password" placeholder="Password" th:fied="*{password}"> </div>
+                                <input class="form-control" type="password" required="" id="password" name="password" placeholder="Password" th:field="*{password}"> </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
@@ -37,7 +38,7 @@
                                         <label class="form-check-label" for="customCheck1">Remember me</label>
                                     </div> 
                                     <div class="ms-auto">
-                                        <a href="javascript:void(0)" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i> Forgot pwd?</a> 
+                                        <a th:href="@{'/forgot-password.html'}" id="to-recover" class="text-muted"><i class="fas fa-lock m-r-5"></i> Forgot password?</a>
                                     </div>
                                 </div>
                             </div>
@@ -96,10 +97,10 @@
         // ============================================================== 
         // Login and Recover Password 
         // ============================================================== 
-        $('#to-recover').on("click", function() {
-            $("#loginform").slideUp();
-            $("#recoverform").fadeIn();
-        });
+        // $('#to-recover').on("click", function() {
+        //     $("#loginform").slideUp();
+        //     $("#recoverform").fadeIn();
+        // });
     </script>
 
     <script th:inline="javascript">
