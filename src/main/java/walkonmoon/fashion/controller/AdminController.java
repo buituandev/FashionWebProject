@@ -50,13 +50,20 @@ public class AdminController {
     private BlogService blogService;
     @Autowired
     private BlogDetailService blogDetailService;
+    @Autowired
+    private StatisticService statisticService;
 
     public AdminController(FirebaseConfig firebaseConfig) {
         this.firebaseConfig = firebaseConfig;
     }
 
     @GetMapping("/index.html")
-    public String dashboard() {
+    public String dashboard(Model model) {
+        int averageOrderPerDayOfMonth = statisticService.calculateOrderAverage();
+        model.addAttribute("averageOrderPerDayOfMonth", averageOrderPerDayOfMonth);
+        int totalRevenue = statisticService.calculateTotalRevenue();
+        model.addAttribute("totalRevenue", totalRevenue);
+        System.out.println("tRevenue "+totalRevenue);
         return "admin/index";
     }
 
