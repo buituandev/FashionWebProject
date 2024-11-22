@@ -55,18 +55,22 @@
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 offset-lg-2 offset-xl-3">
                                         <div class="login-form">
                                             <form>
-                                                <div class="form-group row align-items-center mb-4" style="margin: -30px;">
-                                                    <label class="col-12 col-sm-12 col-md-4 col-form-label">We've sent password reset instruction to:</label>
+                                                <div class="form-group row align-items-center mb-4"
+                                                     style="margin: -30px;">
+                                                    <label class="col-12 col-sm-12 col-md-4 col-form-label">We've sent
+                                                        password reset instruction to:</label>
                                                     <p th:text="${email}" style="color: #cd2626; font-size: large"></p>
-                                                    <p>If it does not arrive soon, please check your spam folder or <a th:href="@{/forgot-password.html}" style="color: #cd2626">send the email again!</a></p>
+                                                    <p>If it does not arrive soon, please check your spam folder or <a
+                                                            th:href="@{/forgot-password.html}" style="color: #cd2626">send
+                                                        the email again!</a></p>
                                                     <div class="col-12 col-sm-12 col-md-8" style="padding-top: 15px">
-<!--                                                        <input type="text" class="form-control" id="newpass" name="newpass"-->
-<!--                                                               placeholder="New Password" required>-->
+                                                        <!--                                                        <input type="text" class="form-control" id="newpass" name="newpass"-->
+                                                        <!--                                                               placeholder="New Password" required>-->
                                                     </div>
                                                 </div>
                                                 <div class="login-box text-center" style="margin-top: -15px">
-<!--                                                    <button type="submit" class="default-btn tiny-btn mt-4">Recover-->
-<!--                                                    </button>-->
+                                                    <!--                                                    <button type="submit" class="default-btn tiny-btn mt-4">Recover-->
+                                                    <!--                                                    </button>-->
                                                 </div>
                                                 <div class="text-center mt-half top-bordered" style="padding-top: 5px">
                                                     <p>Back to your login ? <a th:href="@{/login.html}">Login</a>.
@@ -136,6 +140,53 @@
 ============================================ -->
 
 <!-- jQuery JS -->
+<!--<div class="swal2-container swal2-center swal2-fade swal2-shown"-->
+<!--     style="background: url(&quot;../assets/images/background/nyan-cat.gif&quot;) left center no-repeat rgba(0, 0, 123, 0.4); overflow-y: auto;">-->
+<!--    <div aria-labelledby="swal2-title" aria-describedby="swal2-content" class="swal2-popup swal2-modal swal2-show"-->
+<!--         tabindex="-1" role="dialog" aria-live="assertive" aria-modal="true"-->
+<!--         style="width: 600px; padding: 3em; background: url(&quot;../assets/images/background/active-bg.png&quot;) rgb(255, 255, 255); display: flex;">-->
+<!--        <div class="swal2-header">-->
+<!--            <ul class="swal2-progress-steps" style="display: none;"></ul>-->
+<!--            <div class="swal2-icon swal2-error" style="display: none;"><span class="swal2-x-mark"><span-->
+<!--                    class="swal2-x-mark-line-left"></span><span class="swal2-x-mark-line-right"></span></span></div>-->
+<!--            <div class="swal2-icon swal2-question" style="display: none;"></div>-->
+<!--            <div class="swal2-icon swal2-warning" style="display: none;"></div>-->
+<!--            <div class="swal2-icon swal2-info" style="display: none;"></div>-->
+<!--            <div class="swal2-icon swal2-success" style="display: none;">-->
+<!--                <div class="swal2-success-circular-line-left"></div>-->
+<!--                <span class="swal2-success-line-tip"></span> <span class="swal2-success-line-long"></span>-->
+<!--                <div class="swal2-success-ring"></div>-->
+<!--                <div class="swal2-success-fix"></div>-->
+<!--                <div class="swal2-success-circular-line-right"></div>-->
+<!--            </div>-->
+<!--            <img class="swal2-image" style="display: none;">-->
+<!--            <h2 class="swal2-title" id="swal2-title" style="display: flex;">Custom width, padding, background.</h2>-->
+<!--            <button type="button" class="swal2-close" aria-label="Close this dialog" style="display: none;">×</button>-->
+<!--        </div>-->
+<!--        <div class="swal2-content">-->
+<!--            <div id="swal2-content" style="display: none;"></div>-->
+<!--            <input class="swal2-input" style="display: none;"><input type="file" class="swal2-file"-->
+<!--                                                                     style="display: none;">-->
+<!--            <div class="swal2-range" style="display: none;"><input type="range">-->
+<!--                <output></output>-->
+<!--            </div>-->
+<!--            <select class="swal2-select" style="display: none;"></select>-->
+<!--            <div class="swal2-radio" style="display: none;"></div>-->
+<!--            <label for="swal2-checkbox" class="swal2-checkbox" style="display: none;"><input type="checkbox"><span-->
+<!--                    class="swal2-label"></span></label><textarea class="swal2-textarea"-->
+<!--                                                                 style="display: none;"></textarea>-->
+<!--            <div class="swal2-validation-message" id="swal2-validation-message" style="display: none;"></div>-->
+<!--        </div>-->
+<!--        <div class="swal2-actions" style="display: flex;">-->
+<!--            <button type="button" class="swal2-confirm swal2-styled" aria-label=""-->
+<!--                    style="display: inline-block; border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214);">-->
+<!--                OK-->
+<!--            </button>-->
+<!--            <button type="button" class="swal2-cancel swal2-styled" aria-label="" style="display: none;">Cancel</button>-->
+<!--        </div>-->
+<!--        <div class="swal2-footer" style="display: none;"></div>-->
+<!--    </div>-->
+<!--</div>-->
 <script src="assets/js/jquery.1.12.4.min.js"></script>
 
 <!-- Popper JS -->
@@ -150,6 +201,9 @@
 <!-- Main JS -->
 <script src="assets/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!--<script src="/assets/node_modules/sweetalert2/dist/sweetalert2.all.min.js" aria-hidden="true"></script>-->
+<!--<script src="/assets/node_modules/sweetalert2/sweet-alert.init.js" aria-hidden="true"></script>-->
+
 
 <script>
     function updateCart() {
@@ -171,16 +225,31 @@
         updateCart();
     });
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const urlParams = new URLSearchParams(window.location.search);
         const isSent = urlParams.get('isSent');
 
         if (isSent === "true") {
+            // Swal.fire({
+            //     icon: "success",
+            //     title: "Success!",
+            //     text: "You have been received a recovery email! Check it now!",
+            // });
             Swal.fire({
                 icon: "success",
-                title: "Success!",
-                text: "You have been received a recovery email! Check it now!",
+                title: "Success! You have been received a recovery email! Check it now!",
+                width: 600,
+                padding: "3em",
+                color: "#716add",
+                background: "#fff url(/assets/images/active-bg.png)",
+                backdrop: `
+                rgba(0,0,123,0.4)
+                url("/assets/images/nyan-cat.gif")
+                left top
+                no-repeat
+  `
             });
+
         }
     });
 
@@ -189,7 +258,7 @@
 
 </body>
 <style>
-    .swal2-confirm,.swal2-cancel{
+    .swal2-confirm, .swal2-cancel {
         padding: 0.5px 20px;
     }
 </style>

@@ -32,7 +32,7 @@ public class StatisticService {
 
     public StatisticService(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
-        }
+    }
     public int getTotalOrderPerMonth() {
         LocalDate now = LocalDate.now();
         List<Order> orders = orderService.getOrderList();
@@ -68,12 +68,13 @@ public class StatisticService {
                 .filter(order -> order.getOrder_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == currentMonth
                         && order.getOrder_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear() == currentYear)
                 .toList();
-        int result=0;
-        for(Order order : ordersOfMonth){
-            result+= order.getTotal_price();
+        int result = 0;
+        for (Order order : ordersOfMonth) {
+            result += order.getTotal_price();
         }
 
         return result;
+    }
     public int getTotalPurchasedProductPerMonth(){
         LocalDate now = LocalDate.now();
         List<Order> orders = orderService.getOrderList();

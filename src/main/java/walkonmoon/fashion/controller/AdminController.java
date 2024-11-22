@@ -63,7 +63,7 @@ public class AdminController {
         model.addAttribute("averageOrderPerDayOfMonth", averageOrderPerDayOfMonth);
         int totalRevenue = statisticService.calculateTotalRevenue();
         model.addAttribute("totalRevenue", totalRevenue);
-        System.out.println("tRevenue "+totalRevenue);
+        System.out.println("tRevenue " + totalRevenue);
         int totalOrderPerMonth = statisticService.getTotalOrderPerMonth();
         int totalPurchasedProductPerMonth = statisticService.getTotalPurchasedProductPerMonth();
 
@@ -560,13 +560,13 @@ public class AdminController {
     }
 
     @PostMapping("/blog/save")
-    private String saveBlog(@ModelAttribute  Blog blog, @RequestParam("content") String content, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
+    private String saveBlog(@ModelAttribute Blog blog, @RequestParam("content") String content, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) throws IOException {
         Date updatedNow = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         Blog existBlog = blogService.getBlogById(blog.getId());
         blog.setDate(updatedNow);
-        if(existBlog == null){
+        if (existBlog == null) {
             blogService.saveBlog(blog);
-        }else{
+        } else {
             blog.setThumbnail(existBlog.getThumbnail());
         }
 
@@ -581,10 +581,10 @@ public class AdminController {
         blogService.saveBlog(blog);
         int id = 0;
         BlogDetail blogDetail;
-        if(existBlog != null){
+        if (existBlog != null) {
             id = existBlog.getId();
             blogDetail = blogDetailService.getBlogDetailByBlogID(id);
-        }else{
+        } else {
             id = blog.getId();
             blogDetail = new BlogDetail();
             blogDetail.setBlogID(id);
@@ -596,30 +596,31 @@ public class AdminController {
     }
 
     @GetMapping("/blog-form/{id}")
-    public String editBlog(@PathVariable("id") Integer id, Model model){
-         Blog blog = blogService.getBlogById(id);
-         BlogDetail blogDetail = blogDetailService.getBlogDetailByBlogID(blog.getId());
-         String content = blogDetail.getContent();
-         model.addAttribute("blog",  blog);
-         model.addAttribute("content", content);
-         model.addAttribute("mode", "edit");
-         return  "admin/blog-form";
+    public String editBlog(@PathVariable("id") Integer id, Model model) {
+        Blog blog = blogService.getBlogById(id);
+        BlogDetail blogDetail = blogDetailService.getBlogDetailByBlogID(blog.getId());
+        String content = blogDetail.getContent();
+        model.addAttribute("blog", blog);
+        model.addAttribute("content", content);
+        model.addAttribute("mode", "edit");
+        return "admin/blog-form";
     }
 
     @GetMapping("/blog-delete/{id}")
-    public String deleteBlog(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
+    public String deleteBlog(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         int bdId = blogDetailService.getBlogDetailByBlogID(id).getId();
         blogDetailService.deleteBlogDetailById(bdId);
 
         Blog blog = blogService.getBlogById(id);
-        ResponseEntity<String> response =  deleteFile(blog.getThumbnail());
+        ResponseEntity<String> response = deleteFile(blog.getThumbnail());
         blogService.deleteBlog(id);
-         if(response.getStatusCode() != HttpStatus.OK){
-             redirectAttributes.addFlashAttribute("errorMessage",  "Failed to delete Blog");
-         }
-         redirectAttributes.addFlashAttribute("successMessage", "Blog Delete Successfully");
-         return "redirect:/admin/blog-admin.html";
+        if (response.getStatusCode() != HttpStatus.OK) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete Blog");
+        }
+        redirectAttributes.addFlashAttribute("successMessage", "Blog Delete Successfully");
+        return "redirect:/admin/blog-admin.html";
     }
+
     private String getFileName(MultipartFile file, InputStream inputStream) {
         String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
         Blob blob = StorageClient.getInstance().bucket().create(fileName, inputStream, file.getContentType());
