@@ -4,10 +4,11 @@
 
 <head th:replace = "admin/admin_layout :: head"></head>
 <link rel="stylesheet" type="text/css"
-      href="../assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
+      href="/assets/node_modules/datatables.net-bs4/css/dataTables.bootstrap4.css">
 
 
 <body class="skin-default fixed-layout">
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@4.0.15/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <style>
     .category-select {
         appearance: none; /* Remove default arrow */
@@ -19,6 +20,20 @@
         padding-right: 30px;
         border: 1px solid #ced4da;
         border-radius: 4px;
+    }
+    .suspended-option {
+        color: #ea7543;
+        font-weight: 600;
+    }
+
+    .active-option{
+        color: #1fc549;
+        font-weight: 600;
+    }
+
+    .deactivate-option{
+        color: #bc1a27;
+        font-weight: 600;
     }
 </style>
     <!-- ============================================================== -->
@@ -86,42 +101,43 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Full Name</th>
+                                <th style="width: 13%;">Full Name</th>
                                 <th>Email</th>
-                                <th>DOB</th>
+<!--                                <th>DOB</th>-->
                                 <th>Address</th>
-                                <th>Phone Number</th>
+<!--                                <th>Phone Number</th>-->
 <!--                                <th>Image</th>-->
                                 <th>Gender</th>
-                                <th>Type</th>
-                                <th>Status</th>
+                                <th style="width: 14%">Type</th>
+                                <th style="width: 14%;">Status</th>
 <!--                                <th>Province</th>-->
-                                <th>Action</th>
+                                <th th:if="${user.getType().name() == 'SUPER_ADMIN'}">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="user : ${userList}">
-                                <td th:text="${user.getId()}"></td>
-                                <td th:text="${user.getFull_name()}"></td>
-                                <td th:text="${user.getEmail()}"></td>
-                                <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td>
-                                <td th:text="${user.getAddress()}"></td>
-                                <td th:text="${user.getPhone_number()}"></td>
-                                <td th:text="${user.getGender()}"></td>
-                                <td th:if="${user.getType() == 0}" th:text="User"></td>
-                                <td th:if="${user.getType() == 1}" th:text="Admin"></td>
-                                <td style="padding-top: 10px">
-                                    <select th:id="'status-' + ${user.getId()}" class="form-control category-select" style="padding-top: 10px">
-                                        <option value="ACTIVE" th:selected="${user.status.name() == 'ACTIVE'}">Active</option>
-                                        <option value="SUSPENDED" th:selected="${user.status.name() == 'SUSPENDED'}">Suspended</option>
-                                        <option value="DEACTIVATE" th:selected="${user.status.name() == 'DEACTIVATE'}">Deactivate</option>
-                                    </select>
-                                </td>
+                            <tr th:each="users : ${userList}">
+                                <td th:text="${users.getId()}"></td>
+                                <td th:text="${users.getFull_name()}"></td>
+                                <td th:text="${users.getEmail()}"></td>
+<!--                                <td th:text="${#dates.format(user.getDob(), 'yyyy-MM-dd')}"></td>-->
+                                <td th:text="${users.getAddress()}"></td>
+<!--                                <td th:text="${user.getPhone_number()}"></td>-->
+                                <td th:text="${users.getGender()}"></td>
+                                <td th:if="${users.getType().name() == 'USER'}" th:text="User"></td>
+                                <td th:if="${users.getType().name() == 'ADMIN'}" th:text="Admin"></td>
+                                <td th:if="${users.getType().name() == 'SUPER_ADMIN'}" th:text="Super+' '+ Admin"></td>
+                                <td th:text="${users.getStatus()}" th:if="${users.getStatus().name() == 'ACTIVE'}" class="active-option"></td>
+                                <td th:text="${users.getStatus()}" th:if="${users.getStatus().name() == 'SUSPENDED'}" class="suspended-option"></td>
+                                <td th:text="${users.getStatus()}" th:if="${users.getStatus().name() == 'DEACTIVATE'}" class="deactivate-option"></td>
 <!--                                <td th:text="${user.getProvince()}"></td>-->
-                                <td style="padding-top: 10px">
-                                    <button type="button" class="btn btn-primary"><i class="ti-reload"></i></button>
+                                <td th:if="${user.getType().name() == 'SUPER_ADMIN'}">
+                                    <a th:href="@{'/admin/user-form/edit/' +  ${users.getId()}}" class="text-inverse" title="Delete" data-bs-toggle="tooltip" style="cursor: pointer">
+                                            <i class="ti-pencil" title="Edit" ></i>
+                                    </a>
+                                    <a th:onclick="|deleteAdmin(event, '${users.id}')|" class="text-inverse" title="Delete" data-bs-toggle="tooltip" style="cursor: pointer">
+                                            <i class="ti-trash" title="Edit"></i>
+                                    </a>
                                 </td>
-
                             </tr>
                             </tbody>
                         </table>
@@ -168,16 +184,17 @@
 <div th:replace="admin/admin_layout :: jscript"></div>
 
 <!-- This is data table -->
-<script src="../assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
+<script src="/assets/node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/assets/node_modules/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
 <!-- start - This is for export functionality only -->
-<script src="../assets/cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-<script src="../assets/cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
-<script src="../assets/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="../assets/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-<script src="../assets/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-<script src="../assets/cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
-<script src="../assets/cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script src="/assets/cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+<script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+<script src="/assets/cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="/assets/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="/assets/cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+<script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+<script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- end - This is for export functionality only -->
 <script>
     $(function () {
@@ -230,6 +247,87 @@
     });
 
 </script>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        const successMessage = /*[[${successMessage}]]*/ '';
+        var errorMessage = /*[[${errorMessage}]]*/ '';
+
+        if (errorMessage && errorMessage !== 'null') {
+            Swal.fire({
+                title: "Cannot delete product",
+                text: errorMessage,
+                icon: "error",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else if (successMessage && successMessage !== 'null') {
+            Swal.fire({
+                title: "Success",
+                text: successMessage,
+                icon: "success",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    });
+</script>
+<script>
+    function deleteAdmin(event, userId) {
+        event.preventDefault();
+
+        confirmDelete().then((isConfirmed) => {
+            if (isConfirmed) {
+                window.location.href = `/admin/deleteAdmin/${userId}`;
+            }
+        });
+    }
+
+    function confirmDelete() {
+        return Swal.fire({
+            title: 'Are you sure?',
+            text: "This action cannot be undone!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#AAAAAA',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            return result.isConfirmed;
+        });
+    }
+</script>
+<!--<script>-->
+<!--    function updateUserStatus(userID) {-->
+<!--        const statusSelect = document.getElementById(`status-${userID}`);-->
+<!--        const newStatus = statusSelect.value;-->
+
+<!--        fetch(`/admin/update-user-status/${userID}`, {-->
+<!--            method: 'POST',-->
+<!--            headers: {-->
+<!--                'Content-Type': 'application/json',-->
+<!--            },-->
+<!--            body: JSON.stringify({ status: newStatus })-->
+<!--        })-->
+<!--            .then(response => response.json())-->
+<!--            .then(data => {-->
+<!--                if (data.success) {-->
+<!--                    Swal.fire({-->
+<!--                        title: "Success",-->
+<!--                        text: "User status update successfully",-->
+<!--                        icon: "success",-->
+<!--                        showConfirmButton: false,-->
+<!--                        timer: 1500-->
+<!--                    });-->
+<!--                } else {-->
+<!--                    alert('Failed to update order status.');-->
+<!--                }-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--                console.error('Error updating order status:', error);-->
+<!--                alert('An error occurred.');-->
+<!--            });-->
+<!--    }-->
+<!--</script>-->
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->

@@ -25,6 +25,7 @@ public class FileUploadController {
     private final FirebaseConfig firebaseConfig;
 
     public FileUploadController(FirebaseConfig firebaseConfig) {
+
         this.firebaseConfig = firebaseConfig;
     }
 

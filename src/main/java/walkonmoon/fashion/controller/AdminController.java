@@ -4,7 +4,9 @@ import com.google.cloud.storage.Acl;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.firebase.cloud.StorageClient;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import walkonmoon.fashion.config.FirebaseConfig;
+import walkonmoon.fashion.dto.CartItemDTO;
 import walkonmoon.fashion.model.*;
 import walkonmoon.fashion.service.*;
 
@@ -52,6 +55,8 @@ public class AdminController {
     private BlogDetailService blogDetailService;
     @Autowired
     private StatisticService statisticService;
+    @Autowired
+    private HttpSession httpSession;
 
     public AdminController(FirebaseConfig firebaseConfig) {
         this.firebaseConfig = firebaseConfig;
@@ -59,21 +64,21 @@ public class AdminController {
 
     @GetMapping("/index.html")
     public String dashboard(Model model) {
-        int averageOrderPerDayOfMonth = statisticService.calculateOrderAverage();
-        model.addAttribute("averageOrderPerDayOfMonth", averageOrderPerDayOfMonth);
-        int totalRevenue = statisticService.calculateTotalRevenue();
-        model.addAttribute("totalRevenue", totalRevenue);
-        System.out.println("tRevenue " + totalRevenue);
-        int totalOrderPerMonth = statisticService.getTotalOrderPerMonth();
-        int totalPurchasedProductPerMonth = statisticService.getTotalPurchasedProductPerMonth();
-
-        model.addAttribute("totalOrderPerMonth", totalOrderPerMonth);
-        model.addAttribute("totalPurchasedProductPerMonth", totalPurchasedProductPerMonth);
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         return "admin/index";
     }
 
     @GetMapping("/eco-products.html")
-    public String productManagement(Model model2) {
+    public String productManagement(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         List<Product> products = productService.getListProducts();
         Map<Integer, String> categoryMap = new HashMap<>();
         for (Product product : products) {
@@ -82,8 +87,8 @@ public class AdminController {
                 categoryMap.put(product.getCategoryId(), category.getName());
             }
         }
-        model2.addAttribute("productList", products);
-        model2.addAttribute("categoryMap", categoryMap);
+        model.addAttribute("productList", products);
+        model.addAttribute("categoryMap", categoryMap);
 
         return "admin/eco-products";
     }
@@ -97,6 +102,8 @@ public class AdminController {
 
     @GetMapping("/eco-products-orders.html")
     public String orderManagement(Model model) {
+        User users = (User) httpSession.getAttribute("user");
+        model.addAttribute("user", users);
         List<Order> orders = orderService.getOrderList();
         Map<Integer, String> userName = new HashMap<>();
         for (User user : userService.getListUser()) {
@@ -109,6 +116,11 @@ public class AdminController {
 
     @GetMapping("/eco-order-detail/{id}")
     public String orderDetail(@PathVariable("id") Integer id, Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         List<OrderDetail> orderdetail = orderDetailService.getOrderDetailByOrderID(id);
         List<Product> products = new ArrayList<>();
         for (OrderDetail orderDetail : orderdetail) {
@@ -134,6 +146,11 @@ public class AdminController {
 
     @GetMapping("/eco-products-edit.html")
     public String formProduct(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         model.addAttribute("product", new Product());
@@ -252,6 +269,11 @@ public class AdminController {
 //    }
     @GetMapping("/eco-products-edit/{id}")
     public String editProduct(@PathVariable("id") Integer id, Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         Product product = productService.getProductById(id);
         List<Category> categories = categoryService.getListCategories();
         List<Image> images = imageService.findImageByProductId(id);
@@ -265,6 +287,7 @@ public class AdminController {
 
     @GetMapping("/product-delete/{id}")
     public String deleteProduct(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+
         String fileUrl = productService.getProductById(id).getImage_collection_url();
         Product product = productService.getProductById(id);
         List<CartItem> cartitem = cartItemService.getAllCartItems();
@@ -464,6 +487,11 @@ public class AdminController {
 
     @GetMapping("/category.html")
     public String categoryManagement(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         List<Category> categories = categoryService.getListCategories();
         model.addAttribute("categories", categories);
         return "admin/category";
@@ -471,6 +499,11 @@ public class AdminController {
 
     @GetMapping("/category-add.html")
     public String formCategory(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         model.addAttribute("category", new Category());
         model.addAttribute("mode", "create");
         return "admin/category-add";
@@ -491,6 +524,11 @@ public class AdminController {
 
     @GetMapping("/category-edit/{id}")
     public String editCategory(@PathVariable("id") Integer id, Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         Category category = categoryService.getCategoryById(id);
         model.addAttribute("category", category);
         model.addAttribute("mode", "edit");
@@ -512,20 +550,57 @@ public class AdminController {
 
     @GetMapping("/user-management.html")
     public String userManagement(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         List<User> users = userService.getListUser(); // Fetch all users
         model.addAttribute("userList", users);
         return "admin/user-management";
     }
 
-    @PostMapping("/user-form/edit")
-    public String userSave(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
-        User user1 = userService.findUserById(user.getId());
-        user.setPassword(user1.getPassword());
+
+
+    @GetMapping("/user-form.html")
+    public String userForm(@ModelAttribute User user, RedirectAttributes redirectAttributes, Model model, HttpSession httpSession) {
+        User user2 = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user2);
+        return "/admin/user-form";
+    }
+
+    @PostMapping("/user-form/save")
+    public String userSave(@ModelAttribute User user, RedirectAttributes redirectAttributes){
+        User admin =  userService.getUserByEmail(user.getEmail());
+        user.setPassword(admin.getPassword());
         userService.saveUser(user);
-        redirectAttributes.addFlashAttribute("successMessages", "User Information saved successfully");
+        redirectAttributes.addFlashAttribute("successMessage", "Admin save successfully");
         return "redirect:/admin/user-management.html";
     }
 
+    @GetMapping("/user-form/edit/{id}")
+    public String userEdit(@PathVariable("id") Integer id, Model model, HttpSession httpSession){
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
+        User admin = userService.findUserById(id);
+         model.addAttribute("admin", admin);
+         return "/admin/user-form";
+    }
+
+    @GetMapping("/deleteAdmin/{id}")
+    public String userDelete(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
+        User admin = userService.findUserById(id);
+        admin.setStatus(UserStatus.DEACTIVATE);
+        userService.saveUser(admin);
+        redirectAttributes.addFlashAttribute("successMessage", "You have deactivate this account");
+        return "redirect:/admin/user-management.html";
+    }
     @GetMapping("/pages-login.html")
     public String loginPages(Model model) {
         model.addAttribute("user", new User());
@@ -533,19 +608,43 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes) {
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, RedirectAttributes redirectAttributes, HttpSession httpSession, Model model) {
         User user = userService.getUserByEmail(email);
         String passSHA1 = UserService.toSHA1(password);
-        if (user == null || !user.getPassword().equals(passSHA1) || user.getType() != 1) {
+        if (user == null || !user.getPassword().equals(passSHA1)) {
             redirectAttributes.addFlashAttribute("errorMessage", "Invalid email or password.");
             return "redirect:/admin/pages-login.html";
         }
 
-        return "redirect:/admin/index.html";
-    }
+        if (user.getStatus() == UserStatus.DEACTIVATE || user.getStatus() == UserStatus.SUSPENDED) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Your account has been suspended or deactivated.");
+            return "redirect:/admin/pages-login.html";
+        }
 
+        if(user.getType() == UserType.USER){
+            httpSession.setAttribute("user", user);
+            model.addAttribute("user", user);
+            addCartItemsToModel(user.getId(), model);
+            return "redirect:/index.html";
+        }else if(user.getType() == UserType.ADMIN || user.getType() == UserType.SUPER_ADMIN){
+            httpSession.setAttribute("admin", user);
+            return "redirect:/admin/index.html";
+        }
+        redirectAttributes.addFlashAttribute("errorMessage", "Unauthorized access.");
+        return "redirect:/admin/pages-login.html";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+        session.removeAttribute("admin");
+        return "redirect:/admin/pages-login.html";
+    }
     @GetMapping("/blog-admin.html")
     public String blog(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         List<Blog> blogList = blogService.getListBlogs();
         model.addAttribute("blogs", blogList);
         return "admin/blog-admin";
@@ -554,6 +653,11 @@ public class AdminController {
 
     @GetMapping("/blog-form.html")
     public String formBlog(Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         model.addAttribute("blog", new Blog());
         model.addAttribute("mode", "create");
         return "admin/blog-form";
@@ -597,6 +701,11 @@ public class AdminController {
 
     @GetMapping("/blog-form/{id}")
     public String editBlog(@PathVariable("id") Integer id, Model model) {
+        User user = (User) httpSession.getAttribute("admin");
+        if(user == null){
+            return "redirect:/admin/pages-login.html";
+        }
+        model.addAttribute("user", user);
         Blog blog = blogService.getBlogById(id);
         BlogDetail blogDetail = blogDetailService.getBlogDetailByBlogID(blog.getId());
         String content = blogDetail.getContent();
@@ -642,7 +751,15 @@ public class AdminController {
             return new ResponseEntity<>("Failed to delete file", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    private void addCartItemsToModel(Integer userID, Model model) {
+        List<CartItemDTO> cartItems = new ArrayList<>();
+        if (userID != null) {
+            cartItems = cartItemService.getCartItems(userID);
+        }
+        int totalPrice = cartItemService.calculateTotalPrice(cartItems);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("cartItems", cartItems);
+    }
     private String extractFileName(String fileUrl) {
         String[] parts = fileUrl.split("/");
         String fileName = parts[parts.length - 1].split("\\?")[0];

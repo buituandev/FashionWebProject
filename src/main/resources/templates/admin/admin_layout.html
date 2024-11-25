@@ -123,26 +123,26 @@
             <div class="user-pro-body">
                 <div><img src="/assets/images/users/2.jpg" alt="user-img" class="img-circle"></div>
                 <div class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle u-dropdown link hide-menu"
-                       data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret">Steve</span></a>
-                    <div class="dropdown-menu animated flipInY">
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
-                        <!-- text-->
-                        <div class="dropdown-divider"></div>
-                        <!-- text-->
-                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account
-                            Setting</a>
-                        <!-- text-->
-                        <div class="dropdown-divider"></div>
-                        <!-- text-->
-                        <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
-                        <!-- text-->
-                    </div>
+                    <a href="javascript:void(0)" class=" u-dropdown link hide-menu"
+                       data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span th:text="${user.getFull_name()}" class="caret"></span></a>
+<!--                    <div class="dropdown-menu animated flipInY">-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-user"></i> My Profile</a>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-email"></i> Inbox</a>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <a href="javascript:void(0)" class="dropdown-item"><i class="ti-settings"></i> Account-->
+<!--                            Setting</a>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                        <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>-->
+<!--                        &lt;!&ndash; text&ndash;&gt;-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -188,7 +188,7 @@
                 </li>
 
                 <li class="nav-small-cap">--- SUPPORT</li>
-                <li><a class="waves-effect waves-dark" th:href="@{'/admin/pages-login.html'}" aria-expanded="false"><i
+                <li><a class="waves-effect waves-dark" th:href="@{'/admin/logout'}" aria-expanded="false"><i
                         class="fa fa-circle text-success"></i><span class="hide-menu">Log Out</span></a></li>
             </ul>
         </nav>

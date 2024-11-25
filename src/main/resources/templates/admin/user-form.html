@@ -7,8 +7,10 @@
 </head>
 
 <body class="skin-default fixed-layout">
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@4.0.15/css/froala_editor.pkgd.min.css" rel="stylesheet"
+      type="text/css"/>
 <style>
-    .user-select {
+    .category-select {
         appearance: none; /* Remove default arrow */
         -webkit-appearance: none;
         -moz-appearance: none;
@@ -19,6 +21,74 @@
         border: 1px solid #ced4da;
         border-radius: 4px;
     }
+
+    .product-img .pro-img-overlay a {
+        margin: 50% 5px;
+
+    }
+
+    .category-select:hover, .category-select:focus {
+        border-color: #80bdff;
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .image-preview-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 10px;
+    }
+
+    .image-container {
+        position: relative; /* Allows overlay to be positioned on top of the image */
+        display: inline-block;
+
+    }
+
+    .preview-image {
+        max-width: 150px;
+        height: auto;
+        display: block;
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+
+    .pro-img-overlay {
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s;
+    }
+
+    .image-container:hover .pro-img-overlay {
+        opacity: 1; /* Show overlay on hover */
+    }
+
+    .delete-icon {
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .large-checkbox {
+        width: 20px;
+        height: 17px;
+    }
+
+    .large-label {
+        font-size: 14px;
+        padding-left: 5px;
+    }
+
+    .check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
 </style>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
@@ -55,14 +125,22 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor" style="font-weight: 600">Edit User</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'create'}" style="font-weight: 600">Add New Admin</h4>
+                    <h4 class="text-themecolor" th:if="${mode == 'edit'}" style="font-weight: 600">Edit Admin</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">User edit</li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a href="user-form.html"
+                                                                                              style="color: rgb(228, 106, 118)">Create
+                                New Admin</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Edit User</li>
                         </ol>
+                        <!--                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a-->
+                        <!--                                href="user-form.html" style="color: white"><i-->
+                        <!--                                class="fa fa-plus-circle"></i> Create New</a>-->
+                        <!--                        </button>-->
                     </div>
                 </div>
             </div>
@@ -78,113 +156,141 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            <form th:action="@{/admin/user-form/edit}" method="post" th:object="${user}"
+                            <form th:action="@{/admin/user-form/save}" method="post" th:object="${admin}"
                                   enctype="multipart/form-data">
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Email</label>
+                                                <input type="text" id="lastName" th:field="*{email}"
+                                                       class="form-control"></div>
+                                        </div>
+                                        <!--/span-->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Full Name</label>
-                                                <input type="text" th:field="*{full_name}"
+                                                <input type="text" id="firstName" th:field="*{full_name}"
                                                        class="form-control">
                                                 <input type="hidden" th:field="*{id}"/>
                                             </div>
                                         </div>
                                         <!--/span-->
                                     </div>
+                                    <!--/row-->
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Gender</label>
+                                                <select th:field="*{gender}" class="form-control category-select"
+                                                        tabindex="1">
+                                                    <option th:text="'Male'"
+                                                            th:selected="${admin.getGender() == null}"
+                                                            th:value="Male">
+                                                        Male
+                                                    </option>
+                                                    <option th:text="'Female'"
+                                                            th:selected="${admin.getGender() != null}"
+                                                            th:value="Female">
+                                                        Female
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Type</label>
+                                                <select th:field="*{type}" class="form-control category-select"
+                                                        tabindex="1">
+                                                    <option th:text="'USER'"
+                                                            th:selected="${admin.getType() == null || admin.getType().name() == 'USER'}"
+                                                            th:value="USER">
+                                                        User
+                                                    </option>
+                                                    <option th:text="'ADMIN'"
+                                                            th:selected="${admin.getType() != null && admin.getType().name() == 'ADMIN'}"
+                                                            th:value="ADMIN">
+                                                        Admin
+                                                    </option>
+                                                    <option th:text="'SUPER ADMIN'"
+                                                            th:selected="${admin.getType() != null && admin.getType().name() == 'SUPER_ADMIN'}"
+                                                            th:value="SUPER_ADMIN">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/row-->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label" style="font-weight: 600">Phone
+                                                    Number</label>
+                                                <input type="number" id="phoneNumber" th:field="*{phone_number}"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label" style="font-weight: 600">DOB</label>
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                </div>
+                                                <input type="date" class="form-control" th:field="*{dob}"
+                                                       placeholder="Discount" aria-label="Discount"
+                                                       aria-describedby="basic-addon2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+
+                                    <!--/span-->
+                                    <!--/row-->
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Address</label>
-                                                <input type="text" th:field="*{address}"
-                                                       class="form-control"></div>
-                                        </div>
-                                    </div>
-                                    <!--/row-->
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Email</label>
                                                 <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                    </div>
-                                                    <input type="text" class="form-control" th:field="*{email}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--span-->
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Gender</label>
-                                                <select th:field="*{gender}" class="form-control user-select"
-                                                        tabindex="1">
-                                                    <option th:value="Male" selected>Male</option>
-                                                    <option th:value="Female">Female</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <!--span-->
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Date of Birth</label>
-                                                <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" th:field="*{dob}">
+                                                    <input type="text" class="form-control" th:field="*{address}"
+                                                           aria-describedby="basic-addon1">
                                                 </div>
                                             </div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Phone Number</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                    </div>
-                                                    <input type="number" class="form-control"
-                                                           th:field="*{phone_number}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Type</label>
-                                                <div class="input-group mb-3">
-                                                    <div class="input-group-prepend">
-                                                    </div>
-                                                    <input type="text" class="form-control"
-                                                           th:if="${user.getType() == 1}" th:value="Admin" readonly>
-                                                    <input type="text" class="form-control"
-                                                           th:if="${user.getType() == 0}" th:value="User" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group" style="font-weight: 600">
-                                                <label class="form-label">Status</label>
-                                                <select th:field="*{status}" class="form-control user-select"
+                                                <label class="form-label" style="font-weight: 600">Status</label>
+                                                <select th:field="*{status}" class="form-control category-select"
                                                         tabindex="1">
-                                                    <option th:value="Enable" selected>Enable</option>
-                                                    <option th:value="Disable">Disable</option>
-                                                    <option th:value="Delete">Delete</option>
+                                                    <option th:text="'ACTIVE'"
+                                                            th:selected="${admin.getStatus() == null || admin.getStatus().name() == 'ACTIVE'}"
+                                                            th:value="ACTIVE">
+                                                        Active
+                                                    </option>
+                                                    <option th:text="'SUSPENDED'"
+                                                            th:selected="${admin.getStatus() != null && admin.getStatus().name() == 'SUSPENDED'}"
+                                                            th:value="SUSPENDED">
+                                                        Suspended
+                                                    </option>
+                                                    <option th:text="'DEACTIVATE'"
+                                                            th:selected="${admin.getStatus() != null && admin.getStatus().name() == 'DEACTIVATE'}"
+                                                            th:value="DEACTIVATE">
+                                                        Deactivate
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <div class="form-actions m-t-40">
-                                            <button type="submit" class="btn btn-success text-white"><i
-                                                    class="fa fa-check"></i> Save
-                                            </button>
-                                            <button type="button" class="btn btn-dark"><a
-                                                    th:href="@{'/admin/eco-products.html'}"
-                                                    style="color: white">Cancel</a></button>
-                                        </div>
+                                    </div>
+                                    <div class="form-actions m-t-40">
+                                        <button type="submit" class="btn btn-success text-white"><i
+                                                class="fa fa-check"></i> Save
+                                        </button>
+                                        <button type="button" class="btn btn-dark"><a
+                                                th:href="@{'/admin/user-management.html'}"
+                                                style="color: white">Cancel</a>
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -227,10 +333,12 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<div th:replace="admin/admin_layout :: jscript"></div>
+<div th:replace="~{admin/admin_layout :: jscript}"></div>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 </body>
 </html>
