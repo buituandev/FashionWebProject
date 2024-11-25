@@ -102,7 +102,10 @@ public class AdminController {
 
     @GetMapping("/eco-products-orders.html")
     public String orderManagement(Model model) {
-        User users = (User) httpSession.getAttribute("user");
+        User users = (User) httpSession.getAttribute("admin");
+        if(users == null){
+            return "redirect:/admin/pages-login.html";
+        }
         model.addAttribute("user", users);
         List<Order> orders = orderService.getOrderList();
         Map<Integer, String> userName = new HashMap<>();
