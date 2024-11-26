@@ -592,7 +592,7 @@ public class AdminController {
         }
         model.addAttribute("user", user);
         User admin = userService.findUserById(id);
-         model.addAttribute("admin", admin);
+        model.addAttribute("admin", admin);
          return "/admin/user-form";
     }
 

@@ -102,7 +102,6 @@
                                 <th style="text-align: right" class="price">Price</th>
                                 <th style="text-align: right">Stock</th>
                                 <th>Photo</th>
-                                <th>SKU</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -120,7 +119,7 @@
                                 <td th:text="${status.index + 1}" style="text-align: right; margin-right: 0.5vw;"></td>
                                 <td th:text="${product.getProduct_name()}"></td>
                                 <td th:text="${categoryMap[product.getCategoryId()]}"></td>
-                                <td th:text="${product.getPrice()}"
+                                <td th:text="${product.getPrice()}" class="formatted-price"
                                     style="text-align: right; margin-right: 0.5vw;"></td>
                                 <td th:text="${product.getStock()}"
                                     style="text-align: right; margin-right: 0.5vw;"></td>
@@ -128,7 +127,6 @@
                                     <img th:src="${product.getImage_collection_url()}" alt="Product Image" width="100"
                                          height="100"/>
                                 </td>
-                                <td th:text="${product.getSKU()}"></td>
                                 <td th:if="${product.getStatus().name() == 'ENABLE'}" class="status-icon">
                                     <i class="ti-check" style="color: #0f5132;"></i>
                                 </td>
@@ -198,6 +196,7 @@
 <script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/assets/js/FormatPrice.js"></script>
 <!-- end - This is for export functionality only -->
 <script>
     function deleteItem(event, productId) {

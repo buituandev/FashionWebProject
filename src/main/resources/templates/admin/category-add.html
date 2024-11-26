@@ -49,10 +49,10 @@
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a href="category-add.html" style="color: rgb(228, 106, 118)">Create Category</a></li>
-                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Edit Category</li>
+                            <li class="breadcrumb-item active"><a th:href="@{'/admin/category.html'}">Category</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a th:href="@{'/admin/category-add.html'}" style="color: rgb(228, 106, 118)">Create Category</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}" style="color: rgb(228, 106, 118)">Edit Category</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"></i><a href="category-add.html" style="color: white">Create New</a></button>
                     </div>
                 </div>
             </div>
@@ -73,20 +73,21 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 400">Category Name</label>
-                                                <input type="text" id="firstName" th:field="*{name}" class="form-control"> </div>
+                                                <label class="form-label" style="font-weight: 400">Category Name<span style="color: darkred">*</span></label>
+                                                <input type="text" id="firstName" th:field="*{name}" class="form-control" required> </div>
                                                 <input type="hidden" th:field="*{id}" />
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 400">Description</label>
-                                                <input type="text" id="lastName" th:field="*{description}" class="form-control"> </div>
+                                                <label class="form-label" style="font-weight: 400">Description<span style="color: darkred">*</span></label>
+                                                <input type="text" id="lastName" th:field="*{description}" class="form-control" required> </div>
                                         </div>
                                         <!--/span-->
                                         <div class="form-actions m-t-40">
                                             <button type="submit" class="btn btn-success text-white"> <i class="fa fa-check"></i> Save</button>
-                                            <button type="button" class="btn btn-dark">Cancel</button>
+                                            <button type="button" class="btn btn-dark"><a
+                                                    th:href="@{'/admin/category.html'}" style="color: white">Cancel</a></button>
                                         </div>
                                     </div>
                                 </div>
