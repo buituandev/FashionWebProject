@@ -128,8 +128,8 @@
                                                                         <div class="product-stock"
                                                                              th:text="${product.getStock()}"
                                                                              style="visibility: hidden; display: none"></div>
-<!--                                                                        <div class="label-product label-new"-->
-<!--                                                                             th:text="${product.getTitle()}"></div>-->
+                                                                        <!--                                                                        <div class="label-product label-new"-->
+                                                                        <!--                                                                             th:text="${product.getTitle()}"></div>-->
                                                                         <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                             <img th:src="${product.getImage_collection_url()}"
                                                                                  th:alt="${product.getProduct_name()}"
@@ -176,12 +176,12 @@
                                                                             class="product-inner d-flex align-items-center">
                                                                         <div
                                                                                 class="product-image mb-4 mb-md-0 me-md-4 me-xl-5">
-<!--                                                                            <div class="label-product label-sale">-->
-<!--                                                                                -20%-->
-<!--                                                                            </div>-->
-<!--                                                                            <div class="label-product label-new"-->
-<!--                                                                                 th:text="${product.getTitle()}">-->
-<!--                                                                            </div>-->
+                                                                            <!--                                                                            <div class="label-product label-sale">-->
+                                                                            <!--                                                                                -20%-->
+                                                                            <!--                                                                            </div>-->
+                                                                            <!--                                                                            <div class="label-product label-new"-->
+                                                                            <!--                                                                                 th:text="${product.getTitle()}">-->
+                                                                            <!--                                                                            </div>-->
                                                                             <a th:href="@{'/single-product/' + ${product.getId()}}">
                                                                                 <img th:src="${product.getImage_collection_url()}"
                                                                                      th:title="${product.getProduct_name()}"
@@ -222,65 +222,102 @@
                                         </div> <!-- end of shop-products-wrapper -->
 
                                         <!--test pagi-->
+                                        <!--                                        <div class="pagination-area">-->
+                                        <!--                                            <div class="row align-items-center">-->
+                                        <!--                                                <div class="col-12 col-md-6">-->
+                                        <!--                                                    <div class="page-amount d-flex justify-content-center justify-content-md-start">-->
+                                        <!--                                                        <p th:text="'Showing ' + ${((currentPage - 1) * 8 + 1)} + ' to ' + ${currentPage * 8 > totalProducts ? totalProducts : currentPage * 8} + ' of ' + ${totalProducts} + ' Products'"></p>-->
+                                        <!--                                                    </div>-->
+                                        <!--                                                </div>-->
+                                        <!--                                                <div class="col-12 col-md-6">-->
+                                        <!--                                                    <ul class="pagination justify-content-center justify-content-md-end">-->
+
+                                        <!--                                                        &lt;!&ndash; Previous Page Link &ndash;&gt;-->
+                                        <!--                                                        <li class="page-item"-->
+                                        <!--                                                            th:class="${currentPage == 1} ? 'disabled'">-->
+                                        <!--                                                            <a th:if="${selectedCategoryId != null and currentPage > 1}"-->
+                                        <!--                                                               th:href="@{'/shop-grid/' + ${selectedCategoryId} + '?page=' +${currentPage - 1}}"-->
+                                        <!--                                                               class="page-link">-->
+                                        <!--                                                                <span>Previous</span>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                            <a th:if="${selectedCategoryId == null and currentPage > 1}"-->
+                                        <!--                                                               th:href="@{'/shop-grid?page=' + ${currentPage - 1}}"-->
+                                        <!--                                                               class="page-link">-->
+                                        <!--                                                                <span>Previous</span>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                        </li>-->
+                                        <!--                                                        &lt;!&ndash; Page Number Links &ndash;&gt;-->
+                                        <!--                                                        <li class="page-item"-->
+                                        <!--                                                            th:each="i : ${#numbers.sequence(1, totalPages)}">-->
+                                        <!--                                                            <a th:if="${selectedCategoryId != null}"-->
+                                        <!--                                                               th:href="@{'/shop-grid/' + ${selectedCategoryId} + '?page=' + ${i}}"-->
+                                        <!--                                                               class="page-link"-->
+                                        <!--                                                               th:classappend="${i == currentPage} ? ' active'">-->
+                                        <!--                                                                <span th:text="${i}"></span>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                            <a th:if="${selectedCategoryId == null}"-->
+                                        <!--                                                               th:href="@{'/shop-grid?page=' + ${i}}"-->
+                                        <!--                                                               class="page-link"-->
+                                        <!--                                                               th:classappend="${i == currentPage} ? ' active'">-->
+                                        <!--                                                                <span th:text="${i}"></span>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                        </li>-->
+
+                                        <!--                                                        &lt;!&ndash; Next Page Link &ndash;&gt;-->
+                                        <!--                                                        <li class="page-item"-->
+                                        <!--                                                            th:class="${currentPage == totalPages} ? 'disabled'">-->
+                                        <!--                                                            <a th:if="${selectedCategoryId != null and currentPage < totalPages}"-->
+                                        <!--                                                               th:href="@{'/shop-grid/' + ${selectedCategoryId} + '?page=' + ${currentPage + 1}}"-->
+                                        <!--                                                               class="page-link">-->
+                                        <!--                                                                <span>Next</span> <i class="fa fa-angle-right"></i>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                            <a th:if="${selectedCategoryId == null and currentPage < totalPages}"-->
+                                        <!--                                                               th:href="@{'/shop-grid?page=' + ${currentPage + 1}}"-->
+                                        <!--                                                               class="page-link">-->
+                                        <!--                                                                <span>Next</span> <i class="fa fa-angle-right"></i>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                        </li>-->
+
+                                        <!--                                                    </ul>-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
                                         <div class="pagination-area">
-                                            <div class="row align-items-center">
-                                                <div class="col-12 col-md-6">
-                                                    <div class="page-amount d-flex justify-content-center justify-content-md-start">
-                                                        <p th:text="'Showing ' + ${((currentPage - 1) * 8 + 1)} + ' to ' + ${currentPage * 8 > totalProducts ? totalProducts : currentPage * 8} + ' of ' + ${totalProducts} + ' Products'"></p>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <ul class="pagination justify-content-center justify-content-md-end">
+                                            <ul class="pagination">
+                                                <!-- Previous Page Link -->
+                                                <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                                                    <a th:href="${selectedCategoryId != null} ?
+                        @{'/shop-grid/' + ${selectedCategoryId} + '?page=' + (${currentPage - 1}) + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}} :
+                        @{'/shop-grid?page=' + (${currentPage - 1}) + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}"
+                                                       class="page-link2">
+                                                        <span th:if="${currentPage!=1}">Previous</span>
+                                                    </a>
+                                                </li>
 
-                                                        <!-- Previous Page Link -->
-                                                        <li class="page-item"
-                                                            th:class="${currentPage == 1} ? 'disabled'">
-                                                            <a th:if="${selectedCategoryId != null and currentPage > 1}"
-                                                               th:href="@{'/shop-grid/' + ${selectedCategoryId} + '?page=' +${currentPage - 1}}"
-                                                               class="page-link">
-                                                                <span>Previous</span>
-                                                            </a>
-                                                            <a th:if="${selectedCategoryId == null and currentPage > 1}"
-                                                               th:href="@{'/shop-grid?page=' + ${currentPage - 1}}"
-                                                               class="page-link">
-                                                                <span>Previous</span>
-                                                            </a>
-                                                        </li>
-                                                        <!-- Page Number Links -->
-                                                        <li class="page-item"
-                                                            th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                                            <a th:if="${selectedCategoryId != null}"
-                                                               th:href="@{'/shop-grid/' + ${selectedCategoryId} + '?page=' + ${i}}"
-                                                               class="page-link"
-                                                               th:classappend="${i == currentPage} ? ' active'">
-                                                                <span th:text="${i}"></span>
-                                                            </a>
-                                                            <a th:if="${selectedCategoryId == null}"
-                                                               th:href="@{'/shop-grid?page=' + ${i}}"
-                                                               class="page-link"
-                                                               th:classappend="${i == currentPage} ? ' active'">
-                                                                <span th:text="${i}"></span>
-                                                            </a>
-                                                        </li>
+                                                <!-- Page Number Links -->
+                                                <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                                                    th:classappend="${i == currentPage} ? 'active'">
+                                                    <a th:href="${selectedCategoryId != null} ?
+                        @{'/shop-grid/' + ${selectedCategoryId} + '?page=' + ${i} + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}} :
+                        @{'/shop-grid?page=' + ${i} + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}"
+                                                       class="page-link2">
+                                                        <span th:text="${i}"></span>
+                                                    </a>
+                                                </li>
 
-                                                        <!-- Next Page Link -->
-                                                        <li class="page-item"
-                                                            th:class="${currentPage == totalPages} ? 'disabled'">
-                                                            <a th:if="${selectedCategoryId != null and currentPage < totalPages}"
-                                                               th:href="@{'/shop-grid/' + ${selectedCategoryId} + '?page=' + ${currentPage + 1}}"
-                                                               class="page-link">
-                                                                <span>Next</span> <i class="fa fa-angle-right"></i>
-                                                            </a>
-                                                            <a th:if="${selectedCategoryId == null and currentPage < totalPages}"
-                                                               th:href="@{'/shop-grid?page=' + ${currentPage + 1}}"
-                                                               class="page-link">
-                                                                <span>Next</span> <i class="fa fa-angle-right"></i>
-                                                            </a>
-                                                        </li>
+                                                <!-- Next Page Link -->
+                                                <li class="page-item"
+                                                    th:classappend="${currentPage == totalPages} ? 'disabled'">
+                                                    <a th:href="${selectedCategoryId != null} ?
+                        @{'/shop-grid/' + ${selectedCategoryId} + '?page=' + (${currentPage + 1}) + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}} :
+                        @{'/shop-grid?page=' + (${currentPage + 1}) + '&minPrice=' + ${minPrice} + '&maxPrice=' + ${maxPrice}}"
+                                                       class="page-link2
 
-                                                    </ul>
-                                                </div>
-                                            </div>
+">
+                                                        <span th:if="${currentPage}<${totalPages}">Next</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
 
 
@@ -301,25 +338,6 @@
                             <div class="sidebar-widget list-widget">
                                 <h2 class="widgettitle">Categories</h2>
                                 <div class="list-widget-wrapper">
-<!--                                    <div class="list-group">-->
-<!--                                        <div th:each="category: ${categories}">-->
-<!--                                            <input-->
-<!--                                                    type="checkbox"-->
-<!--                                                    th:checked="${selectedCategoryId} == ${category.getId()}"-->
-<!--                                                    th:id="'checkbox-' + ${category.getId()}"-->
-<!--                                                    th:name="category-checkbox"-->
-<!--                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"-->
-<!--                                                    th:data-href="@{'/shop-grid/' + ${category.getId()}}"-->
-<!--                                                    onclick="selectOnlyOne(this);"-->
-<!--                                            />-->
-<!--                                            <label th:for="'checkbox-' + ${category.getId()}"></label>-->
-<!--                                            <a th:href="@{'/shop-grid/' + ${category.getId()}}"-->
-<!--                                               th:text="${category.getName()}"-->
-<!--                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"-->
-<!--                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
                                     <div class="list-group">
                                         <div th:each="category : ${categories}">
                                             <input
@@ -341,30 +359,30 @@
                                 </div>
                             </div>
                             <!--                            filter gia tien-->
-<!--                            <div class="sidebar-widget list-widget">-->
-<!--                                <h2 class="widgettitle">Price Range</h2>-->
-<!--                                <div class="list-widget-wrapper">-->
-<!--                                    <div class="list-group">-->
-<!--                                        <div th:each="category: ${categories}">-->
-<!--                                            <input-->
-<!--                                                    type="checkbox"-->
-<!--                                                    th:checked="${selectedCategoryId} == ${category.getId()}"-->
-<!--                                                    th:id="'checkbox-' + ${category.getId()}"-->
-<!--                                                    th:name="category-checkbox"-->
-<!--                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"-->
-<!--                                                    th:data-href="@{'/shop-grid/' + ${category.getId()}}"-->
-<!--                                                    onclick="selectOnlyOne(this);"-->
-<!--                                            />-->
-<!--                                            <label th:for="'checkbox-' + ${category.getId()}"></label>-->
-<!--                                            <a th:href="@{'/shop-grid/' + ${category.getId()}}"-->
-<!--                                               th:text="${category.getName()}"-->
-<!--                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"-->
-<!--                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div class="sidebar-widget list-widget">-->
+                            <!--                                <h2 class="widgettitle">Price Range</h2>-->
+                            <!--                                <div class="list-widget-wrapper">-->
+                            <!--                                    <div class="list-group">-->
+                            <!--                                        <div th:each="category: ${categories}">-->
+                            <!--                                            <input-->
+                            <!--                                                    type="checkbox"-->
+                            <!--                                                    th:checked="${selectedCategoryId} == ${category.getId()}"-->
+                            <!--                                                    th:id="'checkbox-' + ${category.getId()}"-->
+                            <!--                                                    th:name="category-checkbox"-->
+                            <!--                                                    th:style="${selectedCategoryId == category.getId() ? 'border-color: red;' : 'border-color: #ccc;'}"-->
+                            <!--                                                    th:data-href="@{'/shop-grid/' + ${category.getId()}}"-->
+                            <!--                                                    onclick="selectOnlyOne(this);"-->
+                            <!--                                            />-->
+                            <!--                                            <label th:for="'checkbox-' + ${category.getId()}"></label>-->
+                            <!--                                            <a th:href="@{'/shop-grid/' + ${category.getId()}}"-->
+                            <!--                                               th:text="${category.getName()}"-->
+                            <!--                                               th:class="${selectedCategoryId == category.getId() ? 'selected' : ''}"-->
+                            <!--                                               th:style="${selectedCategoryId == category.getId() ? 'color: red;' : ''}">-->
+                            <!--                                            </a>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
 
                             <div class="sidebar2-widget list-widget">
                                 <h2 class="widgettitle">Price Range</h2>
@@ -820,6 +838,26 @@
         window.location.href = url;
     }
 
+    // function selectOnlyOne(checkbox) {
+    //     var checkboxes = document.getElementsByName('category-checkbox');
+    //     checkboxes.forEach(function (item) {
+    //         if (item !== checkbox) item.checked = false;
+    //     });
+    //
+    //     if (checkbox.checked) {
+    //         const minPrice = document.getElementById('minPrice').value;
+    //         const maxPrice = document.getElementById('maxPrice').value;
+    //
+    //         let url = checkbox.getAttribute('data-href');
+    //         const params = [];
+    //         if (minPrice) params.push(`minPrice=${minPrice}`);
+    //         if (maxPrice) params.push(`maxPrice=${maxPrice}`);
+    //         if (params.length) url += `?${params.join('&')}`;
+    //
+    //         window.location.href = url;
+    //     }
+    // }
+
     function selectOnlyOne(checkbox) {
         var checkboxes = document.getElementsByName('category-checkbox');
         checkboxes.forEach(function (item) {
@@ -827,8 +865,8 @@
         });
 
         if (checkbox.checked) {
-            const minPrice = document.getElementById('minPrice').value;
-            const maxPrice = document.getElementById('maxPrice').value;
+            const minPrice = document.getElementById('minPrice')?.value || '';
+            const maxPrice = document.getElementById('maxPrice')?.value || '';
 
             let url = checkbox.getAttribute('data-href');
             const params = [];
@@ -839,6 +877,7 @@
             window.location.href = url;
         }
     }
+
 
 </script>
 
@@ -872,6 +911,7 @@
         left: 7px;
         transform: rotate(45deg);
     }
+
     .sidebar2-widget .widgettitle {
         font-size: 20px;
         line-height: 24px;
@@ -929,7 +969,6 @@
         background-color: #000;
         color: #fff;
     }
-
 
 
 </style>
