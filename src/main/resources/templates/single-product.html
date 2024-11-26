@@ -133,7 +133,8 @@
                                                     <p style="color: red">Out of Stock</p>
                                                 </div>
                                                 <div th:if="${product.getStock() > 0}">
-                                                    <p th:text="'There are ' + ${product.getStock()} + ' products left'">In Stock</p>
+                                                    <p th:text="'There are ' + ${product.getStock()} + ' products left'">
+                                                        In Stock</p>
                                                 </div>
                                                 <div class="product-stock">
 
@@ -150,7 +151,7 @@
                                                         </li>
                                                         <li>
                                                             <button type="button" class="default-btn btn-cart"
-                                                                    th:onclick="'addToCart(' + ${product.id} + ', ' + document.getElementById('quantity-input').value + ')'"
+                                                                    th:onclick="'addToCart(' + ${product.id} + ', document.getElementById(\'quantity-input'+ '\').value)'"
                                                                     th:text="${product.getStock() > 0 && ProductService.getProductById(product.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) != 0 ? 'Add to Cart' : 'Unavailable'}"
                                                                     th:disabled="${product.getStock() == 0 || ProductService.getProductById(product.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0}">
                                                             </button>
@@ -162,36 +163,6 @@
                                                 <!--                                                    <button class="btn-wishlist" type="button" title="Add to Wishlist">Add to Wishlist</button>-->
                                                 <!--                                                    <button class="btn-compare" type="button" title="Add to Compare">Add to Compare</button>-->
                                                 <!--                                                </div>-->
-                                            </div>
-
-                                            <div class="social-sharing d-flex align-items-center">
-                                                <span>Share</span>
-                                                <ul class="list-inline">
-                                                    <li class="list-inline-item"><a href="#" class="bg-facebook"
-                                                                                    data-bs-toggle="tooltip"
-                                                                                    data-position="top"
-                                                                                    data-original-title="Facebook"
-                                                                                    target="_blank"><i
-                                                            class="fa fa-facebook"></i><span>Share</span></a></li>
-                                                    <li class="list-inline-item"><a href="#" class="bg-twitter"
-                                                                                    data-bs-toggle="tooltip"
-                                                                                    data-position="top"
-                                                                                    data-original-title="Twitter"
-                                                                                    target="_blank"><i
-                                                            class="fa fa-twitter"></i><span>Tweet</span></a></li>
-                                                    <li class="list-inline-item"><a href="#" class="bg-gplus"
-                                                                                    data-bs-toggle="tooltip"
-                                                                                    data-position="top"
-                                                                                    data-original-title="Google Plus"
-                                                                                    target="_blank"><i
-                                                            class="fa fa-google-plus"></i><span>Google+</span></a></li>
-                                                    <li class="list-inline-item"><a href="#" class="bg-pinterest"
-                                                                                    data-bs-toggle="tooltip"
-                                                                                    data-position="top"
-                                                                                    data-original-title="Pinterest"
-                                                                                    target="_blank"><i
-                                                            class="fa fa-pinterest"></i><span>Pinterest</span></a></li>
-                                                </ul>
                                             </div>
                                         </div> <!-- end of product-details -->
                                     </div>
@@ -259,7 +230,9 @@
                                                     <div class="product-stock" th:text="${relatedProduct.getStock()}"
                                                          style="visibility: hidden; display: none"></div>
                                                     <div class="label-product label-new"
-                                                         th:text="${relatedProduct.getTitle()}"></div>
+                                                         th:if="${relatedProduct.isTrend == 1 || relatedProduct.isNew == 1}"
+                                                         th:text="${relatedProduct.isTrend == 1 ? 'Trend' + ' ' : ''} + ${relatedProduct.isNew == 1 ? 'New' : ''}"
+                                                    ></div>
                                                     <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}">
                                                         <img th:src="${relatedProduct.getImage_collection_url()}"
                                                              th:alt="${relatedProduct.getProduct_name()}"
@@ -269,10 +242,6 @@
                                                         <a class="action-btn btn-cart"
                                                            th:onclick="'addToCart(' + ${relatedProduct.id} + ', 1)'"
                                                            title="Add to Cart"><i class="pe-7s-shopbag"></i></a>
-                                                        <a class="action-btn btn-wishlist" href="#"
-                                                           title="Add to Wishlist"><i class="pe-7s-like"></i></a>
-                                                        <a class="action-btn btn-compare" href="#"
-                                                           title="Add to Compare"><i class="pe-7s-refresh-2"></i></a>
                                                     </div>
                                                 </div> <!-- end of product-image -->
 
@@ -281,19 +250,6 @@
                                                         <div class="product-manufacturer">
                                                             <a th:href="@{'/single-product/' + ${relatedProduct.getId()}}"
                                                                th:text="${relatedProduct.getProduct_name()}"></a>
-                                                        </div>
-                                                        <div class="product-ratings">
-                                                            <div class="rating-box">
-                                                                <ul class="rating d-flex">
-                                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                                    <li><i class="ion ion-md-star-outline"></i></li>
-                                                                    <li><i class="ion ion-md-star-outline disabled"></i>
-                                                                    </li>
-                                                                    <li><i class="ion ion-md-star-outline disabled"></i>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <!--                                                    note ti sua-->
