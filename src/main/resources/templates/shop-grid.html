@@ -141,17 +141,6 @@
                                                                                th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                                title="Add to Cart"><i
                                                                                     class="pe-7s-shopbag"></i></a>
-                                                                            <a class="action-btn btn-wishlist" href="#"
-                                                                               title="Add to Wishlist"><i
-                                                                                    class="pe-7s-like"></i></a>
-                                                                            <a class="action-btn btn-compare" href="#"
-                                                                               title="Add to Compare"><i
-                                                                                    class="pe-7s-refresh-2"></i></a>
-                                                                            <a class="action-btn btn-quickview"
-                                                                               data-bs-toggle="modal"
-                                                                               data-bs-target="#product_quick_view"
-                                                                               href="#" title="Quick View"><i
-                                                                                    class="pe-7s-search"></i></a>
                                                                         </div>
                                                                     </div> <!-- end of product-image -->
 
@@ -160,27 +149,6 @@
                                                                             <div class="product-manufacturer">
                                                                                 <a href="#"
                                                                                    th:text="${product.getProduct_name()}"></a>
-                                                                            </div>
-                                                                            <div class="product-ratings">
-                                                                                <div class="rating-box">
-                                                                                    <ul class="rating d-flex">
-                                                                                        <li>
-                                                                                            <i class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <h4 class="product-name"><a
@@ -224,19 +192,6 @@
                                                                                    th:onclick="'addToCart(' + ${product.id} + ', 1)'"
                                                                                    title="Add to Cart"><i
                                                                                         class="pe-7s-shopbag"></i></a>
-                                                                                <a class="action-btn btn-wishlist"
-                                                                                   href="#"
-                                                                                   title="Add to Wishlist"><i
-                                                                                        class="pe-7s-like"></i></a>
-                                                                                <a class="action-btn btn-compare"
-                                                                                   href="#"
-                                                                                   title="Add to Compare"><i
-                                                                                        class="pe-7s-refresh-2"></i></a>
-                                                                                <a class="action-btn btn-quickview"
-                                                                                   data-bs-toggle="modal"
-                                                                                   data-bs-target="#product_quick_view"
-                                                                                   href="#" title="Quick View"><i
-                                                                                        class="pe-7s-search"></i></a>
                                                                             </div>
                                                                         </div> <!-- end of product-image -->
 
@@ -249,32 +204,6 @@
                                                                                 <a th:href="@{'/single-product/' + ${product.getId()}}"
                                                                                    th:text="${product.getProduct_name()}"></a>
                                                                             </h4>
-                                                                            <div class="product-ratings">
-                                                                                <div class="rating-box">
-                                                                                    <ul class="rating d-flex">
-                                                                                        <li>
-                                                                                            <i
-                                                                                                    class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i
-                                                                                                    class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i
-                                                                                                    class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i
-                                                                                                    class="ion ion-md-star-outline"></i>
-                                                                                        </li>
-                                                                                        <li>
-                                                                                            <i
-                                                                                                    class="ion ion-md-star-outline disabled"></i>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                            </div>
                                                                             <p class="product-price">
                                                                             <span class="price-new formatted-price"
                                                                                   th:text="${product.getPrice()}+' VND'"></span>
@@ -627,15 +556,6 @@
                                 <div class="col-12 col-md-6 col-lg-5">
                                     <div class="product-details">
                                         <h3 class="product-name">Cas Meque Metus</h3>
-                                        <div class="product-ratings">
-                                            <ul class="rating d-flex">
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                            </ul>
-                                        </div>
                                         <div class="product-price">
                                             <p class="d-flex align-items-center">
                                                 <span class="price-old">$54.65</span>

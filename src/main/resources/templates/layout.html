@@ -27,6 +27,7 @@
 
     <!-- Master stylesheet -->
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 
     <!-- Responsive stylesheet -->
     <link rel="stylesheet" href="/assets/css/responsive.css">
@@ -35,7 +36,6 @@
           rel="stylesheet">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0&icon_names=arrow_drop_down"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- modernizr JS
     ============================================ -->
     <script src="/assets/js/modernizr-2.8.3.min.js"></script>
@@ -212,7 +212,7 @@
 <!--PromoteBanner-->
 <div th:fragment="promoBannerNarrow(imageSrc)" class="col-6 col-sm-6 col-md-4 col-lg-4">
     <div class="promo-banner hover-effect-1">
-        <a href="#">
+        <a th:href="@{/shop-grid.html}">
             <img th:src="${imageSrc}" alt="Promo Banner">
         </a>
     </div>
@@ -362,23 +362,23 @@
         <a href="#">
             <img th:src="${imgSrc}" alt="Team Image" style="width: 270px; height: 330px; object-fit: cover">
         </a>
-        <div class="team-socials">
-            <div class="chain-animation">
-                <a class="bg-facebook" href="#">
-                    <i class="fa fa-facebook"></i>
-                </a>
-            </div>
-            <div class="chain-animation">
-                <a class="bg-twitter" href="#">
-                    <i class="fa fa-twitter"></i>
-                </a>
-            </div>
-            <div class="chain-animation">
-                <a class="bg-gplus" href="#">
-                    <i class="fa fa-google-plus"></i>
-                </a>
-            </div>
-        </div>
+<!--        <div class="team-socials">-->
+<!--            <div class="chain-animation">-->
+<!--                <a class="bg-facebook" href="#">-->
+<!--                    <i class="fa fa-facebook"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="chain-animation">-->
+<!--                <a class="bg-twitter" href="#">-->
+<!--                    <i class="fa fa-twitter"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="chain-animation">-->
+<!--                <a class="bg-gplus" href="#">-->
+<!--                    <i class="fa fa-google-plus"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <div class="team-content">
         <h4 th:text="${name}">Tu Thi Hong Diep</h4>
@@ -432,7 +432,7 @@
                             <div class="widget-content">
                                 <div class="widgetized-menu">
                                     <ul class="list-unstyled">
-                                        <li><a th:href="@{/about.html.html}">About Us</a></li>
+                                        <li><a th:href="@{/about.html}">About Us</a></li>
                                         <li><a href="https://test.io/terms-of-service">Terms &amp; Conditions</a></li>
                                         <li><a th:href="@{/my-account.html}">My Account</a></li>
                                     </ul>
@@ -449,7 +449,7 @@
                                     <p><span>Address:</span>Nam Ky Khoi Nghia Street, Dinh Hoa, Thu Dau Mot City, Binh
                                         Duong</p>
                                     <p><span>Phone:</span><a href="tel:+84794002175">(+84) 794002175</a></p>
-                                    <p><span>Email:</span><a href="mailto:support@chroma.com">support@chroma.com</a></p>
+                                    <p><span>Email:</span><a href="mailto:chromashopservice@gmail.com">chromashopservice@gmail.com</a></p>
                                 </div>
                                 <!--                                <div class="newsletter-widget">-->
                                 <!--                                    <p>You may unsubscribe at any moment. For that purpose, please find our-->
@@ -471,35 +471,35 @@
                             </div> <!-- end of widget-content -->
                         </aside> <!-- end of widget-container -->
 
-                        <aside class="widget-container">
-                            <div class="widget-content">
-                                <div class="social-widget mt-half">
-                                    <div
-                                            class="socials d-flex align-items-center justify-content-center justify-content-md-start">
-                                        <ul class="list-inline">
-                                            <li class="list-inline-item"><a href="#" class="bg-facebook"
-                                                                            title="Facebook" target="_blank"><i
-                                                    class="fa fa-facebook"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" class="bg-twitter"
-                                                                            title="Twitter" target="_blank"><i
-                                                    class="fa fa-twitter"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" class="bg-gplus"
-                                                                            title="Google Plus" target="_blank"><i
-                                                    class="fa fa-google-plus"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" class="bg-pinterest"
-                                                                            title="Pinterest" target="_blank"><i
-                                                    class="fa fa-pinterest"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" class="bg-instagram"
-                                                                            title="Instagram" target="_blank"><i
-                                                    class="fa fa-instagram"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" class="bg-linkedin"
-                                                                            title="Linked In" target="_blank"><i
-                                                    class="fa fa-linkedin"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div> <!-- end of widget-content -->
-                        </aside> <!-- end of widget-container -->
+<!--                        <aside class="widget-container">-->
+<!--                            <div class="widget-content">-->
+<!--                                <div class="social-widget mt-half">-->
+<!--                                    <div-->
+<!--                                            class="socials d-flex align-items-center justify-content-center justify-content-md-start">-->
+<!--                                        <ul class="list-inline">-->
+<!--                                            <li class="list-inline-item"><a href="#" class="bg-facebook"-->
+<!--                                                                            title="Facebook" target="_blank"><i-->
+<!--                                                    class="fa fa-facebook"></i></a></li>-->
+<!--                                            <li class="list-inline-item"><a href="#" class="bg-twitter"-->
+<!--                                                                            title="Twitter" target="_blank"><i-->
+<!--                                                    class="fa fa-twitter"></i></a></li>-->
+<!--                                            <li class="list-inline-item"><a href="#" class="bg-gplus"-->
+<!--                                                                            title="Google Plus" target="_blank"><i-->
+<!--                                                    class="fa fa-google-plus"></i></a></li>-->
+<!--                                            <li class="list-inline-item"><a href="#" class="bg-pinterest"-->
+<!--                                                                            title="Pinterest" target="_blank"><i-->
+<!--                                                    class="fa fa-pinterest"></i></a></li>-->
+<!--                                            <li class="list-inline-item"><a href="#" class="bg-instagram"-->
+<!--                                                                            title="Instagram" target="_blank"><i-->
+<!--                                                    class="fa fa-instagram"></i></a></li>-->
+<!--                                            <li class="list-inline-item"><a href="#" class="bg-linkedin"-->
+<!--                                                                            title="Linked In" target="_blank"><i-->
+<!--                                                    class="fa fa-linkedin"></i></a></li>-->
+<!--                                        </ul>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div> &lt;!&ndash; end of widget-content &ndash;&gt;-->
+<!--                        </aside> &lt;!&ndash; end of widget-container &ndash;&gt;-->
                     </div>
                 </div> <!-- end of row -->
             </div> <!-- end of footer-inner -->
