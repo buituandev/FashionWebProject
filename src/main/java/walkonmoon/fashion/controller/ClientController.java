@@ -505,6 +505,9 @@ public class ClientController {
         if (currentUser == null) {
             return "redirect:/login.html?loginSuccess=false";
         }
+        if(currentUser.getType()==UserType.ADMIN || currentUser.getType()== UserType.SUPER_ADMIN){
+            return "redirect:/login.html?loginSuccess=not valid";
+        }
 
         String encryptedPassword = UserService.toSHA1(password);
 
