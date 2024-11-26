@@ -249,6 +249,20 @@
         }
     });
 
+    document.addEventListener("DOMContentLoaded", function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const loginSuccess = urlParams.get('loginSuccess');
+
+        // Check if the login was unsuccessful
+        if (loginSuccess === "not valid") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Admin should login in another site !!",
+            });
+        }
+    });
+
 </script>
 <script>
     function togglePassword() {
