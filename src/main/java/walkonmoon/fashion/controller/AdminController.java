@@ -64,6 +64,15 @@ public class AdminController {
 
     @GetMapping("/index.html")
     public String dashboard(Model model) {
+        int averageOrderPerDayOfMonth = statisticService.calculateOrderAverage();
+        model.addAttribute("averageOrderPerDayOfMonth", averageOrderPerDayOfMonth);
+        int totalRevenue = statisticService.calculateTotalRevenue();
+        model.addAttribute("totalRevenue", totalRevenue);
+        System.out.println("tRevenue " + totalRevenue);
+        int totalOrderPerMonth = statisticService.getTotalOrderPerMonth();
+        int totalPurchasedProductPerMonth = statisticService.getTotalPurchasedProductPerMonth();
+        model.addAttribute("totalOrderPerMonth", totalOrderPerMonth);
+        model.addAttribute("totalPurchasedProductPerMonth", totalPurchasedProductPerMonth);
         User user = (User) httpSession.getAttribute("admin");
         if(user == null){
             return "redirect:/admin/pages-login.html";
