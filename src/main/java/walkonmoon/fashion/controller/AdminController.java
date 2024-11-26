@@ -66,7 +66,6 @@ public class AdminController {
         System.out.println("tRevenue " + totalRevenue);
         int totalOrderPerMonth = statisticService.getTotalOrderPerMonth();
         int totalPurchasedProductPerMonth = statisticService.getTotalPurchasedProductPerMonth();
-
         model.addAttribute("totalOrderPerMonth", totalOrderPerMonth);
         model.addAttribute("totalPurchasedProductPerMonth", totalPurchasedProductPerMonth);
         return "admin/index";
