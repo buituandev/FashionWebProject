@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th = "http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 
 <!-- Mirrored from eliteadmin.themedesigner.in/demos/bt4/ecommerce/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Sep 2024 06:05:48 GMT -->
-<head th:replace = "~{admin/admin_layout :: head}"></head>
+<head th:replace="~{admin/admin_layout :: head}"></head>
 
 <head th:replace="~{admin/admin_layout :: cssIndex}"></head>
 
 <body class="skin-default fixed-layout">
+<link href="/assets/node_modules/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
 <!-- ============================================================== -->
 <!-- Preloader - style you can find in spinners.css -->
 <!-- ============================================================== -->
@@ -44,13 +45,12 @@
             <!-- ============================================================== -->
             <div class="row page-titles">
                 <div class="col-md-5 align-self-center">
-                    <h4 class="text-themecolor">Dashboard</h4>
+                    <h4 class="text-themecolor" style="font-weight: 600">Dashboard</h4>
                 </div>
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item active" style="color: rgb(228, 106, 118)">Dashboard</li>
                         </ol>
                         <!-- <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><i class="fa fa-plus-circle"></i> Create New</button> -->
                     </div>
@@ -63,10 +63,49 @@
             <!-- Info box Content -->
             <!-- ============================================================== -->
             <div th:replace="~{admin/admin_layout :: card}"></div>
-<!--            <div th:replace="admin/admin_layout :: charts"></div>-->
+            <!--            <div th:replace="admin/admin_layout :: charts"></div>-->
             <!-- ============================================================== -->
             <!-- End PAge Content -->
             <!-- ============================================================== -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Orders</h4>
+                    <table data-bs-toggle="table" data-height="280" data-mobile-responsive="true"
+                           data-sort-order="desc" class="table">
+                        <thead>
+                        <tr>
+                            <th data-sortable="true">Order ID</th>
+                            <th data-sortable="true">Customer</th>
+                            <th data-sortable="true">Order Date</th>
+                            <th style="text-align: right" data-sortable="true">Total Price</th>
+                            <th data-sortable="true">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="order : ${orderList}"
+                            th:onclick="|window.location.href='/admin/eco-order-detail/' + ${order.getId()}|"
+                            style="cursor: pointer">
+                            <td th:text="${order.getId()}" style="text-align: center"></td>
+                            <td th:text="${userName[order.getUserID()]}"></td>
+                            <td th:text="${order.getOrder_date()}"></td>
+                            <td th:text="${order.getTotal_price()}" class="formatted-price"
+                                style="text-align: right"></td>
+                            <td th:if="${order.getStatus().name() == 'PENDING'}">
+                                <span class="label label-info">Pending</span>
+                            </td>
+                            <td th:if="${order.getStatus().name() == 'SHIPPING'}">
+                                <span class="label label-primary">Shipping</span>
+                            </td>
+                            <td th:if="${order.getStatus().name() == 'DELIVERED'}">
+                                <span class="label label-success">Delivered</span>
+                            </td>
+                            <td th:if="${order.getStatus().name() == 'CANCELLED'}">
+                                <span class="label label-danger">Cancelled</span>
+                            </td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <!-- ============================================================== -->
             <!-- Right sidebar -->
             <!-- ============================================================== -->
@@ -103,6 +142,15 @@
 <!-- This page plugins -->
 <!-- ============================================================== -->
 <div th:replace="~{admin/admin_layout :: jsIndex}"></div>
+<script src="/assets/dist/js/waves.js"></script>
+<!--Menu sidebar -->
+<script src="/assets/dist/js/sidebarmenu.js"></script>
+<script src="/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/dist/js/perfect-scrollbar.jquery.min.js"></script>
+<script src="/assets/node_modules/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script src="/assets/node_modules/bootstrap-table/dist/bootstrap-table-locale-all.min.js"></script>
+<script src="/assets/node_modules/bootstrap-table/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="/assets/dist/js/pages/bootstrap-table.init.js"></script>
 </body>
 
 

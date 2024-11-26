@@ -164,14 +164,14 @@
                                             <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Email</label>
                                                 <input type="text" id="lastName" th:field="*{email}"
-                                                       class="form-control"></div>
+                                                       class="form-control" readonly></div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Full Name</label>
                                                 <input type="text" id="firstName" th:field="*{full_name}"
-                                                       class="form-control">
+                                                       class="form-control" readonly>
                                                 <input type="hidden" th:field="*{id}"/>
                                             </div>
                                         </div>
@@ -184,7 +184,7 @@
                                             <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Gender</label>
                                                 <select th:field="*{gender}" class="form-control category-select"
-                                                        tabindex="1">
+                                                        tabindex="1" readonly>
                                                     <option th:text="'Male'"
                                                             th:selected="${admin.getGender() == null}"
                                                             th:value="Male">
@@ -228,7 +228,7 @@
                                                 <label class="form-label" style="font-weight: 600">Phone
                                                     Number</label>
                                                 <input type="number" id="phoneNumber" th:field="*{phone_number}"
-                                                       class="form-control">
+                                                       class="form-control" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -240,7 +240,7 @@
                                                 </div>
                                                 <input type="date" class="form-control" th:field="*{dob}"
                                                        placeholder="Discount" aria-label="Discount"
-                                                       aria-describedby="basic-addon2">
+                                                       aria-describedby="basic-addon2" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -254,7 +254,7 @@
                                                 <label class="form-label" style="font-weight: 600">Address</label>
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" th:field="*{address}"
-                                                           aria-describedby="basic-addon1">
+                                                           aria-describedby="basic-addon1" readonly>
                                                 </div>
                                             </div>
                                         </div>

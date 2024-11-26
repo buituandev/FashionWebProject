@@ -71,6 +71,15 @@ public class AdminController {
         System.out.println("tRevenue " + totalRevenue);
         int totalOrderPerMonth = statisticService.getTotalOrderPerMonth();
         int totalPurchasedProductPerMonth = statisticService.getTotalPurchasedProductPerMonth();
+      
+        List<Order> orders = orderService.getOrderList();
+        Map<Integer, String> userName = new HashMap<>();
+        for (User user : userService.getListUser()) {
+            userName.put(user.getId(), user.getFull_name());
+        }
+        model.addAttribute("userName", userName);
+        model.addAttribute("orderList", orders);
+
         model.addAttribute("totalOrderPerMonth", totalOrderPerMonth);
         model.addAttribute("totalPurchasedProductPerMonth", totalPurchasedProductPerMonth);
         User user = (User) httpSession.getAttribute("admin");
@@ -601,7 +610,7 @@ public class AdminController {
         }
         model.addAttribute("user", user);
         User admin = userService.findUserById(id);
-         model.addAttribute("admin", admin);
+        model.addAttribute("admin", admin);
          return "/admin/user-form";
     }
 

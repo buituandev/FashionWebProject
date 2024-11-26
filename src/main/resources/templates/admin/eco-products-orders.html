@@ -97,7 +97,7 @@
                 <div class="card-body">
                     <!--                    <h4 class="card-title">Orders</h4>-->
                     <h6 class="card-subtitle"></h6>
-                    <div class="table-responsive m-t-40">
+                    <div class="table-responsive m-t-10">
                         <table id="myTable" class="table table-striped border">
                             <thead>
                             <tr>
@@ -116,7 +116,7 @@
                                 <td th:text="${order.getId()}" style="text-align: center"></td>
                                 <td th:text="${userName[order.getUserID()]}"></td>
                                 <td th:text="${order.getOrder_date()}"></td>
-                                <td th:text="${order.getTotal_price()}" style="text-align: right"></td>
+                                <td th:text="${order.getTotal_price()}" class="formatted-price" style="text-align: right"></td>
                                 <td th:text="${order.getNote()}"></td>
                                 <td th:text="${order.getPhoneNumber()}"></td>
 <!--                                <td th:text="${order.getStatus()}" th:if="${order.getStatus().name() == 'PENDING'}"-->
@@ -141,10 +141,9 @@
                                     </select>
                                 </td>
 
-                                <td style="text-align: center; padding-top:10px" th:onclick="|event.stopPropagation(); updateOrderStatus(${order.getId()})|">
-<!--                                    <i class="ti-reload" style="cursor: pointer; color: orange; font-size: 15px"-->
-<!--                                       title="Update Status"></i>-->
-                                    <button type="button" class="btn btn-primary"><i class="ti-reload"></i></button>
+                                <td style="text-align: center; padding-top: 18px" th:onclick="|event.stopPropagation(); updateOrderStatus(${order.getId()})|">
+                                    <i class="ti-reload" style="cursor: pointer; color: orange; font-size: 15px"
+                                       title="Update Status"></i>
                                 </td>
                             </tr>
                             </tbody>
@@ -202,6 +201,7 @@
 <script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
 <script src="/assets/cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/assets/js/FormatPrice.js"></script>
 <!-- end - This is for export functionality only -->
 <script>
     $(function () {

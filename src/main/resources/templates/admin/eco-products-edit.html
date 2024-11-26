@@ -126,12 +126,10 @@
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{'/admin/eco-products.html'}">Products</a></li>
                             <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a href="eco-products-edit.html" style="color: rgb(228, 106, 118)">Create Product</a></li>
                             <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Products edit</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a href="eco-products-edit.html" style="color: white"><i
-                                class="fa fa-plus-circle"></i> Create New</a>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -153,18 +151,18 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Product Name</label>
+                                                <label class="form-label" style="font-weight: 600">Product Name<span style="color: darkred">*</span></label>
                                                 <input type="text" id="firstName" th:field="*{product_name}"
-                                                       class="form-control">
+                                                       class="form-control" required>
                                                 <input type="hidden" th:field="*{id}"/>
                                             </div>
                                         </div>
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Short Description</label>
+                                                <label class="form-label" style="font-weight: 600">Short Description<span style="color: darkred">*</span></label>
                                                 <input type="text" id="lastName" th:field="*{short_description}"
-                                                       class="form-control"></div>
+                                                       class="form-control" required></div>
                                         </div>
                                         <!--/span-->
                                     </div>
@@ -173,7 +171,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Category</label>
+                                                <label class="form-label" style="font-weight: 600">Category<span style="color: darkred">*</span></label>
                                                 <select th:field="*{categoryId}" class="form-control category-select" tabindex="1">
                                                     <option th:each="category : ${categories}"
                                                             th:text="${category.getName()}"
@@ -205,11 +203,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Price</label>
+                                                <label class="form-label" style="font-weight: 600">Price<span style="color: darkred">*</span></label>
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" th:field="*{price}"
-                                                           placeholder="price" aria-label="price"
-                                                           aria-describedby="basic-addon1">
+                                                    <input type="number" class="form-control" th:field="*{price}" required>
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1" style="font-size: 16px">VND</span>
                                                     </div>
@@ -219,24 +215,22 @@
                                         <!--/span-->
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Stock</label>
+                                                <label class="form-label" style="font-weight: 600">Stock<span style="color: darkred">*</span></label>
                                                 <div class="input-group mb-3">
                                                     <div class="input-group-prepend">
                                                     </div>
-                                                    <input type="number" class="form-control" th:field="*{stock}"
-                                                           placeholder="Discount" aria-label="Discount"
-                                                           aria-describedby="basic-addon2">
+                                                    <input type="number" class="form-control" th:field="*{stock}" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--/span-->
                                     </div>
-                                    <h5 class="card-title m-t-40" style="font-weight: 600">Product Description</h5>
+                                    <h5 class="card-title m-t-40" style="font-weight: 600">Product Description<span style="color: darkred">*</span></h5>
                                     <div class="row">
                                         <div class="col-md-12 ">
                                             <div class="form-group">
                                                 <textarea class="form-control" th:field="*{long_description}"
-                                                          rows="4"></textarea>
+                                                          rows="4" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +238,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group" style="font-weight: 600">
-                                                <label class="form-label">SKU</label>
+                                                <label class="form-label">SKU <span style="color: darkred">(Optional)</span></label>
                                                 <input type="text" th:field="*{SKU}" class="form-control"></div>
                                         </div>
                                         <!--/span-->
@@ -375,7 +369,7 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<div th:replace="admin/admin_layout :: jscript"></div>
+<div th:replace="~{admin/admin_layout :: jscript}"></div>
 <!-- ============================================================== -->
 <!-- This page plugins -->
 <!-- ============================================================== -->

@@ -136,15 +136,10 @@
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
                             <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a
-                                    href="eco-products-edit.html" style="color: rgb(228, 106, 118)">Create Blog</a>
-                            </li>
+                            <li class="breadcrumb-item active"><a th:href="@{'/admin/blog-form.html'}">Blog</a></li>
+                            <li class="breadcrumb-item active" th:if="${mode == 'create'}" style="color: rgb(228, 106, 118)">Create Blog</li>
                             <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Edit Blog</li>
                         </ol>
-                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a
-                                href="blog-form.html" style="color: white"><i
-                                class="fa fa-plus-circle" th:if="${mode == 'create'}"></i> Create New</a>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -166,9 +161,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Title</label>
+                                                <label class="form-label" style="font-weight: 600">Title<span style="color: darkred">*</span></label>
                                                 <input type="text" id="firstName" th:field="*{title}"
-                                                       class="form-control">
+                                                       class="form-control" required>
                                                 <input type="hidden" th:field="*{id}"/>
                                             </div>
                                         </div>
@@ -178,16 +173,16 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-label" style="font-weight: 600">Short
-                                                    Description</label>
+                                                    Description<span style="color: darkred">*</span></label>
                                                 <input type="text" id="lastName" th:field="*{shortDescription}"
-                                                       class="form-control"></div>
+                                                       class="form-control" required></div>
                                         </div>
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Author</label>
+                                                <label class="form-label" style="font-weight: 600">Author<span style="color: darkred">*</span></label>
                                                 <input type="text" th:field="*{author}"
-                                                       class="form-control"></div>
+                                                       class="form-control" required></div>
                                         </div>
                                     </div>
                                     <!--/row-->
@@ -195,9 +190,9 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="form-label" style="font-weight: 600">Content</label>
+                                                <label class="form-label" style="font-weight: 600">Content<span style="color: darkred">*</span></label>
                                                 <textarea class="form-control" name="content" id="content"
-                                                            rows="4" ></textarea>
+                                                            rows="4" required></textarea>
                                                 <div class="content" th:utext="${content}" hidden="hidden"></div>
                                             </div>
                                         </div>
@@ -245,7 +240,7 @@
                                                     class="fa fa-check"></i> Save
                                             </button>
                                             <button type="button" class="btn btn-dark"><a
-                                                    th:href="@{'/admin/eco-products.html'}"
+                                                    th:href="@{'/admin/blog-admin.html'}"
                                                     style="color: white">Cancel</a>
                                             </button>
                                         </div>
