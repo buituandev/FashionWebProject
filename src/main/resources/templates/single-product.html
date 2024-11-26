@@ -133,7 +133,8 @@
                                                     <p style="color: red">Out of Stock</p>
                                                 </div>
                                                 <div th:if="${product.getStock() > 0}">
-                                                    <p th:text="'There are ' + ${product.getStock()} + ' products left'">In Stock</p>
+                                                    <p th:text="'There are ' + ${product.getStock()} + ' products left'">
+                                                        In Stock</p>
                                                 </div>
                                                 <div class="product-stock">
 
@@ -150,7 +151,7 @@
                                                         </li>
                                                         <li>
                                                             <button type="button" class="default-btn btn-cart"
-                                                                    th:onclick="'addToCart(' + ${product.id} + ', ' + document.getElementById('quantity-input').value + ')'"
+                                                                    th:onclick="'addToCart(' + ${product.id} + ', document.getElementById(\'quantity-input'+ '\').value)'"
                                                                     th:text="${product.getStock() > 0 && ProductService.getProductById(product.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) != 0 ? 'Add to Cart' : 'Unavailable'}"
                                                                     th:disabled="${product.getStock() == 0 || ProductService.getProductById(product.id).status.compareTo(T(walkonmoon.fashion.model.ProductStatus).DISABLE) == 0}">
                                                             </button>
