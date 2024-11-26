@@ -105,30 +105,58 @@ public class ClientController {
 
 
 //    @GetMapping("/shop-grid/{categoryId}")
-//    public String filterShopGrid(@PathVariable int categoryId, @RequestParam(defaultValue = "1") int page, Model model, HttpServletRequest request, HttpSession session) {
+//    public String filterShopGrid(
+//            @PathVariable int categoryId,
+//            @RequestParam(defaultValue = "1") int page,
+//            @RequestParam(required = false) Integer minPrice,
+//            @RequestParam(required = false) Integer maxPrice,
+//            Model model,
+//            HttpServletRequest request,
+//            HttpSession session) {
+//
 //        mainAction(request, model, session);
 //
-//        List<Product> filteredProduct = productService.findByCategoryId(categoryId);
-//        model.addAttribute("products", filteredProduct);
-//        setModelCategoryList(model);
+//        // Filter products by category
+//        List<Product> filteredProducts;
+//        if (categoryId == 0) {
+//            filteredProducts = filterNotDeletedProducts();
+//        } else {
+//            filteredProducts = productService.findByCategoryId(categoryId);
+//        }
+//
+//        // Further filter by price range if specified
+//        if (minPrice != null && maxPrice != null) {
+//            filteredProducts = filteredProducts.stream()
+//                    .filter(product -> product.getPrice() >= minPrice && product.getPrice() <= maxPrice)
+//                    .collect(Collectors.toList());
+//        }
+//
 //        // Pagination logic
 //        int pageSize = 8;
-//        int totalProducts = filteredProduct.size();
+//        int totalProducts = filteredProducts.size();
 //        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+//
 //        int start = (page - 1) * pageSize;
 //        int end = Math.min(start + pageSize, totalProducts);
 //
-//        List<Product> paginatedProducts = filteredProduct.subList(start, end);
+//        List<Product> paginatedProducts = filteredProducts.subList(start, end);
+//
+//        // Add attributes to the model
 //        model.addAttribute("products", paginatedProducts);
 //        model.addAttribute("currentPage", page);
 //        model.addAttribute("totalPages", totalPages);
+//        model.addAttribute("totalProducts", totalProducts);
 //        model.addAttribute("selectedCategoryId", categoryId);
+//        model.addAttribute("minPrice", minPrice);
+//        model.addAttribute("maxPrice", maxPrice);
+//
+//        setModelCategoryList(model);
 //        return "shop-grid";
 //    }
 
     @GetMapping("/shop-grid/{categoryId}")
     public String filterShopGrid(
-            @PathVariable int categoryId,
+            @PathVariable Integer categoryId,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(required = false) Integer minPrice,
             @RequestParam(required = false) Integer maxPrice,
@@ -136,32 +164,54 @@ public class ClientController {
             HttpServletRequest request,
             HttpSession session) {
 
+        // Main action logic (presumably setting some common attributes or session data)
         mainAction(request, model, session);
 
-        // Filter products by category
+        // Default values if null
+        if (categoryId == null) {
+            categoryId = 0; // 0 represents "All categories"
+        }
+        if (minPrice == null) {
+            minPrice = 0; // Default minimum price
+        }
+        if (maxPrice == null) {
+            maxPrice = Integer.MAX_VALUE; // Default maximum price
+        }
+
+        // Fetch and filter products by category
         List<Product> filteredProducts;
         if (categoryId == 0) {
+            // Get all products that are not deleted
             filteredProducts = filterNotDeletedProducts();
         } else {
+            // Get products for the specific category
             filteredProducts = productService.findByCategoryId(categoryId);
         }
 
-        // Further filter by price range if specified
-        if (minPrice != null && maxPrice != null) {
-            filteredProducts = filteredProducts.stream()
-                    .filter(product -> product.getPrice() >= minPrice && product.getPrice() <= maxPrice)
-                    .collect(Collectors.toList());
-        }
+        // Further filter products by price range
+        Integer finalMinPrice = minPrice;
+        Integer finalMaxPrice = maxPrice;
+        filteredProducts = filteredProducts.stream()
+                .filter(product -> product.getPrice() >= finalMinPrice && product.getPrice() <= finalMaxPrice)
+                .collect(Collectors.toList());
 
         // Pagination logic
         int pageSize = 8;
         int totalProducts = filteredProducts.size();
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
 
+        // Validate page number and calculate sublist boundaries
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > totalPages) {
+            page = totalPages;
+        }
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, totalProducts);
 
-        List<Product> paginatedProducts = filteredProducts.subList(start, end);
+        // Get paginated products
+        List<Product> paginatedProducts = totalProducts > 0 ? filteredProducts.subList(start, end) : List.of();
 
         // Add attributes to the model
         model.addAttribute("products", paginatedProducts);
@@ -172,9 +222,12 @@ public class ClientController {
         model.addAttribute("minPrice", minPrice);
         model.addAttribute("maxPrice", maxPrice);
 
+        // Set the category list in the model
         setModelCategoryList(model);
+
         return "shop-grid";
     }
+
 
 
     @GetMapping("/single-product/{id}")
@@ -451,6 +504,9 @@ public class ClientController {
 
         if (currentUser == null) {
             return "redirect:/login.html?loginSuccess=false";
+        }
+        if(currentUser.getType()==UserType.ADMIN || currentUser.getType()== UserType.SUPER_ADMIN){
+            return "redirect:/login.html?loginSuccess=not valid";
         }
 
         String encryptedPassword = UserService.toSHA1(password);

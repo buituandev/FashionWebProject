@@ -71,7 +71,7 @@ public class AdminController {
         System.out.println("tRevenue " + totalRevenue);
         int totalOrderPerMonth = statisticService.getTotalOrderPerMonth();
         int totalPurchasedProductPerMonth = statisticService.getTotalPurchasedProductPerMonth();
-
+      
         List<Order> orders = orderService.getOrderList();
         Map<Integer, String> userName = new HashMap<>();
         for (User user : userService.getListUser()) {
