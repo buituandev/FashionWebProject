@@ -96,7 +96,6 @@
             <div class="card">
                 <div class="card-body">
                     <!--                    <h4 class="card-title">Orders</h4>-->
-                    <h6 class="card-subtitle"></h6>
                     <div class="table-responsive m-t-10">
                         <table id="myTable" class="table table-striped border">
                             <thead>
@@ -115,10 +114,10 @@
                             <tr th:each="order : ${orderList}" th:onclick="|window.location.href='/admin/eco-order-detail/' + ${order.getId()}|" style="cursor: pointer">
                                 <td th:text="${order.getId()}" style="text-align: center"></td>
                                 <td th:text="${userName[order.getUserID()]}"></td>
-                                <td th:text="${order.getOrder_date()}"></td>
+                                <td th:text="${order.getOrder_date().getDate() + '-' + order.getOrder_date().getMonth() + '-' + (order.getOrder_date().getYear() + 1900)}"></td>
                                 <td th:text="${order.getTotal_price()}" class="formatted-price" style="text-align: right"></td>
                                 <td th:text="${order.getNote()}"></td>
-                                <td th:text="${order.getPhoneNumber()}"></td>
+                                <td th:text="${order.getPhoneNumber()}" style="text-align: right"></td>
 <!--                                <td th:text="${order.getStatus()}" th:if="${order.getStatus().name() == 'PENDING'}"-->
 <!--                                    style="color: #0a58ca; font-weight: bold; font-style: italic"></td>-->
 <!--                                <td th:text="${order.getStatus()}" th:if="${order.getStatus().name() == 'SHIPPING'}"-->
@@ -151,6 +150,7 @@
                     </div>
                 </div>
             </div>
+
 
             <!-- ============================================================== -->
             <!-- End PAge Content -->

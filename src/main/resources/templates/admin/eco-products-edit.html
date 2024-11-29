@@ -7,6 +7,7 @@
 </head>
 
 <body class="skin-default fixed-layout">
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@4.0.15/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 <style>
     .category-select {
         appearance: none; /* Remove default arrow */
@@ -229,7 +230,7 @@
                                     <div class="row">
                                         <div class="col-md-12 ">
                                             <div class="form-group">
-                                                <textarea class="form-control" th:field="*{long_description}"
+                                                <textarea class="form-control" name="content" id="content" th:field="*{long_description}"
                                                           rows="4" required></textarea>
                                             </div>
                                         </div>
@@ -374,6 +375,7 @@
 <!-- This page plugins -->
 <!-- ============================================================== -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/froala-editor@4.0.15/js/froala_editor.pkgd.min.js"></script>
 <script>
     const container = document.getElementById('image-preview-wrapper');
     const input = document.getElementById('files');
@@ -539,6 +541,16 @@
             mainImageContainer.appendChild(imgContainer); // Display main image in container
         }
     });
+</script>
+<script>
+    var froala = new FroalaEditor('#content', {
+        toolbarButtons: [
+            'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript',
+            'fontFamily', 'fontSize', 'color', 'paragraphFormat', 'align', 'formatOL',
+            'formatUL', 'outdent', 'indent', 'quote', 'insertLink', 'undo',
+            'redo', 'html', 'fullscreen'
+        ],
+    }); // Initialize Froala Editor for content area
 </script>
 
 </body>

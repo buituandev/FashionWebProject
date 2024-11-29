@@ -130,6 +130,7 @@ public class AdminController {
         for (User user : userService.getListUser()) {
             userName.put(user.getId(), user.getFull_name());
         }
+
         model.addAttribute("userName", userName);
         model.addAttribute("orderList", orders);
         return "admin/eco-products-orders";
@@ -152,6 +153,25 @@ public class AdminController {
         model.addAttribute("orderItems", orderdetail);
         return "admin/eco-order-detail";
     }
+
+    @GetMapping("/eco-order-detail-modal/{id}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> getOrderDetailForModal(@PathVariable("id") Integer id) {
+        // Fetch order details and products by order ID
+        List<OrderDetail> orderdetail = orderDetailService.getOrderDetailByOrderID(id);
+        List<Product> products = new ArrayList<>();
+        for (OrderDetail orderDetail : orderdetail) {
+            Product product = productService.getProductById(orderDetail.getProductID());
+            products.add(product);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("orderItems", orderdetail);
+        response.put("productList", products);
+
+        return ResponseEntity.ok(response);
+    }
+
 
     @PostMapping("/update-order-status/{id}")
     @ResponseBody
