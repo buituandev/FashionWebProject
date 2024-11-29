@@ -365,16 +365,10 @@ public class ClientController {
         User sessionUser = (User) session.getAttribute("user");
 
         if (sessionUser != null) {
-            if (user.getFull_name() != null && !user.getFull_name().isEmpty() && !user.getFull_name().equals(sessionUser.getFull_name())) {
-                sessionUser.setFull_name(user.getFull_name());
+            if (sessionUser.getAddress() == null || sessionUser.getAddress().isEmpty()) {
+                sessionUser.setAddress(orderAddress);
             }
-            if (user.getEmail() != null && !user.getEmail().isEmpty() && !user.getEmail().equals(sessionUser.getEmail())) {
-                sessionUser.setEmail(user.getEmail());
-            }
-            if (user.getAddress() != null && !user.getAddress().isEmpty() && !user.getAddress().equals(sessionUser.getAddress())) {
-                sessionUser.setAddress(user.getAddress());
-            }
-            if (user.getPhone_number() != null && !user.getPhone_number().isEmpty() && !user.getPhone_number().equals(sessionUser.getPhone_number())) {
+            if (sessionUser.getPhone_number() == null || sessionUser.getPhone_number().isEmpty()) {
                 sessionUser.setPhone_number(user.getPhone_number());
             }
             userService.saveUser(sessionUser);

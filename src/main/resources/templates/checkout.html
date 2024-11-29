@@ -3,7 +3,23 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout::head('Chroma - Checkout')}">
 </head>
+<style>
+    .dropdown-wrapper {
+        position: relative;
+    }
 
+    .dropdown-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .select-open .dropdown-icon {
+        transform: translateY(-50%) rotate(180deg);
+    }
+</style>
 <body>
 
 <!--[if lt IE 9]>
@@ -70,10 +86,43 @@
                                                 </div>
                                                 <div class="form-row mb-3">
                                                     <div class="form-group col-12 col-sm-12 col-md-6">
+                                                        <label for="province">Province <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="dropdown-wrapper">
+                                                            <select name="ls_province" id="province"
+                                                                    class="form-control" required></select>
+                                                            <span class="dropdown-icon"
+                                                                  id="province-icon">&#9660;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 col-sm-12 col-md-6">
+                                                        <label for="district">District <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="dropdown-wrapper">
+                                                            <select name="ls_district" id="district"
+                                                                    class="form-control" required></select>
+                                                            <span class="dropdown-icon"
+                                                                  id="district-icon">&#9660;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-12 col-sm-12 col-md-6">
+                                                        <label for="ward">Ward <span
+                                                                class="text-danger">*</span></label>
+                                                        <div class="dropdown-wrapper">
+                                                            <select name="ls_ward" id="ward"
+                                                                    class="form-control" required></select>
+                                                            <span class="dropdown-icon" id="ward-icon">&#9660;</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mb-3">
+                                                    <div class="form-group col-12 col-sm-12 col-md-6">
                                                         <label for="p_address">Address <span
                                                                 class="text-danger">*</span></label>
-                                                        <input th:field="*{address}" type="text" class="form-control"
+                                                        <input type="text" class="form-control"
                                                                id="p_address" required>
+                                                        <div id="user-address-hidden" style="visibility: hidden"
+                                                             th:text="${user.address}"></div>
                                                     </div>
                                                     <div class="form-group col-12 col-sm-12 col-md-6">
                                                         <label for="city_name">Phone Number <span
@@ -249,47 +298,147 @@
 <script src="/assets/js/FormatPrice.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script src="/assets/js/toast.js"></script>
+<script src="/assets/js/vietnamlocalselector.js"></script>
 <script>
     document.querySelector('form').addEventListener('submit', function (event) {
-    event.preventDefault();
+        event.preventDefault();
 
-    const form = event.target;
-    const submitButton = form.querySelector('input[type="submit"]');
-    submitButton.disabled = true;
+        const form = event.target;
+        const submitButton = form.querySelector('input[type="submit"]');
+        submitButton.disabled = true;
 
-    const formData = new FormData(form);
+        const formData = new FormData(form);
+        let address = document.getElementById('p_address').value;
+        let province = document.getElementById('province').selectedOptions[0].text;
+        let district = document.getElementById('district').selectedOptions[0].text;
+        let ward = document.getElementById('ward').selectedOptions[0].text;
+        // Sanitize address with "/" character
+        address = address.replace(/\//g, '');
+        //Combine address, province, district, ward with /
+        address = address + '/' + ward + '/' + district + '/' + province;
 
-    formData.append('order_note', document.getElementById('order_notes').value);
-    formData.append('order_phone_number', document.getElementById('city_name').value);
-    formData.append('order_address', document.getElementById('p_address').value);
-    formData.append('order_email', document.getElementById('email_input').value);
+        formData.append('order_note', document.getElementById('order_notes').value);
+        formData.append('order_phone_number', document.getElementById('city_name').value);
+        formData.append('order_address', address);
+        formData.append('order_email', document.getElementById('email_input').value);
 
-    fetch('/checkout', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 400) {
-                    toast("error", 'Some items are out of stock. Please review your cart.');
-                } else {
-                    toast("error", 'An error occurred. Please try again.');
+        fetch('/checkout', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    if (response.status === 400) {
+                        toast("error", 'Some items are out of stock. Please review your cart.');
+                    } else {
+                        toast("error", 'An error occurred. Please try again.');
+                    }
+                    throw new Error('Server response was not ok.');
                 }
-                throw new Error('Server response was not ok.');
-            }
-            return response.text();
-        })
-        .then(data => {
-            toast("success", 'Order placed successfully!');
-            setTimeout(() => {
-                window.location.href = '/my-account.html#order-history';
-            }, 2000);
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-            submitButton.disabled = false;
-        });
+                return response.text();
+            })
+            .then(data => {
+                toast("success", 'Order placed successfully!');
+                setTimeout(() => {
+                    window.location.href = '/my-account.html#order-history';
+                }, 2000);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                submitButton.disabled = false;
+            });
+    });
+</script>
+
+<script>
+    document.querySelectorAll('.dropdown-wrapper select').forEach(select => {
+    select.addEventListener('click', function () {
+        this.parentElement.classList.toggle('select-open');
+    });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    let hiddenAddress = document.getElementById('user-address-hidden').textContent;
+    if (hiddenAddress !== '') {
+        let address = hiddenAddress.split('/');
+        document.getElementById('p_address').value = address[0];
+
+        setTimeout(() => {
+            setSelectOptionByText('province', address[3]);
+            document.getElementById('province').dispatchEvent(new Event('change'));
+
+            setTimeout(() => {
+                setSelectOptionByText('district', address[2]);
+                document.getElementById('district').dispatchEvent(new Event('change'));
+
+                setTimeout(() => {
+                    setSelectOptionByText('ward', address[1]);
+                }, 100);
+            }, 100);
+        }, 100);
+    }
+});
+
+function setSelectOptionByText(selectId, text) {
+    let selectElement = document.getElementById(selectId);
+    for (let option of selectElement.options) {
+        if (option.text === text) {
+            option.selected = true;
+            break;
+        }
+    }
+}
+
+    let localpicker = new LocalPicker({
+        province: "ls_province",
+        district: "ls_district",
+        ward: "ls_ward"
+    });
+    let options = {
+        /*
+          HTML Selector. You can pass value of name, id or class.
+          It will automatically detect exist elements for you.
+          Example: 'myIdOrClass','#myId', '.myClass', 'myName'
+          */
+        province: 'ls_province',
+        district: 'ls_district',
+        ward: 'ls_ward',
+
+        /*
+        Define value for option tag. Valid option: id|name
+        */
+        getValueBy: 'id',
+
+        //Placeholder text
+        provinceText: 'Chọn tỉnh / thành phố',
+        districtText: 'Chọn quận / huyện',
+        districtNoText: 'Địa phương này không có quận / huyện',
+        wardText: 'Chọn phường / xã',
+        wardNoText: 'Địa phương này không có phường / xã',
+
+        // Default value if no location exist
+        emptyValue: " ",
+
+        // Hide option where no local exist
+        hideEmptyValueOption: true,
+
+        // Hide place-holder option (first option)
+        hidePlaceHolderOption: true,
+
+        /*
+        Include local level on option text as prefix
+        Example: true = Quận Bình Thạnh | false = Bình Thạnh
+        */
+        provincePrefix: false,
+        districtPrefix: true,
+        wardPrefix: true,
+
+        /*
+        Include local level in option tag's attribute
+        */
+        levelAsAttribute: true,
+        levelAttributeName: "data-level",
+    };
 </script>
 </body>
 </html>
