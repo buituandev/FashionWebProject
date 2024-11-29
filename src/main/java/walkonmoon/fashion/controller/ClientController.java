@@ -174,7 +174,7 @@ public class ClientController {
         if (minPrice == null) {
             minPrice = 0; // Default minimum price
         }
-        if (maxPrice == null) {
+        if (maxPrice == null||maxPrice==0) {
             maxPrice = Integer.MAX_VALUE; // Default maximum price
         }
 
@@ -220,6 +220,9 @@ public class ClientController {
         model.addAttribute("totalProducts", totalProducts);
         model.addAttribute("selectedCategoryId", categoryId);
         model.addAttribute("minPrice", minPrice);
+        if(maxPrice==Integer.MAX_VALUE){
+            maxPrice=0;
+        }
         model.addAttribute("maxPrice", maxPrice);
 
         // Set the category list in the model
