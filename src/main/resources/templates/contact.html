@@ -84,22 +84,22 @@
                                 <form th:action="@{/sending-contact}" method="post">
                                     <div class="form-row mb-2">
                                         <div class="form-group col-12 col-sm-12 col-md-6">
-                                            <label for="com-name">Your Name *</label>
+                                            <label for="com-name">Your Name <span style="color: #cc2121">*</span></label>
                                             <input type="text"
                                                    name="name"
                                                    class="form-control"
                                                    id="com-name"
-                                                   placeholder="Your Name *"
+                                                   placeholder="Your Name"
                                                    th:value="${user != null ? user.getFull_name() : ''}"
                                                    required>
                                         </div>
                                         <div class="form-group col-12 col-sm-12 col-md-6">
-                                            <label for="com-email">Your Email *</label>
+                                            <label for="com-email">Your Email <span style="color: #cc2121">*</span></label>
                                             <input type="email"
                                                    name="email"
                                                    class="form-control"
                                                    id="com-email"
-                                                   placeholder="Your Email *"
+                                                   placeholder="Your Email"
                                                    th:value="${user != null ? user.getEmail() : ''}"
                                                    required>
                                         </div>
@@ -116,11 +116,11 @@
                                     </div>
                                     <div class="form-row mb-2">
                                         <div class="form-group col-12">
-                                            <label for="comment">Type Your Message.....</label>
+                                            <label for="comment">Type Your Message <span style="color: #cc2121">*</span></label>
                                             <textarea id="comment"
                                                       name="message"
                                                       class="form-control"
-                                                      placeholder="Type Your Message....."
+                                                      placeholder="Type Your Message"
                                                       required></textarea>
                                         </div>
                                     </div>
