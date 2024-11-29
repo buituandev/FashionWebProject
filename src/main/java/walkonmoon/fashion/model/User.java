@@ -32,7 +32,7 @@ public class User implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column
     private Date dob;
-    @Column(nullable = true)
+    @Column(name = "address", length = 1000000, nullable = true)
     private String address;
     @Column
     private String phone_number;

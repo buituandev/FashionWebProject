@@ -26,7 +26,7 @@ public class Order {
     private String note;
     @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name = "address")
+    @Column(name = "address", length = 1000000)
     private String address;
     @Convert(converter = walkonmoon.fashion.model.OrderStatusConverter.class)
     @Column(name = "status")
