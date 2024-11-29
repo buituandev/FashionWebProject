@@ -80,7 +80,7 @@
                                                     details</a></li>
                                                 <li><a class="nav-link" data-bs-toggle="tab" href="#order-history">Order
                                                     History</a></li>
-                                                <li><a class="nav-link" data-bs-toggle="tab" href="#change-password">Change Password</a></li>
+<!--                                                <li><a class="nav-link" data-bs-toggle="tab" href="#change-password">Change Password</a></li>-->
                                                 <li><a class="nav-link" th:href="@{/logout}">Log out</a></li>
                                             </ul> <!-- end of dashboard-list -->
                                         </div>
@@ -88,12 +88,12 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                                             <!-- Tab panes -->
                                             <div class="tab-content dashboard-content">
-                                                <div id="account-details" class="tab-pane fade show active">
-                                                    <h3>Account details </h3>
+                                                <div id="account-details" class="tab-pane fade show active" style="border-bottom: none !important; padding-bottom: unset">
+                                                    <h3 style="border-bottom: none; padding-bottom: unset">Account details </h3>
                                                     <div class="login-form">
                                                         <form th:action="@{/editProfile}" method="post"
                                                               th:object="${user}" th:if="${user}">
-                                                            <div class="container p-4">
+                                                            <div class="container p-4" style="border: 1px solid #ebebeb; padding: 10px">
 
                                                                 <!-- Full Name -->
                                                                 <div class="row mb-3">
@@ -174,10 +174,64 @@
                                                                         </button>
                                                                     </div>
                                                                 </div>
+
                                                             </div>
                                                         </form>
 
                                                     </div>
+
+                                                    <!--                                                                Change Password-->
+                                                    <h3 style="border-bottom: none; padding-bottom: unset; margin-top: 50px">Change Password</h3>
+                                                    <div class="login-form">
+                                                        <form th:action="@{/changePassword}" method="post"
+                                                              th:object="${user}" th:if="${user}">
+                                                            <div class="container p-4" style="border: 1px solid #ebebeb">
+                                                                <!-- Old pasword -->
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label for="old-password"
+                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Current
+                                                                        Password</label>
+                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                                        <input type="password" class="form-control pr-5"
+                                                                               id="old-password" name="old-password"
+                                                                               placeholder="Current password" required>
+                                                                        <img src="/assets/images/eyes-icon.svg"
+                                                                             onclick="toggleOldPassword()"
+                                                                             alt="Toggle visibility"
+                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- New password -->
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label for="new-password"
+                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">New
+                                                                        Password</label>
+                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                                        <input type="password" class="form-control pr-5"
+                                                                               id="new-password" name="new-password"
+                                                                               placeholder="New password" required>
+                                                                        <img src="/assets/images/eyes-icon.svg"
+                                                                             onclick="toggleNewPassword()"
+                                                                             alt="Toggle visibility"
+                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Save Button -->
+                                                                <div class="row">
+                                                                    <div class="col-md-9 offset-md-3 text-end">
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                                style="background-color: #cc2121; border-color: #cc2121">
+                                                                            Save
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                    <!--                                                                End of change password-->
+
 
                                                 </div> <!-- end of tab-pane -->
                                                 <div id="order-history" class="tab-pane fade">
@@ -278,58 +332,58 @@
                                                         <p>There's no order. Order some and come back again!</p>
                                                     </div>
                                                 </div>
-                                                <div id="change-password" class="tab-pane fade">
-                                                    <h3>Change Password</h3>
-                                                    <div class="login-form">
-                                                        <form th:action="@{/changePassword}" method="post"
-                                                              th:object="${user}" th:if="${user}">
-                                                            <div class="container p-4">
-                                                                <!-- Old pasword -->
-                                                                <div class="form-group row align-items-center mb-4">
-                                                                    <label for="old-password"
-                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Current
-                                                                        Password</label>
-                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
-                                                                        <input type="password" class="form-control pr-5"
-                                                                               id="old-password" name="old-password"
-                                                                               placeholder="Current password" required>
-                                                                        <img src="/assets/images/eyes-icon.svg"
-                                                                             onclick="toggleOldPassword()"
-                                                                             alt="Toggle visibility"
-                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
-                                                                    </div>
-                                                                </div>
+<!--                                                <div id="change-password" class="tab-pane fade">-->
+<!--                                                    <h3>Change Password</h3>-->
+<!--                                                    <div class="login-form">-->
+<!--                                                        <form th:action="@{/changePassword}" method="post"-->
+<!--                                                              th:object="${user}" th:if="${user}">-->
+<!--                                                            <div class="container p-4">-->
+<!--                                                                &lt;!&ndash; Old pasword &ndash;&gt;-->
+<!--                                                                <div class="form-group row align-items-center mb-4">-->
+<!--                                                                    <label for="old-password"-->
+<!--                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Current-->
+<!--                                                                        Password</label>-->
+<!--                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">-->
+<!--                                                                        <input type="password" class="form-control pr-5"-->
+<!--                                                                               id="old-password" name="old-password"-->
+<!--                                                                               placeholder="Current password" required>-->
+<!--                                                                        <img src="/assets/images/eyes-icon.svg"-->
+<!--                                                                             onclick="toggleOldPassword()"-->
+<!--                                                                             alt="Toggle visibility"-->
+<!--                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
 
-                                                                <!-- New password -->
-                                                                <div class="form-group row align-items-center mb-4">
-                                                                    <label for="new-password"
-                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">New
-                                                                        Password</label>
-                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
-                                                                        <input type="password" class="form-control pr-5"
-                                                                               id="new-password" name="new-password"
-                                                                               placeholder="New password" required>
-                                                                        <img src="/assets/images/eyes-icon.svg"
-                                                                             onclick="toggleNewPassword()"
-                                                                             alt="Toggle visibility"
-                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Save Button -->
-                                                                <div class="row">
-                                                                    <div class="col-md-9 offset-md-3 text-end">
-                                                                        <button type="submit" class="btn btn-primary"
-                                                                                style="background-color: #cc2121; border-color: #cc2121">
-                                                                            Save
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+<!--                                                                &lt;!&ndash; New password &ndash;&gt;-->
+<!--                                                                <div class="form-group row align-items-center mb-4">-->
+<!--                                                                    <label for="new-password"-->
+<!--                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">New-->
+<!--                                                                        Password</label>-->
+<!--                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">-->
+<!--                                                                        <input type="password" class="form-control pr-5"-->
+<!--                                                                               id="new-password" name="new-password"-->
+<!--                                                                               placeholder="New password" required>-->
+<!--                                                                        <img src="/assets/images/eyes-icon.svg"-->
+<!--                                                                             onclick="toggleNewPassword()"-->
+<!--                                                                             alt="Toggle visibility"-->
+<!--                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                &lt;!&ndash; Save Button &ndash;&gt;-->
+<!--                                                                <div class="row">-->
+<!--                                                                    <div class="col-md-9 offset-md-3 text-end">-->
+<!--                                                                        <button type="submit" class="btn btn-primary"-->
+<!--                                                                                style="background-color: #cc2121; border-color: #cc2121">-->
+<!--                                                                            Save-->
+<!--                                                                        </button>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </form>-->
 
-                                                    </div>
+<!--                                                    </div>-->
 
-                                                </div> <!-- end of tab-pane -->
+<!--                                                </div> &lt;!&ndash; end of tab-pane &ndash;&gt;-->
 
                                             </div> <!-- end of tab-pane -->
                                         </div> <!-- end of tab-pane -->
