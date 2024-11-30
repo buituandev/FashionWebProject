@@ -189,9 +189,11 @@
                                             <div class="checkout-payment" th:if="${!cartItemsFilter.isEmpty()}">
                                                 <div>
                                                     <div class="form-row">
-                                                        <div class="custom-radio" style="border-bottom: none !important;">
+                                                        <div class="custom-radio"
+                                                             style="border-bottom: none !important;">
                                                             <input class="form-check-input" type="radio" name="payment"
-                                                                   id="cash_delivery_payment" value="cash" required checked>
+                                                                   id="cash_delivery_payment" value="cash" required
+                                                                   checked>
                                                             <span class="checkmark"></span>
                                                             <label class="form-check-label" for="cash_delivery_payment">Cash
                                                                 on Delivery</label>
@@ -352,42 +354,50 @@
 
 <script>
     document.querySelectorAll('.dropdown-wrapper select').forEach(select => {
-    select.addEventListener('click', function () {
-        this.parentElement.classList.toggle('select-open');
+        select.addEventListener('click', function () {
+            this.parentElement.classList.toggle('select-open');
+        });
     });
-});
 
-document.addEventListener('DOMContentLoaded', function () {
-    let hiddenAddress = document.getElementById('user-address-hidden').textContent;
-    if (hiddenAddress !== '') {
-        let address = hiddenAddress.split('/');
-        document.getElementById('p_address').value = address[0];
+    document.addEventListener('click', function (event) {
+        document.querySelectorAll('.dropdown-wrapper').forEach(wrapper => {
+            if (!wrapper.contains(event.target)) {
+                wrapper.classList.remove('select-open');
+            }
+        });
+    });
 
-        setTimeout(() => {
-            setSelectOptionByText('province', address[3]);
-            document.getElementById('province').dispatchEvent(new Event('change'));
+    document.addEventListener('DOMContentLoaded', function () {
+        let hiddenAddress = document.getElementById('user-address-hidden').textContent;
+        if (hiddenAddress !== '') {
+            let address = hiddenAddress.split('/');
+            document.getElementById('p_address').value = address[0];
 
             setTimeout(() => {
-                setSelectOptionByText('district', address[2]);
-                document.getElementById('district').dispatchEvent(new Event('change'));
+                setSelectOptionByText('province', address[3]);
+                document.getElementById('province').dispatchEvent(new Event('change'));
 
                 setTimeout(() => {
-                    setSelectOptionByText('ward', address[1]);
+                    setSelectOptionByText('district', address[2]);
+                    document.getElementById('district').dispatchEvent(new Event('change'));
+
+                    setTimeout(() => {
+                        setSelectOptionByText('ward', address[1]);
+                    }, 100);
                 }, 100);
             }, 100);
-        }, 100);
-    }
-});
+        }
+    });
 
-function setSelectOptionByText(selectId, text) {
-    let selectElement = document.getElementById(selectId);
-    for (let option of selectElement.options) {
-        if (option.text === text) {
-            option.selected = true;
-            break;
+    function setSelectOptionByText(selectId, text) {
+        let selectElement = document.getElementById(selectId);
+        for (let option of selectElement.options) {
+            if (option.text === text) {
+                option.selected = true;
+                break;
+            }
         }
     }
-}
 
     let localpicker = new LocalPicker({
         province: "ls_province",
