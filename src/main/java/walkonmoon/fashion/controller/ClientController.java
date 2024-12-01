@@ -369,6 +369,7 @@ public class ClientController {
 
         if (sessionUser != null) {
             if (sessionUser.getAddress() == null || sessionUser.getAddress().isEmpty()) {
+                System.out.println("user's address is null");
                 sessionUser.setAddress(orderAddress);
             }
             if (sessionUser.getPhone_number() == null || sessionUser.getPhone_number().isEmpty()) {
@@ -454,7 +455,7 @@ public class ClientController {
     }
 
     @PostMapping("/editProfile")
-    public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session) {
+    public String editProfileHtml(@ModelAttribute User user, Model model, HttpSession session, @RequestParam("user-address-hidden") String newAddress) {
 //        model.addAttribute("ProductService", productService);
         User existingUser = (User) session.getAttribute("user");
         if (existingUser != null) {
@@ -462,12 +463,14 @@ public class ClientController {
             existingUser.setPhone_number(user.getPhone_number());
             existingUser.setDob(user.getDob());
             existingUser.setFull_name(user.getFull_name());
+            existingUser.setAddress(newAddress);
             session.removeAttribute("user");
             session.setAttribute("user", existingUser);
             userService.saveUser(existingUser);
             model.addAttribute("user", existingUser);
+            return "redirect:/my-account.html?changeProfile=true";
         }
-        return "redirect:/my-account.html";
+        return "redirect:/login.html";
     }
 
     @PostMapping("/changePassword")
