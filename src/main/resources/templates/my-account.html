@@ -3,6 +3,23 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout::head('Chroma - My Account')}">
 </head>
+<style>
+    .dropdown-wrapper {
+        position: relative;
+    }
+
+    .dropdown-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+
+    .select-open .dropdown-icon {
+        transform: translateY(-50%) rotate(180deg);
+    }
+</style>
 <body>
 
 <!--[if lt IE 9]>
@@ -80,7 +97,7 @@
                                                     details</a></li>
                                                 <li><a class="nav-link" data-bs-toggle="tab" href="#order-history">Order
                                                     History</a></li>
-                                                <li><a class="nav-link" data-bs-toggle="tab" href="#change-password">Change Password</a></li>
+<!--                                                <li><a class="nav-link" data-bs-toggle="tab" href="#change-password">Change Password</a></li>-->
                                                 <li><a class="nav-link" th:href="@{/logout}">Log out</a></li>
                                             </ul> <!-- end of dashboard-list -->
                                         </div>
@@ -88,12 +105,12 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                                             <!-- Tab panes -->
                                             <div class="tab-content dashboard-content">
-                                                <div id="account-details" class="tab-pane fade show active">
-                                                    <h3>Account details </h3>
+                                                <div id="account-details" class="tab-pane fade show active" style="border-bottom: none !important; padding-bottom: unset">
+                                                    <h3 style="border-bottom: none; padding-bottom: unset">Account details </h3>
                                                     <div class="login-form">
                                                         <form th:action="@{/editProfile}" method="post"
                                                               th:object="${user}" th:if="${user}">
-                                                            <div class="container p-4">
+                                                            <div class="container p-4" style="border: 1px solid #ebebeb; padding: 10px">
 
                                                                 <!-- Full Name -->
                                                                 <div class="row mb-3">
@@ -164,7 +181,101 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <!-- Hidden Email and Password -->
+                                                                <!-- Address detail -->
+                                                                <div class="form-row mb-3">
+                                                                    <div class="form-group col-12 col-sm-12 col-md-6">
+                                                                        <label for="province" class="form-label fw-bold">Province</label>
+                                                                        <div class="dropdown-wrapper">
+                                                                            <select name="ls_province" id="province"
+                                                                                    class="form-control" required></select>
+                                                                            <span class="dropdown-icon"
+                                                                                  id="province-icon">&#9660;</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-12 col-sm-12 col-md-6">
+                                                                        <label for="district" class="form-label fw-bold">District</label>
+                                                                        <div class="dropdown-wrapper">
+                                                                            <select name="ls_district" id="district"
+                                                                                    class="form-control" required></select>
+                                                                            <span class="dropdown-icon"
+                                                                                  id="district-icon">&#9660;</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-12 col-sm-12 col-md-6">
+                                                                        <label for="ward" class="form-label fw-bold">Ward</label>
+                                                                        <div class="dropdown-wrapper">
+                                                                            <select name="ls_ward" id="ward"
+                                                                                    class="form-control" required></select>
+                                                                            <span class="dropdown-icon" id="ward-icon">&#9660;</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-12 col-sm-12 col-md-6">
+                                                                        <label for="p_address" class="form-label fw-bold">Address</label>
+                                                                        <input type="text" class="form-control"
+                                                                               id="p_address" required>
+                                                                        <div>
+                                                                            <!-- Paragraph to display the full address, controlled by JS -->
+                                                                            <p style="display: none" id="user-address-hidden" name="user-address-hidden" th:text="${user.getAddress()}"></p>
+
+                                                                            <!-- Hidden input to store the full address for submission -->
+                                                                            <input type="hidden" style="display: none" id="user-address-hidden-input" name="user-address-hidden">
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <!-- Save Button -->
+                                                                <div class="row">
+                                                                    <div class="col-md-9 offset-md-3 text-end">
+                                                                        <button type="submit" class="btn btn-primary"
+                                                                                style="background-color: #cc2121; border-color: #cc2121">
+                                                                            Save
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+
+                                                    <!--                                                                Change Password-->
+                                                    <h3 style="border-bottom: none; padding-bottom: unset; margin-top: 50px">Change Password</h3>
+                                                    <div class="login-form">
+                                                        <form th:action="@{/changePassword}" method="post"
+                                                              th:object="${user}" th:if="${user}">
+                                                            <div class="container p-4" style="border: 1px solid #ebebeb">
+                                                                <!-- Old pasword -->
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label for="old-password"
+                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Current
+                                                                        Password</label>
+                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                                        <input type="password" class="form-control pr-5"
+                                                                               id="old-password" name="old-password"
+                                                                               placeholder="Current password" required>
+                                                                        <img src="/assets/images/eyes-icon.svg"
+                                                                             onclick="toggleOldPassword()"
+                                                                             alt="Toggle visibility"
+                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- New password -->
+                                                                <div class="form-group row align-items-center mb-4">
+                                                                    <label for="new-password"
+                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">New
+                                                                        Password</label>
+                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
+                                                                        <input type="password" class="form-control pr-5"
+                                                                               id="new-password" name="new-password"
+                                                                               placeholder="New password" required>
+                                                                        <img src="/assets/images/eyes-icon.svg"
+                                                                             onclick="toggleNewPassword()"
+                                                                             alt="Toggle visibility"
+                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
+                                                                    </div>
+                                                                </div>
                                                                 <!-- Save Button -->
                                                                 <div class="row">
                                                                     <div class="col-md-9 offset-md-3 text-end">
@@ -178,6 +289,8 @@
                                                         </form>
 
                                                     </div>
+                                                    <!--                                                                End of change password-->
+
 
                                                 </div> <!-- end of tab-pane -->
                                                 <div id="order-history" class="tab-pane fade">
@@ -278,58 +391,58 @@
                                                         <p>There's no order. Order some and come back again!</p>
                                                     </div>
                                                 </div>
-                                                <div id="change-password" class="tab-pane fade">
-                                                    <h3>Change Password</h3>
-                                                    <div class="login-form">
-                                                        <form th:action="@{/changePassword}" method="post"
-                                                              th:object="${user}" th:if="${user}">
-                                                            <div class="container p-4">
-                                                                <!-- Old pasword -->
-                                                                <div class="form-group row align-items-center mb-4">
-                                                                    <label for="old-password"
-                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Current
-                                                                        Password</label>
-                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
-                                                                        <input type="password" class="form-control pr-5"
-                                                                               id="old-password" name="old-password"
-                                                                               placeholder="Current password" required>
-                                                                        <img src="/assets/images/eyes-icon.svg"
-                                                                             onclick="toggleOldPassword()"
-                                                                             alt="Toggle visibility"
-                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
-                                                                    </div>
-                                                                </div>
+<!--                                                <div id="change-password" class="tab-pane fade">-->
+<!--                                                    <h3>Change Password</h3>-->
+<!--                                                    <div class="login-form">-->
+<!--                                                        <form th:action="@{/changePassword}" method="post"-->
+<!--                                                              th:object="${user}" th:if="${user}">-->
+<!--                                                            <div class="container p-4">-->
+<!--                                                                &lt;!&ndash; Old pasword &ndash;&gt;-->
+<!--                                                                <div class="form-group row align-items-center mb-4">-->
+<!--                                                                    <label for="old-password"-->
+<!--                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">Current-->
+<!--                                                                        Password</label>-->
+<!--                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">-->
+<!--                                                                        <input type="password" class="form-control pr-5"-->
+<!--                                                                               id="old-password" name="old-password"-->
+<!--                                                                               placeholder="Current password" required>-->
+<!--                                                                        <img src="/assets/images/eyes-icon.svg"-->
+<!--                                                                             onclick="toggleOldPassword()"-->
+<!--                                                                             alt="Toggle visibility"-->
+<!--                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
 
-                                                                <!-- New password -->
-                                                                <div class="form-group row align-items-center mb-4">
-                                                                    <label for="new-password"
-                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">New
-                                                                        Password</label>
-                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">
-                                                                        <input type="password" class="form-control pr-5"
-                                                                               id="new-password" name="new-password"
-                                                                               placeholder="New password" required>
-                                                                        <img src="/assets/images/eyes-icon.svg"
-                                                                             onclick="toggleNewPassword()"
-                                                                             alt="Toggle visibility"
-                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">
-                                                                    </div>
-                                                                </div>
-                                                                <!-- Save Button -->
-                                                                <div class="row">
-                                                                    <div class="col-md-9 offset-md-3 text-end">
-                                                                        <button type="submit" class="btn btn-primary"
-                                                                                style="background-color: #cc2121; border-color: #cc2121">
-                                                                            Save
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </form>
+<!--                                                                &lt;!&ndash; New password &ndash;&gt;-->
+<!--                                                                <div class="form-group row align-items-center mb-4">-->
+<!--                                                                    <label for="new-password"-->
+<!--                                                                           class="col-12 col-sm-12 col-md-4 col-form-label">New-->
+<!--                                                                        Password</label>-->
+<!--                                                                    <div class="col-12 col-sm-12 col-md-8 position-relative">-->
+<!--                                                                        <input type="password" class="form-control pr-5"-->
+<!--                                                                               id="new-password" name="new-password"-->
+<!--                                                                               placeholder="New password" required>-->
+<!--                                                                        <img src="/assets/images/eyes-icon.svg"-->
+<!--                                                                             onclick="toggleNewPassword()"-->
+<!--                                                                             alt="Toggle visibility"-->
+<!--                                                                             style="position: absolute; right: 35px; top: 40%; transform: translateY(-50%); cursor: pointer; width: 15px; height: 15px;">-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                                &lt;!&ndash; Save Button &ndash;&gt;-->
+<!--                                                                <div class="row">-->
+<!--                                                                    <div class="col-md-9 offset-md-3 text-end">-->
+<!--                                                                        <button type="submit" class="btn btn-primary"-->
+<!--                                                                                style="background-color: #cc2121; border-color: #cc2121">-->
+<!--                                                                            Save-->
+<!--                                                                        </button>-->
+<!--                                                                    </div>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                        </form>-->
 
-                                                    </div>
+<!--                                                    </div>-->
 
-                                                </div> <!-- end of tab-pane -->
+<!--                                                </div> &lt;!&ndash; end of tab-pane &ndash;&gt;-->
 
                                             </div> <!-- end of tab-pane -->
                                         </div> <!-- end of tab-pane -->
@@ -414,6 +527,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/assets/js/toast.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script src="/assets/js/vietnamlocalselector.js"></script>
+
 
 
 <script>
@@ -469,6 +584,18 @@
                 icon: "success",
                 title: "Success!",
                 text: "You have reset your password successfully!",
+            });
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const changeProfile = urlParams.get('changeProfile');
+
+        if (changeProfile === "true") {
+            Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "You have change your profile successfully!",
             });
         }
     });
@@ -557,6 +684,148 @@
             button.addEventListener('click', updateCart);
         });
     });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const provinceSelect = document.getElementById("province");
+        const districtSelect = document.getElementById("district");
+        const wardSelect = document.getElementById("ward");
+        const addressInput = document.getElementById("p_address");
+        const hiddenAddressDiv = document.getElementById("user-address-hidden");
+        const hiddenAddressInput = document.getElementById("user-address-hidden-input"); // Reference to the hidden input
+
+        // Get the initial address from the div content
+        const defaultAddress = hiddenAddressDiv.textContent.trim();
+
+        // Function to update the full address displayed in the hidden div
+        function updateAddressHidden() {
+            // Filter out placeholder values
+            const province = provinceSelect.options[provinceSelect.selectedIndex]?.text || "";
+            const district = districtSelect.options[districtSelect.selectedIndex]?.text || "";
+            const ward = wardSelect.options[wardSelect.selectedIndex]?.text || "";
+            const address = addressInput.value.trim();
+
+            const placeholders = ["Chọn tỉnh / thành", "Chọn quận / huyện", "Chọn phường / xã", ""]; // Placeholder texts
+            const addressParts = [address, ward, district, province].filter(
+                part => part && !placeholders.includes(part)  // Exclude placeholders and empty parts
+            );
+
+            // Combine the address parts, fallback to the default address if empty
+            const fullAddress = addressParts.join("/") || defaultAddress;
+            hiddenAddressDiv.textContent = fullAddress;
+            hiddenAddressInput.value = fullAddress; // Update the hidden input field
+        }
+
+        // Set default address on page load (in case no selection is made)
+        hiddenAddressDiv.textContent = defaultAddress;
+        hiddenAddressInput.value = defaultAddress; // Initialize hidden input with default address
+
+        // Add event listeners to update the hidden address whenever input changes
+        provinceSelect.addEventListener("change", updateAddressHidden);
+        districtSelect.addEventListener("change", updateAddressHidden);
+        wardSelect.addEventListener("change", updateAddressHidden);
+        addressInput.addEventListener("input", updateAddressHidden);
+    });
+
+</script>
+
+<script>
+    document.querySelectorAll('.dropdown-wrapper select').forEach(select => {
+        select.addEventListener('click', function () {
+            this.parentElement.classList.toggle('select-open');
+        });
+    });
+
+    document.addEventListener('click', function (event) {
+        document.querySelectorAll('.dropdown-wrapper').forEach(wrapper => {
+            if (!wrapper.contains(event.target)) {
+                wrapper.classList.remove('select-open');
+            }
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let hiddenAddress = document.getElementById('user-address-hidden').textContent;
+        if (hiddenAddress !== '') {
+            let address = hiddenAddress.split('/');
+            document.getElementById('p_address').value = address[0];
+
+            setTimeout(() => {
+                setSelectOptionByText('province', address[3]);
+                document.getElementById('province').dispatchEvent(new Event('change'));
+
+                setTimeout(() => {
+                    setSelectOptionByText('district', address[2]);
+                    document.getElementById('district').dispatchEvent(new Event('change'));
+
+                    setTimeout(() => {
+                        setSelectOptionByText('ward', address[1]);
+                    }, 100);
+                }, 100);
+            }, 100);
+        }
+    });
+
+    function setSelectOptionByText(selectId, text) {
+        let selectElement = document.getElementById(selectId);
+        for (let option of selectElement.options) {
+            if (option.text === text) {
+                option.selected = true;
+                break;
+            }
+        }
+    }
+
+    let localpicker = new LocalPicker({
+        province: "ls_province",
+        district: "ls_district",
+        ward: "ls_ward"
+    });
+    let options = {
+        /*
+          HTML Selector. You can pass value of name, id or class.
+          It will automatically detect exist elements for you.
+          Example: 'myIdOrClass','#myId', '.myClass', 'myName'
+          */
+        province: 'ls_province',
+        district: 'ls_district',
+        ward: 'ls_ward',
+
+        /*
+        Define value for option tag. Valid option: id|name
+        */
+        getValueBy: 'id',
+
+        //Placeholder text
+        provinceText: 'Chọn tỉnh / thành phố',
+        districtText: 'Chọn quận / huyện',
+        districtNoText: 'Địa phương này không có quận / huyện',
+        wardText: 'Chọn phường / xã',
+        wardNoText: 'Địa phương này không có phường / xã',
+
+        // Default value if no location exist
+        emptyValue: " ",
+
+        // Hide option where no local exist
+        hideEmptyValueOption: true,
+
+        // Hide place-holder option (first option)
+        hidePlaceHolderOption: true,
+
+        /*
+        Include local level on option text as prefix
+        Example: true = Quận Bình Thạnh | false = Bình Thạnh
+        */
+        provincePrefix: false,
+        districtPrefix: true,
+        wardPrefix: true,
+
+        /*
+        Include local level in option tag's attribute
+        */
+        levelAsAttribute: true,
+        levelAttributeName: "data-level",
+    };
 </script>
 </body>
 <style>
