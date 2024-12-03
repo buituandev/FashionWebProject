@@ -647,13 +647,7 @@
                 xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        Swal.fire({
-                            title: 'Deleted!',
-                            text: 'Your item has been deleted from cart',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 3500
-                        });
+                        toast('success', 'Item deleted from cart');
                         updateCart();
                     }
                 };
@@ -826,6 +820,17 @@
         levelAsAttribute: true,
         levelAttributeName: "data-level",
     };
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (window.location.hash === '#order-history') {
+            document.querySelectorAll('.nav-link.active, .tab-pane.show.active').forEach(element => {
+                element.classList.remove('active', 'show');
+            });
+            document.querySelector('a[href="#order-history"]').classList.add('active');
+            document.querySelector('#order-history').classList.add('show', 'active');
+        }
+    });
 </script>
 </body>
 <style>

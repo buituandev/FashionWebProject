@@ -416,13 +416,7 @@ function deleteCartItem(productId, userId) {
             xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    Swal.fire({
-                        title: 'Deleted!',
-                        text: 'Your item has been deleted from cart',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 3500
-                    });
+                    toast('success', 'Item deleted from cart');
                     updateCart();
                 }
             };

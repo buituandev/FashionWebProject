@@ -183,7 +183,7 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane fade show active" id="tab_description"
                                                      role="tabpanel" aria-labelledby="nav_desctiption">
-                                                    <p th:text="${product.getLong_description()}">Studio Design'
+                                                    <p th:utext="${product.getLong_description()}">Studio Design'
                                                         PolyFaune collection features classic products with colorful
                                                         patterns, inspired by the traditional japanese origamis. To wear
                                                         with a chino or jeans. The sublimation textile printing process
@@ -355,6 +355,10 @@
 
     function addToCart(productId, quantity) {
         productIdentifier = productId;
+        if(quantity === "0"){
+            toast("error", "Quantity must be greater than 0");
+            return;
+        }
         const xhr = new XMLHttpRequest();
         xhr.open("GET", `/cart?productId=${productId}&quantity=${quantity}`, true);
         xhr.onreadystatechange = function () {
@@ -387,13 +391,7 @@
                 xhr.open("GET", `/deleteCartItem?productId=${productId}`, true);
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === 4 && xhr.status === 200) {
-                        Swal.fire({
-                            title: 'Deleted!',
-                            text: 'Your item has been deleted from cart',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 3500
-                        });
+                        toast('success', 'Item deleted from cart');
                         updateCart();
                     }
                 };
