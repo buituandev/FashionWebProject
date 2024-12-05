@@ -131,11 +131,9 @@
                 <div class="col-md-7 align-self-center text-end">
                     <div class="d-flex justify-content-end align-items-center">
                         <ol class="breadcrumb justify-content-end">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                            <li class="breadcrumb-item active" th:if="${mode == 'create'}"><a href="user-form.html"
-                                                                                              style="color: rgb(228, 106, 118)">Create
-                                New Admin</a></li>
-                            <li class="breadcrumb-item active" th:if="${mode == 'edit'}">Edit User</li>
+                            <li class="breadcrumb-item"><a href="">Home</a></li>
+                            <li class="breadcrumb-item active" ><a th:href="@{'/admin/user-management.html'}">User Management</a></li>
+                            <li class="breadcrumb-item active">User Details</li>
                         </ol>
                         <!--                        <button type="button" class="btn btn-info d-none d-lg-block m-l-15 text-white"><a-->
                         <!--                                href="user-form.html" style="color: white"><i-->
