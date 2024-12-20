@@ -187,7 +187,7 @@
                                                                         <label for="province" class="form-label fw-bold">Province</label>
                                                                         <div class="dropdown-wrapper">
                                                                             <select name="ls_province" id="province"
-                                                                                    class="form-control" required></select>
+                                                                                    class="form-control" ></select>
                                                                             <span class="dropdown-icon"
                                                                                   id="province-icon">&#9660;</span>
                                                                         </div>
@@ -196,7 +196,7 @@
                                                                         <label for="district" class="form-label fw-bold">District</label>
                                                                         <div class="dropdown-wrapper">
                                                                             <select name="ls_district" id="district"
-                                                                                    class="form-control" required></select>
+                                                                                    class="form-control" ></select>
                                                                             <span class="dropdown-icon"
                                                                                   id="district-icon">&#9660;</span>
                                                                         </div>
@@ -205,14 +205,14 @@
                                                                         <label for="ward" class="form-label fw-bold">Ward</label>
                                                                         <div class="dropdown-wrapper">
                                                                             <select name="ls_ward" id="ward"
-                                                                                    class="form-control" required></select>
+                                                                                    class="form-control" ></select>
                                                                             <span class="dropdown-icon" id="ward-icon">&#9660;</span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group col-12 col-sm-12 col-md-6">
                                                                         <label for="p_address" class="form-label fw-bold">Address</label>
                                                                         <input type="text" class="form-control"
-                                                                               id="p_address" required>
+                                                                               id="p_address" >
                                                                         <div>
                                                                             <!-- Paragraph to display the full address, controlled by JS -->
                                                                             <p style="display: none" id="user-address-hidden" name="user-address-hidden" th:text="${user.getAddress()}"></p>
@@ -829,6 +829,48 @@
         }
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dobInput = document.getElementById("birth");
+
+        const today = new Date();
+
+        const minAgeDate = new Date(today.getFullYear() - 100, 0, 1);
+        const maxAgeDate = new Date(today.getFullYear() - 13, 11, 31);
+
+        const minDateString = minAgeDate.toISOString().split("T")[0];
+        const maxDateString = maxAgeDate.toISOString().split("T")[0];
+
+        dobInput.setAttribute("min", minDateString);
+        dobInput.setAttribute("max", maxDateString);
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const phoneNumberInput = document.getElementById("phonenumber");
+
+        phoneNumberInput.addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, "");
+        });
+
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function (event) {
+            const phoneNumber = phoneNumberInput.value;
+
+            // Check the length of the phone number
+            if (phoneNumber.length < 10 || phoneNumber.length > 15) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Phone number must be between 10 and 15 digits.",
+                });
+            }
+        });
+    });
+</script>
+
+
 </body>
 <style>
     .form-check-input:checked {
