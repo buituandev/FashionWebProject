@@ -40,8 +40,8 @@ public class User implements Serializable {
     private String image;
     @Column(nullable = true)
     private UserType type;
-    @Column
-    private int is_deleted;
+//    @Column
+//    private int is_deleted;
     @Column(name = "province", nullable = true)
     private String province;
     @Column

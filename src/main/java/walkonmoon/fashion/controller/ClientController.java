@@ -532,7 +532,8 @@ public class ClientController {
     @PostMapping("/register/save")
     public String registerSave(@ModelAttribute User newUser, Model model) {
         newUser.setType(UserType.USER);
-        newUser.setIs_deleted(0);
+        newUser.setStatus(UserStatus.ACTIVE);
+        newUser.setType(UserType.USER);
         newUser.setAddress("");
         newUser.setImage("");
         newUser.setProvince("");
