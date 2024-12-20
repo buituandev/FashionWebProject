@@ -122,7 +122,7 @@
                                                            class="col-12 col-sm-12 col-md-4 col-form-label">Phone
                                                         Number</label>
                                                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-                                                        <input type="text" class="form-control" id="phone_number"
+                                                        <input type="number" class="form-control" id="phone_number"
                                                                th:field="*{phone_number}">
                                                     </div>
                                                 </div>
@@ -265,7 +265,28 @@
         const isPassword = passwordField.getAttribute('type') === 'password';
         passwordField.setAttribute('type', isPassword ? 'text' : 'password');
     }
+
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const phoneNumberInput = document.getElementById("phone_number");
+
+        form.addEventListener("submit", function (event) {
+            const phoneNumber = phoneNumberInput.value.trim();
+
+            if (phoneNumber.length < 10 || phoneNumber.length > 15) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong! Your phone number must be al least 10 digits and maximum at 15 digits",
+                });
+                event.preventDefault(); // Prevent form submission
+            }
+        });
+    });
+</script>
+
 
 </body>
 <style>
