@@ -536,7 +536,6 @@ public class ClientController {
         newUser.setType(UserType.USER);
         newUser.setAddress("");
         newUser.setImage("");
-        newUser.setProvince("");
         //encrypt password
         String encryptedPassword = UserService.toSHA1(newUser.getPassword());
         newUser.setPassword(encryptedPassword);
