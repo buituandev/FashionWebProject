@@ -42,8 +42,8 @@ public class User implements Serializable {
     private UserType type;
 //    @Column
 //    private int is_deleted;
-    @Column(name = "province", nullable = true)
-    private String province;
+//    @Column(name = "province", nullable = true)
+//    private String province;
     @Column
     private String email;
     @Column(name = "status")
