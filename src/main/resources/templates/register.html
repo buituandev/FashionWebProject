@@ -286,6 +286,24 @@
         });
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dobInput = document.getElementById("dob");
+
+        const today = new Date();
+
+        const minAgeDate = new Date(today.getFullYear() - 100, 0, 1);  // Set the oldest birthdate (100 years ago)
+        const maxAgeDate = new Date(today.getFullYear() - 13, 11, 31);
+        const minDateString = minAgeDate.toISOString().split("T")[0];
+        const maxDateString = maxAgeDate.toISOString().split("T")[0];
+
+        dobInput.setAttribute("min", minDateString);
+        dobInput.setAttribute("max", maxDateString);
+    });
+</script>
+
+
 
 
 </body>
